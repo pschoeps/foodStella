@@ -1,6 +1,5 @@
 class RegistrationsController < Devise::RegistrationsController
-  include MobileHelper
-  before_action :check_for_mobile
+
   
   
   
