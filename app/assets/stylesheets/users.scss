@@ -98,6 +98,28 @@ $orange: #D85;
 			// float: left;
 		}
 
+form {
+	display: inline-block;
+	padding: 20px;
+	text-align: left;
+	margin-bottom: 20px;
+}
+form > .actions { text-align: right; }
+form input[type=submit] {
+	border: none;
+	background-color: transparent;
+	color: $orange;
+}
+form ~ a {
+	display: block;
+	margin: -15px auto 0;
+	color: $brown;
+	color: $grey;
+	width: 200px;
+}
+label { font-weight: normal; }
+form label ~ em { position: absolute; }
+
 
 
 .tile-wrapper {
