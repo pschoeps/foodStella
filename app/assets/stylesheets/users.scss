@@ -98,27 +98,27 @@ $orange: #D85;
 			// float: left;
 		}
 
-form {
+#new_user {
 	display: inline-block;
 	padding: 20px;
 	text-align: left;
 	margin-bottom: 20px;
 }
-form > .actions { text-align: right; }
-form input[type=submit] {
+#new_user > .actions { text-align: right; }
+#new_user input[type=submit] {
 	border: none;
 	background-color: transparent;
 	color: $orange;
 }
-form ~ a {
+#new_user ~ a {
 	display: block;
 	margin: -15px auto 0;
 	color: $brown;
 	color: $grey;
 	width: 200px;
 }
-label { font-weight: normal; }
-form label ~ em { position: absolute; }
+#new_user label { font-weight: normal; }
+#new_user label ~ em { position: absolute; }
 
 
 
