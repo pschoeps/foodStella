@@ -1,0 +1,137 @@
+// Place all the styles related to the users_controller controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+$banner_h: 100px;
+$beige: #FDF1EE;
+$grey: #ABABAB;
+$brown: #DB9;
+$orange: #D85;
+
+.container {
+  text-align: center;
+  color: $grey;
+}
+
+.banner:first-child {
+	height: 160px;
+	background-color: $grey;
+}
+.banner {
+	height: $banner_h;
+	background-color: $beige;
+	color: $grey;
+}
+
+.banner > .user > .user_pic {
+	margin: -$banner_h/2 auto 0;
+	width: $banner_h;
+	height: $banner_h;
+	border-radius: 99px;
+	border: solid 2px $beige;
+	background-color: blue;
+}
+
+.search-box {
+	display: none;
+	// text-align: left;
+	// float: right;
+	font-size: 12px;
+	position: absolute;
+	bottom: 10px;
+	right: 0;
+}
+
+.button {
+	cursor: pointer;
+	display: none;
+	color: $brown;
+	width: auto;
+	margin: 40px 10px 0;
+	padding: 2px;
+}
+.button.selected { border-bottom: solid 1px $orange; }
+.button:hover { color: $orange; }
+/* Reveal buttons on medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+	.button { display: inline-block; }
+	.search-box { display: inline-block; }
+}
+.tabs_left > .button { float: left; }
+.tabs_right > .button { float: right; }
+.tabs_right > .button > span {
+	font-size: 1.5em;
+	color: $grey;
+}
+
+.tile {
+	margin: 8px auto;
+	background-color: #CEA;
+	max-width: 250px;
+}
+	.tile > .overlay {
+		cursor: pointer;
+		width: 100%;
+		height: 30px;
+		margin-top: calc(100% - 30px);
+		display: inline-block;
+		padding: 0.25em;
+		background-color: rgba(0,0,0,0.2);
+		font-size: 1em;
+		color: rgba(255,255,255,0.5);
+		// text-align: center;
+	}
+	.tile:hover > .overlay {
+		color: rgba(255,255,255,1);
+		background-color: rgba(0,0,0,0.5);
+	}
+		.tile > .overlay > .title {
+			width: calc(100% - 60px);
+			margin-left: 30px;
+			overflow: hidden;
+			white-space: nowrap;
+			float: left;
+		}
+		.tile > .overlay > .star {
+			width: 30px;
+			font-size: 1.3em;
+			// float: left;
+		}
+
+#new_user {
+	display: inline-block;
+	padding: 20px;
+	text-align: left;
+	margin-bottom: 20px;
+}
+#new_user > .actions { text-align: right; }
+#new_user input[type=submit] {
+	border: none;
+	background-color: transparent;
+	color: $orange;
+}
+#new_user ~ a {
+	display: block;
+	margin: -15px auto 0;
+	color: $brown;
+	color: $grey;
+	width: 200px;
+}
+#new_user label { font-weight: normal; }
+#new_user label ~ em { position: absolute; }
+
+
+
+.tile-wrapper {
+	 background-color: white;
+	// display: inline-block;
+}
+.tile_wrapped {
+	width: 200px;
+	height: 200px;
+	display: inline-block;
+	padding: 2px 0;
+	// float: left;
+}
+
+// body { background-color: $beige; }

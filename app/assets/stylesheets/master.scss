@@ -1,6 +1,13 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+/* overflow footer color */
+html { background-color: #DB9; }
+body {
+  padding-bottom: 54px;
+  margin-bottom: 100px;
+}
+
 /* typography */
 
 h1, h2, h3, h4, h5, h6 {
