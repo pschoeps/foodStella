@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  amount: MyString
+  decimal: MyString
+  ingredient: MyString
+
+two:
+  amount: MyString
+  decimal: MyString
+  ingredient: MyString

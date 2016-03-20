@@ -28,10 +28,23 @@ gem 'sass-rails', '~> 4.0.0'
 #auth
 gem 'devise'
 
+#for nesting forms
+gem 'cocoon'
+
+#for image storage
+gem 'carrierwave',             '0.10.0'
+gem 'mini_magick',             '3.8.0'
+gem 'fog',                     '1.36.0'
+
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false
+end
+
+group :development do
+	#database visualization
+   gem "rails-erd"
 end
 
 group :production do

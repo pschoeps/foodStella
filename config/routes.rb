@@ -9,7 +9,10 @@ FoodStella::Application.routes.draw do
     member do
       get 'dashboard'
     end
+
   end
+
+  resources :recipes
 
 
 
