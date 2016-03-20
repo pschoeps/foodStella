@@ -3,7 +3,7 @@
     <%= form_for @recipe, html: {class: "form-horizontal", multipart: true } do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
       <fieldset id="recipe-meta">
-        <ol>
+        <ol style="list-style-type:none">
           <li class="control-group">
             <%= f.label :name, "Recipe Name", class: "control-label" %>
             <div class="controls"><%= f.text_field :name %></div>
