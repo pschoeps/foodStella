@@ -6,9 +6,15 @@
 	<div>
 		<ul>
 			<% @recipe.ingredients.each do |i| %>
-			    <li><%= i.name %></li>
+			    <li><%= i.name %>
+			    <% i.quantities.each do |q| %>
+			      <%= q.amount %>, <%= q.unit %>
+			    <% end %>
+			</li>
 			 <% end %>
 		</ul>
+		<h2><%= @recipe.description %></h2>
+		<h2><%= @recipe.instructions %></h2>
 	</div>
 
 </div>

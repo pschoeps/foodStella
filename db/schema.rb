@@ -11,31 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-<<<<<<< HEAD
-ActiveRecord::Schema.define(version: 20160320162310) do
-=======
-ActiveRecord::Schema.define(version: 20160314224354) do
->>>>>>> 2cac660af8aa843734fc9503e6a68cebe3a0424e
+ActiveRecord::Schema.define(version: 20160322201047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-<<<<<<< HEAD
   create_table "ingredients", force: true do |t|
     t.string   "name"
-=======
-  create_table "recipes", force: true do |t|
-    t.string   "name"
-    t.integer  "prep_time"
-    t.integer  "cook_time"
-    t.integer  "user_id",                  null: false
-    t.integer  "ingredients", default: [],              array: true
->>>>>>> 2cac660af8aa843734fc9503e6a68cebe3a0424e
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-<<<<<<< HEAD
   create_table "quantities", force: true do |t|
     t.string   "amount"
     t.string   "decimal"
@@ -44,6 +30,7 @@ ActiveRecord::Schema.define(version: 20160314224354) do
     t.datetime "updated_at"
     t.integer  "recipe_id"
     t.integer  "ingredient_id"
+    t.string   "unit"
   end
 
   add_index "quantities", ["ingredient_id"], name: "index_quantities_on_ingredient_id", using: :btree
@@ -62,13 +49,6 @@ ActiveRecord::Schema.define(version: 20160314224354) do
 
   add_index "recipes", ["user_id"], name: "index_recipes_on_user_id", using: :btree
 
-=======
-  create_table "tests", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
->>>>>>> 2cac660af8aa843734fc9503e6a68cebe3a0424e
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
