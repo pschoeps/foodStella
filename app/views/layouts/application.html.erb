@@ -1,17 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html class="<%= 'hasFooter' if controller_name != 'sessions' %>">
 <head>
   <title>FoodStella</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tags %>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body>
+<body class="<%= 'hasFooter' if controller_name != 'sessions' %>">
 
-	<%= render "layouts/navbar" %>
+	<%- if controller_name != 'sessions' %>
+		<%= render "layouts/navbar" %>
+	<% end -%>
 
-<div class="container">
+<div class="<%= controller_name == 'sessions' ? 'fluid-container' : 'container' %>">
   <%= yield %>
 </div>
 
