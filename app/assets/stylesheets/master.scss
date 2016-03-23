@@ -1,9 +1,16 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+$banner_h: 100px;
+$light: #F9F7ED;
+$dark: #ABABAB;
+$brown: #BC9C63;
+$orange: #F5B226;
+$green: #819800;
+
 /* overflow footer color */
-html { background-color: #DB9; }
-body {
+html.hasFooter { background-color: $brown; }
+body.hasFooter {
   padding-bottom: 54px;
   margin-bottom: 100px;
 }
@@ -39,3 +46,10 @@ p {
   float: none;
   margin: 0 auto;
 }
+
+#navbar-logo {
+  height: 50px;
+  margin: 10px;
+}
+
+#navbar-search { margin: 36px 10px 0; }
