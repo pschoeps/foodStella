@@ -36,6 +36,10 @@ gem 'carrierwave',             '0.10.0'
 gem 'mini_magick',             '3.8.0'
 gem 'fog',                     '1.36.0'
 
+#moment js and full calendar
+gem 'fullcalendar-rails'
+gem 'momentjs-rails'
+
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

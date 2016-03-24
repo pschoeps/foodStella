@@ -11,7 +11,7 @@
               <li><%= link_to "Dashboard", dashboard_user_path(current_user) %></li>
               <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete  %></li>
               <li><%= link_to "New Recipe", new_recipe_path %></li>
-              <li><%= link_to "My Recipes", recipes_path %></li>
+              <li><%= link_to "Calendar", calendar_user_path(current_user) %></li>
             <% else %>
               <li><%= link_to "Sign In", new_user_session_path %></li>
               <li role="separator" class="divider"></li>
