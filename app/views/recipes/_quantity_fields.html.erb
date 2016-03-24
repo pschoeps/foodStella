@@ -8,8 +8,8 @@
     <%= f.label :amount, "Amount:" %>
     <%= f.text_field :amount %>
 
-    <!-- f.label :unit, "Unit" %>
-     f.select(:unit, options_for_select([['Cup', 1], ['Oz', 2], ["Tsp", 3]])) %> -->
+    <%= f.label :unit, "Unit" %>
+     <%= f.select(:unit, options_for_select([['Cup', 1], ['Oz', 2], ["Tsp", 3]])) %> 
 
     <%= link_to_remove_association "remove", f %>
   </div>

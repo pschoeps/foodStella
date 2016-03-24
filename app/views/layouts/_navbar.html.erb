@@ -2,6 +2,10 @@
   <div class="container-fluid">
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-left align-bottom">
+        <li><%= image_tag "logo-foodstella.png", id: "navbar-logo" %></li>
+        <li><form><input type="text" placeholder="Search" id="navbar-search"></form></li>
+      </ul>
       <ul class="nav navbar-nav navbar-right">
             <% if user_signed_in? %>
               <li><%= link_to "Dashboard", dashboard_user_path(current_user) %></li>

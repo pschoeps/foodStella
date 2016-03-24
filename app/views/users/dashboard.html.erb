@@ -31,14 +31,16 @@
 	</div>
 </div>
 <div class="row tile-wrapper">
+	<% @recipes.each do |r| %>
 	<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
 		<div class="tile">
 			<div class="overlay">
-				<span class="title">Long name for a recipe</span>
+				<span class="title"><%= r.name %></span>
 				<span class="star">&#9733;</span>
 			</div>
 		</div>
 	</div>
+	<% end %>
 	<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
 		<div class="tile">
 			<div class="overlay">
