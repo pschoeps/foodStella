@@ -1,10 +1,25 @@
-<div class="row">
-	<div class="col-md-4">
-		<h1><%= @recipe.name %></h1>
+<div class="row recipe-title">
+	<!-- <div class="col-md-4"> -->
+		<h1><%= @recipe.name.upcase %></h1>
 		<%= image_tag @recipe.photo_url.url if @recipe.photo_url %>
+	<!-- </div> -->
+</div>
+
+<div class="row recipe-photos">
+	<div class="col-md-8 selected-col">
+		<%= image_tag "background-picture-foodstella.jpg", id: "selected-photo" %>
 	</div>
-	<div>
-		<ul class="ingredients-list">
+	<div class="col-md-4 others-col">
+		<%= image_tag "background-picture-foodstella.jpg" %>
+		<%= image_tag "background-picture-foodstella.jpg" %>
+		<%= image_tag "background-picture-foodstella.jpg" %>
+	</div>
+</div>
+
+<div class="row recipe-info">
+	<div class="col-md-2 ingredients">
+		<h3>INGREDIENTS</h3>
+		<ol>
 			<% @recipe.ingredients.each do |i| %>
 			    <li><%= i.name %>
 			    <% i.quantities.each do |q| %>
@@ -12,9 +27,20 @@
 			    <% end %>
 			</li>
 			 <% end %>
-		</ul>
-		<h2><%= @recipe.description %></h2>
-		<h2><%= @recipe.instructions %></h2>
+		</ol>
 	</div>
+	<div class="col-md-10 directions">
+		<h3>DIRECTIONS</h3>
+		<div><%= @recipe.instructions %></div>
+		<h3>DESCRIPTION</h3>
+		<div><%= @recipe.description %></div>
+	</div>
+</div>
 
+<div class="row recipe-similar">
+	
+</div>
+
+<div class="row recipe-reviews">
+	
 </div>

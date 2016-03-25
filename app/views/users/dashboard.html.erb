@@ -1,54 +1,54 @@
-
 <div class="row banner"></div>
 <div class="row banner">
-	<div class="col-xs-4 tabs_left">
+	<div class="col-md-4 tabs_left">
 		<div class="button">Timeline</div>
 		<div class="button">About</div>
 		<div class="button selected">Recipes</div>
 	</div>
-	<div class="col-xs-4 user">
+	<div class="col-sm-12 col-md-4 user">
 		<div class="user_pic"></div>
 		<div class="user_name">Chris Roszell</div>
 	</div>
-	<div class="col-xs-4 tabs_right">
+	<div class="col-md-4 tabs_right">
 		<div class="button">RECIPES<br><span> <%= @recipes.count %> </span></div>
 		<div class="button">FRIENDS<br><span>23</span></div>
 		<div class="button">FOLLOWERS<br><span>20</span></div>
 	</div>
 </div>
-<div class="row content-title"
-	style="position: relative;">
-	<!-- <div class="col-xs-4"></div> -->
-	<!-- <div class="col-xs-4"> -->
-		<h3>RECIPES</h3>
-	<!-- </div> -->
-	<!-- <div class="col-xs-4"> -->
-		<div class="search-box">
-			<!-- Search Recipes<br> -->
-			<form><input type="text" placeholder="Search Recipes"></form>
-			<!-- Search Recipes -->
-		<!-- </div> -->
-		<%= @recipes.count %>
-	</div>
-</div>
-<div class="row tile-wrapper">
-	<% @recipes.each do |r| %>
-	<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-		<div class="tile">
-			<div class="overlay">
-				<span class="title"><%= link_to r.name, recipe_path(r) %></span>
-				<span class="star">&#9733;</span>
-			</div>
-		</div>
-	</div>
-	<% end %>
-	<!-- <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
-		<div class="tile">
-			<div class="overlay">
-				<span class="title">shrNam</span>
-				<span class="star">&#9733;</span>
-			</div>
-		</div>
-	</div>-->
-</div>
 
+<div class="container">
+	<div class="row content-title"
+		style="position: relative;">
+		<!-- <div class="col-xs-4"></div> -->
+		<!-- <div class="col-xs-4"> -->
+			<h3>RECIPES</h3>
+		<!-- </div> -->
+		<!-- <div class="col-xs-4"> -->
+			<div class="search-box">
+				<!-- Search Recipes<br> -->
+				<form><input type="text" placeholder="Search Recipes"></form>
+				<!-- Search Recipes -->
+			<!-- </div> -->
+		</div>
+	</div>
+	<div class="row tile-wrapper">
+		<% @recipes.each do |r| %>
+		<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+			<div class="tile">
+				<div class="overlay">
+					<span class="title"><%= link_to r.name, recipe_path(r) %></span>
+					<span class="star">&#9733;</span>
+				</div>
+			</div>
+		</div>
+		<% end %>
+		<!-- <div class="col-xs-6 col-sm-4 col-md-3 col-lg-2">
+			<div class="tile">
+				<div class="overlay">
+					<span class="title">shrNam</span>
+					<span class="star">&#9733;</span>
+				</div>
+			</div>
+		</div>-->
+	</div>
+</div>

@@ -3,21 +3,24 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .container {
-  text-align: center;
-  color: $dark;
+  // text-align: center;
+  color: $medium;
 }
 
 .banner:first-child {
 	height: 160px;
-	background-color: $dark;
+	background-color: $medium;
 	background: url(<%= asset_data_uri 'background-picture-foodstella.jpg' %>);
 	background-size: 100% auto;
 	background-position: center center;
+	padding: 0;
 }
 .banner {
 	height: $banner_h;
-	background-color: $light;
-	color: $dark;
+	background-color: white;
+	color: $medium;
+	text-align: center;
+	padding: 0 15px;
 }
 
 .banner > .user > .user_pic {
@@ -25,8 +28,8 @@
 	width: $banner_h;
 	height: $banner_h;
 	border-radius: 99px;
-	border: solid 2px $light;
-	background-color: blue;
+	border: solid 2px white;
+	background-color: $dark;
 }
 
 .search-box {
@@ -58,7 +61,7 @@
 .tabs_right > .button { float: right; }
 .tabs_right > .button > span {
 	font-size: 1.5em;
-	color: $dark;
+	color: $medium;
 }
 
 .tile {
@@ -108,9 +111,14 @@
 			color: rgba(255,255,255,1);
 		}
 
+.row > h3 {
+	text-align: center;
+	font-weight: 200;
+}
 
 .tile-wrapper {
 	 background-color: white;
+	 text-align: center;
 	// display: inline-block;
 }
 .tile_wrapped {
@@ -163,8 +171,9 @@ input:-webkit-autofill {
 }
 
 
-html { height: calc(100% - 0px); }
-body, body > div { height: 100%; }
+// html { height: calc(100% - 0px); }
+// body, body > div { height: 100%; }
+.full-height { height: 100%; }
 
 .backsplash-col {
 	// display: none;
