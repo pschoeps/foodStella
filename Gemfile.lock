@@ -164,6 +164,9 @@ GEM
       fog-core
       nokogiri (~> 1.5, >= 1.5.11)
     formatador (0.2.5)
+    fullcalendar-rails (2.4.0.0)
+      jquery-rails (>= 3.1.1, < 5.0.0)
+      momentjs-rails (>= 2.9.0)
     hike (1.2.3)
     i18n (0.7.0)
     inflecto (0.0.2)
@@ -183,6 +186,8 @@ GEM
       subexec (~> 0.2.1)
     mini_portile2 (2.0.0)
     minitest (4.7.5)
+    momentjs-rails (2.11.0)
+      railties (>= 3.1)
     multi_json (1.11.2)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
@@ -266,9 +271,11 @@ DEPENDENCIES
   coffee-rails (~> 4.0.0)
   devise
   fog (= 1.36.0)
+  fullcalendar-rails
   jbuilder (~> 1.2)
   jquery-rails
   mini_magick (= 3.8.0)
+  momentjs-rails
   pg
   rails (= 4.0.0)
   rails-erd

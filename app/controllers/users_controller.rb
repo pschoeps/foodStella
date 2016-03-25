@@ -6,4 +6,7 @@ class UsersController < ApplicationController
 
 	def show
 	end
+
+	def calendar
+	end
 end
