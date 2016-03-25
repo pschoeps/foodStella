@@ -4,7 +4,7 @@
 		<%= image_tag @recipe.photo_url.url if @recipe.photo_url %>
 	</div>
 	<div>
-		<ul>
+		<ul class="ingredients-list">
 			<% @recipe.ingredients.each do |i| %>
 			    <li><%= i.name %>
 			    <% i.quantities.each do |q| %>
