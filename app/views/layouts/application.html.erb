@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html class="<%= 'full-height' if controller_name == 'sessions' || controller_name == 'registrations' %>">
-<!-- <html class="<%= controller_name %>"> -->
+<html>
 <head>
   <title>FoodStella</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
@@ -20,11 +19,11 @@
 		<%= render "layouts/navbar" %>
 	<% end -%>
 
-<div class="<%= @layout ? 'container' : 'fluid-container'  %>">
+<div class="fluid-container <%= 'full-height' if !@layout %>">
   <%= yield %>
 </div>
 
-<%- if controller_name != 'sessions' && controller_name != 'registrations' %>
+<%- if @layout == true %>
    <%= render "layouts/footer" %>
 <% end -%>
 

@@ -12,6 +12,13 @@ class RegistrationsController < Devise::RegistrationsController
   def edit
 
    end
+
+   private
+   def determine_layout
+     #set a lyout variable for determining weather or not to set a layout in the application.html file.  If this variable is set to 
+     #false (in individual controller instances), then the navbar and footer will not be displayed.
+     @layout = false
+   end
    
   
      protected
