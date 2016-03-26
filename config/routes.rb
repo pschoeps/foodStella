@@ -1,7 +1,9 @@
 FoodStella::Application.routes.draw do
   devise_for :users, controllers: { sessions: "sessions", registrations: "registrations" }
   get "static_pages/home"
+
   root "static_pages#home"
+
 
   #resources :model defines a number of routes for a model automatically, including create, destroy, edit.  Using member do
   #adds a restul route that I define here as "dashboard"

@@ -17,6 +17,6 @@
 //= require_tree .
 //= require fullcalendar
 //= require scheduler
-
+//= require_tree .
 
 

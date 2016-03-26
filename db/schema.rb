@@ -61,6 +61,11 @@ ActiveRecord::Schema.define(version: 20160324142847) do
 
   add_index "recipes", ["user_id"], name: "index_recipes_on_user_id", using: :btree
 
+  create_table "tests", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
