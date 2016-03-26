@@ -1,6 +1,4 @@
-// Place all the styles related to the users_controller controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+
 
 .container {
   text-align: center;
@@ -152,7 +150,8 @@ body, body > div { height: 100%; }
 .backsplash-col {
 	// display: none;
 	// background: image-url("backgrouund-picture-foodstella.jpg");
-	background: url(<%= asset_data_uri 'background-picture-foodstella.jpg' %>);
+	//background: url(<= asset_data_uri 'background-picture-foodstella.jpg' %>);
+	background-image: asset-url('background-picture-foodstella.jpg');
 	background-size: auto 100%;
 	background-repeat: no-repeat;
 	background-position: center center;

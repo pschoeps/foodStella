@@ -8,13 +8,13 @@
   <%= csrf_meta_tags %>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body class="<%= 'hasFooter' if controller_name != 'sessions' %>">
+<body class="<%= 'hasFooter' if @layout == true %>">
 
-	<%- if controller_name != 'sessions' %>
+	<%- if @layout == true %>
 		<%= render "layouts/navbar" %>
 	<% end -%>
 
-<div class="<%= controller_name == 'sessions' ? 'fluid-container' : 'container' %>">
+<div class="<%= @layout ? 'container' : 'fluid-container'  %>">
   <%= yield %>
 </div>
 
