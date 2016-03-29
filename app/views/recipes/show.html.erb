@@ -6,41 +6,95 @@
 </div>
 
 <div class="row recipe-photos">
-	<div class="col-md-8 selected-col">
-		<%= image_tag "background-picture-foodstella.jpg", id: "selected-photo" %>
-	</div>
-	<div class="col-md-4 others-col">
-		<%= image_tag "background-picture-foodstella.jpg" %>
-		<%= image_tag "background-picture-foodstella.jpg" %>
-		<%= image_tag "background-picture-foodstella.jpg" %>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 selected-col">
+				<div class="row">
+					<div class="col-md-9">
+						<div class="row">
+							<%= image_tag "background-picture-foodstella.jpg", id: "selected-photo" %>
+						</div>
+						<div class="row" id="selected-panel">
+							<div class="menu">
+								<div>Ingredients</div>
+								<div>Preparation time</div>
+								<div>Cooking time</div>
+								<div>Stellas</div>
+							</div>
+							<div class="menu-info">
+								<div><%= @recipe.ingredients.count %></div>
+								<div>20</div>
+								<div>15</div>
+								<div>stars</div>
+							</div>
+						</div>
+						<div class="row share">
+							Share
+						</div>
+					</div>
+					<div class="col-md-3">Food type<br><br>Difficulty<br><br>etc.</div>
+				</div>
+			</div>
+			<div class="col-md-4 others-col">
+				<div>Photos by others</div>
+				<%= image_tag "background-picture-foodstella.jpg" %>
+				<%= image_tag "background-picture-foodstella.jpg" %>
+				<%= image_tag "background-picture-foodstella.jpg" %>
+			</div>
+		</div>
 	</div>
 </div>
 
-<div class="row recipe-info">
-	<div class="col-md-2 ingredients">
-		<h3>INGREDIENTS</h3>
-		<ol>
-			<% @recipe.ingredients.each do |i| %>
-			    <li><%= i.name %>
-			    <% i.quantities.each do |q| %>
-			      <%= q.amount %>, <%= q.unit %>
-			    <% end %>
-			</li>
-			 <% end %>
-		</ol>
-	</div>
-	<div class="col-md-10 directions">
-		<h3>DIRECTIONS</h3>
-		<div><%= @recipe.instructions %></div>
-		<h3>DESCRIPTION</h3>
-		<div><%= @recipe.description %></div>
+<div class="row">
+	<div class="container">
+		<div class="row recipe-info">
+			<div class="col-md-3 ingredients">
+					<h3>INGREDIENTS</h3>
+					<ol>
+						<% @recipe.ingredients.each do |i| %>
+						    <li><%= i.name %>
+						    <% i.quantities.each do |q| %>
+						      <%= q.amount %>, <%= q.unit %>
+						    <% end %>
+						</li>
+						 <% end %>
+					</ol>
+			</div>
+			<div class="col-md-9 directions">
+				<div class="col-inner">
+					<h3>DIRECTIONS</h3>
+					<div><%= @recipe.instructions %>Instructions here</div>
+					<h3>DESCRIPTION</h3>
+					<div><%= @recipe.description %>Description here</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 
 <div class="row recipe-similar">
-	
+	<div class="container">
+		<!-- <div class="col-md-12"> -->
+			<div id='similar-title'>Similar recipes</div>
+		<!-- </div> -->
+	</div>
+	<div class="row">
+		<div class="image-slider">
+			<%= image_tag "background-picture-foodstella.jpg" %>
+			<%= image_tag "background-picture-foodstella.jpg" %>
+			<%= image_tag "background-picture-foodstella.jpg" %>
+			<%= image_tag "background-picture-foodstella.jpg" %>
+			<%= image_tag "background-picture-foodstella.jpg" %>
+		</div>
+	</div>
 </div>
 
-<div class="row recipe-reviews">
-	
+<div class="row">
+	<div class="container recipe-reviews">
+		<div class="row">
+			<div class="col-md-8">
+				<h3>REVIEWS</h3>
+			</div>
+		</div>
+	</div>
 </div>

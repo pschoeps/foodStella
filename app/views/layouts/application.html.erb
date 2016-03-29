@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html class="<%= 'full-height' if !@layout %>">
 <head>
   <title>FoodStella</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
@@ -13,7 +13,7 @@
 
 </head>
 
-<body class="<%= 'hasFooter' if @layout == true %>">
+<body class="<%= 'hasFooter' if @layout == true %> <%='full-height' if !@layout %>">
 
 	<%- if @layout == true %>
 		<%= render "layouts/navbar" %>
