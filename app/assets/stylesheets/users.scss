@@ -170,6 +170,11 @@ input:-webkit-autofill {
 	float: right;
 }
 
+#new_user input[type=checkbox] {
+	//display: none;
+	// for custom checkbox span
+}
+
 
 // html { height: calc(100% - 0px); }
 // body, body > div { height: 100%; }

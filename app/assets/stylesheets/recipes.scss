@@ -50,7 +50,7 @@
 
 
 // SHOW SINGLE RECIPE VIEW
-.fluid-container > .row {
+.fluid-container > .row.cushioned {
 	padding-top: 30px;
 	padding-bottom: 30px;
 }
@@ -66,8 +66,18 @@
 	}
 }
 
+
 .recipe-photos {
 	background-color: white;
+	.side-col {
+		color: $green;
+		 > div {
+			float: left;
+			text-align: center;
+			width: 33%;
+			margin-bottom: 20px;
+		}
+	}
 	.selected-col {
 		img{
 			width: 100%;
@@ -75,7 +85,7 @@
 			float: left;
 		}
 		> .row {
-			border-right: solid 1px $medium;
+			// border-right: solid 0px $medium;
 		}
 		#selected-panel {
 			border: solid 2px $orange;
@@ -83,26 +93,87 @@
 			.menu {
 				background-color: $orange;
 				color: white;
+				// padding: 3px 0;
+				height: 30px;
+				line-height: 30px;
 			}
 			.menu-info {
 				font-size: 2.5em;
 				font-weight: 100;
+				padding: 14px 0;
+				line-height: 14px;
+				height: 60px;
+				span {
+					font-size: 12px;
+					font-weight: normal;
+				}
 			}
 			>div>div {
-				width: 22%;
-				display: inline-block;
+				width: 25%;
+				float: left;
 			}
 		}
 		.share {
 			text-align: right;
 		}
+		h4 {
+			color: $green;
+			font-weight: 200;
+		}
 	}
-	.others-col > div {
+	.others-col {
+		border-left: solid 0px $medium;
+		> div {
 		margin-bottom: 8px;
+		}
+		.upload {
+			text-align: right;
+		}
+		.slider-container {
+			overflow: hidden;
+			position: relative;
+			padding-right: 20px;
+			.slider-controls {
+				position: absolute;
+				right: 0;
+				width: 20px;
+				height: 100%;
+				color: $medium;
+				font-size: 1.5em;
+				.up {
+					position: absolute;
+					top: 4px;
+				}
+				.down {
+					position: absolute;
+					bottom: 4px;
+				}
+			}
+		}
+		.slider-vertical {
+			height: 0;
+			padding-bottom: 100%;
+			// background-color: red;
+		}
+		.others-photo {
+			float: left;
+			width: calc(33.333333% - 8px);
+			padding-bottom: calc(33.333333% - 8px);
+			margin: 4px;
+		}
+		.others-photo.blank {
+			background-color: #EEE;
+		}
 	}
-	.others-col > img {
-		width: 100px;
-		height: 100px;
+}
+@media (min-width: 992px) {
+	.recipe-photos .side-col > div {
+		// clear: left;
+		text-align: left;
+		width: 100%;
+	}
+	.recipe-photos .others-col {
+		border-left: solid 1px $medium;
 	}
 }
 
@@ -135,7 +206,7 @@
 	#similar-title {
 		font-size: 16px;
 	}
-	.image-slider {
+	.slider-horizontal {
 		width: 500%;
 		img {
 			width: 250px;
@@ -146,9 +217,31 @@
 }
 
 .recipe-reviews {
-	text-align: center;
+	// text-align: center;
+	background-color: white;
 	h3 {
 		color: $green;
 		font-weight: 200;
+	}
+	.row {
+		margin: 0 20px;
+		padding: 20px 0;
+		border-bottom: solid 1px $medium;
+		.user {
+			width: 100px;
+			text-align: center;
+			float: left;
+			.profile-pic {
+				border-radius: 99px;
+				width: 70px;
+				height: 70px;
+				margin: 0 auto;
+				background-color: $dark;
+			}
+		}
+		.review {
+			float: left;
+			width: calc(100% - 100px);
+		}
 	}
 }
