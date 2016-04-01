@@ -30,14 +30,18 @@
 	background-color: $dark;
 }
 
-.search-box {
-	display: none;
-	// text-align: left;
-	// float: right;
-	font-size: 12px;
-	position: absolute;
-	bottom: 10px;
-	right: 0;
+.wrapper-header {
+	// background-color: $light;
+	position: relative;
+	.search-box {
+		display: none;
+		// text-align: left;
+		// float: right;
+		font-size: 12px;
+		position: absolute;
+		bottom: 10px;
+		right: 0;
+	}
 }
 
 .button {
@@ -53,7 +57,7 @@
 /* Reveal buttons on medium devices (desktops, 992px and up) */
 @media (min-width: 992px) {
 	.button { display: inline-block; }
-	.search-box { display: inline-block; }
+	.wrapper-header .search-box { display: inline-block; }
 }
 .tabs_left > .button { float: left; }
 .tabs_right > .button { float: right; }
@@ -117,6 +121,7 @@
 .wrapper {
 	 background-color: white;
 	 text-align: center;
+	 padding: 15px;
 	// display: inline-block;
 }
 .tile_wrapped {
@@ -127,9 +132,6 @@
 	// float: left;
 }
 
-.wrapper .wrapper-header {
-	background-color: $light;
-}
 
 
 

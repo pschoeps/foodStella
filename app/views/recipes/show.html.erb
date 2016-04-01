@@ -21,8 +21,8 @@
 					</div>
 					<div class="menu-info">
 						<div><%= @recipe.ingredients.count %></div>
-						<div>20<br><span>Minutes</span></div>
-						<div>15<br><span>Minutes</span></div>
+						<div><%= @recipe.prep_time %><br><span>Minutes</span></div>
+						<div><%= @recipe.cook_time %><br><span>Minutes</span></div>
 						<div>stars<br><span>Review</span></div>
 					</div>
 				</div>
@@ -33,11 +33,11 @@
 			<div class="col-md-2 col-sm-12 side-col">
 				<div>
 					<h4>Food type</h4>	
-					Yummy
+					<%= @recipe.meal_type %>
 				</div>
 				<div>
 					<h4>Difficulty</h4>
-					Easy
+					<%= @recipe.difficulty %>
 				</div>
 				<div>
 					<h4>Cookware</h4>
@@ -91,10 +91,10 @@
 			</div>
 			<div class="col-md-9 directions">
 				<div class="col-inner">
-					<h3>DIRECTIONS</h3>
-					<div><%= @recipe.instructions %>Instructions here</div>
+					<h3>INSTRUCTIONS</h3>
+					<div><%= @recipe.instructions %></div>
 					<h3>DESCRIPTION</h3>
-					<div><%= @recipe.description %>Description here</div>
+					<div><%= @recipe.description %></div>
 				</div>
 			</div>
 		</div>

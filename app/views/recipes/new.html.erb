@@ -1,12 +1,12 @@
 <div class="row">
-	<div class="col-md-8 col-center">
+	<div class="col-sm-8 col-center new_recipe-col">
     <%= form_for @recipe, html: {class: "form-horizontal", multipart: true } do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
       <!-- <= devise_error_messages! %> -->
       <fieldset id="recipe-meta">
         <ol style="list-style-type:none">
           <li class="control-group">
-            <%= f.label :name, "Recipe Name", class: "control-label" %>
+            <%= f.label :name, "Meal Name", class: "control-label" %>
             <div class="controls"><%= f.text_field :name %></div>
           </li>
 
@@ -21,13 +21,33 @@
           </li>
 
           <li class="control-group">
-            <%= f.label :category, "Category", class: "control-label" %>
-            <div class="controls"><%= f.select(:category, options_for_select([['Mediterranean', 1], ['Chinese', 2], ["Mexican", 3]])) %></div>
+            <%= f.label :instructions, "Instructions", class: "control-label" %>
+            <div class="controls"><%= f.text_area :instructions %></div>
           </li>
 
           <li class="control-group">
-            <%= f.label :instructions, "Instructions", class: "control-label" %>
-            <div class="controls"><%= f.text_area :instructions %></div>
+            <%= f.label :prep_time, "Prep Time", class: "control-label" %>
+            <div class="controls"><%= f.text_field :prep_time %></div>
+          </li>
+
+          <li class="control-group">
+            <%= f.label :cook_time, "Cook Time", class: "control-label" %>
+            <div class="controls"><%= f.text_field :cook_time %></div>
+          </li>
+
+          <li class="control-group">
+            <%= f.label :meal_type, "Meal Type", class: "control-label" %>
+            <div class="controls"><%= f.select(:meal_type, options_for_select([['Snack', 1], ['Side dish', 2], ["Main dish", 3], ['Dessert', 4], ['Drink', 5]])) %></div>
+          </li>
+
+          <li class="control-group">
+            <%= f.label :difficulty, "Difficulty", class: "control-label" %>
+            <div class="controls"><%= f.select(:difficulty, options_for_select([['Easy', 1], ['Moderate', 2], ["Difficult", 3]])) %></div>
+          </li>
+
+          <li class="control-group">
+            <%= f.label :category, "Category", class: "control-label" %>
+            <div class="controls"><%= f.select(:category, options_for_select([['Mediterranean', 1], ['Chinese', 2], ["Mexican", 3]])) %></div>
           </li>
         </ol>
       </fieldset>
@@ -42,6 +62,8 @@
       </fieldset>
 
       <%= f.submit %>
+      <div class="clear"></div>
+
     <% end %>
   </div>
 </div>

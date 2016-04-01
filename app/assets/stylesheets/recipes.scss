@@ -3,11 +3,11 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 // CREATE NEW RECIPE VIEW
-
 #new_recipe {
 	display: block;
 	padding: 20px;
 	text-align: left;
+	background-color: white;
 }
 #new_recipe li { margin-top: 14px; }
 #new_recipe a { color: $green; }
@@ -22,10 +22,10 @@
 #new_recipe input,
 #new_recipe textarea { 
 	border-radius: 0;
-	background-color: $light;
+	background-color: white;
 	border: none;
 	// text-align: center;
-	border-bottom: solid 1px $brown;
+	border-bottom: solid 1px $orange;
 	color: black;
 	display: inline-block;
 	// width: 100%;
@@ -40,11 +40,14 @@
 	float: right;
 }
 
-#recipe-ingredients li { background-color: $light; }
+#recipe-ingredients li {
+	background-color: $light;
+	padding: 2px;
+}
 .add_fields {
 	display: block;
 	text-align: center;
-	background-color: $light;
+	border-top: solid 1px $green;
 	margin: 14px 0 14px 40px;
 }
 
@@ -219,16 +222,17 @@
 .recipe-reviews {
 	// text-align: center;
 	background-color: white;
+	padding-bottom: 70px;
 	h3 {
 		color: $green;
 		font-weight: 200;
 	}
 	.row {
-		margin: 0 20px;
+		margin: 0 20px 0 10px;
 		padding: 20px 0;
 		border-bottom: solid 1px $medium;
 		.user {
-			width: 100px;
+			width: 140px;
 			text-align: center;
 			float: left;
 			.profile-pic {
@@ -241,7 +245,7 @@
 		}
 		.review {
 			float: left;
-			width: calc(100% - 100px);
+			width: calc(100% - 140px);
 		}
 	}
 }
