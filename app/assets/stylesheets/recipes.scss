@@ -189,7 +189,7 @@
 	.ingredients ol {
 		text-align: left;
 	}
-	.directions, .ingredients {
+	.instructions, .ingredients {
 		// border: none;
 		// border-top: solid 15px $light;
 		border: solid 7px $light;
@@ -198,7 +198,7 @@
 	}
 }
 @media (min-width: 768px) {
-	.recipe-info .directions {
+	.recipe-info .instructions {
 		// border: none;
 		// border-left: solid 15px $light;
 	}
@@ -248,4 +248,43 @@
 			width: calc(100% - 140px);
 		}
 	}
+}
+
+.instructions {
+	ol {
+		margin-top: 30px;
+	    counter-reset:li; /* Initiate a counter */
+	    margin-left:0; /* Remove the default left margin */
+	    padding-left:0; /* Remove the default left padding */
+	}
+	ol > li {
+		min-height: 40px;
+	    position:relative; /* Create a positioning context */
+	    margin:0 0 6px 3em; /* Give each list item a left margin to make room for the numbers */
+	    padding: 4px 8px 16px; /* Add some spacing around the content */
+	    list-style:none; /* Disable the normal item numbering */
+	}
+	ol > li:before {
+	    content:counter(li) "."; /* Use the counter as content */
+	    counter-increment:li; /* Increment the counter by 1 */
+	    /* Position and style the number */
+	    position:absolute;
+	    top:-2px;
+	    left:-2em;
+	    // -moz-box-sizing:border-box;
+	    // -webkit-box-sizing:border-box;
+	    // box-sizing:border-box;
+	    width: 2em;
+	    /* Some space between the number and the content in browsers that support
+	       generated content but not positioning it (Camino 2 is one example) */
+	    margin-right:8px;
+	    // padding:4px;
+	    color: $green;
+	    font-weight: 100;
+	    font-size: 2em;
+	    text-align:center;
+	}
+	li ol,
+	li ul {margin-top:6px;}
+	ol ol li:last-child {margin-bottom:0;}
 }

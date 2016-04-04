@@ -1,7 +1,6 @@
 <div class="row recipe-title cushioned">
 	<!-- <div class="col-md-4"> -->
 		<h1><%= @recipe.name.upcase %></h1>
-		<%= image_tag @recipe.photo_url.url if @recipe.photo_url %>
 	<!-- </div> -->
 </div>
 
@@ -10,7 +9,7 @@
 		<div class="row">
 			<div class="col-md-6 col-sm-12 selected-col">
 				<div class="row">
-					<%= image_tag "background-picture-foodstella.jpg", id: "selected-photo" %>
+					<%= image_tag @recipe.photo_url, id: "selected-photo" %>
 				</div>
 				<div class="row" id="selected-panel">
 					<div class="menu">
@@ -89,10 +88,16 @@
 						 <% end %>
 					</ol>
 			</div>
-			<div class="col-md-9 directions">
+			<div class="col-md-9 instructions">
 				<div class="col-inner">
 					<h3>INSTRUCTIONS</h3>
-					<div><%= @recipe.instructions %></div>
+					<div>
+						<ol>
+							<% @recipe.instructions.order(:order).each do |i| %>
+							    <li><%= i.description %></li>
+							 <% end %>
+						</ol>
+					</div>
 					<h3>DESCRIPTION</h3>
 					<div><%= @recipe.description %></div>
 				</div>

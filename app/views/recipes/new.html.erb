@@ -20,9 +20,16 @@
             <div class="controls"><%= f.text_area :description %></div>
           </li>
 
-          <li class="control-group">
-            <%= f.label :instructions, "Instructions", class: "control-label" %>
-            <div class="controls"><%= f.text_area :instructions %></div>
+          <li>
+            <label class="control-label" for="recipe_instructions">Instructions</label>
+            <fieldset id="recipe-instructions">
+              <ol>
+                <%= f.fields_for :instructions do |instruction| %>
+                  <%= render 'instruction_fields', f: instruction %>
+                <% end %>
+              </ol>
+              <%= link_to_add_association 'add step', f, :instructions, 'data-association-insertion-node' => "#recipe-instructions ol", 'data-association-insertion-method' => "append" %>
+            </fieldset>
           </li>
 
           <li class="control-group">
