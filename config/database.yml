@@ -19,7 +19,7 @@ development:
   encoding: unicode
   database: foodStella_development
   pool: 5
-  username: salsaia #foodStella
+  username: foodStella
   password:
 
   # Connect on a TCP socket. Omitted by default since the client uses a
