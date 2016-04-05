@@ -38,8 +38,8 @@ gem 'mini_magick',             '3.8.0'
 gem 'fog',                     '1.36.0'
 
 #moment js and full calendar
-gem 'fullcalendar-rails'
 gem 'momentjs-rails'
+gem 'fullcalendar-rails'
 
 
 group :doc do

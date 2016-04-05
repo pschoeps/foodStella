@@ -1,0 +1,314 @@
+<<<<<<< HEAD:app/assets/stylesheets/users.scss.erb
+=======
+
+
+>>>>>>> 531f494432c7389b727ef16ffad8dc92596ab5cd:app/assets/stylesheets/users.scss
+.container {
+  // text-align: center;
+  color: $medium;
+}
+
+.banner:first-child {
+	height: 160px;
+<<<<<<< HEAD:app/assets/stylesheets/users.scss.erb
+	background-color: $medium;
+	//background: asset-url('background-picture-foodstella.jpg');
+=======
+	// background-color: $medium;
+	background: asset-url('background-picture-foodstella.jpg');
+>>>>>>> 531f494432c7389b727ef16ffad8dc92596ab5cd:app/assets/stylesheets/users.scss
+	background-size: 100% auto;
+	background-position: center center;
+	padding: 0;
+}
+.banner {
+	height: $banner_h;
+	background-color: white;
+	color: $medium;
+	text-align: center;
+	padding: 0 15px;
+}
+
+.banner > .user > .user_pic {
+	margin: -$banner_h/2 auto 0;
+	width: $banner_h;
+	height: $banner_h;
+	border-radius: 99px;
+	border: solid 2px white;
+	background-color: $dark;
+}
+
+.wrapper-header {
+	// background-color: $light;
+	position: relative;
+	.search-box {
+		display: none;
+		// text-align: left;
+		// float: right;
+		font-size: 12px;
+		position: absolute;
+		bottom: 10px;
+		right: 0;
+	}
+}
+
+.button {
+	cursor: pointer;
+	display: none;
+	color: $brown;
+	width: auto;
+	margin: 40px 10px 0;
+	padding: 2px;
+}
+.button.selected { border-bottom: solid 1px $orange; }
+.button:hover { color: $orange; }
+/* Reveal buttons on medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+	.button { display: inline-block; }
+	.wrapper-header .search-box { display: inline-block; }
+}
+.tabs_left > .button { float: left; }
+.tabs_right > .button { float: right; }
+.tabs_right > .button > span {
+	font-size: 1.5em;
+	color: $medium;
+}
+
+.tile {
+	margin: 8px auto;
+	// background-color: #CEA;
+	max-width: 250px;
+	background: asset-url('background-picture-foodstella.jpg');
+	background-size: auto 100%;
+	background-position: center center;
+}
+	.tile > .overlay {
+		// cursor: pointer;
+		width: 100%;
+		height: 30px;
+		margin-top: calc(100% - 30px);
+		display: inline-block;
+		padding: 0.25em;
+		background-color: rgba(0,0,0,0.3);
+		font-size: 1em;
+		color: rgba(255,255,255,0.5);
+		// text-align: center;
+	}
+	.tile:hover > .overlay {
+		// color: rgba(255,255,255,1);
+		background-color: rgba(0,0,0,0.5);
+	}
+		.tile > .overlay a {
+			color: rgba(255,255,255,1);
+			text-decoration: none;
+		}
+		.tile > .overlay a:hover { text-decoration: underline; }
+		.tile > .overlay > .title {
+			width: calc(100% - 60px);
+			margin-left: 30px;
+			overflow: hidden;
+			white-space: nowrap;
+			float: left;
+		}
+		.tile > .overlay > .star {
+			width: 30px;
+			font-size: 1.3em;
+			color: rgba(255,255,255,0.5);
+			cursor: pointer;
+			// float: left;
+		}
+		.tile > .overlay > .star:hover {
+			color: rgba(255,255,255,1);
+		}
+
+.row > h3 {
+	text-align: center;
+	font-weight: 200;
+}
+
+.wrapper {
+	 background-color: white;
+	 text-align: center;
+<<<<<<< HEAD:app/assets/stylesheets/users.scss.erb
+=======
+	 padding: 15px;
+>>>>>>> 531f494432c7389b727ef16ffad8dc92596ab5cd:app/assets/stylesheets/users.scss
+	// display: inline-block;
+}
+.tile_wrapped {
+	width: 200px;
+	height: 200px;
+	display: inline-block;
+	padding: 2px 0;
+	// float: left;
+}
+
+
+
+
+
+#new_user {
+	display: block;
+	padding: 20px;
+	text-align: center;
+}
+#new_user input:focus { outline: none; }
+#new_user {
+	::-webkit-input-placeholder { color: white; }
+	:-moz-placeholder { color: white; }
+	::-moz-placeholder { color: white; }
+	:-ms-input-placeholder { color: white; }
+}
+#new_user input { border-radius: 0; }
+#new_user input[type=email],
+#new_user input[type=password] {
+	background-color: transparent;
+	border: none;
+	text-align: center;
+	border-bottom: solid 1px white;
+	width: 100%;
+}
+
+input:-webkit-autofill {
+    // -webkit-box-shadow: 0 0 0px 1000px $green inset;
+    // color: white;	// doesnt work
+}
+
+#new_user input[type=submit] {
+	border: none;
+	background-color: white;
+	font-weight: bold;
+	color: $green;
+	width: 100px;
+	float: right;
+}
+
+#new_user input[type=checkbox] {
+	//display: none;
+	// for custom checkbox span
+}
+
+
+// html { height: calc(100% - 0px); }
+// body, body > div { height: 100%; }
+// .full-height { height: 100%; }
+
+.backsplash-col {
+	// display: none;
+	// background: image-url("backgrouund-picture-foodstella.jpg");
+	//background: asset-url('backgrouund-picture-foodstella.jpg');
+	background-image: asset-url('background-picture-foodstella.jpg');
+	background-size: auto 100%;
+	background-repeat: no-repeat;
+	background-position: center center;
+	height: 100%;
+	width: 100%;
+	padding: 0;
+	float: none;
+}
+
+// approaximate ratio accounting for signin-col offset
+@media (min-aspect-ratio: 100/51) {
+	.backsplash-col {
+		background-size: 100% auto;
+	}
+}
+
+// img res: 2912:1935 for when signin-col is hidden
+@media (min-aspect-ratio: 2912/1935) and (max-width: 992px) {
+	.backsplash-col {
+		background-size: 100% auto;
+	}
+}
+
+	.backsplash-col > div {
+		width: 100%;
+		height: 100%;
+		text-align: center;
+		position: relative;
+		background-color: rgba(255,255,255,0.85);
+	}
+
+		.backsplash-col > div > #imgs {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			-ms-transform: translate(-50%, -50%);
+			-webkit-transform: translate(-50%, -50%);
+			transform: translate(-50%, -50%);
+			width: 100%;
+			padding: 50px;
+		}
+		.backsplash-col #logo {
+			width: 50%;
+			max-width: 400px;
+			min-width: 200px;
+			margin-bottom: 8%;
+		}
+		.backsplash-col #banner {
+			width: 100%;
+			max-width: 800px;
+			// margin-top: 50px;
+		}
+
+.signin-col {
+	background-color: $green;
+	height: 100%;
+	position: relative;
+	text-align: center;
+	// width: 300px;
+	width: 100%;
+	float: none;
+}
+
+.signin-col h2 { color: white; }
+
+.signin-col > div {
+	// width: calc(100% - 30px);
+	width: 100%;
+	max-width: 300px;
+	color: white;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	-ms-transform: translate(-50%, -50%);
+	-webkit-transform: translate(-50%, -50%);
+	transform: translate(-50%, -50%);
+}
+
+.signin-col a { color: white; }
+.remember, .forgot {
+	display: inline-block;
+	font-size: 12px;
+	float: right;
+	margin: 10px 0;
+}
+.remember { float: left; }
+.clear { clear: both; }
+
+.or {
+	display: inline-block;
+	width: 30px;
+}
+.or.wing {
+	height: 4px;
+	border-top: solid 1px white;
+}
+#facebook {
+	border: solid 2px blue;
+	width: 100px;
+	display: inline-block;
+}
+
+/* Reveal backsplash on medium devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+	.backsplash-col {
+		// display: inline-block;
+		width: calc(100% - 300px);
+		float: left;
+	}
+	.backsplash-col ~ .signin-col {
+		width: 300px;
+		float: left;
+	}
+}

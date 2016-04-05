@@ -1,0 +1,154 @@
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+$banner_h: 100px;
+$light: #F9F7ED;
+$medium: #ABABAB;
+$dark: #4D4D4D; 
+$brown: #BC9C63;
+$orange: #F5B226;
+$green: #819800;
+
+/* overflow footer color */
+// html.hasFooter { background-color: $dark; }
+// body.hasFooter {
+//   padding-bottom: 100px;
+//   margin-bottom: 100px;
+// }
+html { background-color: $dark; }
+.footer {
+  margin-top: 100px;
+  background-color: $dark;
+  text-align: center;
+  color: white;
+  a {
+    color: white;
+    text-decoration: none;
+  }
+  .row {
+    height: 60px;
+    span {
+      margin: 0 5px;
+      line-height: 60px;
+    }
+  }
+}
+body { background-color: $light; }
+@media (min-width: 768px) {
+  .footer .row span { margin: 0 14px; }
+}
+.full-height {
+  // height: 100vh;   // vh doesn't work properly on iOS
+  height: 100%;
+}
+
+// margin bug, is this needed?
+.fluid-container .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* typography */
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1;
+}
+
+h1 {
+  font-size: 3em;
+  letter-spacing: .25px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 1.2em;
+  letter-spacing: 0px;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: normal;
+  color: #777;
+}
+
+p {
+  font-size: 1.1em;
+  line-height: 1.7em;
+}
+
+.col-center {
+  float: none;
+  margin: 0 auto;
+}
+
+
+// NAVBAR
+.navbar {
+  background-color: white;
+  border: none;
+  margin-bottom: 0;
+  padding-bottom: 10px;
+  .navbar-collapse {
+    border: none;
+  }
+}
+.navbar-toggle { border: none; border-radius: 0; }
+.navbar-toggle .icon-bar {
+  background-color: $green !important;
+  height: 4px;
+  width: 28px;
+}
+.navbar-toggle .icon-bar + .icon-bar { margin-top: 2px; }
+
+#navbar-search {
+  border-width: 0;
+  border-bottom-width: 2px;
+}
+.navbar-header { text-align: center; }
+.navbar-toggle {
+  position: absolute;
+  left: 0;
+}
+@media (min-width: 768px) {
+  .navbar-header { text-align: left; }
+  .navbar-toggle { position: relative; }
+  .navbar-nav > li > a {
+      padding-top: 25px;
+      padding-bottom: 5px;
+  }
+}
+
+
+// #navbar-search { margin: 36px 10px 0; }
+
+.logo {
+  height: 42px;
+  margin: 5px;
+}
+
+.clear {
+  clear: both;
+}
+
+
+// iOS vh bug
+// .full-height {
+//   height: 100vh;
+// }
+//  //iPad with portrait orientation.
+// @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:portrait){
+//   .full-height {
+//     height: 1024px;
+//   }
+// } 
+//  //iPad with landscape orientation.
+// @media all and (device-width: 768px) and (device-height: 1024px) and (orientation:landscape){
+//   .full-height {
+//     height: 768px;
+//   }
+// }
+//  //iPhone 5
+// @media screen and (device-aspect-ratio: 40/71) {
+//   .full-height {
+//     height: 500px;
+//   }
+// }

@@ -1,9 +1,13 @@
+// Place all the styles related to the Recipes controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
 
-
+// CREATE NEW RECIPE VIEW
 #new_recipe {
 	display: block;
 	padding: 20px;
 	text-align: left;
+	background-color: white;
 }
 #new_recipe li { margin-top: 14px; }
 #new_recipe a { color: $green; }
@@ -18,10 +22,10 @@
 #new_recipe input,
 #new_recipe textarea { 
 	border-radius: 0;
-	background-color: $light;
+	background-color: white;
 	border: none;
 	// text-align: center;
-	border-bottom: solid 1px $brown;
+	border-bottom: solid 1px $orange;
 	color: black;
 	display: inline-block;
 	// width: 100%;
@@ -36,45 +40,148 @@
 	float: right;
 }
 
-#recipe-ingredients li { background-color: $light; }
+#recipe-ingredients li {
+	background-color: $light;
+	padding: 2px;
+}
 .add_fields {
 	display: block;
 	text-align: center;
-	background-color: $light;
+	border-top: solid 1px $green;
 	margin: 14px 0 14px 40px;
 }
 
 
 // SHOW SINGLE RECIPE VIEW
-
-// .body { background-color: $light; }
-// .container { text-align: left; }
+.fluid-container > .row.cushioned {
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
 
 .recipe-title {
 	background-color: $green;
 	color: white;
+	// padding: 20px 30px 10px;
 	h1 {
 		font-weight: 100;
+		font-size: 2.5em;
+		margin: 0;
 	}
 }
 
+
 .recipe-photos {
 	background-color: white;
+	.side-col {
+		color: $green;
+		 > div {
+			float: left;
+			text-align: center;
+			width: 33%;
+			margin-bottom: 20px;
+		}
+	}
 	.selected-col {
-		height: 400px;
 		img{
-			width: 50%;
+			width: 100%;
 			height: 80%;
 			float: left;
 		}
+		> .row {
+			// border-right: solid 0px $medium;
+		}
+		#selected-panel {
+			border: solid 2px $orange;
+			text-align: center;
+			.menu {
+				background-color: $orange;
+				color: white;
+				// padding: 3px 0;
+				height: 30px;
+				line-height: 30px;
+			}
+			.menu-info {
+				font-size: 2.5em;
+				font-weight: 100;
+				padding: 14px 0;
+				line-height: 14px;
+				height: 60px;
+				span {
+					font-size: 12px;
+					font-weight: normal;
+				}
+			}
+			>div>div {
+				width: 25%;
+				float: left;
+			}
+		}
+		.share {
+			text-align: right;
+		}
+		h4 {
+			color: $green;
+			font-weight: 200;
+		}
 	}
-	.others-col > img {
-		width: 100px;
-		height: 100px;
+	.others-col {
+		border-left: solid 0px $medium;
+		> div {
+		margin-bottom: 8px;
+		}
+		.upload {
+			text-align: right;
+		}
+		.slider-container {
+			overflow: hidden;
+			position: relative;
+			padding-right: 20px;
+			.slider-controls {
+				position: absolute;
+				right: 0;
+				width: 20px;
+				height: 100%;
+				color: $medium;
+				font-size: 1.5em;
+				.up {
+					position: absolute;
+					top: 4px;
+				}
+				.down {
+					position: absolute;
+					bottom: 4px;
+				}
+			}
+		}
+		.slider-vertical {
+			height: 0;
+			padding-bottom: 100%;
+			// background-color: red;
+		}
+		.others-photo {
+			float: left;
+			width: calc(33.333333% - 8px);
+			padding-bottom: calc(33.333333% - 8px);
+			margin: 4px;
+		}
+		.others-photo.blank {
+			background-color: #EEE;
+		}
+	}
+}
+@media (min-width: 992px) {
+	.recipe-photos .side-col > div {
+		// clear: left;
+		text-align: left;
+		width: 100%;
+	}
+	.recipe-photos .others-col {
+		border-left: solid 1px $medium;
 	}
 }
 
 .recipe-info{
+	// background-color: white;
 	h3 {
 		color: $green;
 		font-weight: 200;
@@ -82,4 +189,102 @@
 	.ingredients ol {
 		text-align: left;
 	}
+	.instructions, .ingredients {
+		// border: none;
+		// border-top: solid 15px $light;
+		border: solid 7px $light;
+		background-color: white;
+		padding-bottom: 20px;
+	}
+}
+@media (min-width: 768px) {
+	.recipe-info .instructions {
+		// border: none;
+		// border-left: solid 15px $light;
+	}
+}
+
+.recipe-similar {
+	overflow: hidden;
+	#similar-title {
+		font-size: 16px;
+	}
+	.slider-horizontal {
+		width: 500%;
+		img {
+			width: 250px;
+			float: left;
+			padding-left: 10px;
+		}
+	}
+}
+
+.recipe-reviews {
+	// text-align: center;
+	background-color: white;
+	padding-bottom: 70px;
+	h3 {
+		color: $green;
+		font-weight: 200;
+	}
+	.row {
+		margin: 0 20px 0 10px;
+		padding: 20px 0;
+		border-bottom: solid 1px $medium;
+		.user {
+			width: 140px;
+			text-align: center;
+			float: left;
+			.profile-pic {
+				border-radius: 99px;
+				width: 70px;
+				height: 70px;
+				margin: 0 auto;
+				background-color: $dark;
+			}
+		}
+		.review {
+			float: left;
+			width: calc(100% - 140px);
+		}
+	}
+}
+
+.instructions {
+	ol {
+		margin-top: 30px;
+	    counter-reset:li; /* Initiate a counter */
+	    margin-left:0; /* Remove the default left margin */
+	    padding-left:0; /* Remove the default left padding */
+	}
+	ol > li {
+		min-height: 40px;
+	    position:relative; /* Create a positioning context */
+	    margin:0 0 6px 3em; /* Give each list item a left margin to make room for the numbers */
+	    padding: 4px 8px 16px; /* Add some spacing around the content */
+	    list-style:none; /* Disable the normal item numbering */
+	}
+	ol > li:before {
+	    content:counter(li) "."; /* Use the counter as content */
+	    counter-increment:li; /* Increment the counter by 1 */
+	    /* Position and style the number */
+	    position:absolute;
+	    top:-2px;
+	    left:-2em;
+	    // -moz-box-sizing:border-box;
+	    // -webkit-box-sizing:border-box;
+	    // box-sizing:border-box;
+	    width: 2em;
+	    /* Some space between the number and the content in browsers that support
+	       generated content but not positioning it (Camino 2 is one example) */
+	    margin-right:8px;
+	    // padding:4px;
+	    color: $green;
+	    font-weight: 100;
+	    font-size: 2em;
+	    text-align:center;
+	}
+	li ol,
+	li ul {margin-top:6px;}
+	ol ol li:last-child {margin-bottom:0;}
 }

@@ -42,4 +42,6 @@ class SessionsController < Devise::SessionsController
     def after_update_path_for(resource)
       dashboard_user_path(current_user)
     end
+
 end
+

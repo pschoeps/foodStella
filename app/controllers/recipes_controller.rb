@@ -4,6 +4,7 @@ class RecipesController < ApplicationController
     @recipe = current_user.recipes.build
     @recipe.quantities.build
     @recipe.quantities.last.build_ingredient
+    @recipe.instructions.build
   end
 
   def create
@@ -25,14 +26,17 @@ class RecipesController < ApplicationController
   end
 
   def recipe_params
-    params.require(:recipe).permit(:name, :photo_url, :category,
-      :quantities_attributes => [
-      :id,
-      :amount,
-      :_destroy,
-      :ingredient_attributes => [
-        #:id commented bc we pick 'id' for existing ingredients manually and for new we create it
-        :name
-  ]])
+  	params.require(:recipe).permit(:name, :photo_url, :category, :prep_time, :cook_time, :difficulty, :meal_type, :description,
+  	  :quantities_attributes => [
+        :id,
+        :amount,
+        :_destroy,
+        :ingredient_attributes => [
+          #:id commented bc we pick 'id' for existing ingredients manually and for new we create it
+          :name
+        ]
+      ],
+      :instructions_attributes => [:id, :description, :order, :_destroy]
+    )
   end
 end
