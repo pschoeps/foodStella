@@ -17,25 +17,7 @@
  	 }
  }
 
- .calendar-header {
- 	background-color: white;
- 	height: 2em;
- 	border-bottom: 2px solid #819800;
 
- 	h1 {
- 		width: 20%;
-    	height: 1em;
-    	margin: 0;
-    	padding: 0;
-    	text-align: center;
-    	color: lightgrey;
-    	padding-bottom: 3px;
-    	font-size: 16px;
-    	display: inline-block;
-    	float: left;
-
- 	}
- }
 
 
 
@@ -43,7 +25,7 @@
 #external-events {
   margin: auto;
 
-  width: 150px;
+  width: 100%;
   padding: 0 10px;
   border: 1px solid #ccc;
   text-align: left;
@@ -55,10 +37,7 @@
   padding-top: 1em;
 }
 
-#external-events .fc-event {
-  margin: 10px 0;
-  cursor: pointer;
-}
+
 
 #external-events p {
   margin: 1.5em 0;
@@ -93,6 +72,16 @@
 
 body .fc { /* extra precedence to overcome jqui */
 	font-size: 1em;
+}
+
+#in-list {
+	height: 100px;
+    width: 100px;
+    display: inline-block;
+    margin: 10px;
+    cursor: pointer;
+    background-size: 100% 100%;
+    background-color: white;
 }
 
 .fc-event {

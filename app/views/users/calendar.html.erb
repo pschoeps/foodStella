@@ -1,48 +1,184 @@
 <!-- rendering dynamic css tags for images in a recipe  -->
 <%= render 'recipe_css_variables' %>
+<div class="disable-margins">
 
-<div class= "row calendar-page">
-  <div class="col-md-4">
-
-            <div id='external-events'>
-              <div id='external-events-listing'>
-                <h4>Meals</h4>
-                <% @recipes.each do |r| %>
-                  <div class='fc-event <%= r.name %>'><%= r.name %></div>
-                <% end %>
-              </div>
-              <p>
-                <input type='checkbox' id='drop-remove'/>
-                <label for='drop-remove'>remove after drop</label>
-              </p>
-            </div>
+<div class="row">
+  <div class="col-md-12 calendar-page-header">
+    <div class="planner-details">
+      <h3><%= @date_string %></h3>
+      <p>Planner</p>
     </div>
+  </div>
+</div>
+
+
+<div class="row">
+  <div class="col-md-3 sidebar">
+    <div class="header">
+      <h2>My Foods</h2>
+        <%= link_to "", "#", :class => "glyphicon glyphicon-cog" %>
+    </div>
+
+    <div class="meal-selection">
+       <button type="button" id="snacks">
+          Snacks
+          <span class="badge"><%= @recipes.count %></span>
+       </button>
+      <div class="selection" id="snacks-selection">
+          <div id='external-events'>
+            <div id='external-events-listing'>
+              <% @recipes.each do |r| %>
+                <div class='fc-event <%= r.name %>' id="in-list"><%= r.name %></div>
+              <% end %>
+            </div>
+          </div>
+      </div>
+
+      <button type="button" id="sidedish">
+          Side Dishes
+          <span class="badge"><%= @recipes.count %></span>
+       </button>
+      <div class="selection" id="sidedish-selection">
+          <div id='external-events'>
+            <div id='external-events-listing'>
+              <% @recipes.each do |r| %>
+                <div class='fc-event <%= r.name %>' id="in-list"><%= r.name %></div>
+              <% end %>
+            </div>
+          </div>
+      </div>
+
+      <button type="button" id="maindish">
+          Main Dishes
+          <span class="badge"><%= @recipes.count %></span>
+       </button>
+      <div class="selection" id="maindish-selection">
+          <div id='external-events'>
+            <div id='external-events-listing'>
+              <% @recipes.each do |r| %>
+                <div class='fc-event <%= r.name %>' id="in-list"><%= r.name %></div>
+              <% end %>
+            </div>
+          </div>
+      </div>
+
+      <button type="button" id="dessert">
+          Desserts
+          <span class="badge"><%= @recipes.count %></span>
+       </button>
+      <div class="selection" id="dessert-selection">
+          <div id='external-events'>
+            <div id='external-events-listing'>
+              <% @recipes.each do |r| %>
+                <div class='fc-event <%= r.name %>' id="in-list"><%= r.name %></div>
+              <% end %>
+            </div>
+          </div>
+      </div>
+
+      <button type="button" id="drink">
+          Drinks
+          <span class="badge"><%= @recipes.count %></span>
+       </button>
+      <div class="selection" id="drink-selection">
+          <div id='external-events'>
+            <div id='external-events-listing'>
+              <% @recipes.each do |r| %>
+                <div class='fc-event <%= r.name %>' id="in-list"><%= r.name %></div>
+              <% end %>
+            </div>
+          </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="col-md-9 calendar-nav">
+  </div>
+
+  <div class="col-md-9 calendar-container">
 
     <div class="calendar-title"><h1><%= @calendar_title %></h1></div>
-            
-    <div class="col-md-7">    
-      <div class="calendar-header">
-        <h1>Breakfast</h1>
-        <h1>Snack</h1>
-        <h1>Lunch</h1>
-        <h1>Snack</h1>
-        <h1>Dinner</h1>
-      </div>         
-      <div id='calendar'>
-      </div>          
-    </div>
-
-    <div class="col-md-1"></div>
 
 
-            <div style='clear:both'></div>
+      <div class="calendar-box">          
+        <div class="calendar-header">
+          <h1>Breakfast</h1>
+          <h1>Snack</h1>
+          <h1>Lunch</h1>
+          <h1>Snack</h1>
+          <h1>Dinner</h1>
+        </div>         
+        <div id='calendar'></div>   
+      </div>       
+
+
+  </div>
+
 </div>
 
 
 
+
+
+
+
+
+
+
+
+
+</div>
 <script>
 
 $(document).ready(function() {
+
+  $('#snacks').click(function() {
+    if ( $('#snacks-selection').css('display') == 'none' )
+      $('#snacks-selection').css('display','block');
+    else
+      $('#snacks-selection').css('display','none');
+  });
+
+  $('#sidedish').click(function() {
+    if ( $('#sidedish-selection').css('display') == 'none' )
+      $('#sidedish-selection').css('display','block');
+    else
+      $('#sidedish-selection').css('display','none');
+  });
+
+  $('#maindish').click(function() {
+    if ( $('#maindish-selection').css('display') == 'none' )
+      $('#maindish-selection').css('display','block');
+    else
+      $('#maindish-selection').css('display','none');
+  });
+
+  $('#dessert').click(function() {
+    if ( $('#dessert-selection').css('display') == 'none' )
+      $('#dessert-selection').css('display','block');
+    else
+      $('#dessert-selection').css('display','none');
+  });
+
+  $('#drink').click(function() {
+    if ( $('#drink-selection').css('display') == 'none' )
+      $('#drink-selection').css('display','block');
+    else
+      $('#drink-selection').css('display','none');
+  });
+
+  $('button').click(function() {
+    console.log('button clicked');
+    var containerHeight = $('.meal-selection').outerHeight() + 80;
+    var sidebarHeight = $('.sidebar').outerHeight()
+    console.log(containerHeight)
+    console.log(sidebarHeight)
+
+    if (containerHeight > sidebarHeight) {
+      $('.sidebar').css('height', containerHeight + 'px');
+    }
+  })
 
     var calendarWidth = $('#calendar').outerWidth()
     console.log(calendarWidth)
