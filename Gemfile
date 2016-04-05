@@ -27,6 +27,7 @@ gem 'sass-rails', '~> 4.0.0'
 
 #auth
 gem 'devise'
+gem 'omniauth-facebook'
 
 #for nesting forms
 gem 'cocoon'
