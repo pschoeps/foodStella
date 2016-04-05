@@ -8,5 +8,7 @@ class UsersController < ApplicationController
 	end
 
 	def calendar
+		@recipes = current_user.recipes
+		@calendar_title = Time.now.strftime("%B %d, %Y")
 	end
 end

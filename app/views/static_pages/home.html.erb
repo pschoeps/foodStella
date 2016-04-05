@@ -1,8 +1,75 @@
-<div class="center jumbotron">
-  <h1>This will become Food Stella!</h1>
+<!-- <h2>Log in</h2> -->
+<% params['layout'] = 'none' %>
+<div class="backsplash-col">
+  <div>
+    <div id="imgs">
+      <%= image_tag "logo-foodstella.png", id: "logo" %>
+      <br /><br />
+      <%= image_tag "banner-foodstella.png", id: "banner" %>
+    </div>
+  </div>
+</div>
 
-  <h2>
-    This url will servie as the staging ground for the application.  You can check back here for updates and when the app is ready for deployment. It will be easily scalable and also linkable to a url of your choice.
-  </h2>
+<div class="signin-col">
+
+  <div>
+    <%= form_for(:user, :url => session_path(:user), :html => { :id => "new_user" } ) do |f| %>
+
+       <%- flash.each do |name, msg| -%>
+        <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) || :id != "You need to sign in or sign up before continuing." %>
+       <%- end -%>  
+
+        <br>
+      <div class="field">
+        <!-- <%= f.label :email %><br /> -->
+        <%= f.email_field :email, autofocus: false, placeholder: "Email" %>
+      </div>
+    
+      <br />
+      
+      <div class="field">
+        <!-- <%= f.label :password %><br /> -->
+        <%= f.password_field :password, autocomplete: "off", placeholder: "Password" %>
+      </div>
+      
+      <!-- <br /> -->
+
+        <div class="field remember">
+          <%= f.check_box :remember_me %>
+          <%= f.label :remember_me %>
+        </div>
+     
+
+      
+
+      <div class="field forgot">
+        <%= link_to "Forgot password?", new_password_path(:user) %>
+      </div>
+
+      <div class="clear"></div>
+
+      <div class="actions">
+        <%= f.submit "Login" %>
+      </div>
+    <% end %>
+
+    <div class="clear"></div>
+    <br />
+    <br />
+  
+    <%= link_to "CREATE AN ACCOUNT", new_registration_path(:user) %>
+
+    <br />
+    <br />
+
+    <div class="or wing"></div><div class="or">or</div><div class="or wing"></div>
+
+    <br />
+    <br />
+
+    <div id='facebook'>Facebook</div>
+
+    <!-- <= render "devise/shared/links" %> -->
+  </div>
 
 </div>

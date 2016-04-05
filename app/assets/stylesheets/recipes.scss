@@ -1,3 +1,85 @@
-// Place all the styles related to the Recipes controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+#new_recipe {
+	display: block;
+	padding: 20px;
+	text-align: left;
+}
+#new_recipe li { margin-top: 14px; }
+#new_recipe a { color: $green; }
+#new_recipe input:focus,
+#new_recipe textarea:focus { outline: none; }
+#new_recipe {
+	// ::-webkit-input-placeholder { color: white; }
+	// :-moz-placeholder { color: white; }
+	// ::-moz-placeholder { color: white; }
+	// :-ms-input-placeholder { color: white; }
+}
+#new_recipe input,
+#new_recipe textarea { 
+	border-radius: 0;
+	background-color: $light;
+	border: none;
+	// text-align: center;
+	border-bottom: solid 1px $brown;
+	color: black;
+	display: inline-block;
+	// width: 100%;
+}
+#new_recipe textarea { width: 265px; }
+#new_recipe input[type=submit] {
+	border: none;
+	background-color: $green;
+	font-weight: bold;
+	color: white;
+	// width: 100px;
+	float: right;
+}
+
+#recipe-ingredients li { background-color: $light; }
+.add_fields {
+	display: block;
+	text-align: center;
+	background-color: $light;
+	margin: 14px 0 14px 40px;
+}
+
+
+// SHOW SINGLE RECIPE VIEW
+
+// .body { background-color: $light; }
+// .container { text-align: left; }
+
+.recipe-title {
+	background-color: $green;
+	color: white;
+	h1 {
+		font-weight: 100;
+	}
+}
+
+.recipe-photos {
+	background-color: white;
+	.selected-col {
+		height: 400px;
+		img{
+			width: 50%;
+			height: 80%;
+			float: left;
+		}
+	}
+	.others-col > img {
+		width: 100px;
+		height: 100px;
+	}
+}
+
+.recipe-info{
+	h3 {
+		color: $green;
+		font-weight: 200;
+	}
+	.ingredients ol {
+		text-align: left;
+	}
+}

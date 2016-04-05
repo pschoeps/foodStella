@@ -1,9 +1,8 @@
-<!-- <h2>Log in</h2> -->
 <div class="backsplash-col">
   <div>
     <div id="imgs">
       <%= image_tag "logo-foodstella.png", id: "logo" %>
-      <br /><br />
+      <!-- <br /><br /> -->
       <%= image_tag "banner-foodstella.png", id: "banner" %>
     </div>
   </div>
@@ -13,6 +12,14 @@
 
   <div>
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+      
+
+      <%- flash.each do |name, msg| -%>
+        <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) || :id != "You need to sign in or sign up before continuing." %>
+      <%- end -%>  
+
+        <br>
+
       <div class="field">
         <!-- <%= f.label :email %><br /> -->
         <%= f.email_field :email, autofocus: false, placeholder: "Email" %>
@@ -61,7 +68,9 @@
 
     <div id='facebook'>Facebook</div>
 
-    <!-- <%= render "devise/shared/links" %> -->
+    <br>
+
+     <%= render "devise/shared/links" %> 
   </div>
 
 </div>

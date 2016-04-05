@@ -2,7 +2,7 @@ class Recipe < ActiveRecord::Base
   belongs_to :user
   has_many :quantities, dependent: :destroy
   has_many :ingredients, through: :quantities
-  has_one :recipe
+  belongs_to :event
   #mount profile picture for recipes
   mount_uploader :photo_url, RecipePictureUploader
 
