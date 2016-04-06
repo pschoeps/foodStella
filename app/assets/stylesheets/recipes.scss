@@ -54,8 +54,22 @@
 
 // SHOW SINGLE RECIPE VIEW
 .fluid-container > .row.cushioned {
-	padding-top: 30px;
-	padding-bottom: 30px;
+	height: 10em;
+	margin: 0;
+
+	a {
+		background-color: $green;
+		float: right;
+		text-decoration: none;
+		color: white;
+		top: 50%;
+		position: relative;
+		border: 1px solid white;
+		font-size: 1em;
+		letter-spacing: 2px;
+		margin-right: 20px;
+    	transform: translateY(-50%);
+	}
 }
 
 .recipe-title {
@@ -65,7 +79,12 @@
 	h1 {
 		font-weight: 100;
 		font-size: 2.5em;
+		letter-spacing: 2px;
 		margin: 0;
+		/* the three lines below are a strategy I use to vertically center elements */
+		position: relative;
+		top: 50%;
+    	transform: translateY(-50%);
 	}
 }
 

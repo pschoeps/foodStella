@@ -2,6 +2,10 @@
 <div class="row recipe-title cushioned">
 	<!-- <div class="col-md-4"> -->
 		<h1><%= @recipe.name.upcase %></h1>
+
+		<% if current_user.id == @recipe.user_id %>
+		  <%= link_to "Edit", edit_recipe_path(@recipe), :class => "btn" %>
+		<% end %>
 	<!-- </div> -->
 </div>
 

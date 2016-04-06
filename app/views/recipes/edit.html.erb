@@ -69,7 +69,7 @@
         <%= link_to_add_association 'add ingredient', f, :quantities, 'data-association-insertion-node' => "#recipe-ingredients ol", 'data-association-insertion-method' => "append", :wrap_object => Proc.new {|quantity| quantity.build_ingredient; quantity } %>
       </fieldset>
 
-      <%= f.submit %>
+      <%= f.submit "Edit Recipe" %>
       <div class="clear"></div>
 
     <% end %>

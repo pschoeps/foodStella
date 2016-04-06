@@ -17,6 +17,19 @@ class RecipesController < ApplicationController
     end
   end
 
+  def edit
+    @recipe = Recipe.find(params[:id])
+  end
+
+  def update
+    @recipe = Recipe.find(params[:id])
+    @recipe.update_attributes(recipe_params)
+      respond_to do |format|
+        format.html  { redirect_to recipe_path(@recipe) }
+        flash[:success] =  "Recipe Updated"
+    end
+  end
+
   def show
     @recipe = Recipe.find(params[:id])
   end
