@@ -6,6 +6,7 @@
 </div>
 
 <div class="row recipe-photos cushioned">
+<div class="col-xs-12">
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-sm-12 selected-col">
@@ -26,9 +27,7 @@
 						<div>stars<br><span>Review</span></div>
 					</div>
 				</div>
-				<div class="row share">
-					Share
-				</div>
+				<div class="row share">Share</div>
 			</div>
 			<div class="col-md-2 col-sm-12 side-col">
 				<div>
@@ -46,32 +45,39 @@
 				<div style="clear: both;"></div>
 			</div>
 			<div class="col-md-4 col-sm-12 others-col">
-				<div class="row">Photos by others</div>
+				<div class="row">
+					<div class="col-md-12">Photos by others</div>
+				</div>
 				<div class="row slider-container">
-					<div class="slider-controls">
-						<div class="up">&#9650;</div>
-						<div class="down">&#9660;</div>
-					</div>
-					<div class="slider-vertical">
-						<!--% @recipe.photos.each do |p| %>
-							<a href="%= p.photo_url %>" class="others-photo">
-								<div class="others-photo" style="background-image: %= p.photo_url %>" ></div>
-							</a>
-						% end %>
-						% if recipe.photos.count < 9 %>
-							% (9-recipe.photos.count).times do |i| %>
-								<div class="others-photo blank"></div>
+					<div class="col-md-12">
+						<div class="slider-controls">
+							<div class="up">&#9650;</div>
+							<div class="down">&#9660;</div>
+						</div>
+						<div class="slider-vertical">
+							<!--% @recipe.photos.each do |p| %>
+								<a href="%= p.photo_url %>" class="others-photo">
+									<div class="others-photo" style="background-image: %= p.photo_url %>" ></div>
+								</a>
 							% end %>
-						% end %> -->
-						<% 9.times do |i| %>
-							<div class="others-photo blank"></div>
-						<% end %>
+							% if recipe.photos.count < 9 %>
+								% (9-recipe.photos.count).times do |i| %>
+									<div class="others-photo blank"></div>
+								% end %>
+							% end %> -->
+							<% 9.times do |i| %>
+								<div class="others-photo blank"></div>
+							<% end %>
+						</div>
 					</div>
 				</div>
-				<div class="row upload">Upload <span class="glyphicon glyphicon-camera" aria-hidden="true" style="font-size: 1.2em;"></span></div>
+				<div class="row upload">
+					<div class="col-md-12">Upload <span class="glyphicon glyphicon-camera" aria-hidden="true" style="font-size: 1.2em;"></span></div>
+				</div>
 			</div>
 		</div>
 	</div>
+</div>
 </div>
 
 <div class="row cushioned">
