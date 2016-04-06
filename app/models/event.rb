@@ -1,4 +1,4 @@
 class Event < ActiveRecord::Base
   belongs_to :user
-  belongs_to :recipe
+  has_one :recipe
 end

@@ -8,11 +8,20 @@
 // compiled file.
 //
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
-// about supported directives.
+// about supported directives.  I removed // require turbolinks for now
 //
 //= require moment
 //= require jquery
 //= require jquery_ujs
-//= require fullcalendar
-//= require scheduler
+//= require jquery-ui/core
+//= require jquery-ui/widget
+//= require jquery-ui/mouse
+//= require jquery-ui/position
+//= require jquery-ui/draggable
+//= require fullcalendar-local
+//= require scheduler-local
 //= require cocoon
+
+
+
+

@@ -13,7 +13,9 @@
 <div class="signin-col">
 
   <div>
-    <%= form_for(:user, :url => session_path(:user), :html => { :id => "new_user", :class => "" } ) do |f| %>
+
+    <%= form_for(:user, :url => session_path(:user), :html => { :id => "new_user" } ) do |f| %>
+
 
        <%- flash.each do |name, msg| -%>
         <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) || :id != "You need to sign in or sign up before continuing." %>

@@ -1,28 +1,28 @@
 class RecipesController < ApplicationController
 
   def new
-  	@recipe = current_user.recipes.build
-  	@recipe.quantities.build
+    @recipe = current_user.recipes.build
+    @recipe.quantities.build
     @recipe.quantities.last.build_ingredient
     @recipe.instructions.build
   end
 
   def create
-  	@recipe = current_user.recipes.build(recipe_params)
-  	if @recipe.save
-  		redirect_to dashboard_user_path(current_user)
-  		flash[:success] = "Recipe Created"
-  	else
-  	  render 'new'
-  	end
+    @recipe = current_user.recipes.build(recipe_params)
+    if @recipe.save
+      redirect_to dashboard_user_path(current_user)
+      flash[:success] = "Recipe Created"
+    else
+      render 'new'
+    end
   end
 
   def show
-  	@recipe = Recipe.find(params[:id])
+    @recipe = Recipe.find(params[:id])
   end
 
   def index
-  	@recipes = current_user.recipes 
+    @recipes = current_user.recipes 
   end
 
   def recipe_params

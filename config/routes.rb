@@ -17,6 +17,13 @@ FoodStella::Application.routes.draw do
 
   resources :recipes
 
+  resources :events do
+    collection do 
+      get :get_events
+      post :move
+    end
+  end
+
 
 
   # The priority is based upon order of creation: first created -> highest priority.

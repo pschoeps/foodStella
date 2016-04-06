@@ -1,0 +1,15 @@
+<% content_for(:style) do %>
+
+  <% @recipes.each do |r| %>
+    .<%= r.name %> {
+      background-image: url('<%= r.photo_url.url %>'); 
+    }
+<% end %>
+
+
+
+
+  
+     
+  
+<% end %>

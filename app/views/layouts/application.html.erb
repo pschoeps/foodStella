@@ -3,9 +3,10 @@
 <head>
   <title>FoodStella</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => false %>
   <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tags %>
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
   <!-- Added for collapsed navbar support -->
@@ -13,11 +14,20 @@
 
 </head>
 
+
+<style>
+    <% if content_for?(:style) %>
+      <%= yield(:style) %>
+    <% end %>
+</style>
+
+
 <body class="<%= 'hasFooter' if @layout == true %> <%='full-height' if !@layout %>">
 
 	<%- if @layout == true %>
 		<%= render "layouts/navbar" %>
 	<% end -%>
+
 
 <div class="fluid-container <%= 'full-height' if !@layout %>">
   <%= yield %>
