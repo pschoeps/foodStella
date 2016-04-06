@@ -45,17 +45,17 @@
 
           <li class="control-group">
             <%= f.label :meal_type, "Meal Type", class: "control-label" %>
-            <div class="controls"><%= f.select(:meal_type, options_for_select([['Snack', 1], ['Side dish', 2], ["Main dish", 3], ['Dessert', 4], ['Drink', 5]])) %></div>
+            <div class="controls"><%= f.select(:meal_type, options_for_select([['Snack', 1], ['Side dish', 2], ["Main dish", 3], ['Dessert', 4], ['Drink', 5]], @recipe.meal_type)) %></div>
           </li>
 
           <li class="control-group">
             <%= f.label :difficulty, "Difficulty", class: "control-label" %>
-            <div class="controls"><%= f.select(:difficulty, options_for_select([['Easy', 1], ['Moderate', 2], ["Difficult", 3]])) %></div>
+            <div class="controls"><%= f.select(:difficulty, options_for_select([['Easy', 1], ['Moderate', 2], ["Difficult", 3]], @recipe.difficulty)) %></div>
           </li>
 
           <li class="control-group">
             <%= f.label :category, "Category", class: "control-label" %>
-            <div class="controls"><%= f.select(:category, options_for_select([['Mediterranean', 1], ['Chinese', 2], ["Mexican", 3]])) %></div>
+            <div class="controls"><%= f.select(:category, options_for_select([['Mediterranean', 1], ['Chinese', 2], ["Mexican", 3]], @recipe.category)) %></div>
           </li>
         </ol>
       </fieldset>
