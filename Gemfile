@@ -34,7 +34,7 @@ gem 'omniauth-facebook'
 gem 'cocoon'
 
 #for image storage
-gem 'carrierwave-aws'
+gem 'carrierwave'
 gem 'mini_magick',             '3.8.0'
 gem 'fog',                     '1.36.0'
 
