@@ -1,5 +1,5 @@
 FoodStella::Application.routes.draw do
-  devise_for :users, controllers: { sessions: "sessions", registrations: "registrations" }
+  devise_for :users, controllers: { sessions: "sessions", registrations: "registrations", omniauth_callbacks: "omniauth_callbacks" }
   get "static_pages/home"
 
   root "static_pages#home"
