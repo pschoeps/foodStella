@@ -1,7 +1,11 @@
 
-<div class="row recipe-title cushioned">
+<div class="row recipe-title cushioned" id="nomargin">
 	<!-- <div class="col-md-4"> -->
 		<h1><%= @recipe.name.upcase %></h1>
+
+		<% if current_user.id == @recipe.user_id %>
+		  <%= link_to "Edit", edit_recipe_path(@recipe), :class => "btn" %>
+		<% end %>
 	<!-- </div> -->
 </div>
 
@@ -32,11 +36,11 @@
 			<div class="col-md-2 col-sm-12 side-col">
 				<div>
 					<h4>Food type</h4>	
-					<%= @recipe.meal_type %>
+					<%= @meal_type %>
 				</div>
 				<div>
 					<h4>Difficulty</h4>
-					<%= @recipe.difficulty %>
+					<%= @difficulty %>
 				</div>
 				<div>
 					<h4>Cookware</h4>

@@ -10,9 +10,12 @@
   </div>
 </div>
 
+
 <div class="signin-col">
 
-  <div>
+  
+
+    <div>
 
     <%= form_for(:user, :url => session_path(:user), :html => { :id => "new_user" } ) do |f| %>
 
@@ -55,6 +58,7 @@
       </div>
     <% end %>
 
+
     <div class="clear"></div>
     <br />
     <br />
@@ -72,6 +76,11 @@
     <div id='facebook'>Facebook</div>
 
     <!-- <= render "devise/shared/links" %> -->
-  </div>
+    </div>
+
+  <% end %>
 
 </div>
+
+
+

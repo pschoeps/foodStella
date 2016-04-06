@@ -22,12 +22,12 @@
     <div class="meal-selection">
        <button type="button" id="snacks">
           Snacks
-          <span class="badge"><%= @recipes.count %></span>
+          <span class="badge"><%= @snacks.count %></span>
        </button>
       <div class="selection" id="snacks-selection">
           <div id='external-events'>
             <div id='external-events-listing'>
-              <% @recipes.each do |r| %>
+              <% @snacks.each do |r| %>
                 <div class='fc-event <%= r.name %>' id="in-list"><%= r.name %></div>
               <% end %>
             </div>
@@ -36,12 +36,12 @@
 
       <button type="button" id="sidedish">
           Side Dishes
-          <span class="badge"><%= @recipes.count %></span>
+          <span class="badge"><%= @side_dishes.count %></span>
        </button>
       <div class="selection" id="sidedish-selection">
           <div id='external-events'>
             <div id='external-events-listing'>
-              <% @recipes.each do |r| %>
+              <% @side_dishes.each do |r| %>
                 <div class='fc-event <%= r.name %>' id="in-list"><%= r.name %></div>
               <% end %>
             </div>
@@ -50,12 +50,12 @@
 
       <button type="button" id="maindish">
           Main Dishes
-          <span class="badge"><%= @recipes.count %></span>
+          <span class="badge"><%= @main_dishes.count %></span>
        </button>
       <div class="selection" id="maindish-selection">
           <div id='external-events'>
             <div id='external-events-listing'>
-              <% @recipes.each do |r| %>
+              <% @main_dishes.each do |r| %>
                 <div class='fc-event <%= r.name %>' id="in-list"><%= r.name %></div>
               <% end %>
             </div>
@@ -64,12 +64,12 @@
 
       <button type="button" id="dessert">
           Desserts
-          <span class="badge"><%= @recipes.count %></span>
+          <span class="badge"><%= @desserts.count %></span>
        </button>
       <div class="selection" id="dessert-selection">
           <div id='external-events'>
             <div id='external-events-listing'>
-              <% @recipes.each do |r| %>
+              <% @desserts.each do |r| %>
                 <div class='fc-event <%= r.name %>' id="in-list"><%= r.name %></div>
               <% end %>
             </div>
@@ -78,12 +78,12 @@
 
       <button type="button" id="drink">
           Drinks
-          <span class="badge"><%= @recipes.count %></span>
+          <span class="badge"><%= @drinks.count %></span>
        </button>
       <div class="selection" id="drink-selection">
           <div id='external-events'>
             <div id='external-events-listing'>
-              <% @recipes.each do |r| %>
+              <% @drinks.each do |r| %>
                 <div class='fc-event <%= r.name %>' id="in-list"><%= r.name %></div>
               <% end %>
             </div>
