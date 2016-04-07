@@ -1,1 +1,12 @@
-<h1>Show</h1>
+<div class="row">
+	<div class="col-md_4">
+		<h3>Friends</h3>
+		  <% @friends.each do |friend| %>
+		    <h5><%= friend.email %></h5>
+		    <%= form_tag({controller: "friendship", action: "delete", :id => friend.id}, method: "post") do %>
+                         <%= submit_tag "Remove", :class => "btn" %>
+            <% end %>
+		  <% end %>
+
+	</div>
+</div>

@@ -1,0 +1,25 @@
+<div class="row friendships">
+  <div class="col-md-8">
+    
+    <h2>Pending Requests</h2>
+    
+      <ul>
+        <% if @users.any? %>
+          <% unless current_user.requested_friends.empty? %>
+            <% current_user.requested_friends.each do |requester| %>
+            <li>
+                <%= form_tag({controller: "friendship", action: "accept", :id => requester.id}, method: "post") do %>
+                  <%= label_tag(requester.email) %>
+                  <%= submit_tag("Accept", :class => "btn") %>
+                <% end %>
+          
+                <%= form_tag({controller: "friendship", action: "decline", :id => requester.id}, method: "post") do %>
+                  <%= submit_tag("Decline", :class => "btn") %>
+                <% end %>
+            </li>
+            <% end %>
+          <% end %>
+        <% end %>
+      </ul>
+  </div>
+</div>

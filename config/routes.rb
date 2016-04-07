@@ -11,6 +11,7 @@ FoodStella::Application.routes.draw do
     member do
       get 'dashboard'
       get 'calendar'
+      get 'inbox'
     end
 
   end
@@ -21,6 +22,14 @@ FoodStella::Application.routes.draw do
     collection do 
       get :get_events
       post :move
+    end
+  end
+
+  resources :friendship do 
+    member do
+      post 'accept'
+      post 'decline'
+      post 'delete'
     end
   end
 

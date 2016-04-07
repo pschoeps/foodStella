@@ -8,6 +8,20 @@ class User < ActiveRecord::Base
   has_many :recipes
   has_many :events, dependent: :destroy
 
+  #friendships setup
+  has_many :friendships
+  has_many :friends, -> { where(friendships: {status: 'accepted'}).order('created_at DESC') },
+           :through => :friendships
+
+  
+  has_many :requested_friends, -> { where(friendships: {status: 'requested'}).order('created_at DESC') },
+           :through => :friendships,
+           :source => :friend
+  
+  has_many :pending_friends, -> { where(friendships: {status: 'pending'}).order('created_at DESC') },
+           :through => :friendships,
+           :source => :friend
+
   def self.from_omniauth(auth)
      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
     	user.provider = auth.provider

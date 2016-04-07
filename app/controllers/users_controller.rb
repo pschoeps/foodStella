@@ -5,7 +5,18 @@ class UsersController < ApplicationController
 	end
 
 	def show
+		@friends = current_user.friends
 	end
+
+	def index
+		@users = User.all
+	end
+
+	def inbox
+   		@users = User.all
+  	end
+
+  	
 
 	def calendar
 		@recipes = current_user.recipes

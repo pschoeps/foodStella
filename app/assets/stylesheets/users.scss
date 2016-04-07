@@ -301,3 +301,28 @@ input:-webkit-autofill {
 		float: left;
 	}
 }
+
+/* index page styling and inbox */
+
+.friendships {
+	margin: 0;
+
+	.col-md-8 {
+		margin: auto;
+		position: relative;
+		float: none;
+
+		ul {
+			text-decoration: none;
+			list-style-type: none;
+			text-align: center;
+
+			li {
+				padding: 20px;
+			}
+
+		}
+	}
+
+
+}
