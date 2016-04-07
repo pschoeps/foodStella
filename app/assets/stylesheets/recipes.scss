@@ -3,24 +3,24 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 // CREATE NEW RECIPE VIEW
-#new_recipe {
+.recipe-form {
 	display: block;
 	padding: 20px;
 	text-align: left;
 	background-color: white;
 }
-#new_recipe li { margin-top: 14px; }
-#new_recipe a { color: $green; }
-#new_recipe input:focus,
-#new_recipe textarea:focus { outline: none; }
-#new_recipe {
+.recipe-form li { margin-top: 14px; }
+.recipe-form a { color: $green; }
+.recipe-form input:focus,
+.recipe-form textarea:focus { outline: none; }
+.recipe-form {
 	// ::-webkit-input-placeholder { color: white; }
 	// :-moz-placeholder { color: white; }
 	// ::-moz-placeholder { color: white; }
 	// :-ms-input-placeholder { color: white; }
 }
-#new_recipe input,
-#new_recipe textarea { 
+.recipe-form input,
+.recipe-form textarea { 
 	border-radius: 0;
 	background-color: white;
 	border: none;
@@ -30,8 +30,8 @@
 	display: inline-block;
 	// width: 100%;
 }
-#new_recipe textarea { width: 265px; }
-#new_recipe input[type=submit] {
+.recipe-form textarea { width: 265px; }
+.recipe-form input[type=submit] {
 	border: none;
 	background-color: $green;
 	font-weight: bold;
