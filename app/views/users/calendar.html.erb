@@ -28,7 +28,7 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% @snacks.each do |r| %>
-                <div class='fc-event <%= r.name %>' id="in-list"><%= r.name %></div>
+                <div class='fc-event <%= r.name %>-<%= r.id %>' id="in-list" data="<%= r.name %>-<%= r.id %>"><%= r.name %></div>
               <% end %>
             </div>
           </div>
@@ -42,7 +42,7 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% @side_dishes.each do |r| %>
-                <div class='fc-event <%= r.name %>' id="in-list"><%= r.name %></div>
+                <div class='fc-event <%= r.name %>-<%= r.id %>' id="in-list" data="<%= r.name %>-<%= r.id %>"><%= r.name %></div>
               <% end %>
             </div>
           </div>
@@ -56,7 +56,7 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% @main_dishes.each do |r| %>
-                <div class='fc-event <%= r.name %>' id="in-list"><%= r.name %></div>
+                <div class='fc-event <%= r.name %>-<%= r.id %>' id="in-list" data="<%= r.name %>-<%= r.id %>"><%= r.name %></div>
               <% end %>
             </div>
           </div>
@@ -70,7 +70,7 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% @desserts.each do |r| %>
-                <div class='fc-event <%= r.name %>' id="in-list"><%= r.name %></div>
+                <div class='fc-event <%= r.name %>-<%= r.id %>' id="in-list" data="<%= r.name %>-<%= r.id %>"><%= r.name %></div>
               <% end %>
             </div>
           </div>
@@ -84,7 +84,7 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% @drinks.each do |r| %>
-                <div class='fc-event <%= r.name %>' id="in-list"><%= r.name %></div>
+                <div class='fc-event <%= r.name %>-<%= r.id %>' id="in-list" data="<%= r.name %>-<%= r.id %>"><%= r.name %></div>
               <% end %>
             </div>
           </div>
@@ -193,7 +193,7 @@ $(document).ready(function() {
 
                 // store data so the calendar knows to render an event upon drop
                 $(this).data('event', {
-                    title: $.trim($(this).text()), // use the element's text as the event title
+                    title: $.trim($(this).attr('data')),
                     stick: true // maintain when user navigates (see docs on the renderEvent method)
                 });
 
@@ -216,42 +216,34 @@ $(document).ready(function() {
               defaultView: 'timelineDay',
 
               events: [
-        { id: '1', start: '2016-01-07T02:00:00', end: '2016-01-07T07:00:00', title: 'event 1', className: 'pizza' },
-        { id: '2',  start: '2016-01-07T05:00:00', end: '2016-01-07T22:00:00', title: 'event 2' },
-        { id: '3', start: '2016-01-06', end: '2016-01-08', title: 'event 3' },
-        { id: '4', start: '2016-01-07T03:00:00', end: '2016-01-07T08:00:00', title: 'event 4' },
-        { id: '5',  start: '2016-01-07T00:30:00', end: '2016-01-07T02:30:00', title: 'event 5' }
+        { id: '1', start: '2016-01-07T02:00:00', end: '2016-01-07T02:30:00', title: 'event 1', className: 'Pasta' }
       ],
 
 
               height: 500,
-          //    slotWidth: 36.5,
+
+              scrollTime: '00:00',
+              defaultTimedEventDuration: '00:30:00',
+              //maxTime: '12:00',
+              slotWidth: 86.5 * 2,
            //   slotDuration: 30,
               editable: true,
               droppable: true, // this allows things to be dropped onto the calendar
               dragRevertDuration: 0,
               eventLimit: true, // allow "more" link when too many events
-              drop: function(date, jsEvent, ui) { 
+              drop: function(date, jsEvent, ui, res) { 
+                var originalEventObject = $(this).data('eventObject');
+                var copiedEventObject = $.extend({}, originalEventObject);
+                copiedEventObject.start = date;
+                copiedEventObject.resource = res.id;
+                console.log(jsEvent)
+                var eventTitle = jsEvent.target.innerHTML
 
-                    console.log('calendar 1 drop');
-                    // is the "remove after drop" checkbox checked?
-                    if ($('#drop-remove').is(':checked')) {
-                        // if so, remove the element from the "Draggable Events" list
-                        $(this).remove();
-                    }
+                var div = $(".fc-title").find()
+                console.log(div)
+                div.addClass(eventTitle);
 
-                    $('.fc-event').each(function() {
-                      var $this = $(this);
-                      var text = $this.find(".fc-title").text()
-                      var eventTitle = $.trim($(this).text())
-
-                      if (text == eventTitle) {
-                        $this.addClass(eventTitle);
-                        console.log('in evaluation');
-                      };
-                    });
-
-                    $.ajax({//ajax call for questions
+                $.ajax({//ajax call for questions
                   type:'POST',
                   data: event,
                   url:'/events/new',
@@ -261,9 +253,34 @@ $(document).ready(function() {
                   }
                   
                 });//end ajax call
-            }
+            
+
+                      
+
+                //$('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+         
                 
            
+              },
+
+
+
+              eventRender: function(event, element) {
+                console.log(event.title)
+
+                element.addClass(event.title)
+
+                console.log(element)
+            },
+
+
+
+
+
+
+
+
 
         });
       });
