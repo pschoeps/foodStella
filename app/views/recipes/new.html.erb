@@ -1,7 +1,7 @@
 <div class="row">
 
 	<div class="col-sm-8 col-center new_recipe-col">
-    <%= form_for @recipe, html: {class: "form-horizontal", multipart: true } do |f| %>
+    <%= form_for @recipe, html: {class: "form-horizontal recipe-form", multipart: true } do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
       <!-- <= devise_error_messages! %> -->
       <fieldset id="recipe-meta">
