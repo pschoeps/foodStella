@@ -17,6 +17,7 @@ FoodStella::Application.routes.draw do
   end
 
   resources :recipes
+  resources :relationships,       only: [:create, :destroy]
 
   resources :events do
     collection do 

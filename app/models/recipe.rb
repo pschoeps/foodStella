@@ -5,6 +5,11 @@ class Recipe < ActiveRecord::Base
 
   belongs_to :event
 
+  has_many :relationships,        foreign_key: "followed_id",
+                                   dependent:   :destroy
+                                   
+  has_many :followers, through: :relationships, source: :follower, dependent: :destroy
+
   has_many :instructions
 
   #mount profile picture for recipes

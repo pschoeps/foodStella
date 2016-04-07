@@ -5,10 +5,15 @@ class RecipesController < ApplicationController
     @recipe.quantities.build
     @recipe.quantities.last.build_ingredient
     @recipe.instructions.build
+
+    if params[:recipe]
+      @other_recipe = Recipe.find(params[:recipe])
+    end
   end
 
   def create
     @recipe = current_user.recipes.build(recipe_params)
+
     if @recipe.save
       redirect_to dashboard_user_path(current_user)
       flash[:success] = "Recipe Created"
@@ -38,7 +43,7 @@ class RecipesController < ApplicationController
   end
 
   def index
-    @recipes = current_user.recipes 
+    @recipes = Recipe.all
   end
 
   def get_difficulty(diff)

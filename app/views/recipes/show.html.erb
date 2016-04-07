@@ -3,9 +3,19 @@
 	<!-- <div class="col-md-4"> -->
 		<h1><%= @recipe.name.upcase %></h1>
 
-		<% if current_user.id == @recipe.user_id %>
-		  <%= link_to "Edit", edit_recipe_path(@recipe), :class => "btn" %>
-		<% end %>
+		<div class="actions">
+
+		  <% if current_user.owns?(@recipe) %>
+		    <%= link_to "Edit", edit_recipe_path(@recipe), :class => "btn" %>
+		  <% elsif current_user.following?(@recipe) %>
+		    <% link_to "Alter Recipe", new_recipe_path(:recipe => @recipe), :id => "alter" %>
+		    <span data="<%= @recipe.id %>" id="unfollow">Unfollow</span> 
+		  <% else %>
+		    <span data="<%= @recipe.id %>" id="follow">Follow</span> 
+		    <% link_to "Alter Recipe", new_recipe_path(:recipe => @recipe), :id => "alter" %>
+		  <% end %>
+
+	    </div>
 	<!-- </div> -->
 </div>
 
@@ -155,3 +165,44 @@
 	</div>
 
 </div>
+
+<script>
+
+	$(document).ready(function() {
+		console.log("loaded");
+    	$(document).on('click','#follow',function(){
+    		$this = $(this)
+    		recipe_id = $this.attr('data')
+    		console.log(recipe_id)
+    		$.ajax({//ajax call for questions
+                  type:'POST',
+                  data: {id: recipe_id},
+                  url:'/relationships',
+              
+                  success:function (response) {
+                  	$this.text("Unfollow")
+                    $this.attr('id', 'unfollow');
+                    $this.removeClass("glyphicon-plus")
+                  }
+                  
+                });//end ajax call
+		});
+
+		$(document).on('click','#unfollow',function(){
+    		$this = $(this)
+    		recipe_id = $this.attr('data')
+    		console.log(recipe_id)
+    		$.ajax({//ajax call for questions
+                  type:'DELETE',
+                  data: {id: recipe_id},
+                  url:"/relationships/" + recipe_id,
+              
+                  success:function (response) {
+                  	$this.text("Follow")
+                    $this.attr('id', 'follow');
+                  }
+                  
+                });//end ajax call
+		});
+});
+</script>

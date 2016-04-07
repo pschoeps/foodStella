@@ -19,7 +19,8 @@ class UsersController < ApplicationController
   	
 
 	def calendar
-		@recipes = current_user.recipes
+		@followed_recipes = current_user.following
+		@recipes = current_user.recipes && @followed_recipes
 		@calendar_title = Time.now.strftime("%A")
 
 		@snacks = @recipes.where(:meal_type => "1")

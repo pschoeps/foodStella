@@ -92,6 +92,25 @@
 		top: 50%;
     	transform: translateY(-50%);
 	}
+
+	.actions {
+		position: relative;
+		float: right;
+		height: 6em;
+		width: 16em;
+
+		#alter {
+			position: absolute;
+    		right: 2em;
+    		border: none;
+		}
+
+		span {
+			position: absolute;
+			right: 4em;
+			cursor: pointer;
+		}
+	}
 }
 
 
@@ -312,4 +331,31 @@
 	li ol,
 	li ul {margin-top:6px;}
 	ol ol li:last-child {margin-bottom:0;}
+}
+
+/* Index Page */
+
+.recipes-page {
+
+	.col-md-8 {
+
+		ul {
+			list-style-type: none;
+			padding: 20px;
+			li {
+				display: inline-block;
+				position: relative;
+
+				span {
+					color: $green;
+    				background-color: rgba(176, 176, 176, 0.65);
+    				position: absolute;
+    				padding: 3px;
+    				cursor: pointer;
+    				top: 0;
+    				font-size: 1.2em;
+				}
+			}
+		}
+	}
 }

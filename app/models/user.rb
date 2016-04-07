@@ -8,6 +8,10 @@ class User < ActiveRecord::Base
   has_many :recipes
   has_many :events, dependent: :destroy
 
+  has_many :relationships,        foreign_key: "follower_id",
+                                  dependent:   :destroy
+  has_many :following, through: :relationships, source: :followed
+
   #friendships setup
   has_many :friendships
   has_many :friends, -> { where(friendships: {status: 'accepted'}).order('created_at DESC') },
@@ -31,5 +35,13 @@ class User < ActiveRecord::Base
 		user.name = auth.info.name
 		user.image = auth.info.image
     end
+  end
+
+  def following?(recipe)
+    Relationship.exists? follower_id: id, followed_id: recipe.id
+  end
+
+  def owns?(recipe)
+    id == recipe.user_id
   end
 end
