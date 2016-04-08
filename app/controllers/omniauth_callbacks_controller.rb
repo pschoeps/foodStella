@@ -5,7 +5,6 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     # sign_in_and_redirect @user
 
     if @user.persisted?
-      # why is this not following after_sign_in_path_for to dashboard????
       sign_in_and_redirect @user, :event => :authentication #this will throw if @user is not activated
       set_flash_message(:notice, :success, :kind => "Facebook") if is_navigational_format?
     else
