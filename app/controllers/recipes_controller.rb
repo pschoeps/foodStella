@@ -43,7 +43,19 @@ class RecipesController < ApplicationController
   end
 
   def index
-    @recipes = Recipe.all
+     @filterrific = initialize_filterrific(
+      Recipe,
+      params[:filterrific],
+      :select_options => {
+        sorted_by: Recipe.options_for_sorted_by
+      }
+    ) or return
+    @recipes = @filterrific.find.page(params[:page])
+
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def get_difficulty(diff)

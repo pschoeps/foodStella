@@ -1,0 +1,22 @@
+<div id="filterrific_results">
+
+  <div>
+    <%= page_entries_info recipes %>
+  </div>
+
+    <ul>
+    <% recipes.each do |recipe| %>
+      <li> <%= link_to image_tag(recipe.photo_url.url(:thumb)), {:action => 'show', :controller => 'recipes', :id => recipe.id} %>
+        <% unless current_user.owns?(recipe) %>
+          <% if current_user.following?(recipe) %>
+          <span class="glyphicon glyphicon-remove" data="<%= recipe.id %>" id="unfollow"></span> 
+          <% else %>
+          <span class="glyphicon glyphicon-plus" data="<%= recipe.id %>" id="follow"></span> 
+          <% end %>
+         <% end %>
+       </li>
+    <% end %>
+  </ul>
+</div>
+
+<%= will_paginate recipes %>

@@ -26,6 +26,12 @@ gem 'jbuilder', '~> 1.2'
 gem 'bootstrap-sass',       '3.2.0.0'
 gem 'sass-rails', '~> 4.0.0'
 
+#search and filtering
+gem 'filterrific'
+#and pagination
+gem 'will_paginate'
+gem 'will_paginate-bootstrap'
+
 #auth
 gem 'devise'
 gem 'omniauth-facebook'
