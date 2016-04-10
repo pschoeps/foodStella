@@ -1,7 +1,7 @@
 class StaticPagesController < ApplicationController
   def home
   	if user_signed_in?
-  		redirect_to dashboard_user_path(current_user)
+  		redirect_to calendar_user_path(current_user)
   	end
   end
 
