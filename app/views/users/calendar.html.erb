@@ -28,7 +28,7 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% @snacks.each do |r| %>
-                <div class='fc-event <%= r.name %>-<%= r.id %>' id="in-list" data="<%= r.name %>-<%= r.id %>"><%= r.name %></div>
+                <div class='fc-event <%= r.name %>-<%= r.id %>' id="in-list" data="<%= r.name %>-<%= r.id %>"><%= r.name %>-<%=r.id%></div>
               <% end %>
             </div>
           </div>
@@ -42,7 +42,7 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% @side_dishes.each do |r| %>
-                <div class='fc-event <%= r.name %>-<%= r.id %>' id="in-list" data="<%= r.name %>-<%= r.id %>"><%= r.name %></div>
+                <div class='fc-event <%= r.name %>-<%= r.id %>' id="in-list" data="<%= r.name %>-<%= r.id %>"><%= r.name %>-<%=r.id%></div>
               <% end %>
             </div>
           </div>
@@ -56,7 +56,7 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% @main_dishes.each do |r| %>
-                <div class='fc-event <%= r.name %>-<%= r.id %>' id="in-list" data="<%= r.name %>-<%= r.id %>"><%= r.name %></div>
+                <div class='fc-event <%= r.name %>-<%= r.id %>' id="in-list" data="<%= r.name %>-<%= r.id %>"><%= r.name %>-<%=r.id %></div>
               <% end %>
             </div>
           </div>
@@ -70,7 +70,7 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% @desserts.each do |r| %>
-                <div class='fc-event <%= r.name %>-<%= r.id %>' id="in-list" data="<%= r.name %>-<%= r.id %>"><%= r.name %></div>
+                <div class='fc-event <%= r.name %>-<%= r.id %>' id="in-list" data="<%= r.name %>-<%= r.id %>"><%= r.name %>-<%=r.id%></div>
               <% end %>
             </div>
           </div>
@@ -84,7 +84,7 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% @drinks.each do |r| %>
-                <div class='fc-event <%= r.name %>-<%= r.id %>' id="in-list" data="<%= r.name %>-<%= r.id %>"><%= r.name %></div>
+                <div class='fc-event <%= r.name %>-<%= r.id %>' id="in-list" data="<%= r.name %>-<%= r.id %>"><%= r.name %>-<%=r.id%></div>
               <% end %>
             </div>
           </div>
@@ -99,6 +99,8 @@
   <div class="col-md-9 calendar-container">
 
     <div class="calendar-title"><h1><%= @calendar_title %></h1></div>
+
+    <div id="event-trash"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div>
 
 
       <div class="calendar-box">          
@@ -131,7 +133,17 @@
 </div>
 <script>
 
+var currentMousePos = {
+    x: -1,
+    y: -1
+};
+
 $(document).ready(function() {
+
+   $(document).on("mousemove", function (event) {
+        currentMousePos.x = event.pageX;
+        currentMousePos.y = event.pageY;
+    });
 
   $('#snacks').click(function() {
     if ( $('#snacks-selection').css('display') == 'none' )
@@ -172,8 +184,6 @@ $(document).ready(function() {
     console.log('button clicked');
     var containerHeight = $('.meal-selection').outerHeight() + 80;
     var sidebarHeight = $('.sidebar').outerHeight()
-    console.log(containerHeight)
-    console.log(sidebarHeight)
 
     if (containerHeight > sidebarHeight) {
       $('.sidebar').css('height', containerHeight + 'px');
@@ -181,7 +191,6 @@ $(document).ready(function() {
   })
 
     var calendarWidth = $('#calendar').outerWidth()
-    console.log(calendarWidth)
 
     $('.calendar-header').css('width', calendarWidth + 'px');
 
@@ -215,9 +224,18 @@ $(document).ready(function() {
               now: '2016-01-07',
               defaultView: 'timelineDay',
 
-              events: [
-        { id: '1', start: '2016-01-07T02:00:00', end: '2016-01-07T02:30:00', title: 'event 1', className: 'Pasta' }
-      ],
+
+              <% if @events.length != 0 %>
+
+                events: [
+
+                <% @events.each do |e| %>
+                  {  id: "<%= e.id %>", start: "<%= e.start_at %>", end: "<%= e.end_at %>", title: "<%= e.recipe_name %>-<%= e.recipe_id %>", className: "<%= e.recipe_name %>-<%= e.recipe_id %>" },
+                <% end %>
+
+                ],
+
+              <% end %>
 
 
               height: 500,
@@ -231,28 +249,51 @@ $(document).ready(function() {
               droppable: true, // this allows things to be dropped onto the calendar
               dragRevertDuration: 0,
               eventLimit: true, // allow "more" link when too many events
-              drop: function(date, jsEvent, ui, res) { 
+              drop: function(date, res) { 
+                console.log("drop");
                 var originalEventObject = $(this).data('eventObject');
                 var copiedEventObject = $.extend({}, originalEventObject);
                 copiedEventObject.start = date;
-                copiedEventObject.resource = res.id;
-                console.log(jsEvent)
-                var eventTitle = jsEvent.target.innerHTML
+                var eventTitle = res.target.innerHTML;
 
-                var div = $(".fc-title").find()
-                console.log(div)
-                div.addClass(eventTitle);
+                start_at = date.format();
+                end_at = date.add(30, 'minutes').format();
+                recipe_id = eventTitle.slice(-2);
+                recipe_name = eventTitle.slice(0, -3);
+                console.log(start_at);
+                console.log(end_at);
+                
+                
 
-                $.ajax({//ajax call for questions
+
+                var data = {
+                  event: {
+                    start_at: start_at,
+                    end_at: end_at,
+                    recipe_id: recipe_id,
+                    recipe_name: recipe_name
+                  }
+                };
+
+                $.ajax({//ajax call 
                   type:'POST',
-                  data: event,
-                  url:'/events/new',
+                  data: data,
+                  url:'/events',
               
                   success:function (response) {
-                    console.log("success")
-                  }
+                    copiedEventObject.id = response
+                    //$('#calendar').fullCalendar('renderEvent', copiedEventObject, false);
                   
-                });//end ajax call
+                }
+
+              });//end ajax call
+
+                
+
+                //var div = $(".fc-title").find()
+                //console.log(div)
+                //div.addClass(eventTitle);
+
             
 
                       
@@ -263,26 +304,104 @@ $(document).ready(function() {
                 
            
               },
+              eventDragStop: function( event, jsEvent, ui, view ) {
+                console.log(event)
+                recipe_id = event.title.slice(-2);
+                console.log(event.start.format())
 
+                var data = {
+                    start_at: event.start.format(),
+                    recipe_id: recipe_id,
+                    name: event.title,
+                    id: event.id
+                };
 
+                console.log(recipe_id)
+              
+                
+                if (isElemOverDiv()) {
+                  $('#calendar').fullCalendar('removeEvents', event._id);
 
+                  $.ajax({//ajax call 
+                  type:'DELETE',
+                  data: data,
+                  url:'/events/destroy',
+              
+                  success:function (response) {
+                    console.log("success")
+                  }
+                  
+                });//end ajax call
+                  var trashEl = $('#event-trash');
+                  if (trashEl.hasClass("to-trash")) {
+                      trashEl.removeClass("to-trash");
+                  }
+    }
+              },
               eventRender: function(event, element) {
-                console.log(event.title)
+                console.log('event rendered')
 
-                element.addClass(event.title)
+                element.addClass(event.title);
 
-                console.log(element)
+
+                
+
             },
+            eventDrop: function(event, jsEvent, view) {
+              console.log("event drag has stopped")
+              recipe_id = event.title.slice(-2);
+              console.log(event)
+              console.log("jsEvent")
+              console.log(jsEvent)
+              console.log("view")
+              console.log(view)
+
+              var data = {
+                  event: {
+                    start_at: event.start.format(),
+                    end_at: event.end.format(),
+                    recipe_id: recipe_id,
+                    name: event.title,
+                    id: event.id
+                  }
+                };
+
+                $.ajax({//ajax call 
+                  type:'PUT',
+                  data: data,
+                  url:'/events/update',
+              
+                  success:function (response) {
+                    console.log("success")
+                    //$('#calendar').fullCalendar('renderEvent', copiedEventObject, false);
+                  
+                }
+              })
+            }
+
+        }); //end of iniialize calendar
 
 
 
+       function isElemOverDiv() {
 
+          var trashEl = $('#event-trash');
 
+          var ofs = trashEl.offset();
 
+          var x1 = ofs.left;
+          var x2 = ofs.left + trashEl.outerWidth(true);
+          var y1 = ofs.top;
+          var y2 = ofs.top + trashEl.outerHeight(true);
 
+          if (currentMousePos.x >= x1 && currentMousePos.x <= x2 &&
+            currentMousePos.y >= y1 && currentMousePos.y <= y2) {
+            return true;
+          }
+          return false;
 
+        }
 
-        });
       });
 </script>
 
