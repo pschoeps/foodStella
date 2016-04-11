@@ -237,9 +237,9 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   config.omniauth :facebook, '1587213768258926', '1e1ecd9a132d8a94201fee4402db9e51',
-                  scope: 'email,user_hometown,user_location',
+                  scope: 'email,user_about_me,user_hometown,user_location',
                   # scope: 'user_about_me,user_birthday,user_hometown,user_location',
-                  info_fields: 'email,first_name,last_name,hometown,location',
+                  info_fields: 'email,first_name,last_name,bio,hometown,location',
                   image_size: 'large'
 
   # ==> Warden configuration

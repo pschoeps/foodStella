@@ -30,7 +30,6 @@ class User < ActiveRecord::Base
 
   # facebook omniauth info
   def self.from_omniauth(auth)
-
     if !where(email: auth.info.email).empty?
   		user = where(email: auth.info.email).first
   		user.provider = auth.provider
@@ -38,7 +37,9 @@ class User < ActiveRecord::Base
   		user.image = auth.info.image
       user.fir_name = auth.info.first_name
       user.las_name = auth.info.last_name
-      user.location = auth.extra.raw_info.hometown.name
+      user.hometown = auth.extra.raw_info.hometown.name
+      user.location = auth.extra.raw_info.location
+      user.about_me = auth.extra.raw_info.about_me
   		user.save!
   		user
   	else
@@ -51,7 +52,9 @@ class User < ActiveRecord::Base
         user.image = auth.info.image
         user.fir_name = auth.info.first_name
         user.las_name = auth.info.last_name
-        user.location = auth.extra.raw_info.hometown.name
+        user.hometown = auth.extra.raw_info.hometown.name
+        user.location = auth.extra.raw_info.location.name
+        user.about_me = auth.extra.raw_info.about_me
       end
     end
   end

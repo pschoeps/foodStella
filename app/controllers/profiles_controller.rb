@@ -1,7 +1,11 @@
 class ProfilesController < ApplicationController
 
 	def new
-		@profile = current_user.build_profile
+		# if current_user.provider == 'facebook'
+			# create prefilled form from user's fb info
+		# else
+			@profile = current_user.build_profile
+		# end
 	end
 
 	def create
