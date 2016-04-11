@@ -1,4 +1,10 @@
 <div class="row">
+
+	<div class="col-md_4">
+		<h3><%= @profile.fir_name %></h3>
+		  <%= @profile.about_me %>
+	</div>
+
 	<div class="col-md_4">
 		<h3>Friends</h3>
 		  <% @friends.each do |friend| %>
@@ -9,6 +15,13 @@
 		  <% end %>
 
 	</div>
-	profile
-	<%= @profile %>
+
+		<div class="col-md_4">
+			<h3>Recipes</h3>
+			  <% @recipes.each do |recipe| %>
+			    <h5><%= recipe.name %></h5>
+	            <% end %>
+
+		</div>
+
 </div>

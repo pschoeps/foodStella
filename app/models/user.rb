@@ -26,24 +26,31 @@ class User < ActiveRecord::Base
            :through => :friendships,
            :source => :friend
 
+  # facebook omniauth info
   def self.from_omniauth(auth)
-  	if !where(email: auth.info.email).empty?
-		user = where(email: auth.info.email).first
-		user.provider = auth.provider
-		user.uid = auth.uid
-		user.name = auth.info.name
-		user.image = auth.info.image
-		user.save!
-		user
-	else
-	     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-	    	user.provider = auth.provider
-	    	user.uid = auth.uid
-	      	user.email = auth.info.email
-	      	user.password = Devise.friendly_token[0,20]
-			user.name = auth.info.name
-			user.image = auth.info.image
-		end
+
+    if !where(email: auth.info.email).empty?
+  		user = where(email: auth.info.email).first
+  		user.provider = auth.provider
+  		user.uid = auth.uid
+  		user.image = auth.info.image
+      user.fir_name = auth.info.first_name
+      user.las_name = auth.info.last_name
+      user.location = auth.extra.raw_info.hometown.name
+  		user.save!
+  		user
+  	else
+      where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+        user.provider = auth.provider
+        user.uid = auth.uid
+        user.email = auth.info.email
+        user.password = Devise.friendly_token[0,20]
+        user.name = auth.info.name
+        user.image = auth.info.image
+        user.fir_name = auth.info.first_name
+        user.las_name = auth.info.last_name
+        user.location = auth.extra.raw_info.hometown.name
+      end
     end
   end
 

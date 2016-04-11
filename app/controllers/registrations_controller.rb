@@ -13,6 +13,12 @@ class RegistrationsController < Devise::RegistrationsController
 
    end
 
+   # def configure_permitted_parameters
+   #    devise_parameter_sanitizer.for(:sign_up) {|u| 
+   #      u.permit(:email, :password, :password_confirmation, :remember_me, 
+   #      profile_attributes: [:email, :about_me])}
+   # end
+
    private
    def determine_layout
      #set a lyout variable for determining weather or not to set a layout in the application.html file.  If this variable is set to 
@@ -24,7 +30,7 @@ class RegistrationsController < Devise::RegistrationsController
      protected
      
   def user_params
-      params.require(:user).permit(:username, :email, :password, :password_confirmation, :invite_token)
+      params.require(:user).permit(:username, :email, :password, :password_confirmation, :invite_token, :fir_name, :las_name, :location)
   end
   
   

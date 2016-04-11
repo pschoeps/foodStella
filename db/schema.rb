@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160407211142) do
+ActiveRecord::Schema.define(version: 20160411145330) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,21 @@ ActiveRecord::Schema.define(version: 20160407211142) do
   end
 
   add_index "instructions", ["recipe_id"], name: "index_instructions_on_recipe_id", using: :btree
+
+  create_table "profiles", force: true do |t|
+    t.string   "references"
+    t.string   "user"
+    t.string   "fir_name"
+    t.string   "las_name"
+    t.string   "email"
+    t.string   "country"
+    t.string   "about_me"
+    t.string   "picture_url"
+    t.integer  "cooking_experience"
+    t.integer  "average_cook_time"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "quantities", force: true do |t|
     t.string   "amount"
@@ -94,6 +109,11 @@ ActiveRecord::Schema.define(version: 20160407211142) do
   add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
 
+  create_table "tests", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -111,6 +131,9 @@ ActiveRecord::Schema.define(version: 20160407211142) do
     t.string   "uid"
     t.string   "image"
     t.string   "name"
+    t.string   "fir_name"
+    t.string   "las_name"
+    t.string   "location"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
