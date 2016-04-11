@@ -348,13 +348,8 @@ $(document).ready(function() {
 
             },
             eventDrop: function(event, jsEvent, view) {
-              console.log("event drag has stopped")
+
               recipe_id = event.title.slice(-2);
-              console.log(event)
-              console.log("jsEvent")
-              console.log(jsEvent)
-              console.log("view")
-              console.log(view)
 
               var data = {
                   event: {
