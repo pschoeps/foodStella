@@ -12,6 +12,8 @@ class User < ActiveRecord::Base
                                   dependent:   :destroy
   has_many :following, through: :relationships, source: :followed
 
+  has_one :profile
+
   #friendships setup
   has_many :friendships
   has_many :friends, -> { where(friendships: {status: 'accepted'}).order('created_at DESC') },

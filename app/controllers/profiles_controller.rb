@@ -6,12 +6,30 @@ class ProfilesController < ApplicationController
 
 	def create
 		@profile = current_user.build_profile(profile_params)
+
+		if @profile.save
+		  redirect_to profile_path(current_user)
+		  flash[:success] = "Profile Created"
+		else
+		  render 'new'
+		end
+
+	end
+
+	def edit
+	  @profile = Profile.find_by_user_id(params[:id])
+	end
+
+	def index
+		unless current_user.profile
+			redirect_to new_profile_path
+		end
+		@profile = current_user.profile
 	end
 
 	def show
-		@profile = Profile.find(params[:id])
+		@profile = Profile.find_by_user_id(params[:id])
 		@friends = profile.user.friends
-		@recipes = profile.user.recipes # && @followed_recipes
 	end
 
 	def destroy

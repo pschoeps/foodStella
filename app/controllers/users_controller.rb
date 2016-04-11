@@ -5,7 +5,6 @@ class UsersController < ApplicationController
 	end
 
 	def show
-		#@profile = current_user.profile
 		@friends = current_user.friends
 	end
 
