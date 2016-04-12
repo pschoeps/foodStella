@@ -20,7 +20,7 @@ class UsersController < ApplicationController
 
 	def calendar
 		@followed_recipes = current_user.following
-		@recipes = current_user.recipes && @followed_recipes
+		@recipes = current_user.recipes && @followed_recipes 
 		@calendar_title = Time.now.strftime("%A")
 		@events = current_user.events
 

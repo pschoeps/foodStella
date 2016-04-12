@@ -4,7 +4,13 @@
     .<%= r.name %>-<%= r.id %> {
       background-image: url('<%= r.photo_url.url %>'); 
     }
-<% end %>
+  <% end %>
+
+  <% @events.each do |e| %>
+    .<%= e.recipe_name %>-<%= e.recipe_id %> {
+      background-image: url('<%= Recipe.find(e.recipe_id).photo_url.url %>'); 
+    }
+  <% end %>
 
 
 
