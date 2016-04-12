@@ -63,6 +63,15 @@ class User < ActiveRecord::Base
     Relationship.exists? follower_id: id, followed_id: recipe.id
   end
 
+  def retrieve_pic
+    user = User.find(id)
+    if user.profile && user.profile.picture_url
+      user.profile.picture_url
+    else
+      ActionController::Base.helpers.asset_path('fallback/plate.jpg')
+    end
+  end
+
   def owns?(recipe)
     id == recipe.user_id
   end

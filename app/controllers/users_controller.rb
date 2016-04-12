@@ -21,15 +21,16 @@ class UsersController < ApplicationController
 
 	def calendar
 		@followed_recipes = current_user.following
-		@recipes = current_user.recipes && @followed_recipes 
+		@user_recipes = current_user.recipes
+		@recipes = @user_recipes + @followed_recipes
 		@calendar_title = Time.now.strftime("%A")
 		@events = current_user.events
 
-		@snacks = @recipes.where(:meal_type => "1")
-		@side_dishes = @recipes.where(:meal_type => "2")
-		@main_dishes = @recipes.where(:meal_type => "3")
-		@desserts = @recipes.where(:meal_type => "4")
-		@drinks = @recipes.where(:meal_type => "5")
+		@snacks = @user_recipes.where(:meal_type => "1") + @followed_recipes.where(:meal_type => "1")
+		@side_dishes = @user_recipes.where(:meal_type => "2") + @followed_recipes.where(:meal_type => "2")
+		@main_dishes = @user_recipes.where(:meal_type => "3") + @followed_recipes.where(:meal_type => "3")
+		@desserts = @user_recipes.where(:meal_type => "4") + @followed_recipes.where(:meal_type => "4")
+		@drinks = @user_recipes.where(:meal_type => "5") + @followed_recipes.where(:meal_type => "5")
 
 		d = Date.today
 		@month = d.strftime("%B")
