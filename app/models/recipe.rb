@@ -69,6 +69,8 @@ class Recipe < ActiveRecord::Base
     case sort_option.to_s
     when /^created_at_/
       order("recipes.created_at #{ direction }")
+    when /^name_/
+      order("LOWER(recipes.name) #{ direction }")
     else
       raise(ArgumentError, "Invalid sort option: #{ sort_option.inspect }")
     end

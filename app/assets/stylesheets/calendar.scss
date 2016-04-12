@@ -136,6 +136,22 @@ $outer-container: 90%;
 		}
 	}
 
+    #event-trash {
+        float: right;
+        height: 4em;
+        width: 4em;
+        z-index: 20;
+        position: absolute;
+        right: 6em;
+        bottom: 37em;
+
+      span {
+        font-size: 2em;
+      }
+
+    }
+
+
 	.calendar-box {
 		width: 90%;
 		margin: auto;
