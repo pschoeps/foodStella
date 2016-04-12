@@ -17,17 +17,19 @@
 	color: $medium;
 	text-align: center;
 	padding: 0 15px;
-	}
+}
 
-.banner > .user > .user_pic {
-	margin: -$banner_h/2 auto 0;
+.user_pic {
 	width: $banner_h;
 	height: $banner_h;
-	border-radius: 99px;
-	border: solid 2px white;
 	background-color: $dark;
 	background-size: auto 100%;
 	background-position: center center;
+}
+.banner > .user > .user_pic {
+	margin: -$banner_h/2 auto 0;
+	border-radius: 99px;
+	border: solid 2px white;
 }
 
 .wrapper-header {

@@ -2,6 +2,7 @@ class UsersController < ApplicationController
 	def dashboard
 		@recipe = current_user.recipes.build
 		@recipes = current_user.recipes
+		@profile = current_user.profile
 	end
 
 	def show

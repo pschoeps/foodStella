@@ -6,7 +6,7 @@
 		<div class="button selected">Recipes</div>
 	</div>
 	<div class="col-sm-12 col-md-4 user">
-		<div class="user_pic" style="background-image: url(<%= current_user.image %>)"></div>
+		<div class="user_pic" style="background-image: url(<%= current_user.profile.picture_url %>)"></div>
 		<div class="user_name"><%= current_user.name ? current_user.name : current_user.email[/[^@]+/]  %></div>
 	</div>
 	<div class="col-md-4 tabs_right">

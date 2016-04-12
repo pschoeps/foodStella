@@ -10,6 +10,9 @@
               <%= form_tag({controller: "friendship", action: "create", :id => user.id}, method: "post") do %>
                 <%= label_tag(user.email) %>
                 <%= submit_tag("Request", :class => "btn")%>
+                <% if user.profile %>
+                  <%= link_to "View Profile", profile_path(user) %>
+                <% end %>
               <% end %>
             <% end %>
           </li>
