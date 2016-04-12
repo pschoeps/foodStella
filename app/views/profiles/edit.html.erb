@@ -1,1 +1,47 @@
-<%= render "profile_form" %>
+<!-- <= render "profile_form" %> -->
+
+<div class="row">
+
+	<div class="col-sm-8 col-center new_profile-col">
+    <%= form_for @profile, html: {class: "form-horizontal profile-form", multipart: true } do |f| %>
+      <%= render 'shared/error_messages', object: f.object %>
+      <!-- <= devise_error_messages! %> -->
+      <fieldset id="profile-meta">
+        <ol style="list-style-type:none">
+          <li class="control-group">
+            <%= f.label :fir_name, "First Name", class: "control-label" %>
+            <div class="controls"><%= f.text_field :fir_name %></div>
+          </li>
+
+          <li class="control-group">
+            <%= f.label :las_name, "Last Name", class: "control-label" %>
+            <div class="controls"><%= f.text_field :las_name %></div>
+          </li>
+
+          <li class="control-group">
+          	<div class="user_pic" style="background-image: url(<%= @profile.picture_url %>);"></div>
+            <%= f.label :picture_url, "Upload a picture", class: "control-label" %>
+            <div class="controls"><%= f.file_field :picture_url, accept: 'image/jpeg,image/gif,image/png' %></div>
+          </li>
+
+          <li class="control-group">
+            <%= f.label :about_me, "About Me", class: "control-label" %>
+            <div class="controls"><%= f.text_area :about_me, value: current_user.about_me %></div>
+          </li>
+      </fieldset>
+
+      <%= f.submit %>
+      <div class="clear"></div>
+
+    <% end %>
+  </div>
+</div>
+
+<script>
+  // $('#recipe_picture').bind('change', function() {
+  //   var size_in_megabytes = this.files[0].size/1024/1024;
+  //   if (size_in_megabytes > 5) {
+  //     alert('Maximum file size is 5MB. Please choose a smaller file.');
+  //   }
+  // });
+</script>
