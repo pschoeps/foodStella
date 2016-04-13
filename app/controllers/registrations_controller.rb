@@ -25,12 +25,19 @@ class RegistrationsController < Devise::RegistrationsController
      #false (in individual controller instances), then the navbar and footer will not be displayed.
      @layout = false
    end
-   
+
+  def sign_up_params
+    params.require(:user).permit(:username, :email, :password, :password_confirmation, :invite_token, :fir_name, :las_name, :location, :country)
+  end
+
+  def account_update_params
+    params.require(:user).permit(:username, :email, :password, :password_confirmation, :invite_token, :fir_name, :las_name, :location, :country)
+  end
   
      protected
      
   def user_params
-      params.require(:user).permit(:username, :email, :password, :password_confirmation, :invite_token, :fir_name, :las_name, :location)
+      params.require(:user).permit(:username, :email, :password, :password_confirmation, :invite_token, :fir_name, :las_name, :location, :country)
   end
   
   

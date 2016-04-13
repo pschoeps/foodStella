@@ -2,6 +2,7 @@
 @import "bootstrap";
 
 $banner_h: 100px;
+$pale: #eaeaea;
 $light: #F9F7ED;
 $medium: #ABABAB;
 $dark: #4D4D4D; 
@@ -16,27 +17,7 @@ $green: #819800;
 //   margin-bottom: 100px;
 // }
 html { background-color: $dark; }
-.footer {
-  margin-top: 100px;
-  background-color: $dark;
-  text-align: center;
-  color: white;
-  a {
-    color: white;
-    text-decoration: none;
-  }
-  .row {
-    height: 60px;
-    span {
-      margin: 0 5px;
-      line-height: 60px;
-    }
-  }
-}
 body { background-color: $light; }
-@media (min-width: 768px) {
-  .footer .row span { margin: 0 14px; }
-}
 
 .row { margin: 0; }
 
@@ -77,7 +58,7 @@ p {
 }
 
 
-// NAVBAR
+/* navbar */
 .navbar {
   background-color: white;
   border: none;
@@ -117,11 +98,35 @@ p {
       padding-bottom: 5px;
   }
 }
-
-
 // #navbar-search { margin: 36px 10px 0; }
 
 .logo {
   height: 42px;
   margin: 5px;
+}
+
+/* footer */
+.footer {
+  margin-top: 100px;
+  padding-top: 30px;
+  background-color: $dark;
+  color: white;
+  text-align: center;
+  a {
+    color: white;
+    text-decoration: none;
+  }
+  a:hover {
+    color: $green;
+  }
+  .row {
+    height: 60px;
+    span {
+      margin: 0 5px;
+      line-height: 60px;
+    }
+  }
+}
+@media (min-width: 768px) {
+  .footer .row span { margin: 0 14px; }
 }

@@ -30,6 +30,9 @@ class User < ActiveRecord::Base
 
   # facebook omniauth info
   def self.from_omniauth(auth)
+    puts '============================================================================================================================'
+    puts auth
+    puts auth.info.image
     if !where(email: auth.info.email).empty?
   		user = where(email: auth.info.email).first
   		user.provider = auth.provider
@@ -55,6 +58,7 @@ class User < ActiveRecord::Base
         user.hometown = auth.extra.raw_info.hometown.name
         user.location = auth.extra.raw_info.location.name
         user.about_me = auth.extra.raw_info.about_me
+        # user.country = auth.extra.raw_info.location.country ??
       end
     end
   end
@@ -67,6 +71,8 @@ class User < ActiveRecord::Base
     user = User.find(id)
     if user.profile && user.profile.picture_url
       user.profile.picture_url
+    elsif user.image
+      user.image
     else
       ActionController::Base.helpers.asset_path('fallback/plate.jpg')
     end
