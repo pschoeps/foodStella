@@ -1,7 +1,7 @@
 class Recipe < ActiveRecord::Base
   belongs_to :user
   has_many :quantities, dependent: :destroy
-  has_many :ingredients, through: :quantities
+  has_many :ingredients, through: :quantities, dependent: :destroy
 
   belongs_to :event
 
@@ -10,7 +10,7 @@ class Recipe < ActiveRecord::Base
                                    
   has_many :followers, through: :relationships, source: :follower, dependent: :destroy
 
-  has_many :instructions
+  has_many :instructions, dependent: :destroy
 
   #mount profile picture for recipes
   mount_uploader :photo_url, RecipePictureUploader
@@ -29,10 +29,10 @@ class Recipe < ActiveRecord::Base
 
   #this is some stuff I'm playing around with for searching and filtering recipes
   filterrific :default_filter_params => { :sorted_by => 'created_at_desc' },
-              :available_filters => %w[
-                sorted_by
-                search_query
-                with_created_at_gte
+              available_filters: [
+              :sorted_by,
+              :search_query,
+              :with_created_at_gte,
               ]
 
 
@@ -61,8 +61,6 @@ class Recipe < ActiveRecord::Base
     )
   }
 
-  
-
   scope :sorted_by, lambda { |sort_option|
     # extract the sort direction from the param value.
     direction = (sort_option =~ /desc$/) ? 'desc' : 'asc'
@@ -71,6 +69,10 @@ class Recipe < ActiveRecord::Base
       order("recipes.created_at #{ direction }")
     when /^name_/
       order("LOWER(recipes.name) #{ direction }")
+    when /^difficulty_/
+      order("recipes.difficulty #{ direction }")
+    when /^cook_time_/
+      order("recipes.cook_time #{ direction }")
     else
       raise(ArgumentError, "Invalid sort option: #{ sort_option.inspect }")
     end
@@ -84,7 +86,11 @@ class Recipe < ActiveRecord::Base
     [
       ['Name (a-z)', 'name_asc'],
       ['Registration date (newest first)', 'created_at_desc'],
-      ['Registration date (oldest first)', 'created_at_asc']
+      ['Registration date (oldest first)', 'created_at_asc'],
+      ['Difficulty (hardest first)',       'difficulty_desc'],
+      ['Difficulty (easiest first)',       'difficulty_asc'],
+      ['Cook Time (longest first)',        'cook_time_desc'],
+      ['Cook Time (shortest first)',       'cook_time_asc']
     ]
   end
 

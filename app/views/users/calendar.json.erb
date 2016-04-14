@@ -1,0 +1,13 @@
+<% if @events.length != 0 %>
+ [
+  <% @events.each do |e| %>
+    {  
+       "id": "<%= e.id %>", 
+       "start": "<%= e.start_at %>", 
+       "end": "<%= e.end_at %>", 
+       "title": "<%= e.recipe_name %>-<%= e.recipe_id %>", 
+       "className": "<%= e.recipe_name %>-<%= e.recipe_id %>" 
+     }<% unless e == @events.last %>,<% end %> 
+  <% end %>
+  ]
+<% end %>

@@ -6,6 +6,8 @@
 		<div class="actions">
 
 		  <% if current_user.owns?(@recipe) %>
+		    <%= link_to "Delete", @recipe, method: :delete, :class => "btn",
+                                  data: { confirm: "Are you sure?" } %>
 		    <%= link_to "Edit", edit_recipe_path(@recipe), :class => "btn" %>
 		  <% elsif current_user.following?(@recipe) %>
 		    <% link_to "Alter Recipe", new_recipe_path(:recipe => @recipe), :id => "alter" %>

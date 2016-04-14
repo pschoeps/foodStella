@@ -26,6 +26,12 @@ class RecipesController < ApplicationController
     @recipe = Recipe.find(params[:id])
   end
 
+  def destroy
+    @recipe = Recipe.find(params[:id]).destroy
+    flash[:success] = "Recipe deleted"
+    redirect_to dashboard_user_path
+  end
+
   def update
     @recipe = Recipe.find(params[:id])
     @recipe.update_attributes(recipe_params)
@@ -47,7 +53,7 @@ class RecipesController < ApplicationController
       Recipe,
       params[:filterrific],
       :select_options => {
-        sorted_by: Recipe.options_for_sorted_by
+        sorted_by:   Recipe.options_for_sorted_by
       }
     ) or return
     @recipes = @filterrific.find.page(params[:page])
