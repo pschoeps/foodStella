@@ -34,15 +34,15 @@
 					white-space: nowrap;
 				}
 			}
-			.edit-profile { right: calc(50% + 80px); }
-			.edit-bg { left: calc(50% + 80px); }
+			.edit-profile { right: calc(50% + 70px); }
+			.edit-bg { left: calc(50% + 70px); }
 			.user_pic {
-				width: 140px;
-				height: 140px;
+				width: 120px;
+				height: 120px;
 				background-color: $dark;
 				background-size: auto 100%;
 				background-position: center center;
-				margin: -70px auto 0;
+				margin: -60px auto 0;
 				border-radius: 99px;
 				border: solid 2px white;
 			}	
@@ -58,12 +58,13 @@
 	> .container > .row {
 		position: relative;
 		.tabs_right {
+			display: none; // reveal at medium size
 			text-align: right;
 			position: absolute;
 			bottom: 0;
 			right: 0;
 			.button {
-				// margin-left: 20px;
+				display: inline-block;
 				margin: 0 0 20px 24px;
 				text-align: center;
 				span {
@@ -80,14 +81,13 @@
 	background-color: $dark;
 	color: white;
 	.button {
-		// display: none;
-		color: white;
-		// width: auto;
-		margin: 10px 20px;
+		margin: 10px 0px;
 		padding: 2px;
+		display: inline-block;
 	}
-	.button.selected { color: $green; }
-	.button:hover { color: $green; }
+	.button a { color: white; }
+	.button.selected a { color: $green; }
+	// .button:hover a { color: $green; }
 }
 
 .content.container {
@@ -158,8 +158,11 @@
 
 /* Reveal buttons on medium devices (desktops, 992px and up) */
 @media (min-width: 992px) {
-	.button { display: inline-block; }
-	.wrapper-header .search-box { display: inline-block; }
+	// .button { display: inline-block; }
+	// .wrapper-header .search-box { display: inline-block; }
+}
+@media (min-width: 768px) {
+	.tabs_right { display: block !important; }
 }
 
 }

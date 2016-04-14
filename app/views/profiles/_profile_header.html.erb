@@ -1,0 +1,55 @@
+<div class="row img-banner-bg">
+	<div class="container img-banner"></div>
+</div>
+<div class="row user-banner">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-0 col-sm-4"></div>
+			<div class="col-xs-12 col-sm-4 user">
+				<div class="row actions">
+					<div class='edit-profile'><%= link_to "Edit profile", edit_profile_path(@profile) if @editable %></div>
+					<div class="user_pic" style="background-image: url(<%= @profile.user.retrieve_pic %>)"></div>
+					<div class='edit-bg'><%= link_to "Edit background", edit_profile_path(@profile) if @editable %></div>
+				</div>
+				<div class="row user_name">
+					<h4>
+						<% if @profile.fir_name && @profile.las_name %>
+							<%= @profile.fir_name + ' ' + @profile.las_name %>
+						<% else %>
+							<%= @profile.user.fir_name + ' ' + @profile.user.las_name %>
+							<!-- %= @user.email[/[^@]+/] %> -->
+						<% end %>
+					</h4>
+				</div>
+			</div>
+			<div class="col-sm-4 tabs_right">
+				<div class="button">RECIPES<br><span><%= @profile.user.recipes.count %></span></div>
+				<div class="button">FRIENDS<br><span><%= @profile.user.friends.count %></span></div>
+				<!-- <div class="button">FOLLOWERS<br><span>20</span></div> -->
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row navigation-banner">
+	<div class="col-xs-0 col-sm-2 col-md-3"></div>
+	<div class="col-xs-12 col-sm-8 col-md-6">
+		<div class="row">
+			<div class="col-xs-4">
+				<div class="button <%= 'selected' if @tab == 'about_me' %>">
+					<%= link_to "About Me", profile_path(current_user) %>
+				</div>
+			</div>
+			<div class="col-xs-4">
+				<div class="button <%= 'selected' if @tab == 'friends' %>">
+					<%= link_to "Friends", profile_path(tab: 'friends') %>
+				</div>
+			</div>
+			<div class="col-xs-4">
+				<div class="button <%= 'selected' if @tab == 'activity' %>">
+					<%= link_to "Activity", inbox_user_path(current_user) %>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-0 col-sm-2 col-md-3"></div>
+</div>

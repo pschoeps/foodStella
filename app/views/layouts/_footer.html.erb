@@ -9,7 +9,9 @@
       <span><%= link_to "PROFILE", profile_path(current_user) %></span>
     </div>
 
-    <div class="row"></div>
+    <div class="row">
+      <%= link_to "Sign Out", destroy_user_session_path, :method => :delete  %>
+    </div>
 
     <div class="row">
       <%= image_tag "logo-foodstella-white.png", class: "logo" %>

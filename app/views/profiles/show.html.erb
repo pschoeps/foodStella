@@ -1,1 +1,6 @@
-<%= render "profile_view" %>
+<% @editable = current_user.owns?(@profile) %>
+
+<div class="profile-view">
+	<%= render "profile_header" %>
+	<%= render "profile_" + @tab %>
+</div>

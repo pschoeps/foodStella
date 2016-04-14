@@ -59,6 +59,11 @@ p {
 
 
 /* navbar */
+#myNavBar {
+  .navbar-right {
+    // margin-top: 20px !important;
+  }
+}
 .navbar {
   background-color: white;
   border: none;
@@ -81,14 +86,21 @@ p {
   padding: 3px;
 }
 
-#navbar-search {
-  border-width: 0;
-  border-bottom-width: 2px;
+#navbar-search input[type=text] {
+  border: solid 1px $green;
+  border-radius: 1px;
+  outline: none !important;
+  width: 220px;
 }
 .navbar-header { text-align: center; }
 .navbar-toggle {
   position: absolute;
   left: 0;
+}
+.navbar-nav > li > a {
+  padding: 10px;
+  font-size: 12px;
+
 }
 @media (min-width: 768px) {
   .navbar-header { text-align: left; }
@@ -98,11 +110,19 @@ p {
       padding-bottom: 5px;
   }
 }
+@media (min-width: 992px) {
+  #navbar-search {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    // top: 16px;
+  }
+}
 // #navbar-search { margin: 36px 10px 0; }
 
 .logo {
-  height: 42px;
-  margin: 5px;
+  height: 54px;
+  margin: 5px 5px 12px;
 }
 
 /* footer */
