@@ -5,9 +5,18 @@ class ProfilesController < ApplicationController
 	end
 
 	def create
+
+		# if !profile_params[:picture_url] && current_user.image
+			# profile_params[:picture_url] = current_user.image
+			#OR# @profile.update_attribute(:picture_url, current_user.image)
+		# end
+
 		@profile = current_user.build_profile(profile_params)
 
 		if @profile.save
+			# if !profile_params[:picture_url] && current_user.image
+				# @profile.update_attribute(:picture_url, current_user.image)
+			# end
 		  redirect_to profile_path(current_user)
 		  flash[:success] = "Profile Created"
 		else

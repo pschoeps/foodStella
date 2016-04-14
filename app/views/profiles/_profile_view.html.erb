@@ -1,16 +1,128 @@
+<% @editable = current_user.owns?(@profile) %>
+
+<div class="profile-view">
+
+<div class="row img-banner-bg">
+	<div class="container img-banner"></div>
+</div>
+<div class="row user-banner">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-4"></div>
+			<div class="col-xs-4 user">
+				<div class="row actions">
+					<div class='edit-profile'><%= link_to "Edit profile", edit_profile_path(@profile) if @editable %></div>
+					<div class="user_pic" style="background-image: url(<%= @profile.user.retrieve_pic %>)"></div>
+					<div class='edit-bg'><%= link_to "Edit background", edit_profile_path(@profile) if @editable %></div>
+				</div>
+				<div class="row user_name">
+					<h4>
+						<% if @profile.fir_name && @profile.las_name %>
+							<%= @profile.fir_name + ' ' + @profile.las_name %>
+						<% else %>
+							<%= @profile.user.fir_name + ' ' + @profile.user.las_name %>
+							<!-- %= @user.email[/[^@]+/] %> -->
+						<% end %>
+					</h4>
+				</div>
+			</div>
+			<div class="col-xs-4 tabs_right">
+				<div class="button">RECIPES<br><span><%= @profile.user.recipes.count %></span></div>
+				<div class="button">FRIENDS<br><span>23</span></div>
+				<!-- <div class="button">FOLLOWERS<br><span>20</span></div> -->
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row navigation-banner">
+	<div class="col-xs-4"></div>
+	<div class="col-xs-4">
+		<div class="button selected">About Me</div>
+		<div class="button">Friends</div>
+		<div class="button">Activity</div>
+	</div>
+	<div class="col-xs-4"></div>
+</div>
+
+
 <div class="row">
+	<div class="container content">
+		<div class="row">
+			<h4>ABOUT ME
+			<%= link_to "EDIT", edit_profile_path(@profile), :class => "edit" if @editable %>
+			</h4>
+			<div class="col-xs-12 col-md-10">
+				<%= @profile.about_me %>
+			</div>
+		</div>
 
-	<div class="col-md_4">
-		<h3><%= @profile.fir_name %></h3>
-		<h3><%= @profile.las_name %></h3>
-		  <%= @profile.about_me %>
-		<div class="user_pic" style="background-image: url(<%= @profile.picture_url %>);"></div>
-	</div>
+		<div class="row">
+			<h4>INGREDIENTS I LIKE
+			<%= link_to "EDIT", edit_profile_path(@profile), :class => "edit" if @editable %>
+			</h4>
+			<div class="col-xs-12 col-md-10 left">
+			<%= image_tag "icons/pizza_green.png", class: "icon" %>
+			<%= image_tag "icons/pork_green.png", class: "icon" %>
+			<%= image_tag "icons/legumes_green.png", class: "icon" %>
+			<%= image_tag "icons/soup_green.png", class: "icon" %>
+			<%= image_tag "icons/chicken_green.png", class: "icon" %>
+			<%= image_tag "icons/legumes_green.png", class: "icon" %>
+			<%= image_tag "icons/soup_green.png", class: "icon" %>
+			<%= image_tag "icons/chicken_green.png", class: "icon" %>
+			<div class="clear"></div>
+			</div>
+		</div>
 
-	<div class="actions">
-		<% if current_user.owns?(@profile) %>
-			<%= link_to "Edit", edit_profile_path(@profile), :class => "btn" %>
-		<% end %>
+		<div class="row">
+			<h4>FOODS I LIKE
+			<%= link_to "EDIT", edit_profile_path(@profile), :class => "edit" if @editable %>
+			</h4>
+			<div class="col-xs-12 col-md-10">
+				Mexican, Mediterranean, etc.
+			</div>
+		</div>
+
+		<div class="row">
+			<h4>FOODS I DON'T LIKE
+			<%= link_to "EDIT", edit_profile_path(@profile), :class => "edit" if @editable %>
+			</h4>
+			<div class="col-xs-12 col-md-10 bubbles">
+				<div>1</div>
+				<div>2</div>
+				<div>asdklfja;ldskfj</div>
+			</div>
+		</div>
+
+		<div class="row">
+			<h4>COOKING EXPERIENCE
+			<%= link_to "EDIT", edit_profile_path(@profile), :class => "edit" if @editable %>
+			</h4>
+			<div class="col-xs-12 col-md-10">
+				star star star star star
+			</div>
+		</div>
+
+		<div class="row">
+			<h4>AVERAGE TIME COOKING
+			<%= link_to "EDIT", edit_profile_path(@profile), :class => "edit" if @editable %>
+			</h4>
+			<div class="col-xs-12 col-md-10">
+				30 minutes a day
+			</div>
+		</div>
+
+		<div class="row">
+			<h4>COOKWARE PREFERENCES
+			<%= link_to "EDIT", edit_profile_path(@profile), :class => "edit" if @editable %>
+			</h4>
+			<div class="col-xs-12 col-md-10 bubbles">
+				<div>a;dsklf</div>
+				<div>3</div>
+				<div>3</div>
+				<div>3</div>
+			</div>
+		</div>
 	</div>
+</div>
 
 </div>

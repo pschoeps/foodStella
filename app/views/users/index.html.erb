@@ -8,6 +8,7 @@
               <%= user.email %>, <%= friendship_status(current_user, user) %>
             <% else %>
               <%= form_tag({controller: "friendship", action: "create", :id => user.id}, method: "post") do %>
+                <div class="user_pic" style="background-image: url(<%= user.retrieve_pic %>)"></div>
                 <%= label_tag(user.email) %>
                 <%= submit_tag("Request", :class => "btn")%>
                 <% if user.profile %>

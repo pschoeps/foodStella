@@ -6,8 +6,23 @@
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
       <%= devise_error_messages! %>
 
+      <div class="field split first">
+        <%= f.text_field :fir_name, autofocus: false, placeholder: 'First name' %>
+      </div>
+      <div class="field split">
+        <%= f.text_field :las_name, autofocus: false, placeholder: 'Last name' %>
+      </div>
+
+      <div class="clear"></div>
+      <br />
+
       <div class="field">
-        <!-- <%= f.label :email %><br /> -->
+        <%= f.text_field :country, autofocus: false, placeholder: 'Country' %>
+      </div>
+
+      <br />
+
+      <div class="field">
         <%= f.email_field :email, autofocus: false, placeholder: 'Email' %>
       </div>
 
