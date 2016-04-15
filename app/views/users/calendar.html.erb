@@ -213,10 +213,11 @@ $(document).ready(function() {
                 });
 
                 $(this).click(function(){
-                  $(this).css('box-shadow', '2px 2px 18px #888');
-                  $('.fc-slats td').css({
-                    'box-shadow': 'inset 0 0 90px #e8e8e8',
-                    // 'background-color': '#fafafa'
+                  $('#external-events-listing').css('height', $('#external-events-listing').height() + 'px');
+                  $('.fc-slats td').css('box-shadow', 'inset 0 0 90px #e8e8e8');
+                  $(this).css({
+                    'box-shadow': '2px 2px 18px #888',
+                    'float': 'left'
                   });
                   $(this).animate({
                     'height': '108px',
@@ -227,13 +228,13 @@ $(document).ready(function() {
                       'height': '100px',
                       'width': '100px',
                       'margin': '8px',
-                      // 'box-shadow': '0 0 0px #FFF'
                       }, 200, function(){
-                        $(this).css('box-shadow', '0 0 0px #444');
-                        $('.fc-slats td').css({
-                          'box-shadow': 'inset 0 0 0px #fff',
-                            'background-color': '#fff'
-                          });
+                        $(this).css({
+                          'box-shadow': '0 0 0px #444',
+                          'float': 'none'
+                        });
+                        $('.fc-slats td').css('box-shadow', 'inset 0 0 0px #fff');
+                        $('#external-events-listing').css('height', 'auto');
                       });
                   });
                 });
