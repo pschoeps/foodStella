@@ -55,6 +55,7 @@ class ProfilesController < ApplicationController
 		end
 
 		@users = User.all
+		@friends = current_user.friends
 	end
 
 	def destroy
