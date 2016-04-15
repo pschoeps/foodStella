@@ -213,7 +213,21 @@ $(document).ready(function() {
                 });
 
                 $(this).click(function(){
-                  $(this).effect('bounce');
+                  $(this).css('box-shadow', '2px 2px 18px #888');
+                  $(this).animate({
+                    'height': '108px',
+                    'width': '108px',
+                    'margin': '4px',
+                  }, 200, function(){
+                    $(this).animate({
+                      'height': '100px',
+                      'width': '100px',
+                      'margin': '8px',
+                      // 'box-shadow': '0 0 0px #FFF'
+                      }, 200, function(){
+                        $(this).css('box-shadow', '0 0 0px #444');
+                      });
+                  });
                 });
 
 
