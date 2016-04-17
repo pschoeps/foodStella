@@ -1,0 +1,79 @@
+<div class="col-md-3 sidebar">
+    <div class="header">
+      <h2>My Foods</h2>
+        <%= link_to "", "#", :class => "glyphicon glyphicon-cog" %>
+    </div>
+
+    <div class="meal-selection">
+       <button type="button" id="snacks">
+          Snacks
+          <span class="badge"><%= @snacks.count %></span>
+       </button>
+      <div class="selection" id="snacks-selection">
+          <div id='external-events'>
+            <div id='external-events-listing'>
+              <% @snacks.each do |r| %>
+                <div class='fc-event <%= r.name %>-<%= r.id %> draggable' id="in-list" data="<%= r.name %>-<%= r.id %>" data-event='1'><%= r.name %></div>
+              <% end %>
+            </div>
+          </div>
+      </div>
+
+      <button type="button" id="sidedish">
+          Side Dishes
+          <span class="badge"><%= @side_dishes.count %></span>
+       </button>
+      <div class="selection" id="sidedish-selection">
+          <div id='external-events'>
+            <div id='external-events-listing'>
+              <% @side_dishes.each do |r| %>
+                <div class='fc-event <%= r.name %>-<%= r.id %>' id="in-list" data="<%= r.name %>-<%= r.id %>"><%= r.name %></div>
+              <% end %>
+            </div>
+          </div>
+      </div>
+
+      <button type="button" id="maindish">
+          Main Dishes
+          <span class="badge"><%= @main_dishes.count %></span>
+       </button>
+      <div class="selection" id="maindish-selection">
+          <div id='external-events'>
+            <div id='external-events-listing'>
+              <% @main_dishes.each do |r| %>
+                <div class='fc-event <%= r.name %>-<%= r.id %>' id="in-list" data="<%= r.name %>-<%= r.id %>"><%= r.name %></div>
+              <% end %>
+            </div>
+          </div>
+      </div>
+
+      <button type="button" id="dessert">
+          Desserts
+          <span class="badge"><%= @desserts.count %></span>
+       </button>
+      <div class="selection" id="dessert-selection">
+          <div id='external-events'>
+            <div id='external-events-listing'>
+              <% @desserts.each do |r| %>
+                <div class='fc-event <%= r.name %>-<%= r.id %>' id="in-list" data="<%= r.name %>-<%= r.id %>"><%= r.name %></div>
+              <% end %>
+            </div>
+          </div>
+      </div>
+
+      <button type="button" id="drink">
+          Drinks
+          <span class="badge"><%= @drinks.count %></span>
+       </button>
+      <div class="selection" id="drink-selection">
+          <div id='external-events'>
+            <div id='external-events-listing'>
+              <% @drinks.each do |r| %>
+                <div class='fc-event <%= r.name %>-<%= r.id %>' id="in-list" data="<%= r.name %>-<%= r.id %>"><%= r.name %></div>
+              <% end %>
+            </div>
+          </div>
+      </div>
+
+    </div>
+  </div>

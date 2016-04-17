@@ -1,22 +1,46 @@
 <div id="filterrific_results">
 
-  <div>
-    <%= page_entries_info recipes %>
-  </div>
 
     <ul>
+
+
     <% recipes.each do |recipe| %>
-      <li> <%= link_to image_tag(recipe.photo_url.url(:thumb)), {:action => 'show', :controller => 'recipes', :id => recipe.id} %>
-        <% unless current_user.owns?(recipe) %>
-          <% if current_user.following?(recipe) %>
-          <span class="glyphicon glyphicon-remove" data="<%= recipe.id %>" id="unfollow"></span> 
-          <% else %>
-          <span class="glyphicon glyphicon-plus" data="<%= recipe.id %>" id="follow"></span> 
-          <% end %>
-         <% end %>
+      <li> 
+        <div class="box">
+          <%= link_to image_tag(recipe.photo_url.url), {:action => 'show', :controller => 'recipes', :id => recipe.id} %>
+        </div>
+
+        <div class="details">
+          <h3><%= truncate(recipe.name, length: 25) %></h3>
+          <p><%= truncate(recipe.description, length: 200) %></p>
+          <span class="cook-time">Cook Time: <p><%= recipe.cook_time %>mins</p></span>
+          <span class="prep-time">Prep Time: <p><%= recipe.prep_time %>mins</p></span>
+          <div class="recipe-footer">
+            <p>Recipe By: <% user = recipe.get_user(recipe.user_id).name %>
+               </p>
+          </div>
+        
+        </div>
+
+           <% unless current_user.owns?(recipe) %>
+             <% if current_user.following?(recipe) %>
+               <div data="<%= recipe.id %>" class="spatula spatula-selected" id="unfollow"></div> 
+             <% else %>
+               <div data="<%= recipe.id %>" class="spatula spatula-unselected" id="follow"></div> 
+             <% end %>
+           <% end %>
+
+         
+
+
        </li>
     <% end %>
+
+
   </ul>
+
+
 </div>
+
 
 <%= will_paginate recipes %>

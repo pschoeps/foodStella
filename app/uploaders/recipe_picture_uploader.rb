@@ -8,6 +8,7 @@ class RecipePictureUploader < CarrierWave::Uploader::Base
     process resize_to_fill: [100,100]
   end
 
+
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
   # include CarrierWave::MiniMagick

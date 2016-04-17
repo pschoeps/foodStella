@@ -49,7 +49,22 @@ class RecipesController < ApplicationController
   end
 
   def index
-     @filterrific = initialize_filterrific(
+
+    #variables contained in recipes sidebar
+    @followed_recipes = current_user.following
+    @user_recipes = current_user.recipes
+    @recipes = @user_recipes + @followed_recipes
+    @calendar_title = Time.now.strftime("%A")
+    @events = current_user.events
+
+    @snacks = @user_recipes.where(:meal_type => "1") + @followed_recipes.where(:meal_type => "1")
+    @side_dishes = @user_recipes.where(:meal_type => "2") + @followed_recipes.where(:meal_type => "2")
+    @main_dishes = @user_recipes.where(:meal_type => "3") + @followed_recipes.where(:meal_type => "3")
+    @desserts = @user_recipes.where(:meal_type => "4") + @followed_recipes.where(:meal_type => "4")
+    @drinks = @user_recipes.where(:meal_type => "5") + @followed_recipes.where(:meal_type => "5")
+
+    #filtering links to model 
+    @filterrific = initialize_filterrific(
       Recipe,
       params[:filterrific],
       :select_options => {
@@ -62,6 +77,7 @@ class RecipesController < ApplicationController
       format.html
       format.js
     end
+
   end
 
   def get_difficulty(diff)

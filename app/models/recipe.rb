@@ -107,4 +107,8 @@ class Recipe < ActiveRecord::Base
         i.order = index + 1
       end
     end
+
+    def get_user(id)
+      User.find(id)
+    end
 end

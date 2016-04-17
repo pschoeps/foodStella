@@ -22,6 +22,7 @@
 //= require scheduler-local
 //= require cocoon
 //= require filterrific/filterrific-jquery
+//= require universal
 
 
 

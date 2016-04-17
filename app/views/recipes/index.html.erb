@@ -1,34 +1,28 @@
+<%= render 'layouts/recipe_css_variables' %>
+<div class="row">
+  <div class="col-md-12 recipe-page-header">
+    <h1>What do you <i>stella</i> today?</h1>
+  </div>
+</div>
+
+<div class= "row">
+  <div class="col-md-12 filter-bar">
+    <%= render 'filter_form' %>
+    <%= page_entries_info @recipes %>
+  </div>
+</div>
+
 <div class="row recipes-page">
-  <div class="col-md-8 col-center">
+
+  <%= render 'layouts/recipe_sidebar' %>
+
+  <div class="col-md-9">
   	
 
-    <%= form_for_filterrific @filterrific do |f| %>
-  <div>
-    Search
-    <%# give the search field the 'filterrific-periodically-observed' class for live updates %>
-    <%= f.text_field(
-      :search_query,
-      class: 'filterrific-periodically-observed'
+    <%= render(
+      partial: 'recipes/list',
+      locals: { recipes: @recipes }
     ) %>
-  </div>
-  <div>
-    Sorted by
-    <%= f.select(:sorted_by, @filterrific.select_options[:sorted_by]) %>
-  </div>
-  <div>
-    <%= link_to(
-      'Reset filters',
-      reset_filterrific_url,
-    ) %>
-  </div>
-  <%# add an automated spinner to your form when the list is refreshed %>
-  <%= render_filterrific_spinner %>
-<% end %>
-
-<%= render(
-  partial: 'recipes/list',
-  locals: { recipes: @recipes }
-) %>
 
 
 
@@ -50,9 +44,9 @@
                   url:'/relationships',
               
                   success:function (response) {
-                  	$this.addClass("glyphicon-remove")
+                  	$this.addClass("spatula-selected")
                     $this.attr('id', 'unfollow');
-                    $this.removeClass("glyphicon-plus")
+                    $this.removeClass("spatula-unselected")
                   }
                   
                 });//end ajax call
@@ -68,12 +62,29 @@
                   url:"/relationships/" + recipe_id,
               
                   success:function (response) {
-                  	$this.addClass("glyphicon-plus")
+                  	$this.addClass("spatula-unselected")
                     $this.attr('id', 'follow');
-                    $this.removeClass("glyphicon-remove")
+                    $this.removeClass("spatula-selected")
                   }
                   
                 });//end ajax call
 		});
+
+    //resizes boxes based on screen width;
+
+    wi = $(window).width();
+    win = wi * (3/4);
+    box_size = win * (1/4);
+
+    console.log(wi);
+    $('ox').css({
+                    'height': box_size + 'px',
+                    'width': box_size + 'px'
+                  });
+     $('.dails').css({
+                    //adding height for the "details" div containing recipe information
+                    'height': box_size - 40 + 'px',
+                    'width': box_size + 'px'
+                  });
 });
 </script>
