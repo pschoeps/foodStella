@@ -36,6 +36,9 @@ gem 'will_paginate-bootstrap'
 gem 'devise'
 gem 'omniauth-facebook'
 
+#inline form editing
+gem 'best_in_place'
+
 #for nesting forms
 gem 'cocoon'
 
