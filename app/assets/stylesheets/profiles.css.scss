@@ -166,3 +166,49 @@
 }
 
 }
+
+.friends-view{
+	.row:first-child{
+		position: relative;
+		.search {
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			margin-bottom: 10px !important;
+			input {
+				border: solid 1px $green;
+				text-align: center;
+			}
+		}
+	}
+	.row.friendships {
+		margin-top: 10px !important;
+		ul {
+			list-style: none;
+			padding-left: 0;
+		}
+		li {
+			display: inline-block;
+			float: left;
+			width: 20%;
+			min-width: 136px;
+			height: 230px;
+			.user_name {
+				font-size: 16px;
+				color: $dark;
+				margin: 6px 0;
+			}
+			.user_pic {
+				width: 110px;
+				height: 110px;
+				background-color: $medium;
+				background-size: auto 100%;
+				background-position: center center;
+				// margin: -60px auto 0;
+				border-radius: 99px;
+				border: solid 1px $medium;
+				margin: 0 auto;
+			}
+		}
+	}
+}
