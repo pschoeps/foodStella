@@ -69,7 +69,11 @@ class RecipesController < ApplicationController
       params[:filterrific],
       :select_options => {
         sorted_by:   Recipe.options_for_sorted_by,
-        sort_by_ingredients: Recipe.options_for_sort_by_ingredients
+        sort_by_ingredients: Recipe.options_for_sort_by_ingredients,
+        latest: Recipe.options_for_latest,
+        style: Recipe.options_for_style,
+        difficulty: Recipe.options_for_difficulty,
+        meal_type: Recipe.options_for_meal_type
       }
     ) or return
 

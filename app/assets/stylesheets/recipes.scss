@@ -335,11 +335,17 @@
 
 /* Index Page */
 
-#ingredient-options {
+.new_filterrific {
+	div {
+		float: right;
+	}
+}
+
+#checkbox {
 	label {
-		color: white;
+		color: black;
 		input {
-			display: none;
+			
 		}
 	}
 
@@ -354,6 +360,7 @@
 
 	.col-md-9 {
 		padding: 0;
+		float: right;
 
 		ul {
 			list-style-type: none;
