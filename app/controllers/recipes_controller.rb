@@ -68,9 +68,11 @@ class RecipesController < ApplicationController
       Recipe,
       params[:filterrific],
       :select_options => {
-        sorted_by:   Recipe.options_for_sorted_by
+        sorted_by:   Recipe.options_for_sorted_by,
+        sort_by_ingredients: Recipe.options_for_sort_by_ingredients
       }
     ) or return
+
     @recipes = @filterrific.find.page(params[:page])
 
     respond_to do |format|

@@ -335,6 +335,21 @@
 
 /* Index Page */
 
+#ingredient-options {
+	label {
+		color: white;
+		input {
+			display: none;
+		}
+	}
+
+	.green {
+		color: $green;
+	}
+}
+
+
+
 .recipes-page {
 
 	.col-md-9 {

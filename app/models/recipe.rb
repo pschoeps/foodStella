@@ -33,6 +33,7 @@ class Recipe < ActiveRecord::Base
               :sorted_by,
               :search_query,
               :with_created_at_gte,
+              :sort_by_ingredients
               ]
 
 
@@ -81,6 +82,27 @@ class Recipe < ActiveRecord::Base
   scope :with_created_at_gte, lambda { |ref_date|
     where('recipes.created_at >= ?', ref_date)
   }
+
+  scope :sort_by_ingredients, lambda { |ingredient_ids|
+    # get a reference to the join table
+    quantities = Quantity.arel_table
+    # get a reference to the filtered table
+    recipes = Recipe.arel_table
+    # let AREL generate a complex SQL query
+    where(
+      Quantity \
+        .where(quantities[:recipe_id].eq(recipes[:id])) \
+        .where(quantities[:ingredient_id].in([*ingredient_ids].map(&:to_i))) \
+        .exists
+    )
+  }
+
+  def self.options_for_sort_by_ingredients
+    [
+      ['Tomato', 94], #tomato
+      ['Rice', 95] #rice
+    ]
+  end
 
   def self.options_for_sorted_by
     [

@@ -1,4 +1,71 @@
+var currentMousePos = {
+    x: -1,
+    y: -1
+};
+
+
+
 $(document).ready(function() {
+
+
+   $(document).on("mousemove", function (event) {
+        currentMousePos.x = event.pageX;
+        currentMousePos.y = event.pageY;
+    });
+
+    var calendarWidth = $('#calendar').outerWidth()
+
+    $('.calendar-header').css('width', calendarWidth + 'px');
+
+
+            /* initialize the external events
+            -----------------------------------------------------------------*/
+
+            $('#external-events .fc-event').each(function() {
+
+                // store data so the calendar knows to render an event upon drop
+                $(this).data('event', {
+                    title: $.trim($(this).attr('data')),
+                    stick: true // maintain when user navigates (see docs on the renderEvent method)
+                });
+
+                // make the event draggable using jQuery UI
+                $(this).draggable({
+                    zIndex: 999,
+                    revert: true,      // will cause the event to go back to its
+                    revertDuration: 0  //  original position after the drag
+                });
+
+                $(this).click(function(){
+                  $('#external-events-listing').css('height', $('#external-events-listing').height() + 'px');
+                  $('.fc-slats td').css('box-shadow', 'inset 0 0 90px #e8e8e8');
+                  $(this).css({
+                    'box-shadow': '2px 2px 18px #888',
+                    'float': 'left'
+                  });
+                  $(this).animate({
+                    'height': '108px',
+                    'width': '108px',
+                    'margin': '4px',
+                  }, 200, function(){
+                    $(this).animate({
+                      'height': '100px',
+                      'width': '100px',
+                      'margin': '8px',
+                      }, 200, function(){
+                        $(this).css({
+                          'box-shadow': '0 0 0px #444',
+                          'float': 'none'
+                        });
+                        $('.fc-slats td').css('box-shadow', 'inset 0 0 0px #fff');
+                        $('#external-events-listing').css('height', 'auto');
+                      });
+                  });
+                });
+
+
+            });
+
     $('#snacks').click(function() {
     if ( $('#snacks-selection').css('display') == 'none' )
       $('#snacks-selection').css('display','block');
@@ -45,28 +112,22 @@ $(document).ready(function() {
     }
   })
 
-  $('.x').each(function() {
-    //set size
-    var th = $(this).height(),//box height
-        tw = $(this).width(),//box width
-        im = $(this).find('a').children('img'),//image
-        ih = im.height(),//inital image height
-        iw = im.width();//initial image width
-    if (ih>iw) {//if portrait
-        im.addClass('ww').removeClass('wh');//set width 100%
-    } else {//if landscape
-        im.addClass('wh').removeClass('ww');//set height 100%
-    }
-    //set offset
-    var nh = im.height(),//new image height
-        nw = im.width(),//new image width
-        hd = (nh-th)/2,//half dif img/box height
-        wd = (nw-tw)/2;//half dif img/box width
-    if (nh<nw) {//if portrait
-        im.css({marginLeft: '-'+wd+'px', marginTop: 0});//offset left
-    } else {//if landscape
-        im.css({marginTop: '-'+hd+'px', marginLeft: 0});//offset top
-    }
-  });
+  
+
+
+
+
+
 
 });
+
+
+
+
+
+
+
+
+
+
+
