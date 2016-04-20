@@ -1,34 +1,32 @@
 <div class="row">
-	<div class="container content">
+	<div class="container content friends-view">
 		<div class="row">
-			<h4>FRIENDS</h4>
+			<h4>MY FRIENDS</h4>
+			<div class="search"><input type="text" placeholder="search my friends"></div>
+		</div>
+		<div class="row friendships">
 			<div class="col-xs-12 col-md-10">
-				
-				<div class="row friendships">
-				  <div class="col-md-8">
-				    <ul>
-				      <% if @users.any? %>
-				       <% @users.each do |user| %>
-				          <li>
-				            <% if Friendship.exists?(current_user, user) || user.id == current_user.id %>
-				              <%= user.email %>, <%= friendship_status(current_user, user) %>
-				            <% else %>
-				              <%= form_tag({controller: "friendship", action: "create", :id => user.id}, method: "post") do %>
-				                <div class="user_pic" style="background-image: url(<%= user.retrieve_pic %>)"></div>
-				                <%= label_tag(user.email) %>
-				                <%= submit_tag("Request", :class => "btn")%>
-				                <% if user.profile %>
-				                  <%= link_to "View Profile", profile_path(user) %>
-				                <% end %>
-				              <% end %>
-				            <% end %>
-				          </li>
-				        <% end %>
-				      <% end %>
-				    </ul>
-				  </div>
-				</div>
-
+			    <ul>
+			      <% if @users.any? %>
+			       <% @users.each do |user| %>
+			          <li>
+			          	<div class="user_pic" style="background-image: url(<%= user.retrieve_pic %>)"></div>
+						<div class="user_name"><%= user.fir_name ? user.fir_name : 'Anon' %></div>
+			            <% if Friendship.exists?(current_user, user) || user.id == current_user.id %>
+			              <%= user.email %>, <%= friendship_status(current_user, user) %><br />
+			            <% else %>
+			              <%= form_tag({controller: "friendship", action: "create", :id => user.id}, method: "post") do %>
+			                <%= submit_tag("Request", :class => "btn")%><br />
+			              <% end %>
+			            <% end %>
+			            <% if user.profile %>
+							<%= link_to "View Profile", profile_path(user) %>
+			            <% end %>
+			          </li>
+			        <% end %>
+			      <% end %>
+			      <li style="clear:both;"></li>
+			    </ul>
 			</div>
 		</div>
 	</div>

@@ -28,6 +28,9 @@ GEM
       tzinfo (~> 0.3.37)
     arel (4.0.2)
     bcrypt (3.1.11)
+    best_in_place (3.1.0)
+      actionpack (>= 3.2)
+      railties (>= 3.2)
     bootstrap-sass (3.2.0.0)
       sass (~> 3.2)
     builder (3.1.4)
@@ -291,6 +294,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  best_in_place
   bootstrap-sass (= 3.2.0.0)
   carrierwave
   cocoon

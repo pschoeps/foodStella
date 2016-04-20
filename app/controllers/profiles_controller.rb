@@ -1,4 +1,5 @@
 class ProfilesController < ApplicationController
+	respond_to :html, :json
 
 	def new
 		@profile = current_user.build_profile
@@ -30,10 +31,11 @@ class ProfilesController < ApplicationController
 	def update
 	  @profile = Profile.find(params[:id])
 	  @profile.update_attributes(profile_params)
-	    respond_to do |format|
-	      format.html  { redirect_to profile_path(current_user) }
-	      flash[:success] =  "Profile Updated"
-	  end
+	  #   respond_to do |format|
+	  #     format.html  { redirect_to profile_path(current_user) }
+	  #     flash[:success] =  "Profile Updated"
+	  # end
+	  respond_with @profile
 	end
 
 	def index
