@@ -16,6 +16,10 @@ FoodStella::Application.routes.draw do
       get 'inbox'
     end
 
+    collection do 
+      get 'add_day'
+    end
+
   end
 
   resources :profiles

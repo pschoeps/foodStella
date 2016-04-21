@@ -46,6 +46,14 @@ class UsersController < ApplicationController
 		@day_counter = 3
 
 	end
+
+	def add_day
+		day_counter = params[:day_counter].to_i
+		@new_day = [(DateTime.now + day_counter.days).strftime("%A"), (DateTime.now + day_counter.days).strftime('%Y-%m-%d')]
+		puts @new_day
+
+		render :partial => 'users/one_day', :locals => { :day => @new_day }
+    end
 end
 
 

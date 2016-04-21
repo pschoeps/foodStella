@@ -16,6 +16,7 @@
   <%= render 'layouts/recipe_sidebar' %>
 
   <div class="col-md-9 calendar-nav">
+    <span class="btn" id="add-day" data="<%= @day_counter %>">Add Day</span>
   </div>
 
   <%= render 'one_day', :day => @today %>
@@ -24,17 +25,57 @@
 
 </div>
 
-
-
-
-
-
-
-
-
+<div class="added-days">
+  <div class="row added-day" id="day-<%= @day_counter %>"></div>
+</div>
 
 
 
 </div>
+
+
+<script>
+  $(document).ready(function() {
+      $(document).on('click','#add-day',function(){
+        $this = $(this)
+        day_counter = $this.attr('data')
+        $.ajax({//ajax call for questions
+                  type:'GET',
+                  data: {day_counter: day_counter},
+                  url:'/users/add_day',
+              
+                  success:function (response) {
+                    console.log("ajax success")
+                    $("#day-" + day_counter).html(response);
+
+                    new_day_counter = parseInt(day_counter) + 1
+                    console.log(new_day_counter)
+                    $this.attr('data', new_day_counter)
+
+
+                    string = parse('<div class="row added-day" id="day-%s"> </div>', new_day_counter);
+                    $('.added-days').append($(string))
+
+                    element_id = '#day-' + new_day_counter
+                    console.log(element_id)
+                    $(element_id)[0].scrollIntoView( false );
+
+                  }
+                  
+                });//end ajax call
+    });
+
+    function parse(str) {
+      var args = [].slice.call(arguments, 1),
+        i = 0;
+
+      return str.replace(/%s/g, function() {
+        return args[i++];
+      });
+    }
+
+  });
+
+</script>
 
 
