@@ -1,3 +1,2 @@
-class PrefferedFood < ActiveRecord::Base
-  belongs_to :user
+class PreferredFood < ActiveRecord::Base
 end
