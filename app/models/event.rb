@@ -4,7 +4,9 @@ class Event < ActiveRecord::Base
 
 
   def get_recipe(recipe_id)
-  	recipe = Recipe.find(recipe_id)
-  	recipe
+  	unless recipe_id < 0
+  	  recipe = Recipe.find(recipe_id)
+  	  recipe
+  	end
   end
 end
