@@ -1,5 +1,7 @@
-<% if params[:recipe] %>
-  <%= render "recipe_from_other_recipe", :recipe => params[:recipe] %>
-<% else %>
-  <%= render "recipe_from_scratch" %>
-<% end %>
+<div class='recipe-form'>
+	<% if params[:recipe] %>
+	  <%= render "recipe_from_other_recipe", :recipe => params[:recipe] %>
+	<% else %>
+	  <%= render "recipe_from_scratch" %>
+	<% end %>
+</div>

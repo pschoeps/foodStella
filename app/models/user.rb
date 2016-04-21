@@ -14,6 +14,11 @@ class User < ActiveRecord::Base
 
   has_one :profile
 
+  has_many :preffered_ingredients, dependent: :destroy
+  # accepts_nested_attributes_for :preffered_ingredients
+  has_many :preffered_foods, dependent: :destroy
+  has_many :deffered_foods, dependent: :destroy
+
   #friendships setup
   has_many :friendships
   has_many :friends, -> { where(friendships: {status: 'accepted'}).order('created_at DESC') },

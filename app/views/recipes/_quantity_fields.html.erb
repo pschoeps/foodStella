@@ -1,16 +1,16 @@
 <li class="control-group nested-fields">
   <div class="controls">
   	<%= f.fields_for :ingredient do |quantity_ingredient| %>
-      <%= f.label :name, "Ingredient:" %>
-      <%= quantity_ingredient.text_field :name %>
+      <!-- %= f.label :name, "Ingredient:" %> -->
+      <%= quantity_ingredient.text_field :name, class: 'long' %>
     <% end %>
 
     <%= f.label :amount, "Amount:" %>
-    <%= f.text_field :amount %>
+    <%= f.text_field :amount, class: 'small' %>
 
     <%= f.label :unit, "Unit" %>
      <%= f.select(:unit, options_for_select([['Cup', 1], ['Oz', 2], ["Tsp", 3]])) %> 
 
-    <%= link_to_remove_association "remove", f %>
+    <%= link_to_remove_association "Remove", f %>
   </div>
 </li>

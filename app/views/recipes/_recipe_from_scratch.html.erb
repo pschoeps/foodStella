@@ -1,76 +1,110 @@
 <div class="row">
+  <div class="col-md-12 recipe-form-header">
+    <h1>ADD FOOD</h1>
+  </div>
+</div>
+<div class="row">
 
-	<div class="col-sm-8 col-center new_recipe-col">
+	<div class="col-sm-12 col-md-10 col-center new_recipe-col">
+    
+    <div class="row upload-photo"></div>
+
+    <div class="row food-type"></div>
+
     <%= form_for @recipe, html: {class: "form-horizontal recipe-form", multipart: true } do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
       <!-- <= devise_error_messages! %> -->
+
       <fieldset id="recipe-meta">
-        <ol style="list-style-type:none">
-          <li class="control-group">
-            <%= f.label :name, "Meal Name", class: "control-label" %>
-            <div class="controls"><%= f.text_field :name %></div>
-          </li>
+        <ol class='top-list'>
 
-          <li class="control-group">
-            <%= f.label :photo_url, "Upload a picture", class: "control-label" %>
-            <div class="controls"><%= f.file_field :photo_url, accept: 'image/jpeg,image/gif,image/png' %></div>
-          </li>
+          <div class="row upload-photo">
+            <div class="upload-photo">
+              <li class="control-group">
+                <%= f.label :photo_url, "Upload a photo", class: "control-label" %>
+                <div class="controls"><%= f.file_field :photo_url, accept: 'image/jpeg,image/gif,image/png' %></div>
+              </li>
+            </div>
+          </div>
 
-          <li class="control-group">
-            <%= f.label :description, "Description", class: "control-label" %>
-            <div class="controls"><%= f.text_area :description %></div>
-          </li>
+          <div class="row">
+            <li class="control-group food-type">
+              <%= f.label :meal_type, "Food type:", class: "control-label" %><br />
+              <div class="controls"><%= f.select(:meal_type, options_for_select([['Snack', 1], ['Side dish', 2], ["Main dish", 3], ['Dessert', 4], ['Drink', 5]])) %></div>
+            </li>
+          </div>
 
-          <li>
-            <label class="control-label" for="recipe_instructions">Instructions</label>
-            <fieldset id="recipe-instructions">
-              <ol>
-                <%= f.fields_for :instructions do |instruction| %>
-                  <%= render 'instruction_fields', f: instruction %>
-                <% end %>
-              </ol>
-              <%= link_to_add_association 'add step', f, :instructions, 'data-association-insertion-node' => "#recipe-instructions ol", 'data-association-insertion-method' => "append" %>
-            </fieldset>
-          </li>
+          <div class="row">
+             <h2>MAIN INFORMATION</h2>
 
-          <li class="control-group">
-            <%= f.label :prep_time, "Prep Time", class: "control-label" %>
-            <div class="controls"><%= f.text_field :prep_time %>Mins.</div>
-          </li>
+            <li class="control-group">
+              <%= f.label :name, "Meal name:", class: "control-label" %>
+              <div class="controls"><%= f.text_field :name, required: true %></div>
+            </li>
 
-          <li class="control-group">
-            <%= f.label :cook_time, "Cook Time", class: "control-label" %>
-            <div class="controls"><%= f.text_field :cook_time %>Mins.</div>
-          </li>
+            <li class="control-group">
+              <%= f.label :description, "Description:", class: "control-label" %>
+              <div class="controls"><%= f.text_area :description %></div>
+            </li>
 
-          <li class="control-group">
-            <%= f.label :meal_type, "Meal Type", class: "control-label" %>
-            <div class="controls"><%= f.select(:meal_type, options_for_select([['Snack', 1], ['Side dish', 2], ["Main dish", 3], ['Dessert', 4], ['Drink', 5]])) %></div>
-          </li>
+            <li class="control-group">
+              <%= f.label :servings, "Servings:", class: "control-label" %>
+              <div class="controls"><%= f.text_field :description, class: 'small' %></div>
+            </li>
 
-          <li class="control-group">
-            <%= f.label :difficulty, "Difficulty", class: "control-label" %>
-            <div class="controls"><%= f.select(:difficulty, options_for_select([['Easy', 1], ['Moderate', 2], ["Difficult", 3]])) %></div>
-          </li>
+            <li>
+              <label class="control-label" for="">Ingredients:</label>
+              <fieldset id="recipe-ingredients">
+                <ol>
+                  <%= f.fields_for :quantities do |quantity| %>
+                    <%= render 'quantity_fields', f: quantity %>
+                  <% end %>
+                </ol>
+                <%= link_to_add_association 'Add ingredient', f, :quantities, 'data-association-insertion-node' => "#recipe-ingredients ol", 'data-association-insertion-method' => "append", :wrap_object => Proc.new {|quantity| quantity.build_ingredient; quantity } %>
+              </fieldset>
+            </li>
 
-          <li class="control-group">
-            <%= f.label :category, "Category", class: "control-label" %>
-            <div class="controls"><%= f.select(:category, options_for_select([['Mediterranean', 1], ['Chinese', 2], ["Mexican", 3]])) %></div>
-          </li>
+            <li>
+              <label class="control-label" for="recipe_instructions">Instructions:</label>
+              <fieldset id="recipe-instructions">
+                <ol>
+                  <%= f.fields_for :instructions do |instruction| %>
+                    <%= render 'instruction_fields', f: instruction %>
+                  <% end %>
+                </ol>
+                <%= link_to_add_association 'Add step', f, :instructions, 'data-association-insertion-node' => "#recipe-instructions ol", 'data-association-insertion-method' => "append" %>
+              </fieldset>
+            </li>
+          </div>
+
+          <div class="row">
+            <h2>MORE DETAILS (OPTIONAL)</h2>
+
+            <li class="control-group col-md-4 inline">
+              <%= f.label :prep_time, "Preparation Time:", class: "control-label" %>
+              <div class="controls"><%= f.text_field :prep_time, class: 'small' %> mins</div>
+            </li>
+
+            <li class="control-group col-md-4 inline center">
+              <%= f.label :cook_time, "Cook Time:", class: "control-label" %>
+              <div class="controls"><%= f.text_field :cook_time, class: 'small' %> mins</div>
+            </li>
+
+            <li class="control-group col-md-4 inline">
+              <%= f.label :difficulty, "Difficulty:", class: "control-label" %>
+              <div class="controls"><%= f.select(:difficulty, options_for_select([['Easy', 1], ['Moderate', 2], ["Difficult", 3]])) %></div>
+            </li>
+
+            <li class="control-group">
+              <%= f.label :category, "Category", class: "control-label" %>
+              <div class="controls"><%= f.select(:category, options_for_select([['Mediterranean', 1], ['Chinese', 2], ["Mexican", 3]])) %></div>
+            </li>
+          </div>
         </ol>
-      </fieldset>
-
-      <fieldset id="recipe-ingredients">
-        <ol>
-          <%= f.fields_for :quantities do |quantity| %>
-            <%= render 'quantity_fields', f: quantity %>
-          <% end %>
-        </ol>
-        <%= link_to_add_association 'add ingredient', f, :quantities, 'data-association-insertion-node' => "#recipe-ingredients ol", 'data-association-insertion-method' => "append", :wrap_object => Proc.new {|quantity| quantity.build_ingredient; quantity } %>
       </fieldset>
 
       <%= f.submit %>
-      <div class="clear"></div>
+      <div class="clear" style="height: 60px;"></div>
 
     <% end %>
   </div>

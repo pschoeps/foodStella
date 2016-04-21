@@ -58,6 +58,7 @@ class ProfilesController < ApplicationController
 
 		@users = User.all
 		@friends = current_user.friends
+		@preffered_ingredients = current_user.preffered_ingredients
 	end
 
 	def destroy

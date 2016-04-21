@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160419144642) do
+ActiveRecord::Schema.define(version: 20160421203312) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "deffered_foods", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "food_id"
+    t.string   "food_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "deffered_foods", ["user_id"], name: "index_deffered_foods_on_user_id", using: :btree
 
   create_table "events", force: true do |t|
     t.integer  "user_id"
@@ -53,6 +63,24 @@ ActiveRecord::Schema.define(version: 20160419144642) do
   end
 
   add_index "instructions", ["recipe_id"], name: "index_instructions_on_recipe_id", using: :btree
+
+  create_table "preffered_foods", force: true do |t|
+    t.integer "user_id"
+    t.integer "food_id"
+    t.string  "food_name"
+  end
+
+  add_index "preffered_foods", ["user_id"], name: "index_preffered_foods_on_user_id", using: :btree
+
+  create_table "preffered_ingredients", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "ingredient_id"
+    t.string   "ingredient_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "preffered_ingredients", ["user_id"], name: "index_preffered_ingredients_on_user_id", using: :btree
 
   create_table "profiles", force: true do |t|
     t.string   "fir_name"
