@@ -11,10 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160419144642) do
+ActiveRecord::Schema.define(version: 20160421220622) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "deferred_foods", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "food_id"
+    t.string   "food_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "deferred_foods", ["user_id"], name: "index_deferred_foods_on_user_id", using: :btree
 
   create_table "events", force: true do |t|
     t.integer  "user_id"
@@ -53,6 +63,26 @@ ActiveRecord::Schema.define(version: 20160419144642) do
   end
 
   add_index "instructions", ["recipe_id"], name: "index_instructions_on_recipe_id", using: :btree
+
+  create_table "preferred_foods", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "food_id"
+    t.string   "food_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "preferred_foods", ["user_id"], name: "index_preferred_foods_on_user_id", using: :btree
+
+  create_table "preferred_ingredients", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "ingredient_id"
+    t.string   "ingredient_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "preferred_ingredients", ["user_id"], name: "index_preferred_ingredients_on_user_id", using: :btree
 
   create_table "profiles", force: true do |t|
     t.string   "fir_name"
@@ -110,6 +140,11 @@ ActiveRecord::Schema.define(version: 20160419144642) do
   add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
   add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
+
+  create_table "tests", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

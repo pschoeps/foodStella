@@ -2,53 +2,143 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-// CREATE NEW RECIPE VIEW
+// NEW RECIPE VIEW
 .recipe-form {
-	display: block;
-	padding: 20px;
-	text-align: left;
-	background-color: white;
+	.recipe-form-header {
+		background-color: $green;
+	  h1 {
+		color: white;
+		font-weight: 100;
+		letter-spacing: 3px;
+		padding: 30px 0;
+		margin: 0;
+	  }
+	}
+	.new_recipe-col {
+		background-color: white;
+		padding: 0 100px;
+		.top-list {
+			padding-left: 0;
+			list-style: none;
+			.row {
+				margin: 14px 0;
+				label {
+					color: $dark;
+					font-weight: 200;
+					font-size: 16px;
+					text-align: left;
+					vertical-align: top;
+					padding-top: 0;
+				}
+				li {
+					margin: 30px 0;
+					> label {
+						width: 100px;
+					}
+					.nested-fields {
+						label {
+							margin-left: 14px;
+						}
+					}
+				}
+				li.inline {
+					white-space: nowrap;
+					padding: 0;
+					margin-top: 0;
+					label {
+						width: auto;
+					}
+				}
+				@media (min-width: 992px) {
+					li.inline:nth-of-type(2) {
+						text-align: center;
+					}
+					li.inline:nth-of-type(3) {
+						text-align: right;
+					}
+				}
+				.controls {
+					display: inline-block;
+				}
+				h2 {
+					color: $green;
+					border-bottom: solid 1px $green;
+					text-align: left;
+					font-weight: 400;
+					padding: 4px 0;
+				}
+				.upload-photo {
+					width: 260px;
+					height: 160px;
+					margin: 0 auto;
+					border: solid 1px $medium;
+					text-align: center;
+				}
+				.food-type {
+					text-align: center;
+				}
+				#recipe-ingredients li {
+					// background-color: $light;
+					// padding: 2px;
+					.remove_fields {
+						left: 308px;
+					}
+				}
+				.add_fields {
+					display: inline-block;
+					text-align: left;
+					text-decoration: none;
+					position: relative;
+					left: 54px;
+					top: -14px;
+				}
+				.remove_fields {
+					position: absolute;
+					top: 30px;
+					left: 254px;
+					text-decoration: none;
+					color: $medium;
+					font-style: italic;
+					padding-right: 2px;
+				}
+				#recipe_difficulty {
+					width: 140px;
+				}
+			}
+		}
+	}
 }
-.recipe-form li { margin-top: 14px; }
+
 .recipe-form a { color: $green; }
 .recipe-form input:focus,
 .recipe-form textarea:focus { outline: none; }
-.recipe-form {
-	// ::-webkit-input-placeholder { color: white; }
-	// :-moz-placeholder { color: white; }
-	// ::-moz-placeholder { color: white; }
-	// :-ms-input-placeholder { color: white; }
-}
 .recipe-form input,
 .recipe-form textarea { 
 	border-radius: 0;
 	background-color: white;
 	border: none;
 	// text-align: center;
-	border-bottom: solid 1px $orange;
+	// border-bottom: solid 1px $orange;
+	border: solid 1px $medium;
 	color: black;
 	display: inline-block;
-	// width: 100%;
+	width: 300px;
 }
-.recipe-form textarea { width: 265px; }
+.recipe-form input.small { width: 50px; }
+.recipe-form input.long { width: 354px; }
+
+// .recipe-form textarea { width: 265px; }
 .recipe-form input[type=submit] {
 	border: none;
 	background-color: $green;
 	font-weight: bold;
 	color: white;
 	// width: 100px;
-	float: right;
-}
-
-#recipe-ingredients li {
-	background-color: $light;
-	padding: 2px;
-}
-.add_fields {
+	// float: right;
 	display: block;
-	text-align: center;
-	border-top: solid 1px $green;
-	margin: 14px 0 14px 40px;
+	margin: 0 auto;
+	padding: 8px 24px;
+	width: auto;
 }
 
 
@@ -56,6 +146,8 @@
   height: 10em;
   margin: 0;
   }
+
+
 // SHOW SINGLE RECIPE VIEW
 
 .fluid-container > .row.cushioned {
@@ -294,9 +386,11 @@
 	}
 }
 
+#recipe-instructions,
+#recipe-ingredients,
 .instructions {
 	ol {
-		margin-top: 30px;
+		margin-top: 20px;
 	    counter-reset:li; /* Initiate a counter */
 	    margin-left:0; /* Remove the default left margin */
 	    padding-left:0; /* Remove the default left padding */
@@ -304,7 +398,7 @@
 	ol > li {
 		min-height: 40px;
 	    position:relative; /* Create a positioning context */
-	    margin:0 0 6px 3em; /* Give each list item a left margin to make room for the numbers */
+	    margin:0 0 0px 3em; /* Give each list item a left margin to make room for the numbers */
 	    padding: 4px 8px 16px; /* Add some spacing around the content */
 	    list-style:none; /* Disable the normal item numbering */
 	}
@@ -324,7 +418,7 @@
 	    margin-right:8px;
 	    // padding:4px;
 	    color: $green;
-	    font-weight: 100;
+	    font-weight: 200;
 	    font-size: 2em;
 	    text-align:center;
 	}

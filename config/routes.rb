@@ -23,6 +23,7 @@ FoodStella::Application.routes.draw do
   end
 
   resources :profiles
+  # resources :preferred_foods
 
   resources :recipes
   resources :relationships,       only: [:create, :destroy]
