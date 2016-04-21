@@ -429,10 +429,32 @@
 
 /* Index Page */
 
+.new_filterrific {
+	div {
+		float: right;
+	}
+}
+
+#checkbox {
+	label {
+		color: black;
+		input {
+			
+		}
+	}
+
+	.green {
+		color: $green;
+	}
+}
+
+
+
 .recipes-page {
 
 	.col-md-9 {
 		padding: 0;
+		float: right;
 
 		ul {
 			list-style-type: none;

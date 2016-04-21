@@ -33,6 +33,11 @@ class Recipe < ActiveRecord::Base
               :sorted_by,
               :search_query,
               :with_created_at_gte,
+              :latest,
+              :sort_by_ingredients,
+              :style,
+              :difficulty,
+              :meal_type
               ]
 
 
@@ -78,9 +83,80 @@ class Recipe < ActiveRecord::Base
     end
   }
 
+  scope :latest, lambda { |latest|
+    order("recipes.created_at desc")
+  }
+
+  scope :style, lambda { |style|
+    recipes = Recipe.arel_table
+    where(recipes[:category].eq("#{style[0]}"))
+  }
+
+  scope :difficulty, lambda { |difficulty|
+    recipes = Recipe.arel_table
+    where(recipes[:difficulty].eq("#{difficulty[0]}"))
+  }
+
+  scope :meal_type, lambda { |meal_type|
+     recipes = Recipe.arel_table
+     where(recipes[:meal_type].eq("#{meal_type[0]}"))
+  }
+
   scope :with_created_at_gte, lambda { |ref_date|
     where('recipes.created_at >= ?', ref_date)
   }
+
+  scope :sort_by_ingredients, lambda { |ingredient_ids|
+    # get a reference to the join table
+    quantities = Quantity.arel_table
+    # get a reference to the filtered table
+    recipes = Recipe.arel_table
+    # let AREL generate a complex SQL query
+    where(
+      Quantity \
+        .where(quantities[:recipe_id].eq(recipes[:id])) \
+        .where(quantities[:ingredient_id].in([*ingredient_ids].map(&:to_i))) \
+        .exists
+    )
+  }
+
+  def self.options_for_sort_by_ingredients
+    [
+      ['Tomato', 94], #tomato
+      ['Rice', 95] #rice
+    ]
+  end
+
+  def self.options_for_style
+    [
+      ['Medditerranean', 1], 
+      ['Chinese', 2] 
+    ]
+  end
+
+  def self.options_for_latest
+    [
+      ['Latest', 'created_at_desc']
+    ]
+  end
+
+  def self.options_for_difficulty
+    [
+      ['Easy', 1],
+      ['Medium', 2],
+      ['Hard', 3]
+    ]
+  end
+
+  def self.options_for_meal_type
+    [
+      ['Snack', 1],
+      ['Side Dish', 2],
+      ['Main Dish', 3],
+      ['Dessert', 4],
+      ['Drink', 5]
+    ]
+  end
 
   def self.options_for_sorted_by
     [

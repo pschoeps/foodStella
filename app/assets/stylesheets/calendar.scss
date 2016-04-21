@@ -42,6 +42,7 @@ $outer-container: 90%;
 	background-color: white;
 	z-index: 100;
 	height: 100vh;
+    position: fixed;
 	
 	-webkit-box-shadow:0 3px 8px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
        -moz-box-shadow:0 3px 8px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
@@ -116,10 +117,15 @@ $outer-container: 90%;
 	z-index: 10;
 }
 
+.calendar-days {
+    height: 100%;
+}
+
 .calendar-container {
 	background-color: white;
 	z-index: 10;
 	padding: 0;
+    float: right;
 
 	.calendar-title {
 		position: relative;
@@ -134,14 +140,12 @@ $outer-container: 90%;
 		}
 	}
 
-    #event-trash {
+    .event-trash {
         float: right;
-        height: 4em;
-        width: 4em;
         z-index: 20;
-        position: absolute;
+        position: relative;
         right: 6em;
-        bottom: 37em;
+        bottom: 3em;
 
       span {
         font-size: 2em;
@@ -181,7 +185,7 @@ $outer-container: 90%;
  			}
 	  }
 
-	 #calendar {
+	 .calendar {
 	 	padding-top: 4.5em;
 	 }
 	}

@@ -1,0 +1,181 @@
+<div class="col-md-9 calendar-container">
+
+    <div class="calendar-title"><h1><%= day[0] %></h1><h1><%= day[1] %></h1></div>
+
+    <div class="event-trash" id="event-trash-<%= day[1] %>"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div>
+
+
+      <div class="calendar-box">          
+        <div class="calendar-header">
+          <h1>Breakfast</h1>
+          <h1>Snack</h1>
+          <h1>Lunch</h1>
+          <h1>Snack</h1>
+          <h1>Dinner</h1>
+        </div>         
+        <div id='calendar-<%= day[1] %>' class="calendar"></div>   
+      </div>       
+
+
+  </div>
+
+  <script>
+
+$(document).ready(function() {
+
+  
+
+
+            /* initialize the calendar1
+            -----------------------------------------------------------------*/
+            
+
+            $('#calendar-<%= day[1] %>').fullCalendar({
+              defaultView: 'timelineDay',
+              events: 'calendar.json',
+              height: 500,
+              scrollTime: '00:00',
+              maxTime: '2:30',
+              slotWidth: 86.5 * 2,
+           //   slotDuration: 30,
+              editable: true,
+              forceEventDuration: true,
+              defaultTimedEventDuration: '00:30:00',
+              droppable: true, // this allows things to be dropped onto the calendar
+              dragRevertDuration: 0,
+              eventLimit: true, // allow "more" link when too many events
+              eventDragStop: function( event ) {
+                console.log("eventDragStop fired")
+                recipe_id = event.title.slice(-2);
+                start_at = event.start.format();
+                name = event.title;
+                id = event.id;
+  
+
+                var data = {
+                  event: {
+                    start_at: start_at,
+                    recipe_id: recipe_id,
+                    name: name,
+                    id: id
+                  }
+                };
+              
+                
+                if (isElemOverDiv()) {
+                  $('#calendar-<%= day[1] %>').fullCalendar('removeEvents', event._id);
+
+                  $.ajax({//ajax call 
+                  type:'DELETE',
+                  data: data,
+                  url:'/events/destroy',
+              
+                  success:function (response) {
+                  }
+                  
+                });//end ajax call
+                  var trashEl = $('#event-trash');
+                  if (trashEl.hasClass("to-trash")) {
+                      trashEl.removeClass("to-trash");
+                  }
+                } 
+              },
+              eventRender: function(event, element) {
+
+                element.addClass(event.title);
+
+
+                
+
+            },
+            eventDrop: function(event) {
+              console.log("eventDrop fired")
+
+              recipe_id = event.title.slice(-2);
+
+              var data = {
+                  event: {
+                    start_at: event.start.format(),
+                    //end_at: event.start.add(30, 'minutes').format(),
+                    recipe_id: recipe_id,
+                    name: event.title,
+                    id: event.id
+                  }
+                };
+
+
+                $.ajax({//ajax call 
+                  type:'PUT',
+                  data: data,
+                  url:'/events/update',
+              
+                  success:function (response) {
+                    //$('#calendar').fullCalendar('renderEvent', event);
+                    //$("#calendar").fullCalendar("refetchEvents")
+                  
+                }
+              })
+            },
+             eventReceive: function( event ) {
+              console.log("event recieved");
+
+                //var originalEventObject = $(this).data('eventObject');
+                //var copiedEventObject = $.extend({}, originalEventObject);
+                //copiedEventObject.start = date;
+              var eventTitle = event.title
+              var start_at = event.start.format();
+              //var end_at = event.start.add(30, 'minutes').format();
+              var recipe_id = eventTitle.slice(-2);
+              var recipe_name = eventTitle.slice(0, -3);
+        
+                var data = {
+                  event: {
+                    start_at: start_at,
+                    //end_at: end_at,
+                    recipe_id: recipe_id,
+                    recipe_name: recipe_name
+                  }
+                };
+
+                $.ajax({//ajax call 
+                  type:'POST',
+                  data: data,
+                  url:'/events',
+              
+                  success:function (response) {
+                    event.id = response,
+                    $('#calendar-<%= day[1] %>').fullCalendar('updateEvent', event)
+                  
+                }
+
+              });//end ajax call
+
+        }
+
+        }); //end of iniialize calendar
+
+        $('#calendar-<%= day[1] %>').fullCalendar('gotoDate', "<%= day[1] %>");
+
+
+
+       function isElemOverDiv() {
+
+          var trashEl = $('#event-trash-<%= day[1] %>');
+
+          var ofs = trashEl.offset();
+
+          var x1 = ofs.left;
+          var x2 = ofs.left + trashEl.outerWidth(true);
+          var y1 = ofs.top;
+          var y2 = ofs.top + trashEl.outerHeight(true);
+
+          if (currentMousePos.x >= x1 && currentMousePos.x <= x2 &&
+            currentMousePos.y >= y1 && currentMousePos.y <= y2) {
+            return true;
+          }
+          return false;
+
+        }
+
+      });
+</script>

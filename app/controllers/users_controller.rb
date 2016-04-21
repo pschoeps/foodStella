@@ -23,7 +23,6 @@ class UsersController < ApplicationController
 		@followed_recipes = current_user.following
 		@user_recipes = current_user.recipes
 		@recipes = @user_recipes + @followed_recipes
-		@calendar_title = Time.now.strftime("%A")
 		@events = current_user.events
 
 		@snacks = @user_recipes.where(:meal_type => "1") + @followed_recipes.where(:meal_type => "1")
@@ -38,5 +37,18 @@ class UsersController < ApplicationController
 		@week_end = d.at_end_of_week.strftime("%-d")
 		@date_string = @month + " " + @week_begin + " - " + @week_end
 
+
+
+		@today = [Time.now.strftime("%A"), DateTime.now.strftime('%Y-%m-%d')]
+		@tomorrow = [DateTime.tomorrow.strftime("%A"), DateTime.tomorrow.strftime('%Y-%m-%d')]
+		@day_after_tom = [(DateTime.now + 2.days).strftime("%A"), (DateTime.now + 2.days).strftime('%Y-%m-%d')]
+
+		@day_counter = 3
+
 	end
 end
+
+
+
+
+

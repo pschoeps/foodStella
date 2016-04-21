@@ -1,16 +1,97 @@
 <%= form_for_filterrific @filterrific do |f| %>
   <div>
-    Search
-    <%# give the search field the 'filterrific-periodically-observed' class for live updates %>
+   
     <%= f.text_field(
       :search_query,
-      class: 'filterrific-periodically-observed'
+      class: 'filterrific-periodically-observed',
+      placeholder: "Search"
     ) %>
   </div>
-  <div>
-    Sorted by
-    <%= f.select(:sorted_by, @filterrific.select_options[:sorted_by]) %>
+  <!--div>
+    <= f.select(:sorted_by, @filterrific.select_options[:sorted_by]) %>
+  </div-->
+  <div id="latest">
+    <% @filterrific.select_options[:latest].each do |c| %>
+       <label class="checkbox">
+        Latest
+        <%= check_box_tag("filterrific[latest][]",c[1]) %>
+      </label>
+    <% end %>
   </div>
+
+  
+
+  <div class="dropdown main-ingredient">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      Main Ingredient
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+      <li id="ingredient-options checkbox">
+        <% @filterrific.select_options[:sort_by_ingredients].each do |c| %>
+          <label class="checkbox">
+            <%= c[0] %>
+            <%= check_box_tag("filterrific[sort_by_ingredients][]",c[1]) %>
+          </label>
+        <% end %>
+      </li>
+    </ul>
+  </div>  
+
+  <div class="dropdown style">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      Food Style
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+      <li id="checkbox">
+        <% @filterrific.select_options[:style].each do |c| %>
+          <label class="checkbox">
+            <%= c[0] %>
+            <%= check_box_tag("filterrific[style][]",c[1]) %>
+          </label>
+        <% end %>
+      </li>
+    </ul>
+  </div>  
+
+  <div class="dropdown difficulty">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      Difficulty
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+      <li id="checkbox">
+        <% @filterrific.select_options[:difficulty].each do |c| %>
+          <label class="checkbox">
+            <%= c[0] %>
+            <%= check_box_tag("filterrific[difficulty][]",c[1]) %>
+          </label>
+        <% end %>
+      </li>
+    </ul>
+  </div> 
+
+  <div class="dropdown difficulty">
+    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      Meal Type
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+      <li id="checkbox">
+        <% @filterrific.select_options[:meal_type].each do |c| %>
+          <label class="checkbox">
+            <%= c[0] %>
+            <%= check_box_tag("filterrific[meal_type][]",c[1]) %>
+          </label>
+        <% end %>
+      </li>
+    </ul>
+  </div>  
+
+  
+
+
   <div>
     <%= link_to(
       'Reset filters',
@@ -20,3 +101,4 @@
   <%# add an automated spinner to your form when the list is refreshed %>
   <%= render_filterrific_spinner %>
 <% end %>
+
