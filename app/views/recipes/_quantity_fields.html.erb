@@ -2,11 +2,11 @@
   <div class="controls">
   	<%= f.fields_for :ingredient do |quantity_ingredient| %>
       <!-- %= f.label :name, "Ingredient:" %> -->
-      <%= quantity_ingredient.text_field :name, class: 'long' %>
+      <%= quantity_ingredient.text_field :name, class: 'long', required: true %>
     <% end %>
 
     <%= f.label :amount, "Amount:" %>
-    <%= f.text_field :amount, class: 'small' %>
+    <%= f.text_field :amount, class: 'small', required: true %>
 
     <%= f.label :unit, "Unit" %>
      <%= f.select(:unit, options_for_select([['Cup', 1], ['Oz', 2], ["Tsp", 3]])) %> 

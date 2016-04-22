@@ -48,6 +48,9 @@
 					label {
 						width: auto;
 					}
+					span {
+						color: $green;
+					}
 				}
 				@media (min-width: 992px) {
 					li.inline:nth-of-type(2) {
@@ -73,6 +76,16 @@
 					margin: 0 auto;
 					border: solid 1px $medium;
 					text-align: center;
+					input {
+						width: 200px;
+						border: none;
+						margin-bottom: 32px;
+					}
+					label {
+						text-align: center;
+						width: 200px;
+						color: $medium;
+					}
 				}
 				.food-type {
 					text-align: center;
@@ -82,6 +95,7 @@
 					// padding: 2px;
 					.remove_fields {
 						left: 308px;
+						top: 30px;
 					}
 				}
 				.add_fields {
@@ -94,7 +108,7 @@
 				}
 				.remove_fields {
 					position: absolute;
-					top: 30px;
+					top: 50px;
 					left: 254px;
 					text-decoration: none;
 					color: $medium;
@@ -318,6 +332,10 @@
 
 .recipe-info{
 	// background-color: white;
+	.servings {
+		font-weight: 600;
+		font-style: italic;
+	}
 	h3 {
 		color: $green;
 		font-weight: 200;

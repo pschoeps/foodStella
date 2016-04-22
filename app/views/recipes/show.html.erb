@@ -101,6 +101,7 @@
 		<div class="row recipe-info">
 			<div class="col-md-3 ingredients">
 					<h3>INGREDIENTS</h3>
+					<span class="servings">Servings: <%= @recipe.servings %>
 					<ol>
 						<% @recipe.ingredients.each do |i| %>
 						    <li><%= i.name %>
