@@ -21,8 +21,8 @@
           <div class="row upload-photo">
             <div class="upload-photo">
               <li class="control-group">
-                <%= f.label :photo_url, "Upload a photo", class: "control-label" %>
                 <div class="controls"><%= f.file_field :photo_url, accept: 'image/jpeg,image/gif,image/png' %></div>
+                <%= f.label :photo_url, "Upload photo", class: "control-label" %>
               </li>
             </div>
           </div>
@@ -38,22 +38,22 @@
              <h2>MAIN INFORMATION</h2>
 
             <li class="control-group">
-              <%= f.label :name, "Meal name:", class: "control-label" %>
+              <%= f.label :name, "Meal name*:", class: "control-label" %>
               <div class="controls"><%= f.text_field :name, required: true %></div>
             </li>
 
             <li class="control-group">
-              <%= f.label :description, "Description:", class: "control-label" %>
-              <div class="controls"><%= f.text_area :description %></div>
+              <%= f.label :description, "Description*:", class: "control-label" %>
+              <div class="controls"><%= f.text_area :description, required: true %></div>
             </li>
 
             <li class="control-group">
-              <%= f.label :servings, "Servings:", class: "control-label" %>
-              <div class="controls"><%= f.text_field :description, class: 'small' %></div>
+              <%= f.label :servings, "Servings*:", class: "control-label" %>
+              <div class="controls"><%= f.text_field :servings, class: 'small', required: true %></div>
             </li>
 
             <li>
-              <label class="control-label" for="">Ingredients:</label>
+              <label class="control-label" for="">Ingredients*:</label>
               <fieldset id="recipe-ingredients">
                 <ol>
                   <%= f.fields_for :quantities do |quantity| %>
@@ -65,7 +65,7 @@
             </li>
 
             <li>
-              <label class="control-label" for="recipe_instructions">Instructions:</label>
+              <label class="control-label" for="recipe_instructions">Instructions*:</label>
               <fieldset id="recipe-instructions">
                 <ol>
                   <%= f.fields_for :instructions do |instruction| %>
@@ -82,12 +82,12 @@
 
             <li class="control-group col-md-4 inline">
               <%= f.label :prep_time, "Preparation Time:", class: "control-label" %>
-              <div class="controls"><%= f.text_field :prep_time, class: 'small' %> mins</div>
+              <div class="controls"><%= f.text_field :prep_time, class: 'small' %> <span>min</span></div>
             </li>
 
             <li class="control-group col-md-4 inline center">
               <%= f.label :cook_time, "Cook Time:", class: "control-label" %>
-              <div class="controls"><%= f.text_field :cook_time, class: 'small' %> mins</div>
+              <div class="controls"><%= f.text_field :cook_time, class: 'small' %> <span>min</span></div>
             </li>
 
             <li class="control-group col-md-4 inline">
@@ -96,9 +96,19 @@
             </li>
 
             <li class="control-group">
-              <%= f.label :category, "Category", class: "control-label" %>
+              <%= f.label :category, "Category:", class: "control-label" %>
               <div class="controls"><%= f.select(:category, options_for_select([['Mediterranean', 1], ['Chinese', 2], ["Mexican", 3]])) %></div>
             </li>
+
+            <li class="control-group">
+              <div class="controls">Cookware:</div>
+            </li>
+
+            <li class="control-group">
+              <%= f.label :website_url, "Website url:", class: "control-label" %>
+              <div class="controls"><%= f.text_field :website_url %></div>
+            </li>
+
           </div>
         </ol>
       </fieldset>
