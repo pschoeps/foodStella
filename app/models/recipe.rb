@@ -187,4 +187,13 @@ class Recipe < ActiveRecord::Base
     def get_user(id)
       User.find(id)
     end
+
+    def retrieve_pic
+    recipe = Recipe.find(id)
+    if recipe.photo_url.url
+      recipe.photo_url.url
+    else
+      ActionController::Base.helpers.asset_path('fallback/plate.jpg')
+    end
+  end
 end

@@ -50,11 +50,48 @@ class UsersController < ApplicationController
 	def add_day
 		day_counter = params[:day_counter].to_i
 		@new_day = [(DateTime.now + day_counter.days).strftime("%A"), (DateTime.now + day_counter.days).strftime('%Y-%m-%d')]
-		puts @new_day
+		new_day_counter = day_counter + 1
+		current_user.update_attributes(:day_counter => new_day_counter)
+		current_user.save!
 
 		render :partial => 'users/one_day', :locals => { :day => @new_day }
     end
+
+    def shopping_list
+    	d = Date.today
+		@month = d.strftime("%B")
+		@week_begin = d.at_beginning_of_week.strftime("%-d")
+		@week_end = d.at_end_of_week.strftime("%-d")
+		@date_string = @month + " " + @week_begin + " - " + @week_end
+
+		day_counter = params[:day_counter].to_i
+
+		@first_day = DateTime.now
+		@last_day = DateTime.now + day_counter.days
+
+		@events = Event.where(start_at: (@first_day)..@last_day)
+
+		@recipes = []
+		@events.each do |e|
+			puts "one event"
+		  recipe = Recipe.find(e.recipe_id)
+		  @recipes << recipe
+		end
+
+		@shopping_items = []
+
+		@recipes.each do |r|
+			r.ingredients.each do |i|
+				i.quantities.each do |q|
+					@shopping_items << [i.name, q.amount, q.unit]
+				end
+			end
+		end
+
+    end
 end
+
+
 
 
 

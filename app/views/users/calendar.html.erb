@@ -17,6 +17,7 @@
 
   <div class="col-md-9 calendar-nav">
     <span class="btn" id="add-day" data="<%= @day_counter %>">Add Day</span>
+    <%= link_to "Generate Shopping List", shopping_list_user_path(current_user, day_counter: ""), id: "shopping-list", class: "btn" %>
   </div>
 
   <%= render 'one_day', :day => @today %>
@@ -36,6 +37,14 @@
 
 <script>
   $(document).ready(function() {
+
+      $('a#shopping-list').on('click', function() { 
+        console.log("clicked link")
+        day_counter = $('#add-day').attr('data')
+        console.log(day_counter)
+        this.href = this.href + '&day_counter=' + day_counter
+      });
+
       $(document).on('click','#add-day',function(){
         $this = $(this)
         day_counter = $this.attr('data')

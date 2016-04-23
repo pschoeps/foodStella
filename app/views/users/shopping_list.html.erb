@@ -1,0 +1,23 @@
+<div class="disable-margins">
+
+<div class="row">
+  <div class="col-md-12 calendar-page-header">
+    <div class="planner-details">
+      <h3><%= @date_string %></h3>
+      <p>Shopping List</p>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+	<div class="col-md-9 shopping-list">
+		<ol>
+			<% @shopping_items.each do |s| %>
+			  <li><%= s[0] %>: <%= s[1] %> <%= s[2] %></li>
+			<% end %>
+		</ol>
+	</div>
+</div>
+
+
+</div>

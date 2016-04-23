@@ -5,7 +5,9 @@ var currentMousePos = {
 
 
 
+
 $(document).ready(function() {
+  $('.sidebar').scrollToFixed();
 
 
    $(document).on("mousemove", function (event) {

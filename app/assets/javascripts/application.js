@@ -25,6 +25,7 @@
 //= require universal
 //= require jquery.purr
 //= require best_in_place
+//= require jquery-scrolltofixed
 
 //= require_tree
 

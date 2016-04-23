@@ -2,7 +2,7 @@
 
   <% @recipes.each do |r| %>
     .<%= r.name %>-<%= r.id %> {
-      background-image: url('<%= r.photo_url.url %>'); 
+      background-image: url('<%= r.retrieve_pic %>'); 
     }
   <% end %>
 
@@ -10,7 +10,7 @@
 
    <% if e.get_recipe(e.recipe_id) %>
      .<%= e.recipe_name %>-<%= e.recipe_id %> {
-       background-image: url('<%= e.get_recipe(e.recipe_id).photo_url.url %>'); 
+       background-image: url('<%= e.get_recipe(e.recipe_id).retrieve_pic %>'); 
      }
     <% end %>
   <% end %>

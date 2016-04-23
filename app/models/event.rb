@@ -9,4 +9,5 @@ class Event < ActiveRecord::Base
   	  recipe
   	end
   end
+
 end
