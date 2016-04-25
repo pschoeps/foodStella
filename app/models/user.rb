@@ -83,6 +83,29 @@ class User < ActiveRecord::Base
     end
   end
 
+  def retrieve_name(firLas = '')
+    user = User.find(id)
+    fir_name = ''
+    las_name = ''
+    if user.profile && user.profile.fir_name && user.profile.las_name
+      fir_name = user.profile.fir_name
+      las_name = user.profile.las_name
+    elsif user.fir_name && user.las_name
+      fir_name = user.fir_name
+      las_name = user.las_name
+    else
+      fir_name = 'Anon'
+      las_name = 'McGee'
+    end
+    if firLas == 'first'
+      fir_name
+    elsif firLas == 'last'
+      las_name
+    else
+      fir_name + ' ' + las_name
+    end
+  end
+
   def owns?(recipe)
     id == recipe.user_id
   end
