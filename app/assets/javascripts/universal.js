@@ -8,6 +8,7 @@ var currentMousePos = {
 
 $(document).ready(function() {
   $('.sidebar').scrollToFixed();
+  
 
 
    $(document).on("mousemove", function (event) {
@@ -113,6 +114,16 @@ $(document).ready(function() {
       $('.sidebar').css('height', containerHeight + 'px');
     }
   })
+
+
+ $('.latest').click(function() {
+    console.log("checked")
+    if ( $('#filterrific_latest_').is(":checked") )
+      $(this).css('color', 'white');
+    else
+      $(this).css('color', '#819800');
+
+  });
 
   
 

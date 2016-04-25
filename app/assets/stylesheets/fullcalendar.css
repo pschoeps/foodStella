@@ -18,8 +18,10 @@
  }
 
 
-
-
+/*hides title of events */
+.fc-title {
+	display: none;
+}
 
 
 #external-events {

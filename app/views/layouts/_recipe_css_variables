@@ -1,17 +1,18 @@
 <% content_for(:style) do %>
 
   <% @recipes.each do |r| %>
-    .<%= r.name %>-<%= r.id %> {
-      background-image: url('<%= r.retrieve_pic %>'); 
+    .<%= r.get_friendly_name %>-<%= r.id %> {
+         background-image: url('<%= r.retrieve_pic %>'); 
     }
   <% end %>
 
   <% @events.each do |e| %>
 
    <% if e.get_recipe(e.recipe_id) %>
-     .<%= e.recipe_name %>-<%= e.recipe_id %> {
-       background-image: url('<%= e.get_recipe(e.recipe_id).retrieve_pic %>'); 
-     }
+     <% recipe = e.get_recipe(e.recipe_id) %>
+       .<%= recipe.get_friendly_name %>-<%= recipe.id %> {
+         background-image: url('<%= recipe.retrieve_pic %>'); 
+       }
     <% end %>
   <% end %>
 

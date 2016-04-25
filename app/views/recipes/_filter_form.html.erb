@@ -1,5 +1,5 @@
 <%= form_for_filterrific @filterrific do |f| %>
-  <div>
+  <div class="filter-search">
    
     <%= f.text_field(
       :search_query,
@@ -10,17 +10,17 @@
   <!--div>
     <= f.select(:sorted_by, @filterrific.select_options[:sorted_by]) %>
   </div-->
-  <div id="latest">
+  <div>
     <% @filterrific.select_options[:latest].each do |c| %>
-       <label class="checkbox">
+       <label class="latest checkbox label-for-check">
         Latest
-        <%= check_box_tag("filterrific[latest][]",c[1]) %>
+        <%= check_box_tag("filterrific[latest][]", c[1]) %>
       </label>
     <% end %>
   </div>
 
   
-
+  <div class="dropdowns">
   <div class="dropdown main-ingredient">
     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       Main Ingredient
@@ -31,7 +31,7 @@
         <% @filterrific.select_options[:sort_by_ingredients].each do |c| %>
           <label class="checkbox">
             <%= c[0] %>
-            <%= check_box_tag("filterrific[sort_by_ingredients][]",c[1]) %>
+            <%= check_box_tag("filterrific[sort_by_ingredients][]",c[1])  %>
           </label>
         <% end %>
       </li>
@@ -87,7 +87,8 @@
         <% end %>
       </li>
     </ul>
-  </div>  
+  </div> 
+  </div> 
 
   
 

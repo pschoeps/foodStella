@@ -188,9 +188,9 @@ class Recipe < ActiveRecord::Base
       User.find(id)
     end
 
-    def retrieve_pic
+  def retrieve_pic
     recipe = Recipe.find(id)
-    if recipe.photo_url.url
+    if recipe.photo_url
       puts recipe.photo_url
       puts "recipe photo url"
       recipe.photo_url.url
@@ -198,5 +198,17 @@ class Recipe < ActiveRecord::Base
       puts "no recipe url"
       ActionController::Base.helpers.asset_path('fallback/plate.jpg')
     end
+  end
+
+  def get_friendly_name
+    recipe = Recipe.find(id)
+    
+    new_name = recipe.name.delete(' ').delete(')').delete('(').delete('/').delete('!').delete('.').delete('@')
+    if new_name == nil
+     "placeholder"
+    else
+      new_name
+    end
+
   end
 end
