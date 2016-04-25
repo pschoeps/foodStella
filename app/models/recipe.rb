@@ -191,8 +191,11 @@ class Recipe < ActiveRecord::Base
     def retrieve_pic
     recipe = Recipe.find(id)
     if recipe.photo_url.url
+      puts recipe.photo_url
+      puts "recipe photo url"
       recipe.photo_url.url
     else
+      puts "no recipe url"
       ActionController::Base.helpers.asset_path('fallback/plate.jpg')
     end
   end
