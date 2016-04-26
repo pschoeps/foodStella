@@ -74,7 +74,7 @@ class UsersController < ApplicationController
 		@recipes = []
 		@events.each do |e|
 			puts "one event"
-		  unless recipe_id < 0
+		  unless e.recipe_id < 0
 		    recipe = Recipe.find(e.recipe_id)
 		    @recipes << recipe
 		  end
