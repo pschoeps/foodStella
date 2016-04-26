@@ -1,7 +1,7 @@
 <% content_for(:style) do %>
 
   <% @recipes.each do |r| %>
-    .<%= r.get_friendly_name %>-<%= r.id %> {
+    .<%= r.get_friendly_name %>id-<%= r.id %> {
          background-image: url('<%= r.retrieve_pic %>'); 
     }
   <% end %>
@@ -10,7 +10,7 @@
 
    <% if e.get_recipe(e.recipe_id) %>
      <% recipe = e.get_recipe(e.recipe_id) %>
-       .<%= recipe.get_friendly_name %>-<%= recipe.id %> {
+       .<%= recipe.get_friendly_name %>id-<%= recipe.id %> {
          background-image: url('<%= recipe.retrieve_pic %>'); 
        }
     <% end %>

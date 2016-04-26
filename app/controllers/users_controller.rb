@@ -74,8 +74,10 @@ class UsersController < ApplicationController
 		@recipes = []
 		@events.each do |e|
 			puts "one event"
-		  recipe = Recipe.find(e.recipe_id)
-		  @recipes << recipe
+		  unless e.recipe_id < 0
+		    recipe = Recipe.find(e.recipe_id)
+		    @recipes << recipe
+		  end
 		end
 
 		@shopping_items = []

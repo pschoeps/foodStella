@@ -5,8 +5,8 @@
        "id": "<%= e.id %>", 
        "start": "<%= e.start_at %>", 
        "end": "<%= e.end_at %>", 
-       "title": "<%= e.recipe_name %>-<%= e.recipe_id %>", 
-       "className": "<%= e.recipe_name %>-<%= e.recipe_id %>" 
+       "title": "<%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>", 
+       "className": "<%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" 
      }<% unless e == @events.last %>,<% end %> 
   <% end %>
   ]
