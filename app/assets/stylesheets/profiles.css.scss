@@ -201,17 +201,19 @@
 .friends-view {
 	position: relative;
 	.search {
-		position: absolute;
-		right: 20px;
-		top: 40px;
-		margin-bottom: 10px !important;
+		// position: absolute;
+		// right: 20px;
+		// top: 40px;
+		// margin-bottom: 10px !important;
+		text-align: right;
+		margin-top: 10px !important;
 		input {
 			border: solid 1px $green;
 			text-align: center;
 		}
 	}
 	.row.friendships {
-		margin-top: 10px !important;
+		margin: 10px 0 !important;
 		ul {
 			list-style: none;
 			padding-left: 0;

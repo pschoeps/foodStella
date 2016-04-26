@@ -1,0 +1,89 @@
+<div id="filterrific_results">
+
+	<% if @requests.any? %>
+		<div class="row friendships">
+			<h4>REQUESTS</h4>
+			<div class="row friendships">
+				<div class="col-xs-12 col-md-10">
+				    <ul>
+	      	       <% @requests.each do |user| %>
+	      	       		<li>
+	      	       			<%= link_to profile_path(user) do %>
+	                			<div class="user_pic" style="background-image: url(<%= user.retrieve_pic %>)"></div>
+	      						<div class="user_name"><%= user.retrieve_name %></div>
+	      					<% end %>
+	  						<%= Friendship.mutual(current_user, user) %>
+	  						<%= form_tag({controller: "friendship", action: "accept", :id => user.id}, method: "post") do %>
+	  							<%= submit_tag("Accept", :class => "btn")%><br />
+	  						<% end %>
+	      	          	</li>
+	      	        <% end %>
+				    </ul>
+				</div>
+			</div>
+		</div>
+	<% end %>
+
+	<% if @friends.any? %>		
+		<div class="row friendships">
+			<% if @myself %>
+				<h4>MY FRIENDS</h4>
+			<% else %>
+				<h4><%= @user.retrieve_name('first').upcase %>'S FRIENDS</h4>
+			<% end %>
+			<div class="row friendships">
+				<div class="col-xs-12 col-md-10">
+				    <ul>
+			       <% @friends.each do |user| %>
+			       		<li>
+			       			<%= link_to profile_path(user) do %>
+			          			<div class="user_pic" style="background-image: url(<%= user.retrieve_pic %>)"></div>
+								<div class="user_name"><%= user.retrieve_name %></div>
+				          	<% end %>
+				          	<%= Friendship.mutual(current_user, user) %>
+				          	<% if @myself %>
+								<%= form_tag({controller: "friendship", action: "delete", :id => user.id}, method: "post") do %>
+									<%= submit_tag("Delete", :class => "btn")%><br />
+								<% end %>
+							<% end %>
+			          	</li>
+			        <% end %>
+				    </ul>
+				</div>
+			</div>
+		</div>
+	<% end %>
+
+	<% if @myself %>
+		<% if @others.any? %>
+			<div class="row friendships">
+				<h4>OTHER USERS</h4>
+				<div class="row friendships">
+					<div class="col-xs-12 col-md-10">
+				    	<ul>
+				    		<% @others.each do |user| %>
+			       				<li>
+			       					<%= link_to profile_path(user) do %>
+			          					<div class="user_pic" style="background-image: url(<%= user.retrieve_pic %>)"></div>
+										<div class="user_name">
+											<div class="user_name"><%= user.retrieve_name %></div>
+										</div>
+									<% end %>
+									<%= Friendship.mutual(current_user, user) %>
+									<% if Friendship.exists?(current_user, user) %><br>
+										<%= friendship_status(current_user, user) %><br>
+									<% else %>
+										<%= form_tag({controller: "friendship", action: "create", :id => user.id}, method: "post") do %>
+											<%= submit_tag("Request", :class => "btn")%><br />
+										<% end %>
+									<% end %>
+			          			</li>
+				        	<% end %>
+				    	</ul>
+					</div>
+				</div>
+			</div>
+		<% end %>
+	<% end %>
+</div>
+<!-- %= will_paginate others %> -->

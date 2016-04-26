@@ -1,0 +1,9 @@
+<% js = escape_javascript(
+	render(partial: 'profiles/list', locals: {
+		# myself: @myself,
+		# request: @request,
+		# friends: @friends,
+		# others: @others
+	})
+) %>
+$("#filterrific_results").html("<%= js %>");

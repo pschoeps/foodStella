@@ -39,18 +39,18 @@ class ProfilesController < ApplicationController
 	end
 
 	def index
-		# @profile = Profile.find_by_user_id(params[:user_id])
-		# @profile = Profile.find(params[:id])
-		# @profiles = Profile.all
 	end
 
 	def show
 		@user = User.find(params[:id])
-		@self = params[:id].to_i == current_user.id ? true : false;
+		# @myself = params[:id].to_i == current_user.id ? true : false;
+		puts '======================================================================'
+		puts params[:id]
+		@myself = @user.id == current_user.id ? true : false;
 
 		# if !current_user.profile && params[:id].to_i == current_user.id
 		if !@user.profile
-			if @self
+			if @myself
 				redirect_to new_profile_path and return
 			else
 				flash[:notice] = 'User has not setup profile'
@@ -67,10 +67,31 @@ class ProfilesController < ApplicationController
 
 		@friends = @user.friends
 		@others = User.find(:all, :conditions => ["id != ?", current_user.id])
-		@pending = @self? @user.pending_friends : []
-		@requests = @self? @user.requested_friends : []
+		@pending = @myself? @user.pending_friends : []
+		@requests = @myself? @user.requested_friends : []
 
 		@preferred_ingredients = @user.preferred_ingredients
+
+		#filtering links to model 
+		@filterrific = initialize_filterrific(
+		  User,
+		  params[:filterrific],
+		  :select_options => {
+		    sorted_by:   User.options_for_sorted_by
+		  }
+		) or return
+
+		# @others = @filterrific.find.page(params[:page])
+		@filtered_users = User.filterrific_find(@filterrific) #.page(params[:page]) #.search_query
+
+		@friends = @friends & @filtered_users
+		@requests = @requests & @filtered_users
+		@others = @others & @filtered_users- @friends - @requests
+
+		respond_to do |format|
+		  format.html
+		  format.js
+		end
 	end
 
 	def destroy
