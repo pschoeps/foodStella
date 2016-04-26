@@ -45,10 +45,19 @@ class ProfilesController < ApplicationController
 	end
 
 	def show
-		if !current_user.profile && params[:id].to_i == current_user.id
-			redirect_to new_profile_path and return
-		end
+		@user = User.find(params[:id])
+		@self = params[:id].to_i == current_user.id ? true : false;
 
+		# if !current_user.profile && params[:id].to_i == current_user.id
+		if !@user.profile
+			if @self
+				redirect_to new_profile_path and return
+			else
+				flash[:notice] = 'User has not setup profile'
+				redirect_to(:back) and return
+			end
+		end
+		
 		@profile = Profile.find_by_user_id(params[:id])
 		if(params.has_key?(:tab))
 			@tab = params[:tab]
@@ -56,9 +65,12 @@ class ProfilesController < ApplicationController
 			@tab = 'about_me'
 		end
 
-		@users = User.all
-		@friends = current_user.friends
-		@preferred_ingredients = current_user.preferred_ingredients
+		@friends = @user.friends
+		@others = User.find(:all, :conditions => ["id != ?", current_user.id])
+		@pending = @self? @user.pending_friends : []
+		@requests = @self? @user.requested_friends : []
+
+		@preferred_ingredients = @user.preferred_ingredients
 	end
 
 	def destroy

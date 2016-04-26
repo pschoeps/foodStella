@@ -1,9 +1,9 @@
 <% @editable = current_user.owns?(@profile) %>
 
 <div class="row">
-	<div class="container content">
+	<div class="container content about-me-view">
 		<div class="row">
-			<h4>ABOUT ME
+			<h4>ABOUT <%= @self? 'ME' : @user.retrieve_name('first').upcase %>
 				<%= link_to "EDIT", '#', class: "edit", id: 'edit-about_me' if @editable %>
 				<!-- <a href ='#' id='edit-about_me'class='edit'>EDIT</a> -->
 			</h4>

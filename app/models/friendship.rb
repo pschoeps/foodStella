@@ -10,6 +10,22 @@ class Friendship < ActiveRecord::Base
 		not find_by_user_id_and_friend_id(user, friend).nil?
 	end
 
+	#return true if the user's request is pending
+	def self.pending?(user, friend)
+		find_by_user_id_and_friend_id(user, friend).status == 'pending'
+	end
+
+	#return number of mutual friends
+	def self.mutual(user, friend)
+		mutual = user.friends & friend.friends
+		string = ' Mutual friend'
+		if mutual.length != 1
+			string += 's'
+		end
+		string = mutual.length.to_s + string
+		return string
+	end
+
 	#record a pending friend request
 	def self.request(user, friend)
         unless user == friend or Friendship.exists?(user, friend)
