@@ -608,6 +608,7 @@
 .filter-bar {
 	background-color: $dark;
 	height: 8em;
+	z-index: 500;
 
 	.dropdowns {
 		margin-right: 20px;

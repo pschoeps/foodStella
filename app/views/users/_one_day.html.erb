@@ -46,7 +46,8 @@ $(document).ready(function() {
               eventLimit: true, // allow "more" link when too many events
               eventDragStop: function( event ) {
                 console.log("eventDragStop fired")
-                recipe_id = event.title.slice(-2);
+                recipe_id = event.title.split('id-')[1];
+                console.log(recipe_id)
                 start_at = event.start.format();
                 name = event.title;
                 id = event.id;
@@ -92,7 +93,9 @@ $(document).ready(function() {
             eventDrop: function(event) {
               console.log("eventDrop fired")
 
-              recipe_id = event.title.slice(-2);
+              recipe_id = event.title.split('id-')[1];
+              console.log("eventDrop")
+              console.log(recipe_id)
 
               var data = {
                   event: {
@@ -126,7 +129,9 @@ $(document).ready(function() {
               var eventTitle = event.title
               var start_at = event.start.format();
               //var end_at = event.start.add(30, 'minutes').format();
-              var recipe_id = eventTitle.slice(-2);
+              var recipe_id = eventTitle.split('id-')[1];
+              console.log("event recieve")
+              console.log(recipe_id)
               var recipe_name = eventTitle.slice(0, -3);
         
                 var data = {
