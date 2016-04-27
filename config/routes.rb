@@ -15,6 +15,8 @@ FoodStella::Application.routes.draw do
       get 'calendar'
       get 'inbox'
       get 'shopping_list'
+      get 'json_list'
+      get 'json_list_ing'
     end
 
     collection do 
