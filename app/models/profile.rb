@@ -10,4 +10,5 @@ class Profile < ActiveRecord::Base
         errors.add(:picture_url, "should be less than 5MB")
       end
     end
+
 end
