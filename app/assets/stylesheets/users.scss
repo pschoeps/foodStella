@@ -340,3 +340,63 @@ input:-webkit-autofill {
 
 
 }
+
+/* shopping list */
+.shopping-list {
+	margin: 0;
+	padding: 0;
+}
+.shopping-list-container {
+	width: 100%;
+	background-color: white;
+	position: absolute;
+	padding-bottom: 3em;
+
+	.shopping-list-header {
+		width: 90%;
+		position: relative;
+		margin: auto;
+		height: 4em;
+		border-bottom: 2px solid $green;
+
+		h1 {
+			color: $green;
+			float: left;
+			font-size: 1.7em;
+			font-weight: 200;
+			letter-spacing: 2px;
+		}
+	}
+
+	.list-box {
+		    position: relative;
+    		top: 2em;
+    		height: 20em;
+    		width: 90%;
+    		margin: auto;
+
+		ol {
+			list-style-type: none;
+			padding: 0;
+
+			li {
+				padding:15px;
+				font-size:1.3em;
+				float: left;
+				width: 100%;
+    			float: left;
+    			height: 2.5em;
+
+    			div {
+    				margin-right: 10px;
+    			}
+
+    			label {
+    				font-weight: 200;
+    				letter-spacing: 2px;
+    				word-spacing: 25px;
+    			}
+			}
+		}
+	}
+}

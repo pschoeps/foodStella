@@ -10,14 +10,7 @@
   <!--div>
     <= f.select(:sorted_by, @filterrific.select_options[:sorted_by]) %>
   </div-->
-  <div>
-    <% @filterrific.select_options[:latest].each do |c| %>
-       <label class="latest checkbox label-for-check">
-        Latest
-        <%= check_box_tag("filterrific[latest][]", c[1]) %>
-      </label>
-    <% end %>
-  </div>
+  
 
   
   <div class="dropdowns">
@@ -72,7 +65,7 @@
     </ul>
   </div> 
 
-  <div class="dropdown difficulty">
+  <div class="dropdown meal-type">
     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       Meal Type
       <span class="caret"></span>
@@ -90,10 +83,19 @@
   </div> 
   </div> 
 
+
+    <% @filterrific.select_options[:latest].each do |c| %>
+       <label class="latest checkbox label-for-check">
+        Latest
+        <%= check_box_tag("filterrific[latest][]", c[1]) %>
+      </label>
+    <% end %>
+
+
   
 
 
-  <div>
+  <div id ="reset-filters">
     <%= link_to(
       'Reset filters',
       reset_filterrific_url,

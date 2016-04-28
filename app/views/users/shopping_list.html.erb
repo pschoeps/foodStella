@@ -1,3 +1,5 @@
+<%= render 'layouts/recipe_css_variables' %>
+
 <div class="disable-margins">
 
 <div class="row">
@@ -10,14 +12,57 @@
 </div>
 
 <div class="row">
+	<%= render 'layouts/recipe_sidebar' %>
 	<div class="col-md-9 shopping-list">
-		<ol>
-			<% @shopping_items.each do |s| %>
-			  <li><%= s[0] %>: <%= s[1] %> <%= s[2] %></li>
-			<% end %>
-		</ol>
+		<div class="shopping-list-container">
+			<div class="shopping-list-header">
+			  <h1><%= @date_string %></h1>
+			</div>
+
+			<div class="list-box">
+				<ol>
+					<% @shopping_items.each do |s| %>
+			  		  <li>
+			  		  	<label>
+  						     <input type="checkbox" class='icheck-me' data-skin="minimal" data-color="green">
+			  		  	    <%= s[1] %> <%= s[2] %> <%= s[0] %> 
+			  		  	</label>
+			  		  </li>
+					<% end %>
+				</ol>
+			</div>
+		</div>
 	</div>
 </div>
-
-
 </div>
+
+<script>
+ $(document).ready(function(){
+ // $('input').iCheck({
+ //   checkboxClass: 'icheckbox_minimal-green',
+ //   radioClass: 'iradio_minimal-green',
+ //   increaseArea: '20%' // optional
+  //});
+
+  function icheck(){
+  if($(".icheck-me").length > 0){
+    $(".icheck-me").each(function(){
+      var $el = $(this);
+      var skin = ($el.attr('data-skin') !== undefined) ? "_" + $el.attr('data-skin') : "",
+      color = ($el.attr('data-color') !== undefined) ? "-" + $el.attr('data-color') : "";
+      var opt = {
+        checkboxClass: 'icheckbox' + skin + color,
+        radioClass: 'iradio' + skin + color,
+      }
+      $el.iCheck(opt);
+    });
+  }
+}
+
+$(function(){
+  icheck();
+})
+});
+
+
+</script>

@@ -26,6 +26,7 @@
 //= require jquery.purr
 //= require best_in_place
 //= require jquery-scrolltofixed
+//= require icheck
 
 //= require_tree
 

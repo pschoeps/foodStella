@@ -177,6 +177,10 @@ GEM
     hashie (3.4.3)
     hike (1.2.3)
     i18n (0.7.0)
+    icheck-rails (1.0.2.2)
+      jquery-rails
+      rails (>= 3.1.0)
+      sass-rails
     inflecto (0.0.2)
     ipaddress (0.8.3)
     jbuilder (1.5.3)
@@ -303,6 +307,7 @@ DEPENDENCIES
   filterrific
   fog (= 1.36.0)
   fullcalendar-rails
+  icheck-rails
   jbuilder (~> 1.2)
   jquery-rails
   jquery-ui-rails

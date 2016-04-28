@@ -580,6 +580,18 @@
 
 /* index page */
 
+.recipes-page {
+	z-index: 10;
+}
+
+.padded {
+	padding-top: 5.6em;
+}
+
+.new_filterrific div {
+	float: none;
+}
+
 .recipe-page-header {
 	height: 25%;
 	background-color: $green;
@@ -593,10 +605,11 @@
 }
 
 .latest {
-	  position: relative;
-	  color: $green;
-	  top: 2.3em;
-	  right: 1em;
+	  position: absolute;
+      color: #819800;
+      top: 2.6em;
+      left: 28em;
+      width: 4em;
 	  input { display: none; }
 	}
 
@@ -605,41 +618,72 @@
 	background-color: $dark;
 	height: 8em;
 	z-index: 500;
+	padding: 0;
+
+	#filterrific_filter {
+		height: 8em;
+		width: 100%;
+		position: absolute;
+		text-align: center;
+	}
 
 	.dropdowns {
-		margin-right: 20px;
+		width: 100%;
+		margin: auto;
 		position: relative;
     	top: 50%;
-    	transform: translateY(50%);
+    	transform: translateY(-50%);
+	}
+
+	#reset-filters {
+		width: 6em;
+		position: absolute;
 	}
 
 	.filter-search {
-		position: relative;
-    	top: 50%;
-    	transform: translateY(50%);
-    	border-radius: 10px;
+		float: left;
+		margin-left: 5px;
+		margin-top: 5px;
 	}
 
+	.open .dropdown-toggle{
+		color: $green;
+	}
 
 	.dropdown {
 		padding: 10px;
+		width: 11em;
+		display: inline;
 		button {
-			color: $green;
+			color: white;
 			background-color: transparent;
 			border: none;
 		}
+	
 
 		ul {
-			color: $green;
-			background-color: $dark;
+			color: #819800;
+			z-index: 999999;
+    		background-color: white;
+    		border-radius: 0px;
+    		position: relative;
+    		width: 100%;
+    		padding-left: 7em;
+    		float: right;
+    		top: 2.6em;
+    		height: 5.5em;
 
 			li label {
-				margin-left: 10px;
-				color: $green;
+				    position: relative;
+   				 	height: 1em;
+    				padding: 4px;
+    				padding-right: 50px;
+    				margin: 0;
+    				display: inline-block;
 
 				input {
-					position: absolute;
-					right: 20px;
+					position: relative;
+    				left: 26px;
 				}
 			}
 		}

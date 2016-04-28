@@ -167,7 +167,7 @@ $outer-container: 90%;
 
 	.calendar-title {
 		position: relative;
-		height: 6em;
+		height: 4em;
 		width: 100%;
 		top: 0;
 		padding-left: 1em;
@@ -175,6 +175,7 @@ $outer-container: 90%;
 		h1 {
 			font-weight: 100;
     		letter-spacing: 3px;
+            font-size: 2em;
 		}
 	}
 
@@ -182,7 +183,7 @@ $outer-container: 90%;
         float: right;
         z-index: 20;
         position: relative;
-        right: 6em;
+        right: 4em;
         bottom: 3em;
 
       span {
