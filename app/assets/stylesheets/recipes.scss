@@ -31,7 +31,7 @@
 					padding-top: 0;
 				}
 				li {
-					margin: 30px 0;
+					margin: 16px 0;
 					> label {
 						width: 100px;
 					}
@@ -69,10 +69,11 @@
 					text-align: left;
 					font-weight: 400;
 					padding: 4px 0;
+					margin: 10px 0;
 				}
 				.upload-photo {
-					width: 260px;
-					height: 160px;
+					width: 240px;
+					height: 130px;
 					margin: 0 auto;
 					border: solid 1px $medium;
 					text-align: center;
@@ -89,6 +90,7 @@
 				}
 				.food-type {
 					text-align: center;
+					margin: 0;
 				}
 				#recipe-ingredients li {
 					// background-color: $light;
