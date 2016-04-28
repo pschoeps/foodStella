@@ -24,7 +24,7 @@
 					<% @shopping_items.each do |s| %>
 			  		  <li>
 			  		  	<label>
-  						    <input type="checkbox" name="quux[1]" >
+  						     <input type="checkbox" class='icheck-me' data-skin="minimal" data-color="green">
 			  		  	    <%= s[1] %> <%= s[2] %> <%= s[0] %> 
 			  		  	</label>
 			  		  </li>
@@ -38,10 +38,31 @@
 
 <script>
  $(document).ready(function(){
-  $('input').iCheck({
-    checkboxClass: 'icheckbox_minimal-green',
-    radioClass: 'iradio_minimal-green',
-    increaseArea: '20%' // optional
-  });
+ // $('input').iCheck({
+ //   checkboxClass: 'icheckbox_minimal-green',
+ //   radioClass: 'iradio_minimal-green',
+ //   increaseArea: '20%' // optional
+  //});
+
+  function icheck(){
+  if($(".icheck-me").length > 0){
+    $(".icheck-me").each(function(){
+      var $el = $(this);
+      var skin = ($el.attr('data-skin') !== undefined) ? "_" + $el.attr('data-skin') : "",
+      color = ($el.attr('data-color') !== undefined) ? "-" + $el.attr('data-color') : "";
+      var opt = {
+        checkboxClass: 'icheckbox' + skin + color,
+        radioClass: 'iradio' + skin + color,
+      }
+      $el.iCheck(opt);
+    });
+  }
+}
+
+$(function(){
+  icheck();
+})
 });
+
+
 </script>

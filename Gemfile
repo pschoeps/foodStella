@@ -26,6 +26,9 @@ gem 'jbuilder', '~> 1.2'
 gem 'bootstrap-sass',       '3.2.0.0'
 gem 'sass-rails', '~> 4.0.0'
 
+#for checkboxes
+gem 'icheck-rails'
+
 #search and filtering
 gem 'filterrific'
 #and pagination
