@@ -8,7 +8,6 @@
 <div class= "row">
   <div class="col-md-12 filter-bar">
     <%= render 'filter_form' %>
-    <%= page_entries_info @recipes %>
   </div>
 </div>
 
@@ -33,6 +32,15 @@
 <script>
 
 	$(document).ready(function() {
+
+      //$(document).on('click','.dropdown-toggle',function(){
+       // $('.recipes-page').toggleClass("padded")
+       // if ( $('.recipes-page').css('padding-top') == '5.7em' )
+       //   $('.recipes-page').css('padding-top','0');
+       // else
+       //   $('.recipes-page').css('padding-top','5.7em');
+      //});
+
     	$(document).on('click','#follow',function(){
     		$this = $(this)
     		recipe_id = $this.attr('data')

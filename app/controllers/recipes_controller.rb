@@ -129,6 +129,7 @@ class RecipesController < ApplicationController
   	  :quantities_attributes => [
         :id,
         :amount,
+        :unit,
         :_destroy,
         :ingredient_attributes => [
           #:id commented bc we pick 'id' for existing ingredients manually and for new we create it

@@ -1,5 +1,6 @@
 <!-- rendering dynamic css tags for images in a recipe  -->
 <%= render 'layouts/recipe_css_variables' %>
+
 <div class="disable-margins">
 
 <div class="row">
@@ -36,7 +37,21 @@
 
 
 <script>
+
+  $(document).ready(function(e) {
+
+    $('html, body').animate({
+        scrollTop: $('.calendar-nav').offset().top
+    }, 'slow');
+    e.preventDefault
+  });
+
   $(document).ready(function() {
+    $('.sidebar').scrollToFixed();
+
+
+    
+
 
       $('a#shopping-list').on('click', function() { 
         console.log("clicked link")

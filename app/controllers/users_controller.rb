@@ -80,6 +80,18 @@ class UsersController < ApplicationController
     end
 
     def shopping_list
+
+    	@followed_recipes = current_user.following
+		@user_recipes = current_user.recipes
+		@recipes = @user_recipes + @followed_recipes
+		@events = current_user.events
+
+		@snacks = @user_recipes.where(:meal_type => "1") + @followed_recipes.where(:meal_type => "1")
+		@side_dishes = @user_recipes.where(:meal_type => "2") + @followed_recipes.where(:meal_type => "2")
+		@main_dishes = @user_recipes.where(:meal_type => "3") + @followed_recipes.where(:meal_type => "3")
+		@desserts = @user_recipes.where(:meal_type => "4") + @followed_recipes.where(:meal_type => "4")
+		@drinks = @user_recipes.where(:meal_type => "5") + @followed_recipes.where(:meal_type => "5")
+
     	d = Date.today
 		@month = d.strftime("%B")
 		@week_begin = d.at_beginning_of_week.strftime("%-d")
@@ -107,12 +119,29 @@ class UsersController < ApplicationController
 		@recipes.each do |r|
 			r.ingredients.each do |i|
 				i.quantities.each do |q|
-					@shopping_items << [i.name, q.amount, q.unit]
+					unit = get_unit(q.unit, q.amount)
+					@shopping_items << [i.name, q.amount, unit]
 				end
 			end
 		end
 
     end
+
+    def get_unit(unit, amount)
+    	string = case amount
+                when "1"
+                  if amount.to_i > 1
+                  	"Cups"
+                  else
+                  	"Cup"
+                  end
+                when "2"
+                  "Oz."
+                when "3"
+                  "Tsp."
+                end
+      string
+	end
 end
 
 

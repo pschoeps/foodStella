@@ -7,7 +7,7 @@ var currentMousePos = {
 
 
 $(document).ready(function() {
-  $('.sidebar').scrollToFixed();
+  
   
 
 
