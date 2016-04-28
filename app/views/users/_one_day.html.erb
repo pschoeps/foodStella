@@ -83,7 +83,37 @@ $(document).ready(function() {
               },
               eventRender: function(event, element) {
 
+                recipe_id = event.title.split('id-')[1];
+                console.log(recipe_id)
+                start_at = event.start.format();
+                name = event.title;
+                id = event.id;
+  
+
+                var data = {
+                  event: {
+                    start_at: start_at,
+                    recipe_id: recipe_id,
+                    name: name,
+                    id: id
+                  }
+                };
+
                 element.addClass(event.title);
+                element.append('<span class="glyphicon glyphicon-remove"></span>');
+                element.find(".glyphicon").click(function() {
+                  console.log("clicked")
+                  $('#calendar-<%= day[1] %>').fullCalendar('removeEvents', event._id);
+                  $.ajax({//ajax call 
+                  type:'DELETE',
+                  data: data,
+                  url:'/events/destroy',
+              
+                  success:function (response) {
+                  }
+                  
+                });//end ajax call
+                 });
                
 
 

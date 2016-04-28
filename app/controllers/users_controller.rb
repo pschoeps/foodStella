@@ -17,6 +17,28 @@ class UsersController < ApplicationController
    		@users = User.all
   	end
 
+  	def json_list
+  		@recipes = Recipe.all
+  		@stuff = @recipes.as_json
+
+  		#@pretty_recipes = @recipes.to_json
+  		#@render = JSON.pretty_generate(@recipes)
+  		#@pretty_json = JSON.pretty_generate(@recipes)
+  		
+  		render :json => JSON.pretty_generate(@stuff)
+    end
+
+    def json_list_ing
+    	@ing = Ingredient.all
+  		@stuff = @ing.as_json
+
+  		#@pretty_recipes = @recipes.to_json
+  		#@render = JSON.pretty_generate(@recipes)
+  		#@pretty_json = JSON.pretty_generate(@recipes)
+  		
+  		render :json => JSON.pretty_generate(@stuff)
+  	end
+
   	
 
 	def calendar

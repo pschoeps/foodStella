@@ -94,6 +94,15 @@ body .fc { /* extra precedence to overcome jqui */
     font-weight: normal;
     background-size: cover;
     background-repeat: no-repeat;
+
+    .glyphicon {
+    	position: absolute;
+    	z-index: 10000;
+    	color: #819800;
+    	font-size: 1.5em;
+    	right: 5px;
+    	top: 5px;
+    }
 }
 
 
