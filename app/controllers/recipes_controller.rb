@@ -120,6 +120,8 @@ class RecipesController < ApplicationController
                   "Dessert"
                 when "5"
                   "Drink"
+                when "6"
+                   "Appetizer"
                 end
     string
   end
