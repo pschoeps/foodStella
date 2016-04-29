@@ -77,10 +77,10 @@ body .fc { /* extra precedence to overcome jqui */
 }
 
 #in-list {
-	height: 100px;
-    width: 100px;
+	height: 82px;
+    width: 82px;
     display: inline-block;
-    margin: 8px;
+    margin: 2px;
     cursor: pointer;
     background-size: cover;
     background-color: white;
@@ -89,7 +89,7 @@ body .fc { /* extra precedence to overcome jqui */
 .fc-event {
     display: block;
     background-color: rgba(171, 171, 171, .6);
-    height: 14.7em;
+    height: 11em;
     line-height: 1.3;
     font-weight: normal;
     background-size: cover;

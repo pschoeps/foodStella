@@ -21,6 +21,7 @@ FoodStella::Application.routes.draw do
 
     collection do 
       get 'add_day'
+      get 'previous_day'
     end
 
   end
