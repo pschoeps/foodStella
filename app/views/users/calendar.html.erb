@@ -1,7 +1,7 @@
 <!-- rendering dynamic css tags for images in a recipe  -->
 <%= render 'layouts/recipe_css_variables' %>
 
-<div class="disable-margins">
+<div>
 
 <div class="row">
   <div class="col-md-12 calendar-page-header">
@@ -13,13 +13,20 @@
 </div>
 
 
-<div class="row calendar-days">
+<div class="row calendar-days" css="margin: 0;">
   <%= render 'layouts/recipe_sidebar' %>
 
   <div class="col-md-9 calendar-nav">
     <span class="btn" id="add-day" data="<%= @day_counter %>">Add Day</span>
+    <span class="btn" id="previous-day" data="1">Previous Day</span>
     <%= link_to "Generate Shopping List", shopping_list_user_path(current_user), id: "shopping-list", class: "btn" %>
   </div>
+
+  <div class="previous-days">
+    <div class="row prev-days" id="prev-day-1"></div>
+  </div>
+
+ 
 
   <%= render 'one_day', :day => @today %>
   <%= render 'one_day', :day => @tomorrow %>
@@ -56,8 +63,8 @@
       $('a#shopping-list').on('click', function() { 
         console.log("clicked link")
         day_counter = $('#add-day').attr('data')
-        console.log(day_counter)
-        this.href = this.href + '?day_counter=' + day_counter
+        prev_day_counter = $('#previous-day').attr('data')
+        this.href = this.href + '?day_counter=' + day_counter + '&prev_day_counter=' + prev_day_counter
       });
 
       $(document).on('click','#add-day',function(){
@@ -83,6 +90,33 @@
                     element_id = '#day-' + new_day_counter
                     console.log(element_id)
                     $(element_id)[0].scrollIntoView( false );
+
+                  }
+                  
+                });//end ajax call
+    });
+
+    $(document).on('click','#previous-day',function(){
+        $this = $(this)
+        previous_day_counter = $this.attr('data')
+        $.ajax({//ajax call for questions
+                  type:'GET',
+                  data: {day_counter: previous_day_counter},
+                  url:'/users/previous_day',
+              
+                  success:function (response) {
+                    console.log("ajax success")
+                    $("#prev-day-" + previous_day_counter).html(response);
+
+                    new_day_counter = parseInt(previous_day_counter) + 1
+                    $this.attr('data', new_day_counter)
+
+
+                    string = parse('<div class="row prev-day" id="prev-day-%s"> </div>', new_day_counter);
+                    $('.prev-days').prepend($(string))
+
+                    element_id = '#day-' + new_day_counter
+
 
                   }
                   

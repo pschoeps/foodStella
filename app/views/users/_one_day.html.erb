@@ -1,6 +1,6 @@
 <div class="col-md-9 calendar-container">
 
-    <div class="calendar-title"><h1><%= day[0] %></h1></div>
+    <div class="calendar-title"><h1><%= day[0] %>, <%= day[1] %></h1></div>
 
     <div class="event-trash" id="event-trash-<%= day[1] %>"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div>
 
@@ -36,7 +36,7 @@ $(document).ready(function() {
               height: 350,
               scrollTime: '00:00',
               maxTime: '2:30',
-              slotWidth: 173,
+              slotWidth: 130,
            //   slotDuration: 30,
               editable: true,
               forceEventDuration: true,

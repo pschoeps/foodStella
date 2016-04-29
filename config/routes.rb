@@ -17,10 +17,12 @@ FoodStella::Application.routes.draw do
       get 'shopping_list'
       get 'json_list'
       get 'json_list_ing'
+      get 'json_list_quant'
     end
 
     collection do 
       get 'add_day'
+      get 'previous_day'
     end
 
   end

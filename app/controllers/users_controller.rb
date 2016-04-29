@@ -39,6 +39,17 @@ class UsersController < ApplicationController
   		render :json => JSON.pretty_generate(@stuff)
   	end
 
+  	def json_list_quant
+  		@qua = Quantity.all
+  		@stuff = @qua.as_json
+
+  		#@pretty_recipes = @recipes.to_json
+  		#@render = JSON.pretty_generate(@recipes)
+  		#@pretty_json = JSON.pretty_generate(@recipes)
+  		
+  		render :json => @stuff
+  	end
+
   	
 
 	def calendar
@@ -79,6 +90,13 @@ class UsersController < ApplicationController
 		render :partial => 'users/one_day', :locals => { :day => @new_day }
     end
 
+    def previous_day
+		day_counter = params[:day_counter].to_i
+		@new_day = [(DateTime.now - day_counter.days).strftime("%A"), (DateTime.now - day_counter.days).strftime('%Y-%m-%d')]
+
+		render :partial => 'users/one_day', :locals => { :day => @new_day }
+    end
+
     def shopping_list
 
     	@followed_recipes = current_user.following
@@ -99,8 +117,15 @@ class UsersController < ApplicationController
 		@date_string = @month + " " + @week_begin + " - " + @week_end
 
 		day_counter = params[:day_counter].to_i
+		prev_day_counter = params[:prev_day_counter].to_i
 
-		@first_day = DateTime.now
+		if prev_day_counter == 1
+			@first_day = DateTime.now
+		else
+			subtracted_days = prev_day_counter - 1
+			@first_day = DateTime.now - subtracted_days.days 
+		end
+
 		@last_day = DateTime.now + day_counter.days
 
 		@events = Event.where(start_at: (@first_day)..@last_day)
