@@ -12,7 +12,7 @@
 
         <div class="details">
           <h3><%= truncate(recipe.name, length: 25) %></h3>
-          <p><%= truncate(recipe.description, length: 200) %></p>
+          <p><%= truncate(recipe.description, length: 20) %></p>
           <span class="cook-time">Cook Time: <p><%= recipe.cook_time %>mins</p></span>
           <span class="prep-time">Prep Time: <p><%= recipe.prep_time %>mins</p></span>
           <div class="recipe-footer">

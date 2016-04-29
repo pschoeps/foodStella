@@ -38,12 +38,16 @@ $outer-container: 90%;
 	}
 } 
 
+#sidebar-skinny {
+    width: 20%;
+}
+
 .sidebar {
 	background-color: white;
 	z-index: 100;
 	height: 100vh;
     max-height: 100vh;
-    width: 20%;
+ 
 
 
 
