@@ -47,7 +47,7 @@ class UsersController < ApplicationController
   		#@render = JSON.pretty_generate(@recipes)
   		#@pretty_json = JSON.pretty_generate(@recipes)
   		
-  		render :json => JSON.pretty_generate(@stuff)
+  		render :json => @stuff
   	end
 
   	
