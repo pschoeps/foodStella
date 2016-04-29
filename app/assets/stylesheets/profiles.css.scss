@@ -88,6 +88,14 @@
 	.button a { color: white; }
 	.button.selected a { color: $green; }
 	// .button:hover a { color: $green; }
+	.notification {
+		color: $orange;
+		border: solid 1px $orange;
+		border-radius: 99px;
+		width: 20px;
+		height: 20px;
+		display: inline-block;
+	}
 }
 
 .container.content {
@@ -96,9 +104,9 @@
   background-color: white;
 
 	.row {
-		margin-top: 50px;
+		margin-top: 20px;
 		> div {
-			margin: 20px auto;
+			margin: 10px auto;
 			float: none;
 		}
 		> .left { text-align: left; }

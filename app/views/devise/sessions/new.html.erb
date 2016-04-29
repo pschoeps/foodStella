@@ -1,13 +1,11 @@
-<div id="fb-root"></div>
+<!--<div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
   js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5&appId=1587213768258926";
   fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
-
-
+}(document, 'script', 'facebook-jssdk'));</script>-->
 
 <div class="backsplash-col">
   <div>
@@ -80,10 +78,12 @@
     <br />
     <br />
 
-    <%= link_to "Facebook", user_omniauth_authorize_path(:facebook), style: 'color: blue;' %>
-    <!-- <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="false"></div> -->
+    <!-- %= link_to "Facebook", user_omniauth_authorize_path(:facebook), style: 'color: blue;' %> -->
+    <%= link_to user_omniauth_authorize_path(:facebook) do %>
+      <%= image_tag('log_in_with_facebook.png') %>
+      <!-- <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="false"></div> -->
+    <% end %>
 
      <!-- render "devise/shared/links" %> -->
   </div>
-
 </div>
