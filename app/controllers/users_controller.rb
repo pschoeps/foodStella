@@ -39,6 +39,17 @@ class UsersController < ApplicationController
   		render :json => JSON.pretty_generate(@stuff)
   	end
 
+  	def json_list_quant
+  		@qua = Quantity.all
+  		@stuff = @qua.as_json
+
+  		#@pretty_recipes = @recipes.to_json
+  		#@render = JSON.pretty_generate(@recipes)
+  		#@pretty_json = JSON.pretty_generate(@recipes)
+  		
+  		render :json => JSON.pretty_generate(@stuff)
+  	end
+
   	
 
 	def calendar
