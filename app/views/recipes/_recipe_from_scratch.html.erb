@@ -30,7 +30,35 @@
           <div class="row">
             <li class="control-group food-type">
               <%= f.label :meal_type, "Food type:", class: "control-label" %>
-              <div class="controls"><%= f.select(:meal_type, options_for_select([['Snack', 1], ['Side dish', 2], ["Main dish", 3], ['Dessert', 4], ['Drink', 5], ['Appetizer', 6]])) %></div>
+              <!-- <div class="controls">
+                %= f.select(:meal_type, options_for_select([['Snack', 1], ['Side dish', 2], ["Main dish", 3], ['Dessert', 4], ['Drink', 5], ['Appetizer', 6]])) %>
+              </div> -->
+              <div class="controls">
+                <div class='radio-container'>
+                  <%= f.radio_button(:meal_type, 1) %>
+                  <%= f.label(:meal_type_snack, "Snack") %>
+                </div>
+                <div class='radio-container'>
+                  <%= f.radio_button(:meal_type, 2) %>
+                  <%= f.label(:meal_type_side_dish, "Side Dish") %>
+                </div>
+                <div class='radio-container'>
+                  <%= f.radio_button(:meal_type, 3) %>
+                  <%= f.label(:meal_type_main_dish, "Main Dish") %>
+                </div>
+                <div class='radio-container'>
+                  <%= f.radio_button(:meal_type, 4) %>
+                  <%= f.label(:meal_type_dessert, "Dessert") %>
+                </div>
+                <div class='radio-container'>
+                  <%= f.radio_button(:meal_type, 5) %>
+                  <%= f.label(:meal_type_drink, "Drink") %>
+                </div>
+                <div class='radio-container'>
+                  <%= f.radio_button(:meal_type, 6) %>
+                  <%= f.label(:meal_type_appetizer, "Appetizer") %>
+                </div>
+              </div>
             </li>
           </div>
 

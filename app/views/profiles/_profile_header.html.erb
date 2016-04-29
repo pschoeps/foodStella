@@ -12,14 +12,7 @@
 					<div class='edit-bg'><%= link_to "Edit background", edit_profile_path(@profile) if @editable %></div>
 				</div>
 				<div class="row user_name">
-					<h4>
-						<% if @profile.fir_name && @profile.las_name %>
-							<%= @profile.fir_name + ' ' + @profile.las_name %>
-						<% else %>
-							<%= @profile.user.fir_name + ' ' + @profile.user.las_name %>
-							<!-- %= @user.email[/[^@]+/] %> -->
-						<% end %>
-					</h4>
+					<h4><%= @user.retrieve_name() %></h4>
 				</div>
 			</div>
 			<div class="col-sm-4 tabs_right">
@@ -42,6 +35,9 @@
 			<div class="col-xs-4">
 				<div class="button <%= 'selected' if @tab == 'friends' %>">
 					<%= link_to "Friends", profile_path(tab: 'friends') %>
+					<% if @requests.any? %>
+						<div class="notification"><%= @requests.length %></div>
+					<% end %>
 				</div>
 			</div>
 			<div class="col-xs-4">

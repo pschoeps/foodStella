@@ -154,7 +154,7 @@ class UsersController < ApplicationController
     end
 
     def get_unit(unit, amount)
-    	string = case amount
+    	string = case unit
                 when "1"
                   if amount.to_i > 1
                   	"Cups"
@@ -165,6 +165,14 @@ class UsersController < ApplicationController
                   "Oz."
                 when "3"
                   "Tsp."
+                 when "4"
+                 	"Tbsp."
+                 when "5"
+                 	if amount.to_i > 1
+						"Pinches"
+					else
+                 		"Pinch"
+					end
                 end
       string
 	end

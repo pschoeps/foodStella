@@ -91,6 +91,10 @@
 				.food-type {
 					text-align: center;
 					margin: 0;
+					.radio-container {
+						display: inline-block;
+						white-space: nowrap;
+					}
 				}
 				#recipe-ingredients li {
 					// background-color: $light;
@@ -156,7 +160,11 @@
 	padding: 8px 24px;
 	width: auto;
 }
-
+.recipe-form input[type=radio] {
+	width: auto;
+	text-align: left;
+	margin: 0 4px 0 12px;
+}
 
 #nomargin {
   height: 10em;
@@ -416,11 +424,12 @@
 	    padding-left:0; /* Remove the default left padding */
 	}
 	ol > li {
-		min-height: 40px;
+		min-height: 36px;
 	    position:relative; /* Create a positioning context */
-	    margin:0 0 0px 3em; /* Give each list item a left margin to make room for the numbers */
-	    padding: 4px 8px 16px; /* Add some spacing around the content */
+	    margin:0 0 0px 1em; /* Give each list item a left margin to make room for the numbers */
+	    padding: 4px 8px 14px; /* Add some spacing around the content */
 	    list-style:none; /* Disable the normal item numbering */
+	    font-size: 13px;
 	}
 	ol > li:before {
 	    content:counter(li) "."; /* Use the counter as content */
@@ -428,11 +437,11 @@
 	    /* Position and style the number */
 	    position:absolute;
 	    top:-2px;
-	    left:-2em;
+	    left:-1em;
 	    // -moz-box-sizing:border-box;
 	    // -webkit-box-sizing:border-box;
 	    // box-sizing:border-box;
-	    width: 2em;
+	    width: 1em;
 	    /* Some space between the number and the content in browsers that support
 	       generated content but not positioning it (Camino 2 is one example) */
 	    margin-right:8px;
