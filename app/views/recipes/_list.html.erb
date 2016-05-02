@@ -16,7 +16,7 @@
           <span class="cook-time">Cook Time: <p><%= recipe.cook_time %>mins</p></span>
           <span class="prep-time">Prep Time: <p><%= recipe.prep_time %>mins</p></span>
           <div class="recipe-footer">
-            <p>Recipe By: <% user = recipe.get_user(recipe.user_id).name %>
+            <p>Recipe By: <%= recipe.get_user(recipe.user_id).retrieve_name() %>
                </p>
           </div>
         
@@ -42,5 +42,6 @@
 
 </div>
 
-
-<%= will_paginate recipes %>
+<div class="clear" style="text-align:center;">
+  <%= will_paginate recipes %>
+</div>

@@ -1,7 +1,7 @@
 <% @editable = current_user.owns?(@profile) %>
 
 <div class="row">
-	<div class="container content about-me-view">
+	<div class="col-sm-12 col-md-9 col-center content about-me-view">
 		<div class="row">
 			<h4>ABOUT <%= @self? 'ME' : @user.retrieve_name('first').upcase %>
 				<%= link_to "EDIT", '#', class: "edit", id: 'edit-about_me' if @editable %>
@@ -19,39 +19,60 @@
 			</div>
 		</div>
 
-		<div class="row">
+		<!-- <div class="row">
 			<h4>INGREDIENTS I LIKE
-			<!-- %= link_to "EDIT", '#', class: "edit", id: 'edit-preferred-ingredients' if @editable %> -->
+			%= link_to "EDIT", '#', class: "edit", id: 'edit-preferred-ingredients' if @editable %>
 			</h4>
 			<div class="col-xs-12 col-md-10 left">
-				<%= image_tag "icons/pork_green.png", class: "icon" %>
-			<!-- % @preferred_ingredients.each do |ingredient| %>
+				%= image_tag "icons/pork_green.png", class: "icon" %>
+			% @preferred_ingredients.each do |ingredient| %>
 				%= image_tag "icons/"+ingredient.ingredient_name+"_green.png", class: "icon" %>
-			% end %> -->
+			% end %>
 			<div class="clear"></div>
 			</div>
-		</div>
+		</div> -->
 
 		<div class="row">
 			<h4>FOODS I LIKE
-			<!-- %= link_to "EDIT", '#', class: "edit", id: 'edit-foods_i_like' if @editable %> -->
+				<%= link_to "EDIT", '#', class: "edit", id: 'edit-liked_foods' if @editable %>
 			</h4>
 			<div class="col-xs-12 col-md-10">
-				Mexican, Mediterranean, etc.
-				<!-- %= best_in_place_if (@editable), @profile, :foods_i_like, :as => :textarea, :activator => "#edit-foods_i_like" %> -->
+				<!-- %= @profile.about_me %> -->
+				<%= best_in_place_if (@editable), @profile, :liked_foods,
+					:as => :textarea,
+					:ok_button => 'Save',
+					:activator => "#edit-liked_foods",
+					:html_attrs => {maxlength: 800},
+					:place_holder => 'List some of your favorite foods'
+				%>
 			</div>
 		</div>
 
 		<div class="row">
+			<h4>FOODS I DON'TLIKE
+				<%= link_to "EDIT", '#', class: "edit", id: 'edit-disliked_foods' if @editable %>
+			</h4>
+			<div class="col-xs-12 col-md-10">
+				<!-- %= @profile.about_me %> -->
+				<%= best_in_place_if (@editable), @profile, :disliked_foods,
+					:as => :textarea,
+					:ok_button => 'Save',
+					:activator => "#edit-disliked_foods",
+					:html_attrs => {maxlength: 800},
+					:place_holder => "List some foods that you don't like"
+				%>
+			</div>
+		</div>
+
+		<!-- <div class="row">
 			<h4>FOODS I DON'T LIKE
-			<!-- %= link_to "EDIT", '#', class: "edit", id: 'edit-foods_i_dont_like' if @editable %> -->
 			</h4>
 			<div class="col-xs-12 col-md-10 bubbles">
 				<div>1</div>
 				<div>2</div>
 				<div>asdklfja;ldskfj</div>
 			</div>
-		</div>
+		</div> -->
 
 		<div class="row">
 			<h4>COOKING EXPERIENCE

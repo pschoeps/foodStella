@@ -25,7 +25,7 @@ class Recipe < ActiveRecord::Base
   validate :instructions_order
 
   # default for will_paginate
-  self.per_page = 10
+  self.per_page = 8
 
   #this is some stuff I'm playing around with for searching and filtering recipes
   filterrific :default_filter_params => { :sorted_by => 'created_at_desc' },

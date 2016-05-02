@@ -5,7 +5,7 @@
 </div>
 <div class="row">
 
-	<div class="col-sm-12 col-md-10 col-center new_recipe-col">
+	<div class="col-sm-12 col-md-9 col-center new_recipe-col">
     
     <div class="row upload-photo"></div>
 
@@ -35,7 +35,7 @@
               </div> -->
               <div class="controls">
                 <div class='radio-container'>
-                  <%= f.radio_button(:meal_type, 1) %>
+                  <%= f.radio_button(:meal_type, 1, checked: true) %>
                   <%= f.label(:meal_type_snack, "Snack") %>
                 </div>
                 <div class='radio-container'>
@@ -129,7 +129,7 @@
             </li>
 
             <li class="control-group">
-              <div class="controls">Cookware:</div>
+              <label class="control-label">Cookware:</label>
             </li>
 
             <li class="control-group">

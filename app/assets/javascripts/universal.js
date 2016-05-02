@@ -39,32 +39,32 @@ $(document).ready(function() {
                     revertDuration: 0  //  original position after the drag
                 });
 
-                $(this).click(function(){
-                  $('#external-events-listing').css('height', $('#external-events-listing').height() + 'px');
-                  $('.fc-slats td').css('box-shadow', 'inset 0 0 90px #e8e8e8');
-                  $(this).css({
-                    'box-shadow': '2px 2px 18px #888',
-                    'float': 'left'
-                  });
-                  $(this).animate({
-                    'height': '108px',
-                    'width': '108px',
-                    'margin': '4px',
-                  }, 200, function(){
-                    $(this).animate({
-                      'height': '100px',
-                      'width': '100px',
-                      'margin': '8px',
-                      }, 200, function(){
-                        $(this).css({
-                          'box-shadow': '0 0 0px #444',
-                          'float': 'none'
-                        });
-                        $('.fc-slats td').css('box-shadow', 'inset 0 0 0px #fff');
-                        $('#external-events-listing').css('height', 'auto');
-                      });
-                  });
-                });
+                // $(this).click(function(){
+                //   $('#external-events-listing').css('height', $('#external-events-listing').height() + 'px');
+                //   $('.fc-slats td').css('box-shadow', 'inset 0 0 90px #e8e8e8');
+                //   $(this).css({
+                //     'box-shadow': '2px 2px 18px #888',
+                //     'float': 'left'
+                //   });
+                //   $(this).animate({
+                //     'height': '108px',
+                //     'width': '108px',
+                //     'margin': '4px',
+                //   }, 200, function(){
+                //     $(this).animate({
+                //       'height': '100px',
+                //       'width': '100px',
+                //       'margin': '8px',
+                //       }, 200, function(){
+                //         $(this).css({
+                //           'box-shadow': '0 0 0px #444',
+                //           'float': 'none'
+                //         });
+                //         $('.fc-slats td').css('box-shadow', 'inset 0 0 0px #fff');
+                //         $('#external-events-listing').css('height', 'auto');
+                //       });
+                //   });
+                // });
 
 
             });
@@ -111,7 +111,11 @@ $(document).ready(function() {
     var sidebarHeight = $('.sidebar').outerHeight()
 
     if (containerHeight > sidebarHeight) {
-      $('.sidebar').css('height', containerHeight + 'px');
+      // $('.sidebar').css('height', containerHeight + 'px');
+      $('.sidebar').css('overflow', 'scroll');
+    }
+    else {
+       $('.sidebar').css('overflow', 'auto');
     }
   })
 
@@ -124,6 +128,18 @@ $(document).ready(function() {
       $(this).css('color', '#819800');
 
   });
+
+ if( $('.recipes-page').length && $('.sidebar').length ){
+    console.log('recipes page');
+    var contentHeight = $('.recipes-page').outerHeight();
+    contentHeight += 100;   // for footer margin
+
+    $('.footer').css('margin-top', 0);
+    $('.sidebar').css({
+      'height': contentHeight + 'px',
+      'max-height': contentHeight + 'px'
+    });
+ }
 
   
 

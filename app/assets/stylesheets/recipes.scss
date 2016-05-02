@@ -16,7 +16,8 @@
 	}
 	.new_recipe-col {
 		background-color: white;
-		padding: 0 100px;
+		padding: 0 60px;
+		// max-width: 850px;
 		.top-list {
 			padding-left: 0;
 			list-style: none;
@@ -139,10 +140,12 @@
 	border: none;
 	// text-align: center;
 	// border-bottom: solid 1px $orange;
-	border: solid 1px $medium;
+	border: solid 1px $trim2;
 	color: black;
 	display: inline-block;
 	width: 300px;
+	max-width: 500px;
+	font-weight: 200;
 }
 .recipe-form input.small { width: 50px; }
 .recipe-form input.long { width: 354px; }
@@ -173,25 +176,24 @@
 
 
 // SHOW SINGLE RECIPE VIEW
-
-.fluid-container > .row.cushioned {
+.row.cushioned {
 	padding-top: 30px;
  	padding-bottom: 30px;
  	margin: 0;
+ }
 
-	a {
-		background-color: $green;
-		float: right;
-		text-decoration: none;
-		color: white;
-		top: 50%;
-		position: relative;
-		border: 1px solid white;
-		font-size: 1em;
-		letter-spacing: 2px;
-		margin-right: 20px;
-    	transform: translateY(-50%);
-	}
+.fluid-container > .row > a {
+	// background-color: $green;
+	// float: right;
+	// text-decoration: none;
+	// color: white;
+	// top: 50%;
+	// position: relative;
+	// border: 1px solid white;
+	// font-size: 1em;
+	// letter-spacing: 2px;
+	// margin-right: 20px;
+	// transform: translateY(-50%);
 }
 
 .recipe-title {
@@ -215,6 +217,21 @@
 		height: 6em;
 		width: 16em;
 
+		.btn {
+			background-color: $green;
+			float: right;
+			text-decoration: none;
+			color: white;
+			top: 50%;
+			position: relative;
+			border: 1px solid white;
+			font-size: 1em;
+			font-weight: 200;
+			letter-spacing: 2px;
+			margin-right: 20px;
+			transform: translateY(-50%);
+		}
+
 		#alter {
 			position: absolute;
     		right: 2em;
@@ -229,7 +246,13 @@
 	}
 }
 
-
+.recipe-content {
+	padding: 18px 45px;
+	background-color: white;
+	> .row {
+		margin: 14px 0;
+	}
+}
 .recipe-photos {
 	background-color: white;
 	.side-col {
@@ -239,16 +262,23 @@
 			text-align: center;
 			width: 33%;
 			margin-bottom: 20px;
+			color: $medium;
+			h4 {
+				color: $green;
+				margin: 6px 0;
+				// font-weight: 100;
+			}
 		}
 	}
 	.selected-col {
 		img{
 			width: 100%;
-			height: 80%;
+			// height: 80%;
 			float: left;
 		}
-		> .row {
-			// border-right: solid 0px $medium;
+		> .photo {
+			max-height: 220px;
+			overflow: hidden;
 		}
 		#selected-panel {
 			border: solid 2px $orange;
@@ -261,7 +291,7 @@
 				line-height: 30px;
 			}
 			.menu-info {
-				font-size: 2.5em;
+				font-size: 2.3em;
 				font-weight: 100;
 				padding: 14px 0;
 				line-height: 14px;
@@ -277,11 +307,20 @@
 			}
 		}
 		.share {
-			text-align: right;
+			float: right;
+			padding: 0 4px;
 		}
+		.follow {
+			float: left;
+			padding: 0 4px;
+			// text-decoration: underline;
+			span { cursor: pointer; }
+		}
+		#follow { color: $green; }
+		// #unfollow { color: $medium; }
 		h4 {
 			color: $green;
-			font-weight: 200;
+			font-weight: 100;
 		}
 	}
 	.others-col {
@@ -336,7 +375,7 @@
 		width: 100%;
 	}
 	.recipe-photos .others-col {
-		border-left: solid 1px $medium;
+		border-left: solid 1px $trim2;
 	}
 }
 
@@ -348,17 +387,21 @@
 	}
 	h3 {
 		color: $green;
-		font-weight: 200;
+		font-weight: 100;
 	}
 	.ingredients ol {
 		text-align: left;
 	}
 	.instructions, .ingredients {
 		// border: none;
-		// border-top: solid 15px $light;
-		border: solid 7px $light;
+		
 		background-color: white;
-		padding-bottom: 20px;
+		padding: 10px;
+
+		.col-inner {
+			border: solid 1px $trim2;
+			padding: 0 20px 20px;
+		}
 	}
 }
 @media (min-width: 768px) {
@@ -378,7 +421,7 @@
 		img {
 			width: 250px;
 			float: left;
-			padding-left: 10px;
+			padding-right: 10px;
 		}
 	}
 }
@@ -389,7 +432,7 @@
 	padding-bottom: 70px;
 	h3 {
 		color: $green;
-		font-weight: 200;
+		font-weight: 100;
 	}
 	.row {
 		margin: 0 20px 0 10px;
@@ -437,7 +480,7 @@
 	    /* Position and style the number */
 	    position:absolute;
 	    top:-2px;
-	    left:-1em;
+	    left:-0.8em;
 	    // -moz-box-sizing:border-box;
 	    // -webkit-box-sizing:border-box;
 	    // box-sizing:border-box;
@@ -445,10 +488,11 @@
 	    /* Some space between the number and the content in browsers that support
 	       generated content but not positioning it (Camino 2 is one example) */
 	    margin-right:8px;
-	    // padding:4px;
+	    // margin-top:2px;
+	    padding: 2px;
 	    color: $green;
 	    font-weight: 200;
-	    font-size: 2em;
+	    font-size: 1.5em;
 	    text-align:center;
 	}
 	li ol,
@@ -545,7 +589,7 @@
     					height: 3em;
     					bottom: 0;
     					padding: 3px;
-    					border-top: 1px solid #ababab;
+    					border-top: 1px solid $trim1;
 
 				 		p {
 				 			float: left;
@@ -614,12 +658,17 @@
 }
 
 .latest {
-	  position: absolute;
-      color: #819800;
-      top: 2.6em;
-      left: 28em;
-      width: 4em;
-	  input { display: none; }
+		// position: absolute;
+		color: #819800;
+		// top: 2.6em;
+		// left: 28em;
+		// width: 4em;
+
+		padding: 10px;
+		width: 11em;
+		display: inline;
+
+		input { display: none; }
 	}
 
 
@@ -645,14 +694,21 @@
 	}
 
 	#reset-filters {
-		width: 6em;
+		// width: 6em;
 		position: absolute;
+		a {
+			color: white;
+		}
 	}
 
 	.filter-search {
-		float: left;
-		margin-left: 5px;
-		margin-top: 5px;
+		// float: right;
+		margin: 5px;
+		position: absolute;
+		right: 5px;
+		margin-top: 4em;
+    	transform: translateY(-50%);
+    	z-index: 2;
 	}
 
 	.open .dropdown-toggle{
@@ -682,7 +738,10 @@
     		top: 2.6em;
     		height: 5.5em;
 
-			li label {
+			li {
+				text-align: center;
+
+				label {
 				    position: relative;
    				 	height: 1em;
     				padding: 4px;
@@ -690,9 +749,10 @@
     				margin: 0;
     				display: inline-block;
 
-				input {
-					position: relative;
-    				left: 26px;
+					input {
+						position: relative;
+    					left: 26px;
+					}
 				}
 			}
 		}

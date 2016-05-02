@@ -9,110 +9,119 @@
 		    <%= link_to "Delete", @recipe, method: :delete, :class => "btn",
                                   data: { confirm: "Are you sure?" } %>
 		    <%= link_to "Edit", edit_recipe_path(@recipe), :class => "btn" %>
-		  <% elsif current_user.following?(@recipe) %>
-		    <% link_to "Alter Recipe", new_recipe_path(:recipe => @recipe), :id => "alter" %>
-		    <span data="<%= @recipe.id %>" id="unfollow">Unfollow</span> 
-		  <% else %>
-		    <span data="<%= @recipe.id %>" id="follow">Follow</span> 
-		    <% link_to "Alter Recipe", new_recipe_path(:recipe => @recipe), :id => "alter" %>
-		  <% end %>
+		   <% end %>
 
 	    </div>
 	<!-- </div> -->
 </div>
 
-<div class="row recipe-photos cushioned">
-<div class="col-xs-12">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-5 col-sm-12 selected-col">
-				<div class="row">
-					<%= image_tag @recipe.photo_url, id: "selected-photo" %>
-				</div>
-				<div class="row" id="selected-panel">
-					<div class="menu">
-						<div>Ingredients</div>
-						<div>Prep time</div>
-						<div>Cook time</div>
-						<div>Stellas</div>
+<div class="row">
+	<div class="col-sm-12 col-md-9 col-center recipe-photos recipe-content">
+			<div class="row">
+				<div class="col-md-5 col-sm-12 selected-col">
+					<div class="row photo">
+						<%= image_tag @recipe.photo_url, id: "selected-photo" %>
 					</div>
-					<div class="menu-info">
-						<div><%= @recipe.ingredients.count %></div>
-						<div><%= @recipe.prep_time %><br><span>Minutes</span></div>
-						<div><%= @recipe.cook_time %><br><span>Minutes</span></div>
-						<div>stars<br><span>Review</span></div>
-					</div>
-				</div>
-				<div class="row share">Share</div>
-			</div>
-			<div class="col-md-3 col-sm-12 side-col">
-				<div>
-					<h4>Food type</h4>	
-					<%= @meal_type %>
-				</div>
-				<div>
-					<h4>Difficulty</h4>
-					<%= @difficulty %>
-				</div>
-				<div>
-					<h4>Cookware</h4>
-					Microwave
-				</div>
-				<div style="clear: both;"></div>
-			</div>
-			<div class="col-md-4 col-sm-12 others-col">
-				<div class="row">
-					<div class="col-md-12">Photos by others</div>
-				</div>
-				<div class="row slider-container">
-					<div class="col-md-12">
-						<div class="slider-controls">
-							<div class="up">&#9650;</div>
-							<div class="down">&#9660;</div>
+					<div class="row" id="selected-panel">
+						<div class="menu">
+							<div>Ingredients</div>
+							<div>Prep time</div>
+							<div>Cook time</div>
+							<div>Stellas</div>
 						</div>
-						<div class="slider-vertical">
-							<!--% @recipe.photos.each do |p| %>
-								<a href="%= p.photo_url %>" class="others-photo">
-									<div class="others-photo" style="background-image: %= p.photo_url %>" ></div>
-								</a>
-							% end %>
-							% if recipe.photos.count < 9 %>
-								% (9-recipe.photos.count).times do |i| %>
-									<div class="others-photo blank"></div>
-								% end %>
-							% end %> -->
-							<% 9.times do |i| %>
-								<div class="others-photo blank"></div>
-							<% end %>
+						<div class="menu-info">
+							<div><%= @recipe.ingredients.count %></div>
+							<div><%= @recipe.prep_time %><br><span>Minutes</span></div>
+							<div><%= @recipe.cook_time %><br><span>Minutes</span></div>
+							<div>stars<br><span>Review</span></div>
 						</div>
 					</div>
-				</div>
-				<div class="row upload">
-					<div class="col-md-12">Upload <span class="glyphicon glyphicon-camera" aria-hidden="true" style="font-size: 1.2em;"></span></div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-</div>
+					
+					<div class="follow">
+						<% if !current_user.owns?(@recipe) %>
+						  <% if current_user.following?(@recipe) %>
+						    <% link_to "Alter Recipe", new_recipe_path(:recipe => @recipe), :id => "alter" %>
+						    <span data="<%= @recipe.id %>" id="unfollow">Remove from my foods</span> 
+						  <% else %>
+						    <span data="<%= @recipe.id %>" id="follow">Add to my foods</span> 
+						    <% link_to "Alter Recipe", new_recipe_path(:recipe => @recipe), :id => "alter" %>
+						  <% end %>
+						 <% end %>
+					</div>
 
-<div class="row cushioned">
-	<div class="container">
+					<div class="share">Share</div>
+
+				</div>
+				<div class="col-md-2 col-sm-12 side-col">
+					<div>
+						<h4>Food type</h4>	
+						<%= @meal_type %>
+					</div>
+					<div>
+						<h4>Difficulty</h4>
+						<%= @difficulty %>
+					</div>
+					<div>
+						<h4>Cookware</h4>
+						<!-- Microwave -->
+					</div>
+					<div style="clear: both;"></div>
+				</div>
+				<div class="col-md-5 col-sm-12 others-col">
+					<div class="row">
+						<div class="col-md-12">Photos by others</div>
+					</div>
+					<div class="row slider-container">
+						<div class="col-md-12">
+							<div class="slider-controls">
+								<div class="up">&#9650;</div>
+								<div class="down">&#9660;</div>
+							</div>
+							<div class="slider-vertical">
+								<!--% @recipe.photos.each do |p| %>
+									<a href="%= p.photo_url %>" class="others-photo">
+										<div class="others-photo" style="background-image: %= p.photo_url %>" ></div>
+									</a>
+								% end %>
+								% if recipe.photos.count < 9 %>
+									% (9-recipe.photos.count).times do |i| %>
+										<div class="others-photo blank"></div>
+									% end %>
+								% end %> -->
+								<% 9.times do |i| %>
+									<div class="others-photo blank"></div>
+								<% end %>
+							</div>
+						</div>
+					</div>
+					<div class="row upload">
+						<div class="col-md-12">Upload <span class="glyphicon glyphicon-camera" aria-hidden="true" style="font-size: 1.2em;"></span></div>
+					</div>
+				</div>
+			</div>
+	<!-- </div> -->
+<!-- </div> -->
+
+<!-- <div class="row cushioned"> -->
+	<!-- <div class="container"> -->
 		<div class="row recipe-info">
-			<div class="col-md-3 ingredients">
+			<div class="col-md-4 ingredients">
+				<div class='col-inner'>
 					<h3>INGREDIENTS</h3>
-					<span class="servings">Servings: <%= @recipe.servings ? @recipe.servings : 1 %>
+					<span class="servings">Servings: <%= @recipe.servings ? @recipe.servings : 1 %></span>
 					<ol>
 						<% @recipe.ingredients.each do |i| %>
 						    <li><%= i.name %>
 						    <% i.quantities.each do |q| %>
-						      <%= q.amount %>, <%= q.get_unit(q.unit, q.amount) %>
+						      <%= q.amount %><%= ',' if q.unit != '' %>
+						      <%= q.get_unit(q.unit, q.amount) %>
 						    <% end %>
 						</li>
 						 <% end %>
 					</ol>
+				</div>
 			</div>
-			<div class="col-md-9 instructions">
+			<div class="col-md-8 instructions">
 				<div class="col-inner">
 					<h3>INSTRUCTIONS</h3>
 					<div>
@@ -127,44 +136,45 @@
 				</div>
 			</div>
 		</div>
-	</div>
-</div>
+	<!-- </div> -->
+<!-- </div> -->
 
-<div class="row recipe-similar cushioned">
-	<div class="container">
-		<!-- <div class="col-md-12"> -->
+	<div class="row recipe-similar cushioned">
+	<!-- <div class="container"> -->
+		<div class="col-md-12">
 			<div id='similar-title'>Similar recipes</div>
-		<!-- </div> -->
-	</div>
-	<div class="row">
-		<div class="slider-horizontal">
-			<%= image_tag "background-picture-foodstella.jpg" %>
-			<%= image_tag "background-picture-foodstella.jpg" %>
-			<%= image_tag "background-picture-foodstella.jpg" %>
-			<%= image_tag "background-picture-foodstella.jpg" %>
-			<%= image_tag "background-picture-foodstella.jpg" %>
+		</div>
+	<!-- </div> -->
+		<div class="col-md-12">
+			<div class="slider-horizontal">
+				<%= image_tag "background-picture-foodstella.jpg" %>
+				<%= image_tag "background-picture-foodstella.jpg" %>
+				<%= image_tag "background-picture-foodstella.jpg" %>
+				<%= image_tag "background-picture-foodstella.jpg" %>
+				<%= image_tag "background-picture-foodstella.jpg" %>
+			</div>
 		</div>
 	</div>
-</div>
 
-<div class="row cushioned">
-	<div class="container">
-		<div class="row">
-			<div class="col-md-2"></div>
-			<div class="col-xs-12 col-md-8 recipe-reviews">
-				<h3>REVIEWS</h3>
-				<div class="row">
-					<div class="user">
-						<div class="profile-pic"></div>
-						<span>Diego says:</span>
-					</div>
-					<div class="review">
-						Post reviews of your friends' recipes! Coming soon!
+	<div class="row cushioned">
+		<!-- <div class="container"> -->
+			<div class="row">
+				<div class="col-md-2"></div>
+				<div class="col-xs-12 col-md-8 recipe-reviews">
+					<h3>REVIEWS</h3>
+					<div class="row">
+						<div class="user">
+							<div class="profile-pic"></div>
+							<span>Diego says:</span>
+						</div>
+						<div class="review">
+							Post reviews of your friends' recipes! Coming soon!
+						</div>
 					</div>
 				</div>
+				<div class="col-md-2"></div>
 			</div>
-			<div class="col-md-2"></div>
-		</div>
+		<!-- </div> -->
 	</div>
 
 </div>
@@ -183,7 +193,7 @@
                   url:'/relationships',
               
                   success:function (response) {
-                  	$this.text("Unfollow")
+                  	$this.text("Remove from my foods")
                     $this.attr('id', 'unfollow');
                     $this.removeClass("glyphicon-plus")
                   }
@@ -201,7 +211,7 @@
                   url:"/relationships/" + recipe_id,
               
                   success:function (response) {
-                  	$this.text("Follow")
+                  	$this.text("Add to my foods")
                     $this.attr('id', 'follow');
                   }
                   
