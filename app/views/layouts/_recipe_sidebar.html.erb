@@ -1,4 +1,8 @@
-<div class="col-md-3 sidebar">
+<% if @calendar %>
+  <div class="col-md-3 sidebar" id="sidebar-skinny">
+<% else %>
+  <div class="col-md-3 sidebar">
+<% end %>
     <div class="header">
       <h2>
         <div class="spatula"></div> 

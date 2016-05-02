@@ -53,6 +53,7 @@ class UsersController < ApplicationController
   	
 
 	def calendar
+		@calendar = true
 		@followed_recipes = current_user.following
 		@user_recipes = current_user.recipes
 		@recipes = @user_recipes + @followed_recipes
