@@ -65,17 +65,20 @@ class UsersController < ApplicationController
 		@desserts = @user_recipes.where(:meal_type => "4") + @followed_recipes.where(:meal_type => "4")
 		@drinks = @user_recipes.where(:meal_type => "5") + @followed_recipes.where(:meal_type => "5")
 
+		@day_counter = 3
+
 		d = Date.today
 		@month = d.strftime("%B")
 		@week_begin = d.at_beginning_of_week.strftime("%-d")
 		@week_end = d.at_end_of_week.strftime("%-d")
-		@date_string = @month + " " + @week_begin + " - " + @week_end
+		
+		@planner_begin = d.strftime("%-d")
+		@planner_end = (d + (@day_counter-1).days).strftime("%-d")
+		@date_string = @month + " " + @planner_begin + " - " + @planner_end
 
-
-
-		@today = [Time.now.strftime("%A"), DateTime.now.strftime('%Y-%m-%d')]
-		@tomorrow = [DateTime.tomorrow.strftime("%A"), DateTime.tomorrow.strftime('%Y-%m-%d')]
-		@day_after_tom = [(DateTime.now + 2.days).strftime("%A"), (DateTime.now + 2.days).strftime('%Y-%m-%d')]
+		@today = [DateTime.now.strftime('%A - %B %-d, %Y'), DateTime.now.strftime('%Y-%m-%d')]
+		@tomorrow = [DateTime.tomorrow.strftime('%A - %B %-d, %Y'), DateTime.tomorrow.strftime('%Y-%m-%d')]
+		@day_after_tom = [(DateTime.now + 2.days).strftime('%A - %B %-d, %Y'), (DateTime.now + 2.days).strftime('%Y-%m-%d')]
 
 		@day_counter = 3
 
@@ -83,7 +86,7 @@ class UsersController < ApplicationController
 
 	def add_day
 		day_counter = params[:day_counter].to_i
-		@new_day = [(DateTime.now + day_counter.days).strftime("%A"), (DateTime.now + day_counter.days).strftime('%Y-%m-%d')]
+		@new_day = [(DateTime.now + day_counter.days).strftime('%A - %B %-d, %Y'), (DateTime.now + day_counter.days).strftime('%Y-%m-%d')]
 		new_day_counter = day_counter + 1
 		current_user.update_attributes(:day_counter => new_day_counter)
 		current_user.save!
@@ -93,7 +96,7 @@ class UsersController < ApplicationController
 
     def previous_day
 		day_counter = params[:day_counter].to_i
-		@new_day = [(DateTime.now - day_counter.days).strftime("%A"), (DateTime.now - day_counter.days).strftime('%Y-%m-%d')]
+		@new_day = [(DateTime.now - day_counter.days).strftime('%A - %B %-d, %Y'), (DateTime.now - day_counter.days).strftime('%Y-%m-%d')]
 
 		render :partial => 'users/one_day', :locals => { :day => @new_day }
     end

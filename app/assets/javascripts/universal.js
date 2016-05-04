@@ -111,11 +111,11 @@ $(document).ready(function() {
     var sidebarHeight = $('.sidebar').outerHeight()
 
     if (containerHeight > sidebarHeight) {
-      // $('.sidebar').css('height', containerHeight + 'px');
-      $('.sidebar').css('overflow', 'scroll');
+      $('.sidebar').css('height', containerHeight + 'px');
+      // $('.sidebar').css('overflow', 'scroll');
     }
     else {
-       $('.sidebar').css('overflow', 'auto');
+       // $('.sidebar').css('overflow', 'auto');
     }
   })
 
@@ -134,11 +134,11 @@ $(document).ready(function() {
     var contentHeight = $('.recipes-page').outerHeight();
     contentHeight += 100;   // for footer margin
 
-    $('.footer').css('margin-top', 0);
-    $('.sidebar').css({
-      'height': contentHeight + 'px',
-      'max-height': contentHeight + 'px'
-    });
+    // $('.footer').css('margin-top', 0);
+    // $('.sidebar').css({
+    //   'height': contentHeight + 'px',
+    //   'max-height': contentHeight + 'px'
+    // });
  }
 
   

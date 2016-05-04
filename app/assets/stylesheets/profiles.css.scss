@@ -103,10 +103,11 @@
   // text-align: center;
   color: $medium;
   background-color: white;
-  padding: 20px;
+  padding: 36px;
 
+	.row:first-child { margin-top: 0px; }
 	.row {
-		margin-bottom: 24px;
+		margin: 36px 0;
 		> div {
 			margin: 10px auto;
 			float: none;
@@ -206,6 +207,9 @@
 	input[type=submit] {
 		float: right;
 	}
+	.about-me {
+		text-align: justify;
+	}
 }
 
 .friends-view {
@@ -221,7 +225,7 @@
 		}
 	}
 	.row.friendships {
-		margin: 10px 0 !important;
+		margin: 30px 0 !important;
 		ul {
 			list-style: none;
 			padding-left: 0;

@@ -11,9 +11,23 @@
    <% if e.get_recipe(e.recipe_id) %>
      <% recipe = e.get_recipe(e.recipe_id) %>
        .<%= recipe.get_friendly_name %>id-<%= recipe.id %> {
-         background-image: url('<%= recipe.retrieve_pic %>'); 
+         background-image: url('<%= recipe.retrieve_pic %>');
        }
+       .fc-content .<%= recipe.get_friendly_name %>id-<%= recipe.id %>::after {
+          content: '<%= recipe.get_friendly_name %>';
+          width: 100%;
+          position: absolute;
+          background-color: rgba(176, 176, 176, 0.65);
+          text-align: center;
+          bottom: 0;
+          font-size: 1.2em;
+          color: white;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
     <% end %>
+
   <% end %>
 
 

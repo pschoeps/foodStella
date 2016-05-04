@@ -7,7 +7,7 @@
 				<%= link_to "EDIT", '#', class: "edit", id: 'edit-about_me' if @editable %>
 				<!-- <a href ='#' id='edit-about_me'class='edit'>EDIT</a> -->
 			</h4>
-			<div class="col-xs-12 col-md-10">
+			<div class="col-xs-12 col-md-10 about-me">
 				<!-- %= @profile.about_me %> -->
 				<%= best_in_place_if (@editable), @profile, :about_me,
 					:as => :textarea,
