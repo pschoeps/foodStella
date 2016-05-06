@@ -26,6 +26,24 @@
           text-overflow: ellipsis;
           white-space: nowrap;
         }
+
+        .fc-event-container .<%= recipe.get_friendly_name %>id-<%= recipe.id %>::before {
+          content: 'Yields <%= recipe.servings %>';
+          width: 100%;
+          position: absolute;
+          // background-color: rgba(176, 176, 176, 0.65);
+          text-align: left;
+          top: 0;
+          left: 0;
+          display: inline-block;
+          font-size: 1.2em;
+          color: white;
+          font-weight: lighter;
+          font-style: italic;
+          white-space: nowrap;
+          padding: 4px;
+          letter-spacing: 1px;
+        }
     <% end %>
 
   <% end %>
