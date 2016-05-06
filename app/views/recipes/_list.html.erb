@@ -16,8 +16,11 @@
           <span class="cook-time">Cook Time: <p><%= recipe.cook_time %>mins</p></span>
           <span class="prep-time">Prep Time: <p><%= recipe.prep_time %>mins</p></span>
           <div class="recipe-footer">
-            <p>Recipe By: <%= recipe.get_user(recipe.user_id).retrieve_name() %>
-               </p>
+            <% if recipe.user_id != 0 %>
+              <p>Recipe By: <%= recipe.get_user(recipe.user_id).retrieve_name() %></p>
+              <% else %>
+              <!-- <p>Stock</p> -->
+            <% end %>
           </div>
         
         </div>

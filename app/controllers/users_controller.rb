@@ -6,6 +6,7 @@ class UsersController < ApplicationController
 	end
 
 	def show
+		redirect_to controller: 'profiles', action: 'show'
 		@friends = current_user.friends
 	end
 
@@ -71,10 +72,11 @@ class UsersController < ApplicationController
 		@month = d.strftime("%B")
 		@week_begin = d.at_beginning_of_week.strftime("%-d")
 		@week_end = d.at_end_of_week.strftime("%-d")
-		
+		@date_string = @month + " " + @week_begin + " - " + @week_end
+
 		@planner_begin = d.strftime("%-d")
 		@planner_end = (d + (@day_counter-1).days).strftime("%-d")
-		@date_string = @month + " " + @planner_begin + " - " + @planner_end
+		# @date_string = @month + " " + @planner_begin + " - " + @planner_end
 
 		@today = [DateTime.now.strftime('%A - %B %-d, %Y'), DateTime.now.strftime('%Y-%m-%d')]
 		@tomorrow = [DateTime.tomorrow.strftime('%A - %B %-d, %Y'), DateTime.tomorrow.strftime('%Y-%m-%d')]

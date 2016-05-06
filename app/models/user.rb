@@ -12,7 +12,15 @@ class User < ActiveRecord::Base
                                   dependent:   :destroy
   has_many :following, through: :relationships, source: :followed
 
-  has_one :profile
+  has_one :profile, dependent: :destroy
+  # attr_accessible :fir_name, :las_name, :username, :about_me, :image
+  # accepts_nested_attributes_for :profile
+  after_create :generate_profile
+
+  def generate_profile
+    self.build_profile(fir_name: self.fir_name, las_name: self.las_name, username: self.username, email: self.email, picture_url: self.image, country: self.country)
+    # self.build_profile()
+  end
 
   has_many :preferred_ingredients, dependent: :destroy
   # accepts_nested_attributes_for :preferred_ingredients
@@ -45,6 +53,7 @@ class User < ActiveRecord::Base
       user.hometown = auth.extra.raw_info.hometown.name
       user.location = auth.extra.raw_info.location
       user.about_me = auth.extra.raw_info.about_me
+      user.age_range = auth.info.age_range
   		user.save!
   		user
   	else
@@ -60,6 +69,7 @@ class User < ActiveRecord::Base
         user.hometown = auth.extra.raw_info.hometown.name
         user.location = auth.extra.raw_info.location.name
         user.about_me = auth.extra.raw_info.about_me
+        user.age_range = auth.info.age_range
         # user.country = auth.extra.raw_info.location.country ??
       end
     end
@@ -84,17 +94,23 @@ class User < ActiveRecord::Base
     user = User.find(id)
     fir_name = ''
     las_name = ''
-    if user.profile && user.profile.fir_name && user.profile.las_name
+    username = ''
+    if user.username
+      username = user.username
+    elsif user.profile && user.profile.fir_name && user.profile.las_name
       fir_name = user.profile.fir_name
       las_name = user.profile.las_name
     elsif user.fir_name && user.las_name
       fir_name = user.fir_name
       las_name = user.las_name
     else
-      fir_name = 'Anon'
-      las_name = 'McGee'
+      fir_name = ''
+      las_name = ''
     end
-    if firLas == 'first'
+    #return
+    if username != ''
+      username
+    elsif firLas == 'first'
       fir_name
     elsif firLas == 'last'
       las_name

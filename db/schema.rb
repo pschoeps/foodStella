@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160501192906) do
+ActiveRecord::Schema.define(version: 20160506185646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 20160501192906) do
     t.integer  "user_id"
     t.text     "liked_foods"
     t.text     "disliked_foods"
+    t.string   "username"
   end
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree
@@ -130,6 +131,7 @@ ActiveRecord::Schema.define(version: 20160501192906) do
     t.string   "meal_type"
     t.integer  "servings"
     t.string   "website_url"
+    t.text     "cookware"
   end
 
   add_index "recipes", ["user_id"], name: "index_recipes_on_user_id", using: :btree
@@ -144,6 +146,11 @@ ActiveRecord::Schema.define(version: 20160501192906) do
   add_index "relationships", ["followed_id"], name: "index_relationships_on_followed_id", using: :btree
   add_index "relationships", ["follower_id", "followed_id"], name: "index_relationships_on_follower_id_and_followed_id", unique: true, using: :btree
   add_index "relationships", ["follower_id"], name: "index_relationships_on_follower_id", using: :btree
+
+  create_table "tests", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "email",                       default: "", null: false
@@ -170,6 +177,8 @@ ActiveRecord::Schema.define(version: 20160501192906) do
     t.string   "country"
     t.integer  "day_counter",                 default: 3
     t.datetime "day_counter_last_updated_at"
+    t.string   "username"
+    t.string   "age_range"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

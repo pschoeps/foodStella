@@ -6,7 +6,11 @@ class RegistrationsController < Devise::RegistrationsController
   
   def create
    super
+   # @user.build_profile(fir_name: @user.fir_name, las_name: @user.las_name, email: @user.email)
+   # params.require(:profile).permit(:fir_name, :las_name, :email, :about_me, :picture_url, :country, :cooking_experience, :average_cook_time, :liked_foods, :disliked_foods, :username, :tab )
   end
+
+  def 
   
   
   def edit

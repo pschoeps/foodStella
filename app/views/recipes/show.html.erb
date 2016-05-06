@@ -6,8 +6,8 @@
 		<div class="actions">
 
 		  <% if current_user.owns?(@recipe) %>
-		    <%= link_to "Delete", @recipe, method: :delete, :class => "btn",
-                                  data: { confirm: "Are you sure?" } %>
+		    <!-- %= link_to "Delete", @recipe, method: :delete, :class => "btn", -->
+                                  <!-- data: { confirm: "Are you sure?" } %> -->
 		    <%= link_to "Edit", edit_recipe_path(@recipe), :class => "btn" %>
 		   <% end %>
 
@@ -33,7 +33,7 @@
 							<div><%= @recipe.ingredients.count %></div>
 							<div><%= @recipe.prep_time %><br><span>Minutes</span></div>
 							<div><%= @recipe.cook_time %><br><span>Minutes</span></div>
-							<div>stars<br><span>Review</span></div>
+							<div><br><span>Review</span></div>
 						</div>
 					</div>
 					
@@ -63,7 +63,7 @@
 					</div>
 					<div>
 						<h4>Cookware</h4>
-						<!-- Microwave -->
+						<%= @recipe.cookware %>
 					</div>
 					<div style="clear: both;"></div>
 				</div>

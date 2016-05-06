@@ -7,20 +7,29 @@
       <%= devise_error_messages! %>
 
       <div class="field split first">
-        <%= f.text_field :fir_name, autofocus: false, placeholder: 'First name' %>
+        <%= f.text_field :fir_name, autofocus: false, required: true, placeholder: 'First name' %>
       </div>
       <div class="field split">
-        <%= f.text_field :las_name, autofocus: false, placeholder: 'Last name' %>
+        <%= f.text_field :las_name, autofocus: false, required: true, placeholder: 'Last name' %>
       </div>
 
       <div class="clear"></div>
       <br />
 
       <div class="field">
-        <%= f.text_field :country, autofocus: false, placeholder: 'Country' %>
+        <%= f.text_field :username, autofocus: false, required: true, placeholder: 'Username' %>
       </div>
-
       <br />
+  
+      <div class="field">
+        <%= f.text_field :country, autofocus: false, required: true, placeholder: 'Country' %>
+      </div>
+      <br />
+
+      <!-- <div class="field">
+        %= f.text_field :birthday, autofocus: false, required: true, placeholder: 'Birthday' %>
+      </div>
+      <br /> -->
 
       <div class="field">
         <%= f.email_field :email, autofocus: false, placeholder: 'Email' %>

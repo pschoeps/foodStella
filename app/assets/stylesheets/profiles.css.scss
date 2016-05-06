@@ -12,6 +12,7 @@
 	.img-banner {
 		height: 160px;
 		background: asset-url('background-picture-foodstella.jpg');
+		background-image: url('background-picture-foodstella.jpg');
 		background-size: 100% auto;
 		background-position: center center;
 		background-repeat: no-repeat;
@@ -90,11 +91,12 @@
 	// .button:hover a { color: $green; }
 	.notification {
 		color: $orange;
-		border: solid 1px $orange;
+		// border: solid 1px $orange;
 		border-radius: 99px;
 		width: 20px;
 		height: 20px;
 		display: inline-block;
+		background-color: #3f3f3f;
 	}
 }
 
@@ -225,7 +227,7 @@
 		}
 	}
 	.row.friendships {
-		margin: 30px 0 !important;
+		margin: 36px 0 !important;
 		ul {
 			list-style: none;
 			padding-left: 0;
@@ -255,13 +257,33 @@
 		}
 	}
 	.row.friendships.requests {
+		form {
+			display: inline-block;
+			width: 40%;
+			margin-top: 12px;
+		}
 		input[type=submit] {
 			color: $green;
-		}	
+			width: 56px;
+			padding: 2px;
+		}
 	}
 	.row.friendships.friends {
 		input[type=submit] {
 			border: none;
 		}	
+		.mutual { margin-top: 0; }
+	}
+	.row.friendships.others {
+		form {
+			display: inline-block;
+			width: 40%;
+			margin-top: 12px;
+		}
+		input[type=submit] {
+			color: $green;
+			width: 62px;
+			padding: 2px;
+		}
 	}
 }

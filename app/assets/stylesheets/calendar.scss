@@ -24,7 +24,8 @@ $outer-container: 90%;
     	margin: 0;
     	letter-spacing: 2px;
     	font-weight: 200;
-    	margin-top: 20px;
+    	// margin-top: 20px;
+        padding-top: 20px;
 	  }
 
 	  p {
@@ -42,14 +43,33 @@ $outer-container: 90%;
     width: 20%;
 }
 
+// overriding scrollToFixed spacer to prevent content col from clearing spacer div
+.sidebar-spacer{
+    position: absolute !important;
+}
+
 .sidebar {
 	background-color: white;
 	z-index: 100;
 	height: 100vh;
     // max-height: 100vh;
+    // width: 20%;
+    min-width: 250px;
  
 
-
+    .dragNdrop {
+        color: $medium;
+        text-align: center;
+        padding-top:10px;
+        margin-top:10px;
+        border-top: solid 1px lightgrey;
+        font-weight: 100;
+        div {
+            font-size: 1.1em;
+            float:right;
+            padding: 2px 0 0 2px;
+        }
+    }
 
 	
 	-webkit-box-shadow:0 3px 8px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
@@ -156,8 +176,14 @@ $outer-container: 90%;
 	height: 5em;
 	padding: 0;
 	z-index: 10;
-    float: left;
-    width: 60%;
+    // float: left;
+    float: right;
+    // width: 60%;
+    // width: 80%;
+    float: right;
+
+    min-width: 600px;
+    max-width: calc(100% - 250px);
 
     #add-day, #previous-day {
         position: relative;
@@ -181,6 +207,7 @@ $outer-container: 90%;
 
 .calendar-days {
     height: 100%;
+    min-width: 900px;
 }
 
 .previous-days {
@@ -205,8 +232,13 @@ $outer-container: 90%;
     z-index: 10;
     padding: 0;
     float: right;
-    margin-right: 20%;
-    width: 60%;
+    // margin-right: 20%;
+    // margin: 0 auto;
+    // width: 60%;
+    // width: 80%;
+
+    min-width: 600px;
+    max-width: calc(100% - 250px);
 
 	.calendar-title {
 		position: relative;

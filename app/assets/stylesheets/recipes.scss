@@ -307,6 +307,8 @@
 			>div>div {
 				width: 25%;
 				float: left;
+				padding: 2px;
+				white-space: nowrap;
 			}
 		}
 		.share {
@@ -468,7 +470,7 @@
 #recipe-ingredients,
 .instructions {
 	ol {
-		margin-top: 20px;
+		margin-top: 10px;
 	    counter-reset:li; /* Initiate a counter */
 	    margin-left:0; /* Remove the default left margin */
 	    padding-left:0; /* Remove the default left padding */
@@ -525,10 +527,14 @@
 
 
 .recipes-page {
+	min-width: 900px;
 
-	.col-md-9 {
+	#recipes-col {
 		padding: 0;
 		float: right;
+
+		min-width: 600px;
+		max-width: calc(100% - 250px);
 
 		ul {
 			list-style-type: none;
@@ -561,6 +567,7 @@
 				 	h3 {
 				 		color: $dark;
 				 		font-size: 1.2em;
+				 		white-space: nowrap;
 				 	}
 
 				 	p {
@@ -623,11 +630,13 @@
     					width: 1.5em;
     					cursor: pointer;
     					/* text-align: center; */
-    					top: -5.55em;
+    					// top: -5.55em;
     					font-size: 2.5em;
-    					position: relative;
+    					// position: relative;
     					left: 50%;
     					transform: translateX(-50%);
+    					position: absolute;
+    					top: 5em;
 				}
 
 

@@ -1,4 +1,17 @@
 <% js = escape_javascript(
   render(partial: 'recipes/list', locals: { recipes: @recipes })
 ) %>
-$("#filterrific_results").html("<%= js %>");
+// $("#filterrific_results").html("<%= js %>");
+$("#recipes-col").html("<%= js %>");
+
+<% following = escape_javascript(
+  render(partial: 'layouts/recipe_sidebar',
+  	locals: {
+  		snacks: @snacks,
+      	side_dishes: @side_dishes,
+      	main_dishes: @main_dishes,
+      	desserts: @desserts,
+      	drinks: @drinks
+     })
+) %>
+$("#sidebar-col").html("<%= following %>");

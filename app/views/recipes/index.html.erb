@@ -13,25 +13,47 @@
 
 <div class="row recipes-page">
 
-  <%= render 'layouts/recipe_sidebar' %>
+  <!-- <div id='sidebar-col' class='col-sm-3'> -->
+  <%= render(
+    partial: 'layouts/recipe_sidebar',
+    locals: {
+      snacks: @snacks,
+      side_dishes: @side_dishes,
+      main_dishes: @main_dishes,
+      desserts: @desserts,
+      drinks: @drinks,
+      dragNdrop: false
+    }
+  ) %>
+  <!-- </div> -->
 
-  <div class="col-md-9">
-  	
-
+  <div class="col-sm-9" id="recipes-col">
     <%= render(
       partial: 'recipes/list',
       locals: { recipes: @recipes }
     ) %>
-
-
-
   </div>
+
 </div>
 
 
 <script>
 
-	$(document).ready(function() {
+  function resetSidebar(){
+    $('.sidebar').trigger('detach.ScrollToFixed');
+    $('.sidebar').scrollToFixed({
+      limit: $('.footer').offset().top - $('.sidebar').height(),
+      spacerClass: 'sidebar-spacer'
+    });
+  }
+
+  $(document).ready(function() {
+    
+      resetSidebar();
+
+      $(window).resize( function(e){
+        resetSidebar();
+      });
 
       //$(document).on('click','.dropdown-toggle',function(){
        // $('.recipes-page').toggleClass("padded")
@@ -40,6 +62,10 @@
        // else
        //   $('.recipes-page').css('padding-top','5.7em');
       //});
+
+      // setInterval(function(){
+      //   $.ajax('/recipes');
+      //   }, 8000);
 
     	$(document).on('click','#follow',function(){
     		$this = $(this)
@@ -51,9 +77,26 @@
                   url:'/relationships',
               
                   success:function (response) {
-                  	$this.addClass("spatula-selected")
+                  	$this.addClass("spatula-selected");
                     $this.attr('id', 'unfollow');
-                    $this.removeClass("spatula-unselected")
+                    $this.removeClass("spatula-unselected");
+                    $.ajax('recipes');
+                    <% following = escape_javascript(
+                      render(partial: 'layouts/recipe_sidebar',
+                        locals: {
+                          snacks: @snacks,
+                            side_dishes: @side_dishes,
+                            main_dishes: @main_dishes,
+                            desserts: @desserts,
+                            drinks: @drinks,
+                            dragNdrop: false
+                         })
+                    ) %>
+                    $("#sidebar-col").html("<%= following %>");
+                    // $.ajax({
+                    //   url: "/recipes"
+                    // });
+                    // $('#sidebar-col').load('layouts/_recipe_sidebar.html.erb');
                   }
                   
                 });//end ajax call
@@ -69,9 +112,10 @@
                   url:"/relationships/" + recipe_id,
               
                   success:function (response) {
-                  	$this.addClass("spatula-unselected")
+                  	$this.addClass("spatula-unselected");
                     $this.attr('id', 'follow');
-                    $this.removeClass("spatula-selected")
+                    $this.removeClass("spatula-selected");
+                    // $('#sidebar-col').load('/recipes/index');
                   }
                   
                 });//end ajax call

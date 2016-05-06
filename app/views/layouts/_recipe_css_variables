@@ -13,7 +13,7 @@
        .<%= recipe.get_friendly_name %>id-<%= recipe.id %> {
          background-image: url('<%= recipe.retrieve_pic %>');
        }
-       .fc-content .<%= recipe.get_friendly_name %>id-<%= recipe.id %>::after {
+       .fc-event-container .<%= recipe.get_friendly_name %>id-<%= recipe.id %>::after {
           content: '<%= recipe.get_friendly_name %>';
           width: 100%;
           position: absolute;

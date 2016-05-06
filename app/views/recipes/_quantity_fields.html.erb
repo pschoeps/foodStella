@@ -7,9 +7,8 @@
 
     <%= f.label :amount, "Amount:" %>
     <%= f.text_field :amount, class: 'small', required: true %>
-
     <%= f.label :unit, "Unit" %>
-     <%= f.select(:unit, options_for_select([ ['', nil], ['Cup', 1], ['Oz', 2], ["Tsp", 3], ["Tbsp", 4], ["Pinch", 5]])) %> 
+     <%= f.select(:unit, options_for_select([ ['', nil], ['Cup', 1], ['Oz', 2], ["Tsp", 3], ["Tbsp", 4], ["Pinch", 5]], :selected => f.object.unit)) %>
 
     <%= link_to_remove_association "Remove", f %>
   </div>

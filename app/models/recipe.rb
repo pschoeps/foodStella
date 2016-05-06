@@ -185,7 +185,11 @@ class Recipe < ActiveRecord::Base
     end
 
     def get_user(id)
-      User.find(id)
+      if id == 0
+        ''  # for stock recipes
+      else
+        User.find(id)
+      end
     end
 
   def retrieve_pic

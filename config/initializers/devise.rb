@@ -239,7 +239,7 @@ Devise.setup do |config|
   config.omniauth :facebook, '1587213768258926', '1e1ecd9a132d8a94201fee4402db9e51',
                   scope: 'email,user_about_me,user_hometown,user_location',
                   # scope: 'user_about_me,user_birthday,user_hometown,user_location',
-                  info_fields: 'email,first_name,last_name,locale,bio,hometown,location',
+                  info_fields: 'email,first_name,last_name,locale,bio,hometown,location,age_range',
                   image_size: 'large'
 
   # ==> Warden configuration

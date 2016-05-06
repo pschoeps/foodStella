@@ -14,7 +14,10 @@
 	      					<% end %>
 	  						<%= Friendship.mutual(current_user, user) %>
 	  						<%= form_tag({controller: "friendship", action: "accept", :id => user.id}, method: "post") do %>
-	  							<%= submit_tag("Accept", :class => "btn")%><br />
+	  							<%= submit_tag("Accept", :class => "btn")%>
+	  						<% end %>
+	  						<%= form_tag({controller: "friendship", action: "decline", :id => user.id}, method: "post") do %>
+	  						  <%= submit_tag("Decline", :class => "btn") %>
 	  						<% end %>
 	      	          	</li>
 	      	        <% end %>

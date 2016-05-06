@@ -15,7 +15,8 @@ class RecipesController < ApplicationController
     @recipe = current_user.recipes.build(recipe_params)
 
     if @recipe.save
-      redirect_to dashboard_user_path(current_user)
+      # redirect_to dashboard_user_path(current_user)
+      redirect_to action: 'index'
       flash[:success] = "Recipe Created"
     else
       render 'new'
@@ -27,9 +28,11 @@ class RecipesController < ApplicationController
   end
 
   def destroy
+    puts Recipe.find(params[:id])
     @recipe = Recipe.find(params[:id]).destroy
     flash[:success] = "Recipe deleted"
-    redirect_to dashboard_user_path
+    # redirect_to dashboard_user_path
+    redirect_to action: 'index'
   end
 
   def update
@@ -45,6 +48,7 @@ class RecipesController < ApplicationController
     @recipe = Recipe.find(params[:id])
     @difficulty = get_difficulty(@recipe.difficulty) if @recipe.difficulty
     @meal_type = get_meal_type(@recipe.meal_type) if @recipe.meal_type
+    # @cookware = get_meal_type(@recipe.meal_type) if @recipe.meal_type
     @category = get_category(@recipe.category) if @recipe.category
   end
 
@@ -120,14 +124,14 @@ class RecipesController < ApplicationController
                   "Dessert"
                 when "5"
                   "Drink"
-                when "6"
-                   "Appetizer"
+                # when "6"
+                   # "Appetizer"
                 end
     string
   end
 
   def recipe_params
-  	params.require(:recipe).permit(:name, :photo_url, :category, :prep_time, :cook_time, :difficulty, :meal_type, :description, :servings, :website_url,
+  	params.require(:recipe).permit(:name, :photo_url, :category, :prep_time, :cook_time, :difficulty, :meal_type, :description, :servings, :website_url, :cookware,
   	  :quantities_attributes => [
         :id,
         :amount,

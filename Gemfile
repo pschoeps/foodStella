@@ -54,6 +54,8 @@ gem 'fog',                     '1.36.0'
 gem 'momentjs-rails'
 gem 'fullcalendar-rails'
 
+#importing scraped json data
+gem 'json'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

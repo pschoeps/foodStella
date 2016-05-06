@@ -1,8 +1,8 @@
-<% if @calendar %>
-  <div class="col-md-3 sidebar" id="sidebar-skinny">
-<% else %>
-  <div class="col-md-3 sidebar">
-<% end %>
+<!-- % if calendar %> -->
+  <!-- <div class="col-md-3 sidebar" id="sidebar-skinny"> -->
+<!-- % else %> -->
+  <div class="sidebar col-sm-3">
+<!-- % end %> -->
     <div class="header">
       <h2>
         <div class="spatula"></div> 
@@ -14,12 +14,12 @@
     <div class="meal-selection">
        <button type="button" id="snacks">
           Snacks
-          <span class="badge"><%= @snacks.count %></span>
+          <span class="badge"><%= snacks.count %></span>
        </button>
       <div class="selection" id="snacks-selection">
           <div id='external-events'>
             <div id='external-events-listing'>
-              <% @snacks.each do |r| %>
+              <% snacks.each do |r| %>
                 <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1'><span class="recipe-title"><%= link_to truncate(r.name, length: 10), recipe_path(r) %></span></div>
               <% end %>
             </div>
@@ -28,12 +28,12 @@
 
       <button type="button" id="sidedish">
           Side Dishes
-          <span class="badge"><%= @side_dishes.count %></span>
+          <span class="badge"><%= side_dishes.count %></span>
        </button>
       <div class="selection" id="sidedish-selection">
           <div id='external-events'>
             <div id='external-events-listing'>
-              <% @side_dishes.each do |r| %>
+              <% side_dishes.each do |r| %>
                 <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>"><span class="recipe-title"><%= link_to truncate(r.name, length: 10), recipe_path(r) %></span></div>
               <% end %>
             </div>
@@ -42,12 +42,12 @@
 
       <button type="button" id="maindish">
           Main Dishes
-          <span class="badge"><%= @main_dishes.count %></span>
+          <span class="badge"><%= main_dishes.count %></span>
        </button>
       <div class="selection" id="maindish-selection">
           <div id='external-events'>
             <div id='external-events-listing'>
-              <% @main_dishes.each do |r| %>
+              <% main_dishes.each do |r| %>
                 <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>"><span class="recipe-title"><%= truncate(r.name, length: 10) %></span></div>
               <% end %>
             </div>
@@ -56,12 +56,12 @@
 
       <button type="button" id="dessert">
           Desserts
-          <span class="badge"><%= @desserts.count %></span>
+          <span class="badge"><%= desserts.count %></span>
        </button>
       <div class="selection" id="dessert-selection">
           <div id='external-events'>
             <div id='external-events-listing'>
-              <% @desserts.each do |r| %>
+              <% desserts.each do |r| %>
                 <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>"><span class="recipe-title"><%= link_to truncate(r.name, length: 10), recipe_path(r) %></span></div>
               <% end %>
             </div>
@@ -70,17 +70,21 @@
 
       <button type="button" id="drink">
           Drinks
-          <span class="badge"><%= @drinks.count %></span>
+          <span class="badge"><%= drinks.count %></span>
        </button>
       <div class="selection" id="drink-selection">
           <div id='external-events'>
             <div id='external-events-listing'>
-              <% @drinks.each do |r| %>
+              <% drinks.each do |r| %>
                 <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>"><span class="recipe-title"><%= link_to truncate(r.name, length: 10), recipe_path(r) %></span></div>
               <% end %>
             </div>
           </div>
       </div>
+
+      <% if dragNdrop %>
+        <div class='dragNdrop'>Drag recipes onto your planner <div>&#8618;</div></div>
+      <% end %>
 
     </div>
   </div>
