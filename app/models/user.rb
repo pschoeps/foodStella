@@ -95,7 +95,9 @@ class User < ActiveRecord::Base
     fir_name = ''
     las_name = ''
     username = ''
-    if user.username
+    if user.profile && profile.username
+      username = profile.username
+    elsif user.username
       username = user.username
     elsif user.profile && user.profile.fir_name && user.profile.las_name
       fir_name = user.profile.fir_name
