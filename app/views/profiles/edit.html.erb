@@ -1,9 +1,9 @@
-<!-- <= render "profile_form" %> -->
-
 <div class="row">
 
-	<div class="col-sm-8 col-center new_profile-col">
+	<div class="col-sm-8 col-center edit-profile-view">
     
+    <div class="clear"></div>
+
     <% if @profile.email %>
       <h2><%= @profile.email %></h2>
     <% else %>
@@ -14,20 +14,21 @@
       <%= render 'shared/error_messages', object: f.object %>
       <!-- <= devise_error_messages! %> -->
       <fieldset id="profile-meta">
-        <ol style="list-style-type:none">
+        <ol style="list-style-type:none; padding:0">
+          
           <li class="control-group">
+            <%= f.label :username, "Username", class: "control-label" %>
+            <div class="controls"><%= f.text_field :username %></div>
+          </li>
+          
+          <li class="control-group inline">
             <%= f.label :fir_name, "First Name", class: "control-label" %>
             <div class="controls"><%= f.text_field :fir_name %></div>
           </li>
 
-          <li class="control-group">
+          <li class="control-group inline">
             <%= f.label :las_name, "Last Name", class: "control-label" %>
             <div class="controls"><%= f.text_field :las_name %></div>
-          </li>
-
-          <li class="control-group">
-            <%= f.label :username, "Username", class: "control-label" %>
-            <div class="controls"><%= f.text_field :username %></div>
           </li>
 
           <li class="control-group">
@@ -35,7 +36,7 @@
             <div class="controls"><%= f.text_field :country %></div>
           </li>
 
-          <li class="control-group">
+          <li class="control-group file-upload">
             <% if current_user.image %>
               <div class="user_pic" style="background-image: url(<%= current_user.retrieve_pic %>);"></div>
               <%= f.label :picture_url, "Change picture", class: "control-label" %>
@@ -46,13 +47,13 @@
             <% end %>
           </li>
 
-          <li class="control-group">
-            <%= f.label :about_me, "About Me", class: "control-label" %>
-            <div class="controls"><%= f.text_area :about_me, value: current_user.about_me %></div>
-          </li>
+
       </fieldset>
 
-      <%= f.submit %>
+       <div class="actions">
+        <%= f.submit 'Save Changes' %>
+      </div>
+
       <div class="clear"></div>
 
     <% end %>

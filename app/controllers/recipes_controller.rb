@@ -67,6 +67,12 @@ class RecipesController < ApplicationController
     @desserts = @user_recipes.where(:meal_type => "4") + @followed_recipes.where(:meal_type => "4")
     @drinks = @user_recipes.where(:meal_type => "5") + @followed_recipes.where(:meal_type => "5")
 
+    if params[:expanded]
+      @expanded = params[:expanded]
+    else
+      @expanded = ['false','false','false','false','false']
+    end
+
     #filtering links to model 
     @filterrific = initialize_filterrific(
       Recipe,
@@ -87,7 +93,27 @@ class RecipesController < ApplicationController
       format.html
       format.js
     end
+  end
 
+  def sidebar
+    @followed_recipes = current_user.following
+    @user_recipes = current_user.recipes
+    @snacks = @user_recipes.where(:meal_type => "1") + @followed_recipes.where(:meal_type => "1")
+    @side_dishes = @user_recipes.where(:meal_type => "2") + @followed_recipes.where(:meal_type => "2")
+    @main_dishes = @user_recipes.where(:meal_type => "3") + @followed_recipes.where(:meal_type => "3")
+    @desserts = @user_recipes.where(:meal_type => "4") + @followed_recipes.where(:meal_type => "4")
+    @drinks = @user_recipes.where(:meal_type => "5") + @followed_recipes.where(:meal_type => "5")
+    # render :partial => '/layouts/recipe_sidebar'
+    if params[:expanded]
+      @expanded = params[:expanded]
+    else
+      @expanded = ['false','false','false','false','false']
+    end
+
+    respond_to do |format|
+      # format.html
+      format.js
+    end
   end
 
   def get_difficulty(diff)

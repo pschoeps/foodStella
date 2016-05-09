@@ -98,7 +98,7 @@ class ProfilesController < ApplicationController
 	end
 
 	def profile_params
-	  	params.require(:profile).permit(:fir_name, :las_name, :email, :about_me, :picture_url, :country, :cooking_experience, :average_cook_time, :liked_foods, :disliked_foods, :username, :tab )
+	  	params.require(:profile).permit(:fir_name, :las_name, :email, :about_me, :picture_url, :country, :cooking_experience, :average_cook_time, :liked_foods, :disliked_foods, :username, :cookware_preferences, :tab )
 	end
 
 end

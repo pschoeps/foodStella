@@ -7,14 +7,14 @@
 				<%= link_to "EDIT", '#', class: "edit", id: 'edit-about_me' if @editable %>
 				<!-- <a href ='#' id='edit-about_me'class='edit'>EDIT</a> -->
 			</h4>
-			<div class="col-xs-12 col-md-10 about-me">
+			<div class="col-xs-12 col-sm-7 about-me <%= 'about-me-multiline' if @profile.about_me.length > 60 %>">
 				<!-- %= @profile.about_me %> -->
 				<%= best_in_place_if (@editable), @profile, :about_me,
 					:as => :textarea,
 					:ok_button => 'Save',
 					:activator => "#edit-about_me",
 					:html_attrs => {maxlength: 800},
-					:place_holder => "Share a bit about yourself. Tell us about your cooking experience, food preferences, or anything that you'd like other users to know!"
+					:place_holder => "Share a bit about yourself."
 				%>
 			</div>
 		</div>
@@ -97,16 +97,50 @@
 			</div>
 		</div>
 
-		<div class="row">
+		<!-- <div class="row">
 			<h4>COOKWARE PREFERENCES
-			<!-- %= link_to "EDIT", '#', class: "edit", id: 'edit-cookware_preferences' if @editable %> -->
 			</h4>
 			<div class="col-xs-12 col-md-10 bubbles">
-				<div>a;dsklf</div>
+				<div>MAKE ME A TEXTAREA</div>
 				<div>3</div>
 				<div>3</div>
 				<div>3</div>
 			</div>
+		</div> -->
+
+		<div class="row">
+			<h4>COOKWARE PREFERENCES
+				<%= link_to "EDIT", '#', class: "edit", id: 'edit-cookware_preferences' if @editable %>
+			</h4>
+			<div class="col-xs-12 col-md-10">
+				<!-- %= @profile.about_me %> -->
+				<%= best_in_place_if (@editable), @profile, :cookware_preferences,
+					:as => :textarea,
+					:ok_button => 'Save',
+					:activator => "#edit-cookware_preferences",
+					:html_attrs => {maxlength: 800},
+					:place_holder => 'Share your favorite cookware.'
+				%>
+			</div>
 		</div>
+
 	</div>
 </div>
+
+<script>
+	function checkAboutMeHeight(){
+		if( $('.about-me').height() > 20)
+			$('.about-me').addClass('about-me-multiline');
+		else
+			$('.about-me').removeClass('about-me-multiline');
+	}
+
+	$(document).ready(function(){
+		
+		$('.about-me').click(function(e){
+			setTimeout(function() { checkAboutMeHeight()}, 0);
+		});
+
+		checkAboutMeHeight();
+	});
+</script>

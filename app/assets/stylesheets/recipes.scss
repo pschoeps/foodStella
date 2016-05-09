@@ -536,6 +536,8 @@
 		min-width: 600px;
 		max-width: calc(100% - 250px);
 
+		min-height: 100vh;
+
 		ul {
 			list-style-type: none;
 			padding: 0;
@@ -615,31 +617,57 @@
 
 				 .spatula-selected {
 					background-image: asset-url('icons/spatula-selected.png');
+					.label {
+						background-color: white;
+						color: $green;
+					}
 				}
 
 				.spatula-unselected {
 					background-image: asset-url('icons/spatula-unselected.png');
+					.label {
+						background-color: $green;
+						color: white;
+					}
 				}
 
 				.spatula { 
-    					/* background-color: rgba(176, 176, 176, 0.65); */
-    					background-size: 100% 100%;
-    					border-radius: 100%;
-    					height: 1.5em;
-    					/* width: 2em; */
-    					width: 1.5em;
-    					cursor: pointer;
-    					/* text-align: center; */
-    					// top: -5.55em;
-    					font-size: 2.5em;
-    					// position: relative;
-    					left: 50%;
-    					transform: translateX(-50%);
-    					position: absolute;
-    					top: 5em;
+					/* background-color: rgba(176, 176, 176, 0.65); */
+					background-size: 110% 110%;
+					// overflow: hidden;
+					background-position: 50% 50%;
+					border-radius: 100%;
+					height: 50px;
+					/* width: 2em; */
+					width: 50px;
+					cursor: pointer;
+					font-size: 2.5em;
+					// position: relative;
+					left: 50%;
+					transform: translateX(-50%);
+					position: absolute;
+					top: 5em;
+					// text-align: center;
+
+					.label {
+						display: none;
+						position: absolute;
+						top: -20px;
+						left: -6px;
+						font-size: 12px;
+						font-weight: 100;
+						letter-spacing: 1px;
+						width: 62px;
+						height: 15px;
+						border-radius: 5px;
+					}
 				}
 
-
+				.spatula-unselected:hover { box-shadow: 0 0 14px $green; }
+				.spatula-selected:hover { box-shadow: 0 0 14px $medium; }
+				.spatula:hover > .label { display: block; }
+				.spatula-selected > .label::after {	content: 'Unfollow'; }
+				.spatula-unselected > .label::after { content: 'Follow'; }
 
 			}
 		}
@@ -731,7 +759,7 @@
 	}
 
 	.open .dropdown-toggle{
-		color: $green;
+		color: $green !important;
 	}
 
 	.dropdown {

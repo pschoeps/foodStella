@@ -66,20 +66,24 @@ class UsersController < ApplicationController
 		@desserts = @user_recipes.where(:meal_type => "4") + @followed_recipes.where(:meal_type => "4")
 		@drinks = @user_recipes.where(:meal_type => "5") + @followed_recipes.where(:meal_type => "5")
 
-		@day_counter = 3
+		@expanded = ['false','false','true','false','false']
+
+		# @day_counter = 3
 
 		d = Date.today
 		@month = d.strftime("%B")
-		@week_begin = d.at_beginning_of_week.strftime("%-d")
-		@week_end = d.at_end_of_week.strftime("%-d")
-		@date_string = @month + " " + @week_begin + " - " + @week_end
+		# @week_begin = d.at_beginning_of_week.strftime("%-d")
+		# @week_end = d.at_end_of_week.strftime("%-d")
+		# @date_string = @month + " " + @week_begin + " - " + @week_end
 
 		@planner_begin = d.strftime("%-d")
-		@planner_end = (d + (@day_counter-1).days).strftime("%-d")
-		# @date_string = @month + " " + @planner_begin + " - " + @planner_end
+		# @planner_end = (d + (@day_counter-1).days).strftime("%-d")
+		@planner_end = (d + (2).days).strftime("%-d")
+		@date_string = @month + " " + @planner_begin + " - " + @planner_end
 
 		@today = [DateTime.now.strftime('%A - %B %-d, %Y'), DateTime.now.strftime('%Y-%m-%d')]
-		@tomorrow = [DateTime.tomorrow.strftime('%A - %B %-d, %Y'), DateTime.tomorrow.strftime('%Y-%m-%d')]
+		# @tomorrow = [DateTime.tomorrow.strftime('%A - %B %-d, %Y'), DateTime.tomorrow.strftime('%Y-%m-%d')]
+		@tomorrow = [(DateTime.now + 1.days).strftime('%A - %B %-d, %Y'), (DateTime.now + 1.days).strftime('%Y-%m-%d')]
 		@day_after_tom = [(DateTime.now + 2.days).strftime('%A - %B %-d, %Y'), (DateTime.now + 2.days).strftime('%Y-%m-%d')]
 
 		@day_counter = 3
@@ -115,6 +119,8 @@ class UsersController < ApplicationController
 		@main_dishes = @user_recipes.where(:meal_type => "3") + @followed_recipes.where(:meal_type => "3")
 		@desserts = @user_recipes.where(:meal_type => "4") + @followed_recipes.where(:meal_type => "4")
 		@drinks = @user_recipes.where(:meal_type => "5") + @followed_recipes.where(:meal_type => "5")
+
+		@expanded = ['false','false','false','false','false']
 
     	d = Date.today
 		@month = d.strftime("%B")

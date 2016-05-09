@@ -43,6 +43,7 @@
           white-space: nowrap;
           padding: 4px;
           letter-spacing: 1px;
+          display: none;
         }
     <% end %>
 

@@ -13,6 +13,7 @@
 	      						<div class="user_name"><%= user.retrieve_name %></div>
 	      					<% end %>
 	  						<%= Friendship.mutual(current_user, user) %>
+	  						<br />
 	  						<%= form_tag({controller: "friendship", action: "accept", :id => user.id}, method: "post") do %>
 	  							<%= submit_tag("Accept", :class => "btn")%>
 	  						<% end %>
@@ -44,6 +45,7 @@
 								<div class="user_name"><%= user.retrieve_name %></div>
 				          	<% end %>
 				          	<%= Friendship.mutual(current_user, user) %>
+				          	<br />
 				          	<% if @myself %>
 								<%= form_tag({controller: "friendship", action: "delete", :id => user.id}, method: "post") do %>
 									<%= submit_tag("Delete", :class => "btn")%><br />
@@ -73,6 +75,7 @@
 										</div>
 									<% end %>
 									<%= Friendship.mutual(current_user, user) %>
+									<br />
 									<% if Friendship.exists?(current_user, user) %><br>
 										<%= friendship_status(current_user, user) %><br>
 									<% else %>

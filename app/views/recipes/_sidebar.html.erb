@@ -3,7 +3,7 @@
 <!-- % else %> -->
   <div class="sidebar">
 <!-- % end %> -->
-    <div class="header <%= 'halo_effect' if dragNdrop %>">
+    <div class="header">
       <h2>
         <div class="spatula"></div> 
         My Foods
@@ -91,11 +91,52 @@
 
 <!-- SECRET BUTTON for live-reloading sidebar magic -->
 <!-- %= link_to 'Refresh recipes', '/recipes', id: 'refresh', style: 'display: none;', remote: true %> -->
-
+<!-- %= link_to 'Refresh recipes', action: :sidebar, remote: true, id: 'refresh', style: 'display: none;' %> -->
 
 <script>
 
 $(document).ready(function(){
+
+  $('button').click(function() {
+      var contentHeight = $('.meal-selection').outerHeight() + 80;
+      var sidebarHeight = $('.sidebar').outerHeight()
+
+    if (contentHeight > sidebarHeight) {
+      $('.sidebar').css({
+        'height': contentHeight + 'px',
+        'max-height': contentHeight + 'px'
+      });
+      $('#sidebar-col').css({
+        'height': contentHeight + 'px',
+        'max-height': contentHeight + 'px'
+      });
+      $('.sidebar-content').css({
+        'min-height': contentHeight + 'px'
+      });
+      resetSidebar();
+    }
+    else {
+      if(contentHeight < $(window).height()){
+        $('.sidebar').css({
+          'height': '100vh',
+          'max-height': '100vh'
+        });
+        $('#sidebar-col').css({
+          'height': '100vh',
+          'max-height': '100vh'
+        });
+        $('.sidebar-content').css({
+          'min-height': ''
+        });
+        resetSidebar();
+      }
+    }
+  });
+
+
+    // overflow-y on My Foods view
+    // if( $('#recipes-col').length)
+    //   $('.sidebar').css('overflow-y', 'scroll');
 
   //   $('#snacks').click(function() {
   //   if ( $('#snacks-selection').css('display') == 'none' )
@@ -141,38 +182,24 @@ $(document).ready(function(){
     // if(matchingSelection.height() > $(window).height()*0.6)
     //     matchingSelection.addClass('scrollable');
 
-    var contentHeight = $('.meal-selection').outerHeight() + 80;
+    var containerHeight = $('.meal-selection').outerHeight() + 80;
     var sidebarHeight = $('.sidebar').outerHeight()
 
-    if (contentHeight > sidebarHeight) {
-      $('.sidebar').css({
-        'height': contentHeight + 'px',
-        'max-height': contentHeight + 'px'
-      });
-      $('#sidebar-col').css({
-        'height': contentHeight + 'px',
-        'max-height': contentHeight + 'px'
-      });
-      $('.sidebar-content').css({
-        'min-height': contentHeight + 'px'
-      });
-      resetSidebar();
+    if (containerHeight > sidebarHeight) {
+      // $('.sidebar').css('height', containerHeight + 'px');
+      // $('.sidebar').css('overflow', 'scroll');
     }
     else {
-      if(contentHeight < $(window).height()){
-        $('.sidebar').css({
-          'height': '100vh',
-          'max-height': '100vh'
-        });
-        $('#sidebar-col').css({
-          'height': '100vh',
-          'max-height': '100vh'
-        });
-        $('.sidebar-content').css({
-          'min-height': ''
-        });
-        resetSidebar();
-      }
+       // $('.sidebar').css('overflow', 'auto');
+    }
+    if( $('#recipes-col').length){
+          var containerHeight = $('.recipe-col').outerHeight() + 100;
+          var sidebarHeight = $('.sidebar').outerHeight()
+
+      // if (containerHeight > sidebarHeight)
+      //     $('.sidebar').css('overflow', 'scroll');
+      //   else
+      //     $('.sidebar').css('overflow', 'auto');
     }
   });
 });

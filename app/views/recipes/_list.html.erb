@@ -25,15 +25,13 @@
         
         </div>
 
-           <% unless current_user.owns?(recipe) %>
-             <% if current_user.following?(recipe) %>
-               <div data="<%= recipe.id %>" class="spatula spatula-selected" id="unfollow"></div> 
-             <% else %>
-               <div data="<%= recipe.id %>" class="spatula spatula-unselected" id="follow"></div> 
-             <% end %>
-           <% end %>
-
-         
+          <% unless current_user.owns?(recipe) %>
+            <% if current_user.following?(recipe) %>
+              <div data="<%= recipe.id %>" class="spatula spatula-selected" id="unfollow"><div class='label'></div></div> 
+            <% else %>
+              <div data="<%= recipe.id %>" class="spatula spatula-unselected" id="follow"><div class='label'></div></div> 
+            <% end %>
+          <% end %>
 
 
        </li>

@@ -106,8 +106,8 @@ class User < ActiveRecord::Base
       fir_name = user.fir_name
       las_name = user.las_name
     else
-      fir_name = ''
-      las_name = ''
+      fir_name = '-'
+      las_name = '-'
     end
     #return
     if username != ''

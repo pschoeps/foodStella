@@ -13,6 +13,7 @@
 
 <div class="row">
 	<!-- %= render 'layouts/recipe_sidebar' %> -->
+  <div id='sidebar-col' class='col-sm-3'>
   <%= render(
     partial: 'layouts/recipe_sidebar',
     locals: {
@@ -21,11 +22,13 @@
       main_dishes: @main_dishes,
       desserts: @desserts,
       drinks: @drinks,
-      dragNdrop: false
+      dragNdrop: false,
+      expanded: @expanded
     }
   ) %>
+  </div>
 
-	<div class="col-sm-9 shopping-list">
+	<div class="col-sm-9 shopping-list sidebar-content">
 		<div class="shopping-list-container">
 			<div class="shopping-list-header">
 			  <h1><%= @date_string %></h1>
@@ -51,21 +54,20 @@
 
 <script>
 
-  // function resetSidebar(){
-  //   $('.sidebar').trigger('detach.ScrollToFixed');
-  //   $('.sidebar').scrollToFixed({
-  //     limit: $('.footer').offset().top - $('.sidebar').height(),
-  //     spacerClass: 'sidebar-spacer'
-  //   });
-  // }
+  function resetSidebar(){
+    $('#sidebar-col').trigger('detach.ScrollToFixed');
+    $('#sidebar-col').scrollToFixed({
+      limit: $('.footer').offset().top - $('#sidebar-col').height(),
+      spacerClass: 'sidebar-spacer'
+    });
+  }
 
   $(document).ready(function() {
-    
-      // resetSidebar();
+      resetSidebar();
 
-      // $(window).resize( function(e){
-      //   resetSidebar();
-      // });
+      $(window).resize( function(e){
+        resetSidebar();
+      });
       
  // $('input').iCheck({
  //   checkboxClass: 'icheckbox_minimal-green',
@@ -73,20 +75,15 @@
  //   increaseArea: '20%' // optional
   //});
 
-  $('.sidebar').css('height', '0vh');
-  var innerHeight = $('.footer').offset().top - $('.sidebar').offset().top;
-  console.log($('.footer').offset().top);
-  console.log($('.sidebar').offset().top);
-  console.log(innerHeight);
-  $('.sidebar').css('height', innerHeight+'px');
-  $('.footer').css('margin-top',0);
-
   // $('.sidebar').css('height', '0vh');
   // var innerHeight = $('.footer').offset().top - $('.sidebar').offset().top;
-  // if( innerHeight < $(window).height())
-  //   $('.sidebar').css('height',innerHeight+'px');
-  // else
-  //   $('.sidebar').css('height', '100vh');
+  // console.log($('.footer').offset().top);
+  // console.log($('.sidebar').offset().top);
+  // console.log(innerHeight);
+  // $('.sidebar').css('height', innerHeight+'px');
+  // $('.footer').css('margin-top',0);
+  // $('.sidebar').trigger('detach.ScrollToFixed');
+
 
   // $('.sidebar').scrollToFixed({
   //   limit: $('.footer').offset().top - $('.sidebar').height(),

@@ -185,6 +185,10 @@ input:-webkit-autofill {
 	width: 100px;
 	float: right;
 }
+#new_user input[type=submit].reset_password {
+	width: auto;
+	float: none;
+}
 
 #new_user input[type=checkbox] {
 	//display: none;
@@ -349,6 +353,8 @@ input:-webkit-autofill {
 	float: right;
 	min-width: 600px;
     max-width: calc(100% - 250px);
+
+    min-height: 100vh;
 }
 .shopping-list-container {
 	width: 100%;

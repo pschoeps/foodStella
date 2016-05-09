@@ -33,41 +33,23 @@ $(document).ready(function() {
                 });
 
                 // make the event draggable using jQuery UI
-                $(this).draggable({
-                    zIndex: 999,
-                    revert: true,      // will cause the event to go back to its
-                    revertDuration: 0  //  original position after the drag
-                });
+                if( $('.calendar-nav').length ){  // only make items draggable on calendar view
+                  $(this).draggable({
+                      zIndex: 999,
+                      revert: true,      // will cause the event to go back to its
+                      revertDuration: 0  //  original position after the drag
+                  });
 
-                // $(this).click(function(){
-                //   $('#external-events-listing').css('height', $('#external-events-listing').height() + 'px');
-                //   $('.fc-slats td').css('box-shadow', 'inset 0 0 90px #e8e8e8');
-                //   $(this).css({
-                //     'box-shadow': '2px 2px 18px #888',
-                //     'float': 'left'
-                //   });
-                //   $(this).animate({
-                //     'height': '108px',
-                //     'width': '108px',
-                //     'margin': '4px',
-                //   }, 200, function(){
-                //     $(this).animate({
-                //       'height': '100px',
-                //       'width': '100px',
-                //       'margin': '8px',
-                //       }, 200, function(){
-                //         $(this).css({
-                //           'box-shadow': '0 0 0px #444',
-                //           'float': 'none'
-                //         });
-                //         $('.fc-slats td').css('box-shadow', 'inset 0 0 0px #fff');
-                //         $('#external-events-listing').css('height', 'auto');
-                //       });
-                //   });
-                // });
+                  $(this).mousedown(function(){
+                    // $(this).closest('.selection').addClass('selection-dragging');
+                  });
 
+                  $(this).mouseup(function(){
+                    // $(this).closest('.selection').removeClass('selection-dragging');
+                  });
+                }
 
-            });
+              });
 
     $('#snacks').click(function() {
     if ( $('#snacks-selection').css('display') == 'none' )
@@ -106,19 +88,23 @@ $(document).ready(function() {
 
 
 
-  $('button').click(function() {
-    var containerHeight = $('.meal-selection').outerHeight() + 80;
-    var sidebarHeight = $('.sidebar').outerHeight()
+  // $('button').click(function() {
+  //   var containerHeight = $('.meal-selection').outerHeight() + 80;
+  //   var sidebarHeight = $('.sidebar').outerHeight()
 
-    if (containerHeight > sidebarHeight) {
-      $('.sidebar').css('height', containerHeight + 'px');
-      // $('.sidebar').css('overflow', 'scroll');
-    }
-    else {
-       // $('.sidebar').css('overflow', 'auto');
-    }
-  })
+  //   if (containerHeight > sidebarHeight) {
+  //     $('.sidebar').css('height', containerHeight + 'px');
+  //     // $('.sidebar').css('overflow', 'scroll');
+  //   }
+  //   else {
+  //      // $('.sidebar').css('overflow', 'auto');
+  //   }
+  // })
 
+  if ( $('#filterrific_latest_').is(":checked") )
+    $(this).css('color', 'white');
+  else
+    $(this).css('color', '#819800');
 
  $('.latest').click(function() {
     console.log("checked")
@@ -129,17 +115,34 @@ $(document).ready(function() {
 
   });
 
- if( $('.recipes-page').length && $('.sidebar').length ){
-    console.log('recipes page');
-    var contentHeight = $('.recipes-page').outerHeight();
-    contentHeight += 100;   // for footer margin
+ function checkFilters(){
+    $('.dropdown').each(function(){
+      var clear = true;
+      $(this).find(':input').each(function(){
+        if($(this).is(':checked'))
+          clear = false;
+      });
+      if(clear) $(this).find('.dropdown-toggle').css('color','white');
+      else $(this).find('.dropdown-toggle').css('color','#819800');
+    });
+  }
 
-    // $('.footer').css('margin-top', 0);
-    // $('.sidebar').css({
-    //   'height': contentHeight + 'px',
-    //   'max-height': contentHeight + 'px'
-    // });
- }
+ $('.dropdown').find(':input').each(function(){
+  $(this).click(function(){
+    checkFilters();
+  });
+
+  checkFilters();
+
+ })
+
+
+
+ // if( $('.recipes-page').length && $('.sidebar').length ){
+ //    console.log('recipes page');
+ //    var contentHeight = $('.recipes-page').outerHeight();
+ //    contentHeight += 100;   // for footer margin
+ // }
 
   
 

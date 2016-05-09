@@ -12,9 +12,13 @@
   </div>
 </div>
 
+<!-- <div class="row">
+  %= render(partial: 'header') %>
+</div> -->
 
 <div class="row calendar-days" css="margin: 0;">
   <!-- %= render 'layouts/recipe_sidebar' %> -->
+  <div id='sidebar-col' class="col-sm-3">
   <%= render(
     partial: 'layouts/recipe_sidebar',
     locals: {
@@ -24,29 +28,33 @@
       desserts: @desserts,
       drinks: @drinks,
       dragNdrop: true,
+      expanded: @expanded
     }
   ) %>
-
-  <div class="col-sm-9 calendar-nav">
-    <span class="btn" id="previous-day" data="1">Previous Day</span>
-    <span class="btn" id="add-day" data="<%= @day_counter %>">Add Day</span>
-    <%= link_to "Generate Shopping List", shopping_list_user_path(current_user), id: "shopping-list", class: "btn" %>
   </div>
 
-  <div class="previous-days">
-    <div class="row prev-days" id="prev-day-1"></div>
+  <div class="sidebar-content">
+    <div class="col-sm-9 calendar-nav">
+      <span class="btn" id="previous-day" data="1">Previous Day</span>
+      <span class="btn" id="add-day" data="<%= @day_counter %>">Add Day</span>
+      <%= link_to "Generate Shopping List", shopping_list_user_path(current_user), id: "shopping-list", class: "btn" %>
+    </div>
+
+    <div class="previous-days">
+      <div class="row prev-days" id="prev-day-1"></div>
+    </div>
+
+   
+
+    <%= render 'one_day', :day => @today %>
+    <%= render 'one_day', :day => @tomorrow %>
+    <%= render 'one_day', :day => @day_after_tom %>
+
   </div>
 
- 
-
-  <%= render 'one_day', :day => @today %>
-  <%= render 'one_day', :day => @tomorrow %>
-  <%= render 'one_day', :day => @day_after_tom %>
-
-</div>
-
-<div class="added-days">
-  <div class="row added-day" id="day-<%= @day_counter %>"></div>
+  <div class="added-days">
+    <div class="row added-day" id="day-<%= @day_counter %>"></div>
+  </div>
 </div>
 
 
@@ -65,15 +73,14 @@
   });
 
   function resetSidebar(){
-    $('.sidebar').trigger('detach.ScrollToFixed');
-    $('.sidebar').scrollToFixed({
-      limit: $('.footer').offset().top - $('.sidebar').height(),
+    $('#sidebar-col').trigger('detach.ScrollToFixed');
+    $('#sidebar-col').scrollToFixed({
+      limit: $('.footer').offset().top - $('#sidebar-col').height(),
       spacerClass: 'sidebar-spacer'
     });
   }
 
   $(document).ready(function() {
-    
       resetSidebar();
 
       $(window).resize( function(e){

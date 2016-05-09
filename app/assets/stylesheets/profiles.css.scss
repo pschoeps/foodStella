@@ -2,6 +2,62 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.edit-profile-view {
+	text-align: center;
+	background-color: white;
+	color: $green;
+	padding: 20px;
+	margin-top: 20px;
+
+	h2 {
+		margin: 0;
+		padding-top: 20px;
+		border-bottom: solid 1px $medium;
+	}
+
+	.actions, li { margin: 16px; }
+
+	.inline {
+		display: inline-block;
+		margin: 0;
+		padding: 5px;
+		input[type=text] {
+			width: 145px;
+		}
+	}
+
+	input:focus { outline: none; }
+	input { border-radius: 0; }
+	input[type=text] {
+		background-color: transparent;
+		border: none;
+		text-align: center;
+		border-bottom: solid 1px $green;
+		width: 300px;
+	}
+	input[type=submit] {
+		border: none;
+		background-color: $green;
+		font-weight: bold;
+		color: white;
+		width: 120px;
+	}
+	textarea:focus { outline: none; }
+	textarea {
+		border: solid 1px $green;
+		width: 300px;
+		height: 60px;
+	}
+	.file-upload{
+		position: relative;
+		input {
+			border-bottom: solid 1px $green;
+			padding: 4px;
+			margin: 0 auto;
+		}
+	}
+}
+
 .profile-view {
 	text-align: center;
 
@@ -81,6 +137,7 @@
 .navigation-banner {
 	background-color: $dark;
 	color: white;
+	.btn-container { padding: 0; }
 	.button {
 		margin: 10px 0px;
 		padding: 2px;
@@ -98,6 +155,8 @@
 		display: inline-block;
 		background-color: #3f3f3f;
 	}
+	.button.about-btn { float: left; }
+	.button.activity-btn { float: right; }
 }
 
 // .container
@@ -210,6 +269,9 @@
 		float: right;
 	}
 	.about-me {
+		text-align: center;
+	}
+	.about-me.about-me-multiline {
 		text-align: justify;
 	}
 }
@@ -260,7 +322,7 @@
 		form {
 			display: inline-block;
 			width: 40%;
-			margin-top: 12px;
+			margin-top: 6px;
 		}
 		input[type=submit] {
 			color: $green;
@@ -278,7 +340,7 @@
 		form {
 			display: inline-block;
 			width: 40%;
-			margin-top: 12px;
+			margin-top: 6px;
 		}
 		input[type=submit] {
 			color: $green;

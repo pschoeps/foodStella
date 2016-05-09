@@ -30,7 +30,13 @@ FoodStella::Application.routes.draw do
   resources :profiles
   # resources :preferred_foods
 
-  resources :recipes
+  resources :recipes  do
+    member do
+      get 'sidebar'
+    end
+  end
+  # get "/recipes/side" => 'recipes#sidebar', as: 'sidebar'
+  
   resources :relationships,       only: [:create, :destroy]
 
   resources :events do

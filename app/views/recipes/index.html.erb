@@ -13,21 +13,26 @@
 
 <div class="row recipes-page">
 
-  <!-- <div id='sidebar-col' class='col-sm-3'> -->
+  <div id='sidebar-col' class='col-sm-3'>
   <%= render(
-    partial: 'layouts/recipe_sidebar',
+    partial: 'recipes/sidebar',
     locals: {
       snacks: @snacks,
       side_dishes: @side_dishes,
       main_dishes: @main_dishes,
       desserts: @desserts,
       drinks: @drinks,
-      dragNdrop: false
+      dragNdrop: false,
+      expanded: @expanded
     }
   ) %>
-  <!-- </div> -->
+  </div>
 
-  <div class="col-sm-9" id="recipes-col">
+<div style='display:none' id='refresh-sidebar'>
+  <%= link_to 'Refresh recipes', action: :sidebar, remote: true, id: 'doesntmatter' %>
+</div>
+
+  <div class="col-sm-9 sidebar-content" id="recipes-col">
     <%= render(
       partial: 'recipes/list',
       locals: { recipes: @recipes }
@@ -40,11 +45,32 @@
 <script>
 
   function resetSidebar(){
-    $('.sidebar').trigger('detach.ScrollToFixed');
-    $('.sidebar').scrollToFixed({
-      limit: $('.footer').offset().top - $('.sidebar').height(),
+    $('#sidebar-col').trigger('detach.ScrollToFixed');
+    $('#sidebar-col').scrollToFixed({
+      limit: $('.footer').offset().top - $('#sidebar-col').height(),
       spacerClass: 'sidebar-spacer'
     });
+    // var contentHeight = $('.footer').offset().top - $('#recipes-col').offset().top;
+    // if( contentHeight < $(window).height()){
+    //   $('#sidebar-col').css('height', contentHeight + 'px');
+    //   $('.sidebar').css('height', contentHeight + 'px');
+    // }
+  }
+
+  function updateMyFoods(){
+    var expandedSections = [];
+      $('.selection').each(function(){
+      if( $(this).css('display') == 'block')
+        expandedSections.push('true');
+      else
+        expandedSections.push('false');
+    });
+
+    var dataString = 'expanded%5B%5D=' + expandedSections[0] + '&expanded%5B%5D=' + expandedSections[1] + '&expanded%5B%5D=' + expandedSections[2] + '&expanded%5B%5D=' + expandedSections[3] + '&expanded%5B%5D=' + expandedSections[4];
+   
+    $('#refresh-sidebar>a').attr('data-params', dataString);
+    $('#refresh-sidebar>a').click();
+    resetSidebar();
   }
 
   $(document).ready(function() {
@@ -55,17 +81,10 @@
         resetSidebar();
       });
 
-      //$(document).on('click','.dropdown-toggle',function(){
-       // $('.recipes-page').toggleClass("padded")
-       // if ( $('.recipes-page').css('padding-top') == '5.7em' )
-       //   $('.recipes-page').css('padding-top','0');
-       // else
-       //   $('.recipes-page').css('padding-top','5.7em');
-      //});
-
-      // setInterval(function(){
-      //   $.ajax('/recipes');
-      //   }, 8000);
+      $('.sidebar').scroll(function(e){
+        e.stopPropagation();
+        // resetSidebar();
+      })
 
     	$(document).on('click','#follow',function(){
     		$this = $(this)
@@ -75,30 +94,14 @@
                   type:'POST',
                   data: {id: recipe_id},
                   url:'/relationships',
-              
+
                   success:function (response) {
+                    console.log('done');
                   	$this.addClass("spatula-selected");
                     $this.attr('id', 'unfollow');
                     $this.removeClass("spatula-unselected");
-                    $.ajax('recipes');
-                    <% following = escape_javascript(
-                      render(partial: 'layouts/recipe_sidebar',
-                        locals: {
-                          snacks: @snacks,
-                            side_dishes: @side_dishes,
-                            main_dishes: @main_dishes,
-                            desserts: @desserts,
-                            drinks: @drinks,
-                            dragNdrop: false
-                         })
-                    ) %>
-                    $("#sidebar-col").html("<%= following %>");
-                    // $.ajax({
-                    //   url: "/recipes"
-                    // });
-                    // $('#sidebar-col').load('layouts/_recipe_sidebar.html.erb');
+                    updateMyFoods();
                   }
-                  
                 });//end ajax call
 		});
 
@@ -115,9 +118,8 @@
                   	$this.addClass("spatula-unselected");
                     $this.attr('id', 'follow');
                     $this.removeClass("spatula-selected");
-                    // $('#sidebar-col').load('/recipes/index');
+                    updateMyFoods();
                   }
-                  
                 });//end ajax call
 		});
 

@@ -134,6 +134,8 @@ p {
   background-color: $dark;
   color: white;
   text-align: center;
+  font-weight: lighter;
+  letter-spacing: 1px;
   a {
     color: white;
     text-decoration: none;
@@ -152,3 +154,15 @@ p {
 @media (min-width: 768px) {
   .footer .row span { margin: 0 14px; }
 }
+
+
+ // sidebar overflow fix
+ .footer {
+  position: relative;
+  z-index: 9999;
+ }
+ body > .fluid-container,
+ body > .container, {
+  // position: relative;
+  z-index: 1;
+ }
