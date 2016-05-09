@@ -133,8 +133,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def owns?(recipe)
-    id == recipe.user_id
+  def owns?(recipeOrProfile)
+    id == recipeOrProfile.user_id
   end
 
 
