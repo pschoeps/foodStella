@@ -9,6 +9,10 @@ Bundler.require(:default, Rails.env)
 module FoodStella
   class Application < Rails::Application
     # config.assets.enabled = false
+
+    # the new line added for autoload of lib
+    # config.autoload_paths += %W(#{config.root}/lib)
+
     
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

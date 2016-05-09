@@ -1,18 +1,9 @@
 <% content_for(:style) do %>
 
-  <% @recipes.each do |r| %>
-    .<%= r.get_friendly_name %>id-<%= r.id %> {
-         background-image: url('<%= r.retrieve_pic %>'); 
+  <% @recipes.each do |recipe| %>
+    .<%= recipe.get_friendly_name %>id-<%= recipe.id %> {
+         background-image: url('<%= recipe.retrieve_pic %>'); 
     }
-  <% end %>
-
-  <% @events.each do |e| %>
-
-   <% if e.get_recipe(e.recipe_id) %>
-     <% recipe = e.get_recipe(e.recipe_id) %>
-       .<%= recipe.get_friendly_name %>id-<%= recipe.id %> {
-         background-image: url('<%= recipe.retrieve_pic %>');
-       }
        .fc-event-container .<%= recipe.get_friendly_name %>id-<%= recipe.id %>::after {
           content: '<%= recipe.get_friendly_name %>';
           width: 100%;
@@ -31,7 +22,6 @@
           content: 'Yields <%= recipe.servings %>';
           width: 100%;
           position: absolute;
-          // background-color: rgba(176, 176, 176, 0.65);
           text-align: left;
           top: 0;
           left: 0;
@@ -45,7 +35,6 @@
           letter-spacing: 1px;
           display: none;
         }
-    <% end %>
 
   <% end %>
 

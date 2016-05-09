@@ -16,10 +16,22 @@ class User < ActiveRecord::Base
   # attr_accessible :fir_name, :las_name, :username, :about_me, :image
   # accepts_nested_attributes_for :profile
   after_create :generate_profile
+  after_create :default_foods
 
   def generate_profile
     self.build_profile(fir_name: self.fir_name, las_name: self.las_name, username: self.username, email: self.email, picture_url: self.image, country: self.country)
     # self.build_profile()
+  end
+
+  def default_foods
+    snack = Recipe.where(name: 'Two-Cheese Party Pastries').first
+    Relationship.create(follower_id: self.id, followed_id: snack.id)
+    main_dish_1 = Recipe.where(name: 'Pizza-Style Vegetables').first
+    Relationship.create(follower_id: self.id, followed_id: main_dish_1.id )
+    main_dish_2 = Recipe.where(name: 'Juicy Texas Burgers').first
+    Relationship.create(follower_id: self.id, followed_id: main_dish_2.id )
+    dessert = Recipe.where(name: 'Apricot Bar Cookies').first
+    Relationship.create(follower_id: self.id, followed_id: dessert.id)
   end
 
   has_many :preferred_ingredients, dependent: :destroy

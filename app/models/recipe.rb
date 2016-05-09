@@ -193,8 +193,12 @@ class Recipe < ActiveRecord::Base
     end
 
   def retrieve_pic
+    puts '========================================================================================'
     recipe = Recipe.find(id)
-    if recipe.photo_url
+    if recipe.remote_photo_url
+      puts 'remote recipe url'
+      recipe.remote_photo_url
+    elsif recipe.photo_url
       puts recipe.photo_url
       puts "recipe photo url"
       recipe.photo_url.url

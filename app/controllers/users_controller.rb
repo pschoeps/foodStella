@@ -142,18 +142,18 @@ class UsersController < ApplicationController
 
 		@events = Event.where(start_at: (@first_day)..@last_day)
 
-		@recipes = []
+		@planned_recipes = []
 		@events.each do |e|
 			puts "one event"
 		  unless e.recipe_id < 0
 		    recipe = Recipe.find(e.recipe_id)
-		    @recipes << recipe
+		    @planned_recipes << recipe
 		  end
 		end
 
 		@shopping_items = []
 
-		@recipes.each do |r|
+		@planned_recipes.each do |r|
 			r.ingredients.each do |i|
 				i.quantities.each do |q|
 					unit = get_unit(q.unit, q.amount)
