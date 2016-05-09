@@ -32,7 +32,11 @@
 				<div class="row">
 					<div class="col-xs-4 btn-container">
 						<div class="button about-btn <%= 'selected' if @tab == 'about_me' %>">
-							<%= link_to "About Me", profile_path(current_user) %>
+						<% if @editable %>
+							<%= link_to "About Me", profile_path(tab: 'about_me') %>
+						<% else %>
+							<%= link_to "About " << @user.retrieve_name('first'), profile_path(tab: 'about_me') %>
+						<% end %>
 						</div>
 					</div>
 					<div class="col-xs-4 btn-container">
