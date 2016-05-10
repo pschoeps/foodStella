@@ -1,25 +1,52 @@
-<h2>Change your password</h2>
+<% @layout = false %>
+<div class="signin-col">
+  <div>
+    <h2>Change your password</h2>
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
-  <%= f.hidden_field :reset_password_token %>
+    <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
+      <%= devise_error_messages! %>
+      <%= f.hidden_field :reset_password_token %>
 
-  <div class="field">
-    <%= f.label :password, "New password" %><br />
-    <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+      <div class="field">
+        <%= f.label :password, "New password" %><br />
+        <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+        <% end %>
+        <%= f.password_field :password, autofocus: true, autocomplete: "off" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password_confirmation, "Confirm new password" %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "off" %>
+      </div>
+
+       <br />
+
+      <div class="clear"></div>
+
+      <div class="actions">
+        <%= f.submit "Change my password" %>
+      </div>
     <% end %>
-    <%= f.password_field :password, autofocus: true, autocomplete: "off" %>
-  </div>
 
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %>
-  </div>
+    <br />
+     <br />
+     <div class="clear"></div>
 
-  <div class="actions">
-    <%= f.submit "Change my password" %>
-  </div>
-<% end %>
+     <%= link_to "LOGIN", new_session_path(resource_name) %>
 
-<%= render "devise/shared/links" %>
+     <br />
+     <br />
+
+     <div class="or wing"></div><div class="or">or</div><div class="or wing"></div>
+
+     <br />
+     <br />
+
+     <!-- %= link_to "Facebook", user_omniauth_authorize_path(:facebook), style: 'color: blue;' %> -->
+     <%= link_to user_omniauth_authorize_path(:facebook) do %>
+       <%= image_tag('log_in_with_facebook.png') %>
+     <% end %>
+
+    </div>
+  </div>
