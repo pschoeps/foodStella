@@ -47,6 +47,11 @@ class RegistrationsController < Devise::RegistrationsController
   
   
   protected
+    def after_inactive_sign_up_path_for(resource)
+      # new_user_confirmation_path
+      new_session_path(resource_name)
+    end
+
     def after_sign_up_path_for(resource)
       calendar_user_path(current_user)
     end

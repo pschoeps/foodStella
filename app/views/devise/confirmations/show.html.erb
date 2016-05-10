@@ -3,27 +3,11 @@
 <div class="signin-col">
 	<div>
 		<h2>Thank you for registering!</h2>
+
 		
-		<p>An email has been sent to <%= resource.email %> with instructions on how to finish setting up your account.</p>
+		An email has been sent to <%= @user.email %> with instructions on how to finish setting up your account.
 
-	<br><br>
-
-		<p>Don't see the email?</p>
-		<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post }) do |f| %>
-		  <%= devise_error_messages! %>
-
-		  <div class="field">
-		    <%= f.label :email %><br />
-		    <%= f.email_field :email, autofocus: true, value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %> 
-		  </div>
-
-		  <div class="clear"></div>
-		    <br />
-
-		  <div class="actions">
-		    <%= f.submit "Resend confirmation instructions", style: 'width: 100%'%>
-		  </div>
-		<% end %>
+			<%= link_to sent_user_confirmation_path %>
 
 		    <div class="clear"></div>
 		    <br />

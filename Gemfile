@@ -65,6 +65,7 @@ end
 group :development do
 	#database visualization
    gem "rails-erd"
+   gem "foreman"
 end
 
 group :production do
