@@ -94,10 +94,10 @@ class User < ActiveRecord::Base
 
   def retrieve_pic
     user = User.find(id)
-    if user.profile && user.profile.picture_url
-      user.profile.picture_url
-    elsif user.image
+    if user.image
       user.image
+    elsif user.profile && user.profile.picture_url
+      user.profile.picture_url
     else
       ActionController::Base.helpers.asset_path('fallback/plate.jpg')
     end
