@@ -63,7 +63,7 @@ class User < ActiveRecord::Base
   		user.image = auth.info.image
       user.fir_name = auth.info.first_name
       user.las_name = auth.info.last_name
-      user.hometown = auth.extra.raw_info.hometown.name
+      # user.hometown = auth.extra.raw_info.hometown.name
       user.location = auth.extra.raw_info.locale
       user.about_me = auth.extra.raw_info.about_me
       user.age_range = auth.info.age_range
@@ -80,7 +80,7 @@ class User < ActiveRecord::Base
         user.image = auth.info.image
         user.fir_name = auth.info.first_name
         user.las_name = auth.info.last_name
-        user.hometown = auth.extra.raw_info.hometown.name
+        # user.hometown = auth.extra.raw_info.hometown.name
         user.location = auth.extra.raw_info.locale
         user.about_me = auth.extra.raw_info.about_me
         user.age_range = auth.info.age_range
