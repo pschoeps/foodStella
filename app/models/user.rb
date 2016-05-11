@@ -64,9 +64,10 @@ class User < ActiveRecord::Base
       user.fir_name = auth.info.first_name
       user.las_name = auth.info.last_name
       user.hometown = auth.extra.raw_info.hometown.name
-      user.location = auth.extra.raw_info.location
+      user.location = auth.extra.raw_info.locale
       user.about_me = auth.extra.raw_info.about_me
       user.age_range = auth.info.age_range
+      user.skip_confirmation!
   		user.save!
   		user
   	else
@@ -80,9 +81,13 @@ class User < ActiveRecord::Base
         user.fir_name = auth.info.first_name
         user.las_name = auth.info.last_name
         user.hometown = auth.extra.raw_info.hometown.name
-        user.location = auth.extra.raw_info.location.name
+        user.location = auth.extra.raw_info.locale
         user.about_me = auth.extra.raw_info.about_me
         user.age_range = auth.info.age_range
+
+        user.skip_confirmation!
+        user.save!
+        user
         # user.country = auth.extra.raw_info.location.country ??
       end
     end
