@@ -20,7 +20,9 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% snacks.each do |r| %>
-                <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1'><span class="recipe-title"><%= link_to truncate(r.name, length: 10), recipe_path(r) %></span></div>
+                <%= link_to recipe_path(r) do %>
+                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span></div>
+                <% end %>
               <% end %>
             </div>
           </div>
@@ -34,7 +36,9 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% side_dishes.each do |r| %>
-                <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>"><span class="recipe-title"><%= link_to truncate(r.name, length: 10), recipe_path(r) %></span></div>
+                <%= link_to recipe_path(r) do %>
+                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span></div>
+                <% end %>
               <% end %>
             </div>
           </div>
@@ -48,7 +52,9 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% main_dishes.each do |r| %>
-                <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>"><span class="recipe-title"><%= truncate(r.name, length: 10) %></span></div>
+                <%= link_to recipe_path(r) do %>
+                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span></div>
+                <% end %>
               <% end %>
             </div>
           </div>
@@ -62,7 +68,9 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% desserts.each do |r| %>
-                <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>"><span class="recipe-title"><%= link_to truncate(r.name, length: 10), recipe_path(r) %></span></div>
+                <%= link_to recipe_path(r) do %>
+                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span></div>
+                <% end %>
               <% end %>
             </div>
           </div>
@@ -76,7 +84,9 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% drinks.each do |r| %>
-                <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>"><span class="recipe-title"><%= link_to truncate(r.name, length: 10), recipe_path(r) %></span></div>
+                <%= link_to recipe_path(r) do %>
+                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span></div>
+                <% end %>
               <% end %>
             </div>
           </div>
