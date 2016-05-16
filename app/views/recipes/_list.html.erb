@@ -12,14 +12,16 @@
 
         <div class="details">
           <h3><%= truncate(recipe.name, length: 25) %></h3>
-          <p><%= truncate(recipe.description, length: 20) %></p>
+          <p><%= truncate(recipe.description, length: 30) %></p>
           <span class="cook-time">Cook Time: <p><%= recipe.cook_time %>mins</p></span>
           <span class="prep-time">Prep Time: <p><%= recipe.prep_time %>mins</p></span>
+          <!-- <span class="rating">%= rating_for recipe, "review", disable_after_rate: true, imdb_avg: true %></span> -->
+          <span class="rating">Avg Rating: <%= rating_for recipe, "review" %></span>
           <div class="recipe-footer">
             <% if recipe.user_id != 0 %>
               <p>Recipe By: <%= recipe.get_user(recipe.user_id).retrieve_name() %></p>
               <% else %>
-              <!-- <p>Stock</p> -->
+              <p>Stock</p>
             <% end %>
           </div>
         

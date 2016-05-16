@@ -6,9 +6,10 @@ class Recipe < ActiveRecord::Base
   belongs_to :event
 
   has_many :relationships,        foreign_key: "followed_id",
-                                   dependent:   :destroy
-                                   
+                                   dependent:   :destroy                                 
   has_many :followers, through: :relationships, source: :follower, dependent: :destroy
+
+  ratyrate_rateable "review"
 
   has_many :instructions, dependent: :destroy
 

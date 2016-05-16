@@ -3,7 +3,7 @@
 <div class="row">
 	<div class="col-sm-12 col-md-9 col-center content about-me-view">
 		<div class="row">
-			<h4>ABOUT <%= @self? 'ME' : @user.retrieve_name('first').upcase %>
+			<h4>About <%= @self? 'Me' : @user.retrieve_name('first') %>
 				<%= link_to "EDIT", '#', class: "edit", id: 'edit-about_me' if @editable %>
 				<!-- <a href ='#' id='edit-about_me'class='edit'>EDIT</a> -->
 			</h4>
@@ -33,7 +33,7 @@
 		</div> -->
 
 		<div class="row">
-			<h4>FOODS I LIKE
+			<h4>Foods I Like
 				<%= link_to "EDIT", '#', class: "edit", id: 'edit-liked_foods' if @editable %>
 			</h4>
 			<div class="col-xs-12 col-md-10">
@@ -49,7 +49,7 @@
 		</div>
 
 		<div class="row">
-			<h4>FOODS I DON'TLIKE
+			<h4>Foods I Don't Like
 				<%= link_to "EDIT", '#', class: "edit", id: 'edit-disliked_foods' if @editable %>
 			</h4>
 			<div class="col-xs-12 col-md-10">
@@ -75,7 +75,7 @@
 		</div> -->
 
 		<div class="row">
-			<h4>COOKING EXPERIENCE
+			<h4>Cooking Experience
 			<!-- %= link_to "EDIT", '#', class: "edit", id: 'edit-cooking_experience' if @editable %> -->
 			</h4>
 			<div class="col-xs-12 col-md-10">
@@ -89,7 +89,7 @@
 		</div>
 
 		<div class="row">
-			<h4>AVERAGE TIME COOKING
+			<h4>Average Time Cooking
 			<%= link_to "EDIT", '#', class: "edit", id: 'edit-average_cook_time' if @editable %>
 			</h4>
 			<div class="col-xs-12 col-md-10 integer">
@@ -109,7 +109,7 @@
 		</div> -->
 
 		<div class="row">
-			<h4>COOKWARE PREFERENCES
+			<h4>Cookware Preferences
 				<%= link_to "EDIT", '#', class: "edit", id: 'edit-cookware_preferences' if @editable %>
 			</h4>
 			<div class="col-xs-12 col-md-10">

@@ -8,7 +8,9 @@
         <span class="icon-bar"></span>
         <!-- <span class="icon-bar"></span> -->
       </button>
-      <%= image_tag "logo-foodstella.png", class: "logo" %>
+      <%= link_to recipes_path do %>
+        <%= image_tag "logo-foodstella.png", class: "logo" %>
+      <% end %>
     </div>
 
     <!-- <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1"> -->
@@ -20,12 +22,12 @@
 
       <ul class="nav navbar-nav navbar-right">
             <% if user_signed_in? %>
-              <li id="navbar-search"><a><input type="text"></a></li>
+              <!-- <li id="navbar-search"><a><input type="text"></a></li> -->
               <!-- <li>%= link_to "Dashboard", dashboard_user_path(current_user) %></li> -->
               <!-- <li>%= link_to "Users", users_path %></li> -->
               <!-- <li> %= link_to "FOOD NEWS", '#' %></li> -->
               <li><%= link_to "CREATE RECIPE", new_recipe_path %></li>
-              <li><%= link_to "MY RECIPES", recipes_path %></li>
+              <li><%= link_to "RECIPES", recipes_path %></li>
               <li><%= link_to "PLANNER", calendar_user_path(current_user) %></li>
               <li><%= link_to "PROFILE", profile_path(current_user) %></li>
 

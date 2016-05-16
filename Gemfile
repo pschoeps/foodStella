@@ -42,6 +42,8 @@ gem 'omniauth-facebook'
 #inline form editing
 gem 'best_in_place'
 
+gem 'ratyrate'
+
 #for nesting forms
 gem 'cocoon'
 

@@ -12,6 +12,11 @@ class User < ActiveRecord::Base
                                   dependent:   :destroy
   has_many :following, through: :relationships, source: :followed
 
+  # has_many :ratings,             foreign_key: "user_id",
+  #                                 dependent:   :destroy
+  # has_many :following, through: :relationships, source: :followed
+  ratyrate_rater
+
   has_one :profile, dependent: :destroy
   # attr_accessible :fir_name, :las_name, :username, :about_me, :image
   # accepts_nested_attributes_for :profile

@@ -1,4 +1,5 @@
 FoodStella::Application.routes.draw do
+  post '/rate' => 'rater#create', :as => 'rate'
   devise_for :users, controllers: { sessions: "sessions", registrations: "registrations", omniauth_callbacks: "omniauth_callbacks" }
   get "static_pages/home"
   match 'events/destroy'   => 'events#destroy',    :via => :delete
