@@ -636,9 +636,10 @@
 				 	}
 				 	// .star {display: none;}
 				 	.star {
-				 		z-index: -1;
+				 		// z-index: -1;
 				 		font-size: 0;
 				 		margin-bottom: 10px;
+				 		white-space: nowrap;
 				 		img{
 				 			margin: 0 1px 0 -3px;
 				 		}
