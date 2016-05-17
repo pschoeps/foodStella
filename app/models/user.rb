@@ -12,9 +12,10 @@ class User < ActiveRecord::Base
                                   dependent:   :destroy
   has_many :following, through: :relationships, source: :followed
 
-  # has_many :ratings,             foreign_key: "user_id",
-  #                                 dependent:   :destroy
+  has_many :cookeds,             foreign_key: "cooker_id",
+                                  dependent:   :destroy
   # has_many :following, through: :relationships, source: :followed
+  
   ratyrate_rater
 
   has_one :profile, dependent: :destroy
@@ -113,39 +114,43 @@ class User < ActiveRecord::Base
     end
   end
 
-  def retrieve_name(firLas = '')
+  def retrieve_name(whichName = '')
     user = User.find(id)
-    fir_name = ''
-    las_name = ''
-    username = ''
-    if user.profile && profile.username
-      username = profile.username
-    elsif user.username
-      username = user.username
-    elsif user.profile && user.profile.fir_name && user.profile.las_name
-      fir_name = user.profile.fir_name
-      las_name = user.profile.las_name
-    elsif user.fir_name && user.las_name
-      fir_name = user.fir_name
-      las_name = user.las_name
+    if whichName == 'username'
+      if user.profile && profile.username
+        profile.username
+      elsif user.username
+        user.username
+      elsif user.profile && user.profile.fir_name && user.profile.las_name
+        user.profile.fir_name + ' ' + user.profile.las_name[0] + '.'
+      elsif user.fir_name && user.las_name
+        user.fir_name + ' ' + user.las_name[0] + '.'
+      end
+    elsif whichName == 'first'
+      if user.profile && user.profile.fir_name
+        user.profile.fir_name
+      elsif user.fir_name
+        user.fir_name
+      else
+        ''
+      end
     else
-      fir_name = '-'
-      las_name = '-'
-    end
-    #return
-    if username != ''
-      username
-    elsif firLas == 'first'
-      fir_name
-    elsif firLas == 'last'
-      las_name
-    else
-      fir_name + ' ' + las_name
+      if user.profile && user.profile.fir_name && user.profile.las_name
+        user.profile.fir_name + ' ' + user.profile.las_name
+      elsif user.fir_name && user.las_name
+        user.fir_name + ' ' + user.las_name
+      else
+        '- -'
+      end
     end
   end
 
   def owns?(recipeOrProfile)
     id == recipeOrProfile.user_id
+  end
+
+  def cooked?(recipe)
+    Cooked.exists? cooker_id: id, cooked_id: recipe.id
   end
 
 

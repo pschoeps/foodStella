@@ -344,10 +344,44 @@
 			float: left;
 			padding: 0 4px;
 			// text-decoration: underline;
-			span { cursor: pointer; }
+			span {
+				cursor: pointer;
+				.spatula {
+					display: inline-block;
+					width: 1.5em;
+					height: 1.5em;
+					background-size:100% 100%;
+					position: relative;
+					top: 0.25em;
+					margin-right: 0.25em;
+				}
+			}
 		}
-		#follow { color: $green; }
-		// #unfollow { color: $medium; }
+		#follow {
+			color: $green;
+			.spatula {
+				background-image: asset-url('icons/spatula-unselected.png');
+			}
+		}
+		#unfollow {
+			color: $medium;
+			.spatula {
+				background-image: asset-url('icons/spatula-selected.png');
+			}
+		}
+		.cooked {
+			curosr: pointer;
+			float: right;
+			height: 1.75em;
+			span {
+				position:relative;
+				top:0.25em;
+			}
+			#cooked_true { color: $green; }
+			#cooked_false { color: $medium; }
+			#cooked_true:hover { color: $medium; }
+			#cooked_false:hover { color: $green; }
+		}
 		h4 {
 			color: $green;
 			font-weight: 100;

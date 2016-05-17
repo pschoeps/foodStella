@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160516161816) do
+ActiveRecord::Schema.define(version: 20160517141721) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,17 @@ ActiveRecord::Schema.define(version: 20160516161816) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "cookeds", force: true do |t|
+    t.integer  "cooker_id"
+    t.integer  "cooked_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "cookeds", ["cooked_id"], name: "index_cookeds_on_cooked_id", using: :btree
+  add_index "cookeds", ["cooker_id", "cooked_id"], name: "index_cookeds_on_cooker_id_and_cooked_id", unique: true, using: :btree
+  add_index "cookeds", ["cooker_id"], name: "index_cookeds_on_cooker_id", using: :btree
 
   create_table "deferred_foods", force: true do |t|
     t.integer  "user_id"

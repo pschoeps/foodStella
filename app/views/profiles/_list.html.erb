@@ -71,7 +71,7 @@
 			       					<%= link_to profile_path(user) do %>
 			          					<div class="user_pic" style="background-image: url(<%= user.retrieve_pic %>)"></div>
 										<div class="user_name">
-											<div class="user_name"><%= user.retrieve_name %></div>
+											<div class="user_name"><%= user.retrieve_name('username') %></div>
 										</div>
 									<% end %>
 									<%= Friendship.mutual(current_user, user) %>

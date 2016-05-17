@@ -42,17 +42,33 @@
 					
 					<div class="follow">
 						<% if !current_user.owns?(@recipe) %>
-						  <% if current_user.following?(@recipe) %>
-						    <% link_to "Alter Recipe", new_recipe_path(:recipe => @recipe), :id => "alter" %>
-						    <span data="<%= @recipe.id %>" id="unfollow">Remove from my foods</span> 
-						  <% else %>
-						    <span data="<%= @recipe.id %>" id="follow">Add to my foods</span> 
-						    <% link_to "Alter Recipe", new_recipe_path(:recipe => @recipe), :id => "alter" %>
-						  <% end %>
-						 <% end %>
+							<% if current_user.following?(@recipe) %>
+						    	<!-- % link_to "Alter Recipe", new_recipe_path(:recipe => @recipe), :id => "alter" %> -->
+						    	<span data="<%= @recipe.id %>" id="unfollow">
+						    		<div class="spatula"></div>Remove from my foods
+						    	</span> 
+					  		<% else %>
+						    	<!-- % link_to "Alter Recipe", new_recipe_path(:recipe => @recipe), :id => "alter" %> -->
+						    	<span data="<%= @recipe.id %>" id="follow">
+						    		<div class="spatula"></div>Add to my foods
+						    	</span> 
+						  	<% end %>
+						<% end %>
 					</div>
 
-					<div class="share">Share</div>
+					<!-- <div class="share">Share</div> -->
+
+					<div class="cooked">
+						<% if current_user.cooked?(@recipe) %>
+						    <span data="<%= @recipe.id %>" id="cooked_true">
+						    	I've cooked this
+						    </span> 
+						<% else %>
+							<span data="<%= @recipe.id %>" id="cooked_false">
+								I've cooked this
+							</span> 
+						<% end %>
+					</div>
 
 				</div>
 				<div class="col-md-2 col-sm-12 side-col">
@@ -196,7 +212,7 @@
                   url:'/relationships',
               
                   success:function (response) {
-                  	$this.text("Remove from my foods")
+                  	$this.html("<div class='spatula'></div>Remove from my foods")
                     $this.attr('id', 'unfollow');
                     $this.removeClass("glyphicon-plus")
                   }
@@ -214,11 +230,48 @@
                   url:"/relationships/" + recipe_id,
               
                   success:function (response) {
-                  	$this.text("Add to my foods")
+                  	$this.html("<div class='spatula'></div>Add to my foods")
                     $this.attr('id', 'follow');
                   }
                   
                 });//end ajax call
 		});
+
+
+    	$(document).on('click','#cooked_false',function(){
+    		$this = $(this)
+    		recipe_id = $this.attr('data')
+    		console.log(recipe_id)
+    		$.ajax({//ajax call for questions
+                  type:'POST',
+                  data: {id: recipe_id},
+                  url:'/cookeds',
+              
+                  success:function (response) {
+                  	// $this.html("<div class='spatula'></div>Remove from my foods")
+                    $this.attr('id', 'cooked_true');
+                    // $this.removeClass("glyphicon-plus")
+                  }
+                  
+                });//end ajax call
+		});
+
+		$(document).on('click','#cooked_true',function(){
+    		$this = $(this)
+    		recipe_id = $this.attr('data')
+    		$.ajax({//ajax call for questions
+                  type:'DELETE',
+                  data: {id: recipe_id},
+                  url:"/cookeds/" + recipe_id,
+              
+                  success:function (response) {
+                  	// $this.html("<div class='spatula'></div>Add to my foods")
+                    $this.attr('id', 'cooked_false');
+                  }
+                  
+                });//end ajax call
+		});
+
+
 });
 </script>

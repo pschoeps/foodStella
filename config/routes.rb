@@ -40,6 +40,8 @@ FoodStella::Application.routes.draw do
   
   resources :relationships,       only: [:create, :destroy]
 
+  resources :cookeds,       only: [:create, :destroy]
+
   resources :events do
     collection do 
       get :get_events

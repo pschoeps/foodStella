@@ -9,6 +9,9 @@ class Recipe < ActiveRecord::Base
                                    dependent:   :destroy                                 
   has_many :followers, through: :relationships, source: :follower, dependent: :destroy
 
+  has_many :cookeds,               foreign_key: "cooked_id",
+                                   dependent:   :destroy   
+
   ratyrate_rateable "review"
 
   has_many :instructions, dependent: :destroy
