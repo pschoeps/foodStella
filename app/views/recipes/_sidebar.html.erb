@@ -21,7 +21,9 @@
             <div id='external-events-listing'>
               <% snacks.each do |r| %>
                 <%= link_to recipe_path(r) do %>
-                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span></div>
+                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
+                    <span class="glyphicon glyphicon-remove remove" data='<%= r.id %>'></span>
+                    </div>
                 <% end %>
               <% end %>
             </div>
@@ -37,7 +39,9 @@
             <div id='external-events-listing'>
               <% side_dishes.each do |r| %>
                 <%= link_to recipe_path(r) do %>
-                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span></div>
+                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
+                    <span class="glyphicon glyphicon-remove remove" data='<%= r.id %>'></span>
+                  </div>
                 <% end %>
               <% end %>
             </div>
@@ -53,7 +57,9 @@
             <div id='external-events-listing'>
               <% main_dishes.each do |r| %>
                 <%= link_to recipe_path(r) do %>
-                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span></div>
+                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
+                    <span class="glyphicon glyphicon-remove remove" data='<%= r.id %>'></span>
+                  </div>
                 <% end %>
               <% end %>
             </div>
@@ -69,7 +75,9 @@
             <div id='external-events-listing'>
               <% desserts.each do |r| %>
                 <%= link_to recipe_path(r) do %>
-                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span></div>
+                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
+                    <span class="glyphicon glyphicon-remove remove" data='<%= r.id %>'></span>
+                  </div>
                 <% end %>
               <% end %>
             </div>
@@ -85,7 +93,9 @@
             <div id='external-events-listing'>
               <% drinks.each do |r| %>
                 <%= link_to recipe_path(r) do %>
-                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span></div>
+                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
+                    <span class="glyphicon glyphicon-remove remove" data='<%= r.id %>'></span>
+                  </div>
                 <% end %>
               <% end %>
             </div>
@@ -212,5 +222,28 @@ $(document).ready(function(){
       //     $('.sidebar').css('overflow', 'auto');
     }
   });
+
+      $(document).one('click','.remove',function(e){
+          e.stopPropagation();
+
+          $this = $(this)
+          recipe_id = $this.attr('data');
+          $(this).closest('.fc-event').remove();
+          $.ajax({//ajax call for questions
+                    type:'DELETE',
+                    data: {id: recipe_id},
+                    url:"/relationships/" + recipe_id,
+                
+                    success:function (response) {
+                        var spatula = $('#recipes-col').find("[data='" + recipe_id + "']");
+                        spatula.addClass("spatula-unselected");
+                        spatula.attr('id', 'follow');
+                        spatula.removeClass("spatula-selected");
+                      updateMyFoods();
+                    }
+                  });//end ajax call
+          return false;
+      });
+
 });
 </script>

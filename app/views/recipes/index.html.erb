@@ -45,6 +45,7 @@
 <script>
 
   function resetSidebar(){
+    console.log('RESET');
     $('#sidebar-col').trigger('detach.ScrollToFixed');
     $('#sidebar-col').scrollToFixed({
       limit: $('.footer').offset().top - $('#sidebar-col').height(),
@@ -139,5 +140,15 @@
                     'height': box_size - 40 + 'px',
                     'width': box_size + 'px'
                   });
+
+     $(document).on('click','#show_more_link',function(){
+        console.log('<%= @recipes.next_page %>');
+        $(this).remove();
+          
+          //wait for page to finish loading
+          //--------------------------------------------FIX THIS!!
+          setTimeout(resetSidebar, 500);
+          // resetSidebar();
+     });
 });
 </script>

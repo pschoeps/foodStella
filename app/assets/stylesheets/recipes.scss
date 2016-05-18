@@ -588,6 +588,17 @@
 .recipes-page {
 	min-width: 900px;
 
+	// #show-more{
+		// float: right;
+		#show_more_link {
+			font-size: 1.5em;
+			display: block;
+			text-align: center;
+			color: $green;	
+			padding-top: 3em;
+		}
+	// }
+
 	#recipes-col {
 		padding: 0;
 		float: right;

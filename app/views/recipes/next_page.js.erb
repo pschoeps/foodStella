@@ -1,0 +1,4 @@
+<% page = escape_javascript(
+  render(partial: 'recipes/list', locals: { recipes: @more_recipes })
+) %>
+$("#recipes-col").append("<%= page %>");

@@ -68,15 +68,24 @@ $outer-container: 90%;
         // overflow: hidden;
         // width: 20%;
         min-width: 280px;
+
+        .fc-event .remove {
+            display: none;
+            position: absolute;
+            top: 0; right: 0;
+            cursor: pointer;
+        }
+        .fc-event:hover .remove { display: block; }
      
 
         .dragNdrop {
-            color: $medium;
+            // color: $medium;
+            color: $green;
             text-align: center;
             padding-top:10px;
             margin-top:10px;
             border-top: solid 1px lightgrey;
-            font-weight: 100;
+            // font-weight: 100;
             div {
                 font-size: 1.1em;
                 float:right;
@@ -326,7 +335,7 @@ $outer-container: 90%;
 }
 
 
-.dragNdrop { animation: highlight_dnd 1s linear 3.5s 2 alternate; }
+// .dragNdrop { animation: highlight_dnd 1s linear 3.5s 2 alternate; }
 @-webkit-keyframes highlight_dnd {
     0% {
         color: $medium;
@@ -362,7 +371,7 @@ $outer-container: 90%;
     }
 }
 
-.header.halo_effect { animation: highlight_header 1s linear 1.5s 2 alternate; }
+// .header.halo_effect { animation: highlight_header 1s linear 1.5s 2 alternate; }
 @-webkit-keyframes highlight_header {
     0% { text-shadow: none; }
     40% { text-shadow: 0 0 8px $orange; }

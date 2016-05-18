@@ -95,6 +95,32 @@ class RecipesController < ApplicationController
     end
   end
 
+  def next_page
+    #filtering links to model 
+    @filterrific = initialize_filterrific(
+      Recipe,
+      params[:filterrific],
+      :select_options => {
+        sorted_by:   Recipe.options_for_sorted_by,
+        sort_by_ingredients: Recipe.options_for_sort_by_ingredients,
+        latest: Recipe.options_for_latest,
+        style: Recipe.options_for_style,
+        difficulty: Recipe.options_for_difficulty,
+        meal_type: Recipe.options_for_meal_type
+      }
+    ) or return
+    puts '======================================================================'
+    puts @filterrific
+    @more_recipes = @filterrific.find.page(params[:page])
+    puts @more_recipes
+    respond_to do |format|
+      format.html
+      format.js #{ render partial: "recipes/list", locals: {recipes: @more_recipes} }
+    end
+    # render partial: "recipes/list", locals: {recipes: @more_recipes}
+    # render(partial: 'recipes/next_page', locals: { recipes: @more_recipes })
+  end
+
   def sidebar
     @followed_recipes = current_user.following
     @user_recipes = current_user.recipes

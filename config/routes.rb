@@ -36,6 +36,7 @@ FoodStella::Application.routes.draw do
       get 'sidebar'
     end
   end
+  get 'recipes/:page/next_page' => 'recipes#next_page', as: :recipes_next_page
   # get "/recipes/side" => 'recipes#sidebar', as: 'sidebar'
   
   resources :relationships,       only: [:create, :destroy]
