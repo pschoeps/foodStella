@@ -229,7 +229,7 @@ class Recipe < ActiveRecord::Base
     keywords = Recipe.find(id).name.split(' ').reverse!
     keywords.each do |keyword|
       break if similar.length >= 4
-      Recipe.where("name LIKE ?", "%#{keyword}%").each do |similar_recipe|
+      Recipe.where("lower(name) LIKE ?", "%#{keyword.downcase}%").each do |similar_recipe|
         break if similar.length >= 4
         similar.push( similar_recipe ) if similar_recipe.id != id
       end
