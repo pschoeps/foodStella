@@ -166,11 +166,15 @@
 	<!-- </div> -->
 		<div class="col-md-12">
 			<div class="slider-horizontal">
-				<%= image_tag "background-picture-foodstella.jpg" %>
-				<%= image_tag "background-picture-foodstella.jpg" %>
-				<%= image_tag "background-picture-foodstella.jpg" %>
-				<%= image_tag "background-picture-foodstella.jpg" %>
-				<%= image_tag "background-picture-foodstella.jpg" %>
+				<!-- % @similar_recipes.each do |recipe| %> -->
+				<% @recipe.similar_recipes.each do |recipe| %>
+					<%= link_to recipe_path(recipe) do %>
+						<div class="similar-recipe">
+							<%= image_tag(recipe.retrieve_pic) %>
+							<span><%= truncate(recipe.name, length: 55) %></span></span>
+						</div>
+					<% end %>
+				 <% end %>
 			</div>
 		</div>
 	</div>

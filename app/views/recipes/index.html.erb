@@ -142,13 +142,12 @@
                   });
 
      $(document).on('click','#show_more_link',function(){
-        console.log('<%= @recipes.next_page %>');
+        $.ajax({
+          success:function(){
+            resetSidebar();
+          }
+        });
         $(this).remove();
-          
-          //wait for page to finish loading
-          //--------------------------------------------FIX THIS!!
-          setTimeout(resetSidebar, 500);
-          // resetSidebar();
      });
 });
 </script>

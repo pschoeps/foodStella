@@ -144,11 +144,6 @@ $(document).ready(function() {
  //    contentHeight += 100;   // for footer margin
  // }
 
-  
-
-
-
-
 
 
 });

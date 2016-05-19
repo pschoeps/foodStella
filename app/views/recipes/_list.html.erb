@@ -15,8 +15,14 @@
           <p><%= truncate(recipe.description, length: 30) %></p>
           <span class="cook-time">Cook Time: <p><%= recipe.cook_time %>mins</p></span>
           <span class="prep-time">Prep Time: <p><%= recipe.prep_time %>mins</p></span>
-          <!-- <span class="rating">%= rating_for recipe, "review", disable_after_rate: true, imdb_avg: true %></span> -->
-          <span class="rating">Avg Rating: <%= rating_for recipe, "review", disable_after_rate: false, cancel_hint: 'readonly' %></span>
+          <span class="rating">
+            <% if recipe.ratings_count == 1 %>
+              1 Rating: 
+            <% else %>
+              <%= recipe.ratings_count %> Ratings: 
+            <% end %>
+            <%= rating_for recipe, "review", disable_after_rate: false, cancel_hint: 'readonly' %>
+          </span>
           <div class="recipe-footer">
             <% if recipe.user_id != 0 %>
               <p>Recipe By: <%= recipe.get_user(recipe.user_id).retrieve_name('username') %></p>

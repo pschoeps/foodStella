@@ -485,11 +485,40 @@
 		font-size: 16px;
 	}
 	.slider-horizontal {
-		width: 500%;
-		img {
-			width: 250px;
+		width: 100%;
+		// img {
+		// 	width: 250px;
+		// 	float: left;
+		// 	padding-right: 10px;
+		// }
+		.similar-recipe {
+			width: 25%;
+			position: relative;
+			overflow: hidden;
+			padding-top: 25%;
 			float: left;
-			padding-right: 10px;
+			border: solid 3px white;
+			cursor: pointer;
+			img {
+				// width: 100%;
+				position: absolute;
+				top: 0;
+				left: 50%;
+				transform: translateX(-50%);
+				height: 100%;
+			}
+			span {
+				width: 100%;
+				padding: 0 14px;
+				text-align: center;
+				position: absolute;
+				bottom: 0; left: 0;
+				color: white;
+				background-color: rgba(176, 176, 176, 0.7);
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+			}
 		}
 	}
 }

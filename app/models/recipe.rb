@@ -223,4 +223,22 @@ class Recipe < ActiveRecord::Base
     end
 
   end
+
+  def similar_recipes
+    similar = []
+    keywords = Recipe.find(id).name.split(' ').reverse!
+    keywords.each do |keyword|
+      break if similar.length >= 4
+      Recipe.where("name LIKE ?", "%#{keyword}%").each do |similar_recipe|
+        break if similar.length >= 4
+        similar.push( similar_recipe ) if similar_recipe.id != id
+      end
+    end
+    similar
+  end
+
+  def ratings_count
+    Rate.where("rateable_id = ?", id).length
+  end
+
 end
