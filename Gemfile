@@ -43,6 +43,7 @@ gem 'omniauth-facebook'
 gem 'best_in_place'
 
 gem 'ratyrate'
+gem 'commontator', '~> 4.11.1'
 
 #for nesting forms
 gem 'cocoon'

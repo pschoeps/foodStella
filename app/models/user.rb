@@ -18,6 +18,8 @@ class User < ActiveRecord::Base
   
   ratyrate_rater
 
+  acts_as_commontator
+
   has_one :profile, dependent: :destroy
   # attr_accessible :fir_name, :las_name, :username, :about_me, :image
   # accepts_nested_attributes_for :profile

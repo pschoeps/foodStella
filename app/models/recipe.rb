@@ -14,6 +14,8 @@ class Recipe < ActiveRecord::Base
 
   ratyrate_rateable "review"
 
+  acts_as_commontable
+
   has_many :instructions, dependent: :destroy
 
   #mount profile picture for recipes

@@ -50,6 +50,7 @@ class RecipesController < ApplicationController
     @meal_type = get_meal_type(@recipe.meal_type) if @recipe.meal_type
     # @cookware = get_meal_type(@recipe.meal_type) if @recipe.meal_type
     @category = get_category(@recipe.category) if @recipe.category
+    commontator_thread_show(@recipe)
   end
 
   def index
