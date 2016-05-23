@@ -227,15 +227,30 @@ class Recipe < ActiveRecord::Base
   end
 
   def similar_recipes
+
     similar = []
+    similar_ids = [id]
     keywords = Recipe.find(id).name.split(' ').reverse!
     keywords.each do |keyword|
-      break if similar.length >= 4
+      break if similar.length >= 12
       Recipe.where("lower(name) LIKE ?", "%#{keyword.downcase}%").each do |similar_recipe|
-        break if similar.length >= 4
-        similar.push( similar_recipe ) if similar_recipe.id != id
+        break if similar.length >= 12
+        unless similar_ids.include?(similar_recipe.id)
+          similar.push( similar_recipe ) 
+          similar_ids.push( similar_recipe.id ) 
+        end
       end
     end
+
+    # add random recipes until total == 12
+    if similar.length < 12
+      extra = Recipe.where('id NOT IN (?)', similar_ids).limit(12).order("RANDOM()")
+      extra.each do |r|
+        break if similar.length >= 12
+        similar.push( r )
+      end
+    end
+
     similar
   end
 

@@ -61,11 +61,11 @@
 					<div class="cooked">
 						<% if current_user.cooked?(@recipe) %>
 						    <span data="<%= @recipe.id %>" id="cooked_true">
-						    	I've cooked this
+						    	I've cooked this <span>&#9745;</span>
 						    </span> 
 						<% else %>
 							<span data="<%= @recipe.id %>" id="cooked_false">
-								I've cooked this
+								I've cooked this <span>&#9744;</span>
 							</span> 
 						<% end %>
 					</div>
@@ -130,11 +130,12 @@
 					<span class="servings">Servings: <%= @recipe.servings ? @recipe.servings : 1 %></span>
 					<ol>
 						<% @recipe.ingredients.each do |i| %>
-						    <li><%= i.name %>
+						    <li>
 						    <% i.quantities.each do |q| %>
-						      <%= q.amount %><%= ',' if q.unit != '' %>
-						      <%= q.get_unit(q.unit, q.amount) %>
+						      <%= q.amount %><%= ' ' if q.unit != '' %>
+						      <%= q.get_unit(q.unit, q.amount) %><%= ' ' %>
 						    <% end %>
+						    <%= i.name %>
 						</li>
 						 <% end %>
 					</ol>
@@ -159,14 +160,15 @@
 <!-- </div> -->
 
 	<div class="row recipe-similar cushioned">
-	<!-- <div class="container"> -->
 		<div class="col-md-12">
 			<div id='similar-title'>Similar recipes</div>
 		</div>
-	<!-- </div> -->
-		<div class="col-md-12">
-			<div class="slider-horizontal">
-				<!-- % @similar_recipes.each do |recipe| %> -->
+		<div class="slider-controls">
+			<div class="back inactive">&#8249;</div>
+			<div class="next">&#8250;</div>
+		</div>
+		<div class="col-md-12 horizontal-wrapper">
+			<div class="slider-horizontal" style="left: 0%">
 				<% @recipe.similar_recipes.each do |recipe| %>
 					<%= link_to recipe_path(recipe) do %>
 						<div class="similar-recipe">
@@ -176,6 +178,7 @@
 					<% end %>
 				 <% end %>
 			</div>
+
 		</div>
 	</div>
 
@@ -254,7 +257,7 @@
                   url:'/cookeds',
               
                   success:function (response) {
-                  	// $this.html("<div class='spatula'></div>Remove from my foods")
+                  	$this.html("I've cooked this <span>&#9745;</span>");
                     $this.attr('id', 'cooked_true');
                     // $this.removeClass("glyphicon-plus")
                   }
@@ -271,11 +274,35 @@
                   url:"/cookeds/" + recipe_id,
               
                   success:function (response) {
-                  	// $this.html("<div class='spatula'></div>Add to my foods")
+                  	$this.html("I've cooked this <span>&#9744;</span>");
                     $this.attr('id', 'cooked_false');
                   }
                   
                 });//end ajax call
+		});
+
+		$(document).on('click','.next:not(.inactive)',function(){
+			var left_perc = parseInt($('.slider-horizontal')[0].style.left);
+			$('.slider-horizontal').animate({left: (left_perc-100) + '%'},
+				function(){
+					$('.back').removeClass('inactive');
+					var left_perc = parseInt($('.slider-horizontal')[0].style.left);
+					if(left_perc <= -200)
+						$('.next').addClass('inactive');
+				}
+			);
+		});
+
+		$(document).on('click','.back:not(.inactive)',function(){
+			var left_perc = parseInt($('.slider-horizontal')[0].style.left);
+			$('.slider-horizontal').animate({left: (left_perc+100) + '%'},
+				function(){
+					$('.next').removeClass('inactive');
+					var left_perc = parseInt($('.slider-horizontal')[0].style.left);
+					if(left_perc > -100)
+						$('.back').addClass('inactive');
+				}
+			);
 		});
 
 

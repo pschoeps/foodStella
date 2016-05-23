@@ -106,23 +106,36 @@ records.each do |record|
 
       amount_s = ingredient['quantity'].gsub(/[a-zA-Z\-].+/, '')
       amount_a = amount_s.split(' ')
-      if amount_a.length == 1
-        if amount_a[0].include? "/"
-          fraction = amount_a[0].split('/')
-          amount = fraction[0].to_f / fraction[1].to_f
+      if amount_a.length == 1                             # ex. "1/2" || "3"
+        if amount_a[0].include? "/"                       # "1/2" 
+          fraction = amount_a[0].split('/')               # ["1","2"]
+          amount = fraction[0].to_f / fraction[1].to_f    # 0.5
         else
-          amount = amount_a[0].to_f
+          amount = amount_a[0].to_f                       # = 3.0
         end
+      elsif amount_a.length == 2                          # ex. "1/2 4 oz package" || "3 1/2" || "2 8 ounce packages"
+        if amount_a[0].include? "/"                       # "1/2 4"
+          amount_f = amount_a[0].split('/')
+          amount = amount_f[0].to_f / amount_f[1].to_f
+          amount *= amount_a[1].to_f
+        elsif amount_a[1].include? "/"                    # "3 1/2"
+          amount = amount_a[0].to_f
+          additional_f = amount_a[1].split('/')
+          additional = additional_f[0].to_f / additional_f[1].to_f
+          amount += additional                            # = 3.0 + 0.5
+        else
+          amount = amount_a[0].to_f * amount_a[1].to_f    # = 2.0 * 8.0
+        end
+      elsif amount_a.length == 3                          # ex. "1 10 3/4 ounce can"
+        amount = amount_a[0].to_f                         # 1.0
+        additonal = amount_a[1].to_f                      # 10.0
+        fraction = amount_a[2].split('/')                 # ["3","4"]
+        additional += fraction[0].to_f / fraction[1].to_f # 10.0 + 0.75
+        amount *= additional                              # = 1 * 10.75
       else
-        if amount_a[1].include? "/"
-          amount = amount_a[0].to_f
-          fraction = amount_a[1].split('/')
-          additional = fraction[0].to_f / fraction[1].to_f
-          amount += additional
-        else
-          amount = amount_a[0].to_f * amount_a[1].to_f
-        end
+        amount = amount_a[0].to_f * (amount_a[1].to_f + amount_a[2].to_f + amount_a[3].to_f) # take a guess...
       end
+      
       amount = (amount*100).round / 100.0
 
       Quantity.create!({
