@@ -22,7 +22,9 @@
               <% snacks.each do |r| %>
                 <%= link_to recipe_path(r) do %>
                   <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
-                    <span class="glyphicon glyphicon-remove remove" data='<%= r.id %>'></span>
+                    <% unless current_user.owns?(r) %>
+                      <span class="glyphicon glyphicon-remove remove" data='<%= r.id %>'></span>
+                    <% end %>
                     </div>
                 <% end %>
               <% end %>
