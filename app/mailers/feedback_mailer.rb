@@ -1,5 +1,5 @@
 class FeedbackMailer < ActionMailer::Base
-	default :to => "salulos@gmail.com"
+	default :to => "foodstella.info@gmail.com"
 	def message_me(msg)
 		@msg = msg
 
