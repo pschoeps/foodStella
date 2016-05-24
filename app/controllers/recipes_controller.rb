@@ -51,6 +51,7 @@ class RecipesController < ApplicationController
     # @cookware = get_meal_type(@recipe.meal_type) if @recipe.meal_type
     @category = get_category(@recipe.category) if @recipe.category
     commontator_thread_show(@recipe)
+    @others_photos = @recipe.others_photos
   end
 
   def index

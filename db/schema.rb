@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160520170320) do
+ActiveRecord::Schema.define(version: 20160524181124) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -125,6 +125,15 @@ ActiveRecord::Schema.define(version: 20160520170320) do
   end
 
   add_index "instructions", ["recipe_id"], name: "index_instructions_on_recipe_id", using: :btree
+
+  create_table "others_photos", force: true do |t|
+    t.string  "photo_url"
+    t.integer "recipe_id"
+    t.integer "user_id"
+  end
+
+  add_index "others_photos", ["recipe_id"], name: "index_others_photos_on_recipe_id", using: :btree
+  add_index "others_photos", ["user_id"], name: "index_others_photos_on_user_id", using: :btree
 
   create_table "overall_averages", force: true do |t|
     t.integer  "rateable_id"
@@ -280,6 +289,7 @@ ActiveRecord::Schema.define(version: 20160520170320) do
     t.string   "confirmation_token"
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
+    t.datetime "birthday"
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree

@@ -18,6 +18,8 @@ class Recipe < ActiveRecord::Base
 
   has_many :instructions, dependent: :destroy
 
+  has_many :others_photos, dependent: :destroy
+
   #mount profile picture for recipes
   mount_uploader :photo_url, RecipePictureUploader
 
@@ -199,7 +201,6 @@ class Recipe < ActiveRecord::Base
     end
 
   def retrieve_pic
-    puts '========================================================================================'
     recipe = Recipe.find(id)
     if recipe.remote_photo_url
       puts 'remote recipe url'
@@ -223,11 +224,9 @@ class Recipe < ActiveRecord::Base
     else
       new_name
     end
-
   end
 
   def similar_recipes
-
     similar = []
     similar_ids = [id]
     keywords = Recipe.find(id).name.split(' ').reverse!
@@ -241,7 +240,6 @@ class Recipe < ActiveRecord::Base
         end
       end
     end
-
     # add random recipes until total == 12
     if similar.length < 12
       extra = Recipe.where('id NOT IN (?)', similar_ids).limit(12).order("RANDOM()")
@@ -250,7 +248,6 @@ class Recipe < ActiveRecord::Base
         similar.push( r )
       end
     end
-
     similar
   end
 

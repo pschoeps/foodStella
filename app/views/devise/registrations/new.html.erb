@@ -26,10 +26,11 @@
       </div>
       <br />
 
-      <!-- <div class="field">
-        %= f.text_field :birthday, autofocus: false, required: true, placeholder: 'Birthday' %>
+      <div class="field">
+        Birthday<br/>
+        <%= f.date_select :birthday, autofocus: false, required: true, start_year: 1916 %>
       </div>
-      <br /> -->
+      <br />
 
       <div class="field">
         <%= f.email_field :email, autofocus: false, placeholder: 'Email' %>

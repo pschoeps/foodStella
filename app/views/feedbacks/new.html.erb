@@ -1,0 +1,46 @@
+<div class='row'>
+<div class="feedback-view col-sm-4 col-center">
+	<h3>FEEDBACK</h3>
+
+	<%= form_for @feedback do |f| %>
+		<%= notice %>
+	  <% if @feedback.errors.any? %>
+	    <div id="error_explanation">
+	      <p>
+	        <%= "#{pluralize(@feedback.errors.count, "error")} prohibited this feedback from being sent:" %>
+	      </p>
+
+	      <ul>
+	        <% @feedback.errors.each do |msg| %>
+	          <li><%= msg %></li>
+	        <% end %>
+	      <ul>
+	    </div>
+	  <% end %>
+
+	  <div class="field">
+	    <%= f.label :name %>
+	    <%= f.text_field :name %>
+	  </div>
+
+	  <div class="field">
+	    <%= f.label :email %>
+	    <%= f.email_field :email %>
+	  </div>
+
+	  <div class="field">
+	    <%= f.label :subject %>
+	    <%= f.text_field :subject %>
+	  </div>
+
+	  <div class="field content">
+	    <!-- %= f.label :content %> -->
+	    <%= f.text_area :content %>
+	  </div>
+
+	  <div class="field">
+	    <%= f.submit 'Send', class: 'button' %>
+	  </div>
+	<% end %>
+</div>
+</div>

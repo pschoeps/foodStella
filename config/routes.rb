@@ -1,4 +1,5 @@
 FoodStella::Application.routes.draw do
+  resources :feedbacks, only: [:new, :create]
   post '/rate' => 'rater#create', :as => 'rate'
   devise_for :users, controllers: { sessions: "sessions", registrations: "registrations", omniauth_callbacks: "omniauth_callbacks" }
   get "static_pages/home"
@@ -59,6 +60,7 @@ FoodStella::Application.routes.draw do
   end
 
   mount Commontator::Engine => '/commontator'
+
 
 
 

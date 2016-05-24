@@ -498,15 +498,17 @@
 			top: 50%;
 			transform: translateY(-50%);
 			cursor: pointer;
+			width: 40px;
+			text-align: center;
 		}
 		div.inactive{
 			color: $medium;
 			cursor: auto;
 		}
 		.back{
-			left: -20px;
+			left: -40px;
 		}
-		.next{ right: -20px;}
+		.next{ right: -40px;}
 	}
 
 	.horizontal-wrapper {

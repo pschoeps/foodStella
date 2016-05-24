@@ -97,32 +97,27 @@
 								<div class="down">&#9660;</div>
 							</div>
 							<div class="slider-vertical">
-								<!--% @recipe.photos.each do |p| %>
-									<a href="%= p.photo_url %>" class="others-photo">
-										<div class="others-photo" style="background-image: %= p.photo_url %>" ></div>
-									</a>
-								% end %>
-								% if recipe.photos.count < 9 %>
-									% (9-recipe.photos.count).times do |i| %>
-										<div class="others-photo blank"></div>
-									% end %>
-								% end %> -->
-								<% 9.times do |i| %>
-									<div class="others-photo blank"></div>
+								<% @others_photos.each do |photo| %>
+									<%= image_tag photo.photo_url, class: "others-photo" %>
 								<% end %>
 							</div>
 						</div>
 					</div>
 					<div class="row upload">
 						<div class="col-md-12">Upload <span class="glyphicon glyphicon-camera" aria-hidden="true" style="font-size: 1.2em;"></span></div>
+						<%= form_for @recipe, html: {class: "form-horizontal recipe-form", multipart: true } do |f| %>
+						  <%= render 'shared/error_messages', object: f.object %>
+						  	<%= f.fields_for :others_photos do |photo| %>
+								<div class="controls">
+									<!-- %= photo.file_field :photo_url, accept: 'image/jpeg,image/gif,image/png' %> -->
+								</div>
+							<% end %>
+							<!-- %= f.submit %> -->
+						<% end %>
 					</div>
 				</div>
 			</div>
-	<!-- </div> -->
-<!-- </div> -->
 
-<!-- <div class="row cushioned"> -->
-	<!-- <div class="container"> -->
 		<div class="row recipe-info">
 			<div class="col-md-4 ingredients">
 				<div class='col-inner'>
