@@ -20,11 +20,16 @@
   background-color: #FFF;
   
   clear: both;
+  position: relative;
 }
 
 .comment_actions {
-  float: right;
+  /*float: right;*/
+  position: absolute;
+  bottom: 12px;
+  right: 0;
 }
+  .comment_actions a { color: #ababab; }
 
 .comment_body {
   padding-top: 3px;
@@ -95,6 +100,8 @@ textarea {
   background-color: transparent;
   padding: 0px;
   margin: 0px;
+  width: 1.4em;
+  margin-right: 6px;
 }
 
 .comment_votes form {
@@ -125,6 +132,8 @@ textarea {
 
 .comment_like + .comment_vote_count {
   float: right;
+  font-size: 1.2em;
+  color: #819800;
 }
 
 .comment_error_explanation {

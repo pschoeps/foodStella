@@ -44,6 +44,7 @@ gem 'best_in_place'
 
 gem 'ratyrate'
 gem 'commontator', '~> 4.11.1'
+gem 'acts_as_votable'
 
 #for nesting forms
 gem 'cocoon'

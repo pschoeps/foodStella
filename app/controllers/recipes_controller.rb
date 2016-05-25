@@ -36,11 +36,19 @@ class RecipesController < ApplicationController
   end
 
   def update
+    puts '================================================'
+    puts 'updating recipe'
     @recipe = Recipe.find(params[:id])
-    @recipe.update_attributes(recipe_params)
+    if @recipe.update_attributes(recipe_params)
+      if params[:others_photo_url]
+        puts 'got a photo!!-----------------------------------------------------------------------------------------------'
+        @recipe.others_photos.create(photo_url: params[:others_photo_url], user_id: current_user.id)
+      end
+
       respond_to do |format|
         format.html  { redirect_to recipe_path(@recipe) }
         flash[:success] =  "Recipe Updated"
+      end
     end
   end
 

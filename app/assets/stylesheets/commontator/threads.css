@@ -5,10 +5,15 @@
 .thread .commontator_hidden {
   display: none;
 }
+  .thread .commontator_hidden a {
+    color: #ababab;
+    float: right;
+  }
 
 .thread_actions {
   float: right;
 }
+  .thread_actions a { color: #ababab; }
 
 .thread_header {
   font-size: 16px;

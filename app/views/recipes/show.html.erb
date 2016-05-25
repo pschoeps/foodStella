@@ -90,30 +90,41 @@
 					<div class="row">
 						<div class="col-md-12">Photos by others</div>
 					</div>
-					<div class="row slider-container">
+					<div class="slider-controls">
+						<div class="up inactive">&#9650;</div>
+						<div class="down">&#9660;</div>
+					</div>
+					<div class="row vertical-wrapper">
 						<div class="col-md-12">
-							<div class="slider-controls">
-								<div class="up">&#9650;</div>
-								<div class="down">&#9660;</div>
-							</div>
-							<div class="slider-vertical">
+							<div class="slider-vertical" style="top: 0">
 								<% @others_photos.each do |photo| %>
-									<%= image_tag photo.photo_url, class: "others-photo" %>
+									<div class="others-photo">
+										<%= image_tag photo.photo_url %>
+									</div>
+								<% end %>
+								<% if @others_photos.length < 9 %>
+									<% (9-@others_photos.length).times do |i| %>
+										<div class="others-photo blank"></div>
+									<% end %>
 								<% end %>
 							</div>
 						</div>
 					</div>
 					<div class="row upload">
-						<div class="col-md-12">Upload <span class="glyphicon glyphicon-camera" aria-hidden="true" style="font-size: 1.2em;"></span></div>
-						<%= form_for @recipe, html: {class: "form-horizontal recipe-form", multipart: true } do |f| %>
-						  <%= render 'shared/error_messages', object: f.object %>
-						  	<%= f.fields_for :others_photos do |photo| %>
+				
+						<div class="upload-bttn">Upload <span class="glyphicon glyphicon-camera" aria-hidden="true" style="font-size: 1.2em;"></span></div>
+						
+						<div style="display: none;">
+							<%= form_for @recipe, :html => {:multipart => true} do |f| %>
+							  <%= render 'shared/error_messages', object: f.object %>
+							  	<%= f.hidden_field :name %>
 								<div class="controls">
-									<!-- %= photo.file_field :photo_url, accept: 'image/jpeg,image/gif,image/png' %> -->
+									<%= file_field_tag :others_photo_url, accept: 'image/jpeg,image/gif,image/png', id: 'upload_photo' %>
 								</div>
+								<!-- %= f.submit 'Upload' %> -->
 							<% end %>
-							<!-- %= f.submit %> -->
-						<% end %>
+						</div>
+
 					</div>
 				</div>
 			</div>
@@ -299,6 +310,36 @@
 				}
 			);
 		});
+
+		// $(document).on('click','.down:not(.inactive)',function(){
+		// 	var top_perc = parseInt($('.slider-vertical')[0].style.top);
+		// 	$('.slider-vertical').animate({top: (top_perc-100) + '%'},
+		// 		function(){
+		// 			$('.up').removeClass('inactive');
+		// 			var top_perc = parseInt($('.slider-vertical')[0].style.top);
+		// 			if(top_perc > -100)
+		// 				$('.down').addClass('inactive');
+		// 		}
+		// 	);
+		// });
+
+		// $(document).on('click','.up:not(.inactive)',function(){
+		// 	var top_perc = parseInt($('.slider-vertical')[0].style.top);
+		// 	$('.slider-vertical').animate({top: (top_perc+100) + '%'},
+		// 		function(){
+		// 			$('.up').removeClass('inactive');
+		// 			var top_perc = parseInt($('.slider-vertical')[0].style.top);
+		// 			if(top_perc <= -200)
+		// 				$('.down').addClass('inactive');
+		// 		}
+		// 	);
+		// });
+
+		// Streamlined photo_upload form
+		$(document).on('click','.upload-bttn',function(){
+			$('#upload_photo').click();
+		});
+		$("input[name='others_photo_url']").change(function() { this.form.submit(); });
 
 
 });

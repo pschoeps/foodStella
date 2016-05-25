@@ -19,6 +19,7 @@ class Recipe < ActiveRecord::Base
   has_many :instructions, dependent: :destroy
 
   has_many :others_photos, dependent: :destroy
+  accepts_nested_attributes_for :others_photos, allow_destroy: true
 
   #mount profile picture for recipes
   mount_uploader :photo_url, RecipePictureUploader
