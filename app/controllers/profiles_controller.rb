@@ -34,11 +34,21 @@ class ProfilesController < ApplicationController
 	def update
 	  @profile = Profile.find(params[:id])
 	  @profile.update_attributes(profile_params)
-	  #   respond_to do |format|
-	  #     format.html  { redirect_to profile_path(current_user) }
-	  #     flash[:success] =  "Profile Updated"
-	  # end
+		  #   respond_to do |format|
+		  #     format.html  { redirect_to profile_path(current_user) }
+		  #     flash[:success] =  "Profile Updated"
+		  # end
 	  respond_with @profile.user
+	  # if @profile.update_attributes(profile_params)
+	  #   if params[:background_url]
+	  #     # @recipe.others_photos.create(photo_url: params[:others_photo_url], user_id: current_user.id)
+	  #   end
+
+	  #   respond_to do |format|
+	  #     format.html  { redirect_to recipe_path(@recipe) }
+	  #     flash[:success] =  "Recipe Updated"
+	  #   end
+	  # end
 	end
 
 	def index
@@ -98,7 +108,7 @@ class ProfilesController < ApplicationController
 	end
 
 	def profile_params
-	  	params.require(:profile).permit(:fir_name, :las_name, :email, :about_me, :picture_url, :country, :cooking_experience, :average_cook_time, :liked_foods, :disliked_foods, :username, :cookware_preferences, :tab )
+	  	params.require(:profile).permit(:fir_name, :las_name, :email, :about_me, :picture_url, :country, :cooking_experience, :average_cook_time, :liked_foods, :disliked_foods, :username, :cookware_preferences, :tab, :background_url, :background_offset )
 	end
 
 end

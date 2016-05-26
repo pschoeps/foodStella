@@ -95,7 +95,7 @@
 						<div class="down">&#9660;</div>
 					</div>
 					<div class="row vertical-wrapper">
-						<div class="col-md-12">
+						<div class="col-md-12" style="top: 0">
 							<div class="slider-vertical" style="top: 0">
 								<% @others_photos.each do |photo| %>
 									<div class="others-photo">
@@ -293,7 +293,7 @@
 				function(){
 					$('.back').removeClass('inactive');
 					var left_perc = parseInt($('.slider-horizontal')[0].style.left);
-					if(left_perc <= -200)
+					if(left_perc <= -300)
 						$('.next').addClass('inactive');
 				}
 			);
@@ -311,35 +311,49 @@
 			);
 		});
 
-		// $(document).on('click','.down:not(.inactive)',function(){
-		// 	var top_perc = parseInt($('.slider-vertical')[0].style.top);
-		// 	$('.slider-vertical').animate({top: (top_perc-100) + '%'},
-		// 		function(){
-		// 			$('.up').removeClass('inactive');
-		// 			var top_perc = parseInt($('.slider-vertical')[0].style.top);
-		// 			if(top_perc > -100)
-		// 				$('.down').addClass('inactive');
-		// 		}
-		// 	);
-		// });
+		$(document).on('click','.down:not(.inactive)',function(){
+			var slider = $('.slider-vertical').parent();
+			var photoCount = $('.slider-vertical').children().length;
+			var top_perc = parseInt(slider[0].style.top);
+			var pageCount = Math.ceil(photoCount/9);	// 9 phots per page
+			var max_perc = (pageCount-1) * 100;
+			console.log(max_perc);
+			slider.animate({top: (top_perc-100) + '%'},
+				function(){
+					$('.up').removeClass('inactive');
+					var top_perc = parseInt(slider[0].style.top);
+					if(top_perc <= -max_perc)
+						$('.down').addClass('inactive');
+				}
+			);
+		});
 
-		// $(document).on('click','.up:not(.inactive)',function(){
-		// 	var top_perc = parseInt($('.slider-vertical')[0].style.top);
-		// 	$('.slider-vertical').animate({top: (top_perc+100) + '%'},
-		// 		function(){
-		// 			$('.up').removeClass('inactive');
-		// 			var top_perc = parseInt($('.slider-vertical')[0].style.top);
-		// 			if(top_perc <= -200)
-		// 				$('.down').addClass('inactive');
-		// 		}
-		// 	);
-		// });
+		$(document).on('click','.up:not(.inactive)',function(){
+			var slider = $('.slider-vertical').parent();
+			var top_perc = parseInt(slider[0].style.top);
+			slider.animate({top: (top_perc+100) + '%'},
+				function(){
+					$('.down').removeClass('inactive');
+					var top_perc = parseInt(slider[0].style.top);
+					if(top_perc >= 0)
+						$('.up').addClass('inactive');
+				}
+			);
+		});
 
 		// Streamlined photo_upload form
 		$(document).on('click','.upload-bttn',function(){
 			$('#upload_photo').click();
 		});
 		$("input[name='others_photo_url']").change(function() { this.form.submit(); });
+
+		$(document).on('click','.others-photo',function(){
+			var selected_url = $(this).find('img').attr('src');
+			var selected_photo = $('#selected-photo');
+			selected_photo.attr('src', selected_url);
+			var imgClass = (selected_photo.width/selected_photo.height > 1) ? 'wide' : 'tall';
+			selected_photo.addClass(imgClass);
+		});
 
 
 });

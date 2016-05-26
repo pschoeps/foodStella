@@ -1,6 +1,11 @@
 // Place all the styles related to the profiles controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+body.moving-img{
+	cursor: grabbing !important;
+	cursor: -webkit-grabbing !important;
+	cursor:-moz-grabbing !important;
+}
 
 .edit-profile-view {
 	text-align: center;
@@ -75,12 +80,50 @@
 	height: 160px;
 	padding: 0;
 	.img-banner {
+		position: relative;
+		width: 100%;
 		height: 160px;
 		background: asset-url('background-picture-foodstella.jpg');
 		background-image: url('background-picture-foodstella.jpg');
 		background-size: 100% auto;
-		background-position: center center;
+		background-position-x: 50%;
 		background-repeat: no-repeat;
+		.cancel-move-photo,
+		.move-photo {
+			color: white;
+			position: absolute;
+			bottom: 10px;
+			background-color: rgba(0,0,0,0.2);
+			padding: 8px;
+			cursor: pointer;
+			border-radius: 5px;
+		}
+		.move-photo { right: 20px; }
+		.cancel-move-photo {
+			left: 20px;
+			display: none;
+		}
+		.cancel-move-photo:hover,
+		.move-photo:hover {
+			text-decoration: underline;
+		}
+	}
+	.img-banner:hover .cancel-move-photo,
+	.img-banner:hover .move-photo,
+	.img-banner.movable .cancel-move-photo,
+	.img-banner.movable .move-photo {
+		background-color: rgba(0,0,0,0.5);
+	}
+	.img-banner.movable {
+		cursor: grab;
+		cursor: -webkit-grab;
+		cursor:-moz-grab;
+		.cancel-move-photo { display: block; }
+	}
+	.img-banner.moving{
+		cursor: grabbing !important;
+		cursor: -webkit-grabbing !important;
+		cursor:-moz-grabbing !important;
 	}
 }
 .user-banner {

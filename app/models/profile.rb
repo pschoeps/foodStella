@@ -4,6 +4,7 @@ class Profile < ActiveRecord::Base
 	# has_many :ingredients
 
 	mount_uploader :picture_url, ProfilePictureUploader
+	mount_uploader :background_url, BackgroundPictureUploader
 
 	 def picture_size
       if picture_url.size > 5.megabytes

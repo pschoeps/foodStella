@@ -18,7 +18,7 @@ class Recipe < ActiveRecord::Base
 
   has_many :instructions, dependent: :destroy
 
-  has_many :others_photos, dependent: :destroy
+  has_many :others_photos, dependent: :destroy, :order => 'id DESC'
   accepts_nested_attributes_for :others_photos, allow_destroy: true
 
   #mount profile picture for recipes
@@ -232,20 +232,20 @@ class Recipe < ActiveRecord::Base
     similar_ids = [id]
     keywords = Recipe.find(id).name.split(' ').reverse!
     keywords.each do |keyword|
-      break if similar.length >= 12
+      break if similar.length >= 16
       Recipe.where("lower(name) LIKE ?", "%#{keyword.downcase}%").each do |similar_recipe|
-        break if similar.length >= 12
+        break if similar.length >= 16
         unless similar_ids.include?(similar_recipe.id)
           similar.push( similar_recipe ) 
           similar_ids.push( similar_recipe.id ) 
         end
       end
     end
-    # add random recipes until total == 12
-    if similar.length < 12
-      extra = Recipe.where('id NOT IN (?)', similar_ids).limit(12).order("RANDOM()")
+    # add random recipes until total == 16
+    if similar.length < 16
+      extra = Recipe.where('id NOT IN (?)', similar_ids).limit(16).order("RANDOM()")
       extra.each do |r|
-        break if similar.length >= 12
+        break if similar.length >= 16
         similar.push( r )
       end
     end

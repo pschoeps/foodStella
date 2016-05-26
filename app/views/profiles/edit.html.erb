@@ -39,12 +39,17 @@
           <li class="control-group file-upload">
             <% if current_user.image %>
               <div class="user_pic" style="background-image: url(<%= current_user.retrieve_pic %>);"></div>
-              <%= f.label :picture_url, "Change picture", class: "control-label" %>
+              <%= f.label :picture_url, "Change profile picture", class: "control-label" %>
               <div class="controls"><%= f.file_field :picture_url, accept: 'image/jpeg,image/gif,image/png' %></div>
             <% else %>
-              <%= f.label :picture_url, "Upload a picture", class: "control-label" %>
+              <%= f.label :picture_url, "Upload a profile picture", class: "control-label" %>
               <div class="controls"><%= f.file_field :picture_url, accept: 'image/jpeg,image/gif,image/png' %></div>
             <% end %>
+          </li>
+
+          <li class="control-group file-upload">
+              <%= f.label :background_url, "Upload a background picture", class: "control-label" %>
+              <div class="controls"><%= f.file_field :background_url, accept: 'image/jpeg,image/gif,image/png' %></div>
           </li>
 
 

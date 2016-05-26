@@ -1,5 +1,15 @@
 <div class="row img-banner-bg">
-	<div class="container img-banner"></div>
+	<div class="container img-banner"
+		style="background-image: url('<%= @profile.background_url %>');
+			background-position-y: <%= @profile.background_offset %>%">
+		<div class='cancel-move-photo'>Cancel</div>
+		<div class='move-photo'>Reposition photo</div>
+		<div style='display: none'>
+			<%= form_for @profile, html: {multipart: true } do |f| %>
+			    <%= f.text_field :background_offset %>
+			<% end %>
+		</div>
+	</div>
 </div>
 <div class="row user-banner">
 	<div class="container">
@@ -9,7 +19,14 @@
 				<div class="row actions">
 					<div class='edit-profile'><%= link_to "Edit profile", edit_profile_path(@profile) if @editable %></div>
 					<div class="user_pic" style="background-image: url(<%= @profile.user.retrieve_pic %>)"></div>
-					<div class='edit-bg'><%= link_to "Edit background", edit_profile_path(@profile) if @editable %></div>
+					<% if @editable %>
+						<div class='edit-bg'><%= link_to "Edit background", '' if @editable %></div>
+						<div style='display: none'>
+							<%= form_for @profile, html: {multipart: true } do |f| %>
+							    <%= f.file_field :background_url, accept: 'image/jpeg,image/gif,image/png', id: 'background-upload' %>
+							<% end %>
+						</div>
+					<% end %>
 				</div>
 				<div class="row user_name">
 					<h4><%= @user.retrieve_name() %></h4>
@@ -58,3 +75,69 @@
 	</div>
 	<div class="col-xs-0 col-sm-2 col-md-3"></div>
 </div>
+
+<script>
+	$(document).ready(function() {
+		// Streamlined photo_upload form
+		$(document).on('click','.edit-bg',function(e){
+			e.preventDefault();
+			$('#background-upload').click();
+		});
+		$("input[name='profile[background_url]']").change(function() { this.form.submit(); });
+
+		var movable = false;
+		var moving = false;
+		var mouseY = 0;
+		var startingOffset = parseInt($('.img-banner').css('background-position-y'));
+		var newOffset = startingOffset;
+		$(document).on('click','.cancel-move-photo',function(e){
+			movable = false;
+			$('.move-photo').text('Reposition photo');
+			$('.img-banner').removeClass('movable')
+				.css('background-position-y', <%= @profile.background_offset %>+'%');
+		});
+		$(document).on('click','.move-photo',function(e){
+			if(movable){
+				movable = false;
+				$(this).text('Saving...').css('text-decoration','none');
+				$('.img-banner').removeClass('movable');
+				// Save new offset
+				$("input[name='profile[background_offset]']").val(newOffset);
+				$("input[name='profile[background_offset]']")[0].form.submit();
+			}
+			else{
+				movable = true;
+				$(this).text('Save');
+				$('.img-banner').addClass('movable');
+			}
+		});
+
+		$(document).on('mousedown','.img-banner.movable',function(e){
+			e.preventDefault();
+			moving = true;
+			mouseY = e.pageY;
+			startingOffset = parseInt($('.img-banner').css('background-position-y'));
+			$(this).addClass('moving');
+		});
+
+		$(document).on('mouseup','body',function(e){
+			if(moving){
+				e.preventDefault();
+				moving = false;
+				$('.img-banner').removeClass('moving');
+				$('body').removeClass('moving-img');
+			}
+		});
+
+		$(document).on('mousemove','body',function(e){
+			if(moving){
+				var mouseOffset = e.pageY - mouseY;
+				newOffset = startingOffset - (mouseOffset/10);
+				if(newOffset<0) newOffset = 0;
+				if(newOffset>100) newOffset = 100;
+				$('.img-banner').css('background-position-y', newOffset+'%');
+				$('body').addClass('moving-img');
+			}
+		});
+	});
+</script>

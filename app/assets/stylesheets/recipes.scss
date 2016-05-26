@@ -272,13 +272,18 @@
 	}
 	.selected-col {
 		> .photo {
-			max-height: 220px;
+			height: 220px;
 			overflow: hidden;
 			img{
 				width: 100%;
-				// height: 80%;
+				min-height: 220px;
 				float: left;
+				position: relative;
+				top: 50%;
+				transform: translateY(-50%);
 			}
+			img.wide{ height: 100%; }
+			// img.tall{ width: auto; }
 		}
 		#selected-panel {
 			border: solid 1px $orange;
@@ -420,7 +425,10 @@
 				bottom: 4px;
 				cursor: pointer;
 			}
-			.inactive { color: $medium; }
+			.inactive {
+				color: $medium;
+				cursor: auto;
+			}
 		}
 		.vertical-wrapper {
 			overflow: hidden;
