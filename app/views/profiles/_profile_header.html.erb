@@ -2,13 +2,15 @@
 	<div class="container img-banner"
 		style="background-image: url('<%= @profile.background_url %>');
 			background-position-y: <%= @profile.background_offset %>%">
-		<div class='cancel-move-photo'>Cancel</div>
-		<div class='move-photo'>Reposition photo</div>
-		<div style='display: none'>
-			<%= form_for @profile, html: {multipart: true } do |f| %>
-			    <%= f.text_field :background_offset %>
-			<% end %>
-		</div>
+		<% if @editable %>
+			<div class='cancel-move-photo'>Cancel</div>
+			<div class='move-photo'>Reposition photo</div>
+			<div style='display: none'>
+				<%= form_for @profile, html: {multipart: true } do |f| %>
+				    <%= f.text_field :background_offset %>
+				<% end %>
+			</div>
+		<% end %>
 	</div>
 </div>
 <div class="row user-banner">
