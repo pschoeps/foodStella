@@ -22,6 +22,8 @@ class User < ActiveRecord::Base
 
   acts_as_commontator
 
+  validates_uniqueness_of :username, allow_blank: true
+
   has_one :profile, dependent: :destroy
   # attr_accessible :fir_name, :las_name, :username, :about_me, :image
   # accepts_nested_attributes_for :profile
@@ -109,10 +111,10 @@ class User < ActiveRecord::Base
 
   def retrieve_pic
     user = User.find(id)
-    if user.image
-      user.image
-    elsif user.profile && user.profile.picture_url
+    if user.profile && user.profile.picture_url
       user.profile.picture_url
+    elsif user.image
+      user.image
     else
       ActionController::Base.helpers.asset_path('fallback/plate.jpg')
     end
@@ -120,6 +122,9 @@ class User < ActiveRecord::Base
 
   def retrieve_name(whichName = '')
     user = User.find(id)
+    if whichName == 'check'
+      whichName = user.profile.show_full_name ? '' : 'username'
+    end
     if whichName == 'username'
       if user.profile && profile.username
         profile.username

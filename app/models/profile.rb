@@ -6,6 +6,8 @@ class Profile < ActiveRecord::Base
 	mount_uploader :picture_url, ProfilePictureUploader
 	mount_uploader :background_url, BackgroundPictureUploader
 
+	validates_uniqueness_of :username, message: "is already taken"
+
 	 def picture_size
       if picture_url.size > 5.megabytes
         errors.add(:picture_url, "should be less than 5MB")

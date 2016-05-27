@@ -25,7 +25,7 @@
           </span>
           <div class="recipe-footer">
             <% if recipe.user_id != 0 %>
-              <p>Recipe By: <%= recipe.get_user(recipe.user_id).retrieve_name('username') %></p>
+              <p>Recipe By: <%= recipe.get_user(recipe.user_id).retrieve_name('check') %></p>
               <% else %>
               <p>Stock</p>
             <% end %>

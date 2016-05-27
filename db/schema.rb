@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160526194327) do
+ActiveRecord::Schema.define(version: 20160527212553) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -181,6 +181,7 @@ ActiveRecord::Schema.define(version: 20160526194327) do
     t.text     "cookware_preferences"
     t.string   "background_url"
     t.integer  "background_offset"
+    t.boolean  "show_full_name"
   end
 
   add_index "profiles", ["user_id"], name: "index_profiles_on_user_id", using: :btree

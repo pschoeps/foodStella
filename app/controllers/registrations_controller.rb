@@ -53,14 +53,17 @@ class RegistrationsController < Devise::RegistrationsController
     end
 
     def after_sign_up_path_for(resource)
-      calendar_user_path(current_user)
+      # calendar_user_path(current_user)
+      recipes_path
     end
     
     def after_sign_in_path_for(user)
-      calendar_user_path(current_user)
+      # calendar_user_path(current_user)
+      recipes_path
     end
 
     def after_update_path_for(resource)
-      calendar_user_path(current_user)
+      # calendar_user_path(current_user)
+      recipes_path
     end
 end

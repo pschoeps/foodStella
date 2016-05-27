@@ -12,13 +12,24 @@
 
     <%= form_for @profile, html: {class: "form-horizontal profile-form", multipart: true } do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
-      <!-- <= devise_error_messages! %> -->
+      <!-- %= f.error_messages :header => "Please complete all the fields", :message => "There is a problem with one or more fields" %> -->
       <fieldset id="profile-meta">
         <ol style="list-style-type:none; padding:0">
           
+          <% if @profile.username %>
+            <li class="control-group">
+              <div class="controls"><b>Username:</b> <%= @profile.username %></div>
+            </li>
+          <% else %>
+            <li class="control-group">
+              <%= f.label :username, "Username", class: "control-label" %>
+              <div class="controls"><%= f.text_field :username %></div>
+            </li>
+          <% end %>
+
           <li class="control-group">
-            <%= f.label :username, "Username", class: "control-label" %>
-            <div class="controls"><%= f.text_field :username %></div>
+            <%= f.check_box :show_full_name %>
+            <%= f.label :show_full_name, "Show full name on recipes you create", class: "control-label" %>
           </li>
           
           <li class="control-group inline">
@@ -37,20 +48,23 @@
           </li>
 
           <li class="control-group file-upload">
-            <% if current_user.image %>
               <div class="user_pic" style="background-image: url(<%= current_user.retrieve_pic %>);"></div>
               <%= f.label :picture_url, "Change profile picture", class: "control-label" %>
               <div class="controls"><%= f.file_field :picture_url, accept: 'image/jpeg,image/gif,image/png' %></div>
-            <% else %>
-              <%= f.label :picture_url, "Upload a profile picture", class: "control-label" %>
-              <div class="controls"><%= f.file_field :picture_url, accept: 'image/jpeg,image/gif,image/png' %></div>
-            <% end %>
           </li>
 
-          <li class="control-group file-upload">
-              <%= f.label :background_url, "Upload a background picture", class: "control-label" %>
-              <div class="controls"><%= f.file_field :background_url, accept: 'image/jpeg,image/gif,image/png' %></div>
-          </li>
+          <!-- vvv disabled by end of conditional vvvv -->
+          <% if current_user.provider == 'facebook' && current_user.image && false %>
+            <li class="control-group file-upload">
+              <div class="control-label" id="use_fb_avatar">Use Facebook avatar</div>
+              <div class="controls"><%= f.hidden_field :picture_url %></div>
+            </li>
+          <% end %>
+
+          <!-- <li class="control-group file-upload">
+              %= f.label :background_url, "Upload a background picture", class: "control-label" %>
+              <div class="controls">%= f.file_field :background_url, accept: 'image/jpeg,image/gif,image/png' %></div>
+          </li> -->
 
 
       </fieldset>
@@ -72,4 +86,10 @@
   //     alert('Maximum file size is 5MB. Please choose a smaller file.');
   //   }
   // });
+  $(document).ready(function(){
+    $('#use_fb_avatar').click(function(e){
+      e.preventDefault();
+      $("input[name='profile[picture_url]']").val('<%= current_user.image %>');
+    });
+  });
 </script>

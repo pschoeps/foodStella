@@ -4,7 +4,7 @@
     <div class="row">
       <!-- <span>%= link_to "FOOD NEWS", new_recipe_path  %></span> -->
       <!-- <span><= link_to "MY FOOD", new_recipe_path %></span> -->
-      <span><%= link_to "MY RECIPES", recipes_path %></span>
+      <span><%= link_to "RECIPES", recipes_path %></span>
       <span><%= link_to "PLANNER", calendar_user_path(current_user) %></span>
       <!-- <%  user_signed_in? %> -->
       <span><%= link_to "PROFILE", profile_path(current_user) %></span>
@@ -23,6 +23,7 @@
       <span>&#169;FOODSTELLA</span>
       <span><a href=''>Terms</a></span>
       <span><a href="">Privacy</a></span>
+      <span><%= link_to "Contact Us", new_feedback_path(contact: true) %></span>
     </div>
 
   </div><!-- /.container-fluid -->
