@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   # attr_accessible :fir_name, :las_name, :username, :about_me, :image
   # accepts_nested_attributes_for :profile
   after_create :generate_profile
-  after_create :default_foods
+  # after_create :default_foods
 
   def generate_profile
     # self.build_profile(fir_name: self.fir_name, las_name: self.las_name, username: self.username, email: self.email, picture_url: self.image, country: self.country)

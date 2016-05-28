@@ -92,7 +92,7 @@
 					</div>
 					<div class="slider-controls">
 						<div class="up inactive">&#9650;</div>
-						<div class="down">&#9660;</div>
+						<div class="down <%= 'inactive' if @others_photos.length < 9 %>">&#9660;</div>
 					</div>
 					<div class="row vertical-wrapper">
 						<div class="col-md-12" style="top: 0">
@@ -135,15 +135,37 @@
 					<h3>Ingredients</h3>
 					<span class="servings">Servings: <%= @recipe.servings ? @recipe.servings : 1 %></span>
 					<ol>
-						<% @recipe.ingredients.each do |i| %>
-						    <li>
-						    <% i.quantities.each do |q| %>
-						      <%= q.amount %><%= ' ' if q.unit != '' %>
-						      <%= q.get_unit(q.unit, q.amount) %><%= ' ' %>
-						    <% end %>
-						    <%= i.name %>
-						</li>
-						 <% end %>
+						<% if @recipe.user_id == 0 %>
+							<% @recipe.quantities.order(ounces: :desc).each do |q| %>
+							    <li>
+							      <%= q.detail %>
+							</li>
+							 <% end %>
+						<% elsif @recipe.user_id == -1 %>
+							<% @recipe.ingredients.each do |i| %>
+							    <li>
+							    <% i.quantities.where(recipe_id: @recipe.id).each do |q| %>
+							      <%= q.amount %>
+							      <%= ' ' if q.unit != '' %>
+							      <%= q.get_unit(q.unit, q.amount) %>
+							      <%= ' ' %>
+							    <% end %>
+							    <%= i.name %>
+							</li>
+							<% end %>
+						<% else %>
+							<% @recipe.ingredients.each do |i| %>
+							    <li>
+							    <% i.quantities.each do |q| %>
+							      <%= q.amount %>
+							      <%= ' ' if q.unit != '' %>
+							      <%= q.get_unit(q.unit, q.amount) %>
+							      <%= ' ' %>
+							    <% end %>
+							    <%= i.name %>
+							</li>
+							<% end %>
+						<% end %>
 					</ol>
 				</div>
 			</div>

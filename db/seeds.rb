@@ -7,23 +7,34 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # json = ActiveSupport::JSON.decode(File.read('db/seeds/countries.json'))
-records = JSON.parse(File.read('app/assets/data/recipes.json'))
+
+# Recipe.destroy_all
+
+records = JSON.parse(File.read('app/assets/data/recipes_with_serving_sizes.json'))
 records.each do |record|
+
+  appetizers = ['appetizers']
+  side_dishes = ['bread','chili','rice','salad','soup','vegetables','casseroles','healthy']
+  main_dishes = ['beef','burgers','chicken','fish & seafood','italian','mexican','pasta','pizza','pork','sausage','steak','stew']
+  desserts = ['cake', 'cookies', 'pies']
+  drinks = []
   
-  if record['meal_type'] == 'Appetizers'
+  if appetizers.include? record['meal_type'].downcase
     meal_type = 1
-  elsif record['meal_type'] == 'Chili' || record['meal_type'] == 'Rice' || record['meal_type'] == 'Salad' || record['meal_type'] == 'Soup' || record['meal_type'] == 'Vegetables'
+  elsif side_dishes.include? record['meal_type'].downcase
     meal_type = 2
-  elsif record['meal_type'] == 'Cake' || record['meal_type'] == 'Cookies' || record['meal_type'] == 'Pies'
+  elsif main_dishes.include? record['meal_type'].downcase
+    meal_type = 3
+  elsif desserts.include? record['meal_type'].downcase
     meal_type = 4
   else
     meal_type = 3
   end
 
-  if record['servings'] == ''
+  if record['servings:'] == ''
     servings = 1
   else
-    servings = record['servings']
+    servings = record['servings:']
   end
 
   total_mins = 0
@@ -44,7 +55,11 @@ records.each do |record|
     prep_mins += record['prep_time'].gsub(/\s.+/,'').to_i * 60
   end
 
-  cook_mins = total_mins - prep_mins
+  if total_mins == 0
+    cook_mins = 0
+  else
+    cook_mins = total_mins - prep_mins
+  end
 
   difficulty = 1
   if total_mins > 30
@@ -57,13 +72,13 @@ records.each do |record|
   	user_id: 0,
   	name: record['recipe_name'],
   	remote_photo_url: record['recipe_pic_url'],
-  	category: 0,
   	description: record['recipe_description'],
   	prep_time: prep_mins,
   	cook_time: cook_mins,
   	difficulty: difficulty,
   	meal_type: meal_type,
-  	servings: servings
+  	servings: servings,
+    category: record['meal_type']
   })
 
 
@@ -80,69 +95,32 @@ records.each do |record|
     end
   end
 
-  ingredients = JSON.parse(File.read('app/assets/data/recipe_ingredients.json'))
+  ingredients = JSON.parse(File.read('app/assets/data/recipe_ingredients_parsed_with_units.json'))
   ingredients.each do |ingredient|
     if ingredient['recipe_id'] == record['recipe_id']
-      new_ingredient = Ingredient.create!({
-        name: ingredient['ingredient']
-      })
+      new_ingredient = Ingredient.find_or_create_by!(name: ingredient['ingredient'])
 
-      unit_s = ingredient['quantity'][/[a-zA-Z].+/]
-      if unit_s
-        if unit_s.downcase.include? "cup"
-          unit = 1
-        elsif unit_s.downcase.include? "ounce"
-          unit = 2
-        elsif unit_s.downcase.include? "teaspoon"
-          unit = 3
-        elsif unit_s.downcase.include? "tablespoon"
-          unit = 4
-        elsif unit_s.downcase.include? "pinch"
-          unit = 5
-        else
-          unit = nil
-        end
-      end
-
-      amount_s = ingredient['quantity'].gsub(/[a-zA-Z\-].+/, '')
-      amount_a = amount_s.split(' ')
-      if amount_a.length == 1                             # ex. "1/2" || "3"
-        if amount_a[0].include? "/"                       # "1/2" 
-          fraction = amount_a[0].split('/')               # ["1","2"]
-          amount = fraction[0].to_f / fraction[1].to_f    # 0.5
-        else
-          amount = amount_a[0].to_f                       # = 3.0
-        end
-      elsif amount_a.length == 2                          # ex. "1/2 4 oz package" || "3 1/2" || "2 8 ounce packages"
-        if amount_a[0].include? "/"                       # "1/2 4"
-          amount_f = amount_a[0].split('/')
-          amount = amount_f[0].to_f / amount_f[1].to_f
-          amount *= amount_a[1].to_f
-        elsif amount_a[1].include? "/"                    # "3 1/2"
-          amount = amount_a[0].to_f
-          additional_f = amount_a[1].split('/')
-          additional = additional_f[0].to_f / additional_f[1].to_f
-          amount += additional                            # = 3.0 + 0.5
-        else
-          amount = amount_a[0].to_f * amount_a[1].to_f    # = 2.0 * 8.0
-        end
-      elsif amount_a.length == 3                          # ex. "1 10 3/4 ounce can"
-        amount = amount_a[0].to_f                         # 1.0
-        additonal = amount_a[1].to_f                      # 10.0
-        fraction = amount_a[2].split('/')                 # ["3","4"]
-        additional += fraction[0].to_f / fraction[1].to_f # 10.0 + 0.75
-        amount *= additional                              # = 1 * 10.75
+      if ingredient['unit'].downcase.include? "cup"
+        unit = 1
+      elsif ingredient['unit'].downcase.include? "ounce"
+        unit = 2
+      elsif ingredient['unit'].downcase.include? "teaspoon"
+        unit = 3
+      elsif ingredient['unit'].downcase.include? "tablespoon"
+        unit = 4
+      elsif ingredient['unit'].downcase.include? "pinch"
+        unit = 5
       else
-        amount = amount_a[0].to_f * (amount_a[1].to_f + amount_a[2].to_f + amount_a[3].to_f) # take a guess...
+        unit = nil
       end
-      
-      amount = (amount*100).round / 100.0
 
       Quantity.create!({
-        amount: amount,
         recipe_id: recipe.id,
         ingredient_id: new_ingredient.id,
-        unit: unit
+        unit: unit,
+        amount: ingredient['quantity'],
+        ounces: ingredient['ounces'],
+        detail: ingredient['detail']
       })
     end
   end
