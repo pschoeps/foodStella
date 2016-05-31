@@ -10,6 +10,40 @@
 
 # Recipe.destroy_all
 
+# Manually clear all tables related to recipes
+sql = "truncate table average_caches"
+ActiveRecord::Base.connection.execute(sql)
+sql = "truncate table commontator_comments"
+ActiveRecord::Base.connection.execute(sql)
+sql = "truncate table commontator_subscriptions"
+ActiveRecord::Base.connection.execute(sql)
+sql = "truncate table commontator_threads"
+ActiveRecord::Base.connection.execute(sql)
+sql = "truncate table cookeds"
+ActiveRecord::Base.connection.execute(sql)
+sql = "truncate table events"
+ActiveRecord::Base.connection.execute(sql)
+sql = "truncate table ingredients"
+ActiveRecord::Base.connection.execute(sql)
+sql = "truncate table instructions"
+ActiveRecord::Base.connection.execute(sql)
+sql = "truncate table others_photos"
+ActiveRecord::Base.connection.execute(sql)
+sql = "truncate table overall_averages"
+ActiveRecord::Base.connection.execute(sql)
+sql = "truncate table quantities"
+ActiveRecord::Base.connection.execute(sql)
+sql = "truncate table rates"
+ActiveRecord::Base.connection.execute(sql)
+sql = "truncate table rating_caches"
+ActiveRecord::Base.connection.execute(sql)
+sql = "truncate table recipes"
+ActiveRecord::Base.connection.execute(sql)
+sql = "truncate table relationships"
+ActiveRecord::Base.connection.execute(sql)
+sql = "truncate table votes"
+ActiveRecord::Base.connection.execute(sql)
+
 records = JSON.parse(File.read('app/assets/data/recipes_with_serving_sizes.json'))
 records.each do |record|
 

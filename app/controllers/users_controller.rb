@@ -155,10 +155,23 @@ class UsersController < ApplicationController
 
 		@planned_recipes.each do |r|
 			r.ingredients.each do |i|
-				i.quantities.each do |q|
-					unit = get_unit(q.unit, q.amount)
-					@shopping_items << [i.name, q.amount, unit]
+				i.quantities.where(recipe_id: r.id).each do |q|
+					unique_r = true
+					@shopping_items.each do |s|
+						if s[0] == i.name
+							unique_r = false
+							s[1] += q.ounces
+						end
+					end
+					if unique_r
+						unit = q.unit == '' ? '' : 'oz'
+						@shopping_items << [i.name, q.ounces, 'oz.']
+					end
 				end
+				# i.quantities.each do |q|
+					# unit = get_unit(q.unit, q.amount)
+					# @shopping_items << [i.name, q.amount, unit]
+				# end
 			end
 		end
 
