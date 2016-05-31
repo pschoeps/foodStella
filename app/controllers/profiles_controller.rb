@@ -53,7 +53,8 @@ class ProfilesController < ApplicationController
 		# if !current_user.profile && params[:id].to_i == current_user.id
 		if !@user.profile
 			if @myself
-				redirect_to new_profile_path and return
+				Profile.create(user_id: current_user.id, fir_name: current_user.fir_name, las_name: current_user.las_name, username: current_user.username, email: current_user.email, picture_url: current_user.image, country: current_user.country)
+				# redirect_to new_profile_path and return
 			else
 				flash[:notice] = 'User has not setup profile'
 				redirect_to(:back) and return

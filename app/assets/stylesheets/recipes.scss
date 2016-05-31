@@ -705,12 +705,13 @@
 				position: relative;
 				width: 25%;
 
-
-				a img {
-					width: 100%;
+				.box {
 					height: 200px;
-					 position: relative;
-    				bottom: 0;
+					overflow: hidden;
+					a img {
+						min-height: 200px;
+						min-width: 100%;
+					}
 				}
 
 				 .details {

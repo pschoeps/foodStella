@@ -60,7 +60,7 @@ class RecipesController < ApplicationController
   end
 
   def index
-
+    
     #variables contained in recipes sidebar
     @followed_recipes = current_user.following
     @user_recipes = current_user.recipes

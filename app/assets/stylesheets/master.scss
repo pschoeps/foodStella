@@ -19,7 +19,10 @@ $trim2: #ddd;
 //   margin-bottom: 100px;
 // }
 html { background-color: $dark; }
-body { background-color: $light; }
+body {
+  background-color: $light;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+}
 
 .row { margin: 0; }
 
