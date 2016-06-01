@@ -926,7 +926,7 @@
 
 	#reset-filters {
 		// width: 6em;
-		// position: absolute;
+		position: absolute;
 		a {
 			color: white;
 		}
@@ -934,16 +934,12 @@
 
 	.filter-search {
 		// float: right;
-		// margin: 5px;
-		// position: absolute;
-		// right: 5px;
-		// margin-top: 4em;
-  //   	transform: translateY(-50%);
-  //   	z-index: 2;
-  		padding: 10px;
-		width: 11em;
-		display: inline-block;
-		transform: translateY(30%);
+		margin: 5px;
+		position: absolute;
+		right: 5px;
+		margin-top: 4em;
+    	transform: translateY(-50%);
+    	z-index: 2;
 	}
 
 	.open .dropdown-toggle{
