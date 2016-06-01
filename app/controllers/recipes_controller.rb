@@ -91,7 +91,9 @@ class RecipesController < ApplicationController
         style: Recipe.options_for_style,
         difficulty: Recipe.options_for_difficulty,
         meal_type: Recipe.options_for_meal_type
-      }
+      },
+      persistence_id: false
+      # default_filter_params: {latest: false}
     ) or return
 
     @recipes = @filterrific.find.page(params[:page])
@@ -144,7 +146,7 @@ class RecipesController < ApplicationController
     end
 
     respond_to do |format|
-      # format.html
+      format.html
       format.js
     end
   end

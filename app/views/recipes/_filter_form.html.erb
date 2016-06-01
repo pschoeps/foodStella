@@ -4,6 +4,11 @@
     <= f.select(:sorted_by, @filterrific.select_options[:sorted_by]) %>
   </div-->
   
+
+
+  
+  <div class="dropdowns">
+
   <div class="filter-search">
 
      <%= f.text_field(
@@ -21,8 +26,6 @@
 
    </div>
 
-  
-  <div class="dropdowns">
 
     <% @filterrific.select_options[:latest].each do |c| %>
        <label class="latest checkbox label-for-check">
@@ -30,6 +33,88 @@
         <%= check_box_tag("filterrific[latest][]", c[1]) %>
       </label>
     <% end %>
+
+    <% @filterrific.select_options[:latest].each do |c| %>
+       <label class="latest checkbox label-for-check">
+        Trending
+        <%= check_box_tag("filterrific[latest][]", c[1]) %>
+      </label>
+    <% end %>
+
+    <% @filterrific.select_options[:latest].each do |c| %>
+       <label class="latest checkbox label-for-check">
+        Things I've Cooked
+        <%= check_box_tag("filterrific[latest][]", c[1]) %>
+      </label>
+    <% end %>
+
+    <div class="dropdown">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Cooking Time
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li id="ingredient-options checkbox">
+          <% @filterrific.select_options[:sort_by_ingredients].each do |c| %>
+            <label class="checkbox">
+              <%= c[0] %>
+              <%= check_box_tag("filterrific[sort_by_ingredients][]",c[1])  %>
+            </label>
+          <% end %>
+        </li>
+      </ul>
+    </div> 
+
+    <div class="dropdown">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Prep Time
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li id="ingredient-options checkbox">
+          <% @filterrific.select_options[:sort_by_ingredients].each do |c| %>
+            <label class="checkbox">
+              <%= c[0] %>
+              <%= check_box_tag("filterrific[sort_by_ingredients][]",c[1])  %>
+            </label>
+          <% end %>
+        </li>
+      </ul>
+    </div> 
+
+    <div class="dropdown">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Cookware
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li id="ingredient-options checkbox">
+          <% @filterrific.select_options[:sort_by_ingredients].each do |c| %>
+            <label class="checkbox">
+              <%= c[0] %>
+              <%= check_box_tag("filterrific[sort_by_ingredients][]",c[1])  %>
+            </label>
+          <% end %>
+        </li>
+      </ul>
+    </div> 
+
+    <div class="dropdown">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Reviews
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li id="ingredient-options checkbox">
+          <% @filterrific.select_options[:sort_by_ingredients].each do |c| %>
+            <label class="checkbox">
+              <%= c[0] %>
+              <%= check_box_tag("filterrific[sort_by_ingredients][]",c[1])  %>
+            </label>
+          <% end %>
+        </li>
+      </ul>
+    </div>  
 
     <div class="dropdown main-ingredient">
       <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">

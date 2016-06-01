@@ -102,16 +102,16 @@ $(document).ready(function() {
   // })
 
   if ( $('#filterrific_latest_').is(":checked") )
-    $(this).css('color', 'white');
-  else
     $(this).css('color', '#819800');
+  else
+    $(this).css('color', 'white');
 
  $('.latest').click(function() {
     console.log("checked")
     if ( $('#filterrific_latest_').is(":checked") )
-      $(this).css('color', 'white');
-    else
       $(this).css('color', '#819800');
+    else
+      $(this).css('color', 'white');
 
   });
 

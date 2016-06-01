@@ -6,7 +6,8 @@ FoodStella::Application.routes.draw do
   match 'events/destroy'   => 'events#destroy',    :via => :delete
   match 'events/udpate'   => 'events#update',    :via => :put
 
-  root "static_pages#home"
+  # root "static_pages#home"
+  root "recipes#index"
 
 
   #resources :model defines a number of routes for a model automatically, including create, destroy, edit.  Using member do

@@ -37,7 +37,7 @@ class Recipe < ActiveRecord::Base
   self.per_page = 12
 
   #this is some stuff I'm playing around with for searching and filtering recipes
-  filterrific :default_filter_params => { :sorted_by => 'created_at_desc' },
+  filterrific :default_filter_params => { :sorted_by => 'RANDOM()'}, #created_at_desc' },
               available_filters: [
               :sorted_by,
               :search_query,
@@ -58,7 +58,9 @@ class Recipe < ActiveRecord::Base
     # replace "*" with "%" for wildcard searches,
     # append '%', remove duplicate '%'s
     terms = terms.map { |e|
-      (e.gsub('*', '%') + '%').gsub(/%+/, '%')
+      # (e.gsub('*', '%') + '%').gsub(/%+/, '%')
+      # prepend '%' to search full name
+      ('%' + e.gsub('*', '%') + '%').gsub(/%+/, '%')
     }
     # configure number of OR conditions for provision
     # of interpolation arguments. Adjust this if you
@@ -76,19 +78,23 @@ class Recipe < ActiveRecord::Base
   }
 
   scope :sorted_by, lambda { |sort_option|
-    # extract the sort direction from the param value.
-    direction = (sort_option =~ /desc$/) ? 'desc' : 'asc'
-    case sort_option.to_s
-    when /^created_at_/
-      order("recipes.created_at #{ direction }")
-    when /^name_/
-      order("LOWER(recipes.name) #{ direction }")
-    when /^difficulty_/
-      order("recipes.difficulty #{ direction }")
-    when /^cook_time_/
-      order("recipes.cook_time #{ direction }")
+    if sort_option == 'RANDOM()'
+      order(sort_option)
     else
-      raise(ArgumentError, "Invalid sort option: #{ sort_option.inspect }")
+      # extract the sort direction from the param value.
+      direction = (sort_option =~ /desc$/) ? 'desc' : 'asc'
+      case sort_option.to_s
+      when /^created_at_/
+        order("recipes.created_at #{ direction }")
+      when /^name_/
+        order("LOWER(recipes.name) #{ direction }")
+      when /^difficulty_/
+        order("recipes.difficulty #{ direction }")
+      when /^cook_time_/
+        order("recipes.cook_time #{ direction }")
+      else
+        raise(ArgumentError, "Invalid sort option: #{ sort_option.inspect }")
+      end
     end
   }
 
@@ -97,8 +103,14 @@ class Recipe < ActiveRecord::Base
   }
 
   scope :style, lambda { |style|
-    recipes = Recipe.arel_table
-    where(recipes[:category].eq("#{style[0]}"))
+    # recipes = Recipe.arel_table
+    # where(recipes[:category].eq("#{style[0]}"))
+    styles = []
+    style.each do |s|
+      styles.push(options_for_style[s-1][0].downcase)
+    end
+    pg_styles = styles.map {|val| "%#{val}%" }
+    where('lower(recipes.category) ILIKE ANY ( array[?] )', pg_styles)
   }
 
   scope :difficulty, lambda { |difficulty|
@@ -118,28 +130,71 @@ class Recipe < ActiveRecord::Base
   scope :sort_by_ingredients, lambda { |ingredient_ids|
     # get a reference to the join table
     quantities = Quantity.arel_table
+    ingredients = Ingredient.arel_table
     # get a reference to the filtered table
     recipes = Recipe.arel_table
+
+    main_ingredients = []
+    ingredient_ids.each do |i|
+      main_ingredients.push(options_for_sort_by_ingredients[i-1][0].downcase)
+      if options_for_sort_by_ingredients[i-1][2]
+        main_ingredients.push(options_for_sort_by_ingredients[i-1][2].downcase) # for alternate names
+      end
+    end
+    pg_ingredients = main_ingredients.map {|val| "%#{val}%" }
+    @matching_ingredients = Ingredient.where('lower(name) ILIKE ANY ( array[?] )', pg_ingredients)
+    @ingred_ids = []
+    @matching_ingredients.each do |i|
+      @ingred_ids.push(i.id)
+    end
+
     # let AREL generate a complex SQL query
     where(
       Quantity \
         .where(quantities[:recipe_id].eq(recipes[:id])) \
-        .where(quantities[:ingredient_id].in([*ingredient_ids].map(&:to_i))) \
+        # .where(quantities[:ingredient_id].in([*ingredient_ids].map(&:to_i))) \
+        .where(quantities[:ingredient_id].in([*@ingred_ids].map(&:to_i))) \
         .exists
     )
   }
 
   def self.options_for_sort_by_ingredients
     [
-      ['Tomato', 94], #tomato
-      ['Rice', 95] #rice
+      # ['Tomato', 94], #tomato
+      # ['Rice', 95] #rice
+      ['Meat',1,'Beef'],
+      ['Chicken',2],
+      ['Soup',3],
+      ['Vegetarian',4],
+      ['Vegan',5],
+      ['Fish',6],
+      ['Lobster',7],
+      ['Octopus',8],
+      ['Shrimp',9],
+      ['Clams',10],
+      ['Rice',11],
+      ['Quinoa',12],
+      ['Pasta',13],
+      ['Pizza',14],
+      ['Sandwiches',15],
+      ['Salads',16],
+      ['Duck',17],
+      ['Cheese',18],
+      ['Tofu',19]
     ]
   end
 
   def self.options_for_style
     [
-      ['Medditerranean', 1], 
-      ['Chinese', 2] 
+      ['Burgers', 1],
+      ['Casserole', 2],
+      ['Chili', 3],
+      ['Healthy', 4],
+      ['Italian', 5],
+      ['Mexican', 6],
+      ['Salad', 7],
+      ['Seafood', 8],
+      ['Soup', 9]
     ]
   end
 
