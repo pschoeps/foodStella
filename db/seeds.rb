@@ -129,7 +129,7 @@ records.each do |record|
     end
   end
 
-  ingredients = JSON.parse(File.read('app/assets/data/recipe_ingredients_parsed_with_units.json'))
+  ingredients = JSON.parse(File.read('app/assets/data/recipe_ingredients_parsed_with_units_2.json'))
   ingredients.each do |ingredient|
     if ingredient['recipe_id'] == record['recipe_id']
       new_ingredient = Ingredient.find_or_create_by!(name: ingredient['ingredient'])
