@@ -27,7 +27,7 @@
       
 
       <%- flash.each do |name, msg| -%>
-        <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) || :id != "You need to sign in or sign up before continuing." %>
+        <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) || :id != "Log in or sign up below to continue!" %>
       <%- end -%>  
 
         <br>

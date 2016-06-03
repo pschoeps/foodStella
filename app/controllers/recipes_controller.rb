@@ -90,7 +90,13 @@ class RecipesController < ApplicationController
         latest: Recipe.options_for_latest,
         style: Recipe.options_for_style,
         difficulty: Recipe.options_for_difficulty,
-        meal_type: Recipe.options_for_meal_type
+        meal_type: Recipe.options_for_meal_type,
+        cook_time: Recipe.options_for_cook_time,
+        prep_time: Recipe.options_for_prep_time,
+        ratings_count: Recipe.options_for_ratings_count,
+        ratings_average: Recipe.options_for_ratings_average,
+        cooked: Recipe.options_for_cooked,
+        trending: Recipe.options_for_trending,
       },
       persistence_id: false
       # default_filter_params: {latest: false}

@@ -46,7 +46,15 @@ class Recipe < ActiveRecord::Base
               :sort_by_ingredients,
               :style,
               :difficulty,
-              :meal_type
+              :meal_type,
+              :cook_time,
+              :prep_time,
+              :cookware,
+              :ratings_count,
+              :ratings_average,
+              :trending,
+              :cooked,
+              :more
               ]
 
 
@@ -158,10 +166,12 @@ class Recipe < ActiveRecord::Base
     )
   }
 
+  scope :more, lambda { |more|
+    # order("recipes.created_at desc")
+  }
+
   def self.options_for_sort_by_ingredients
     [
-      # ['Tomato', 94], #tomato
-      # ['Rice', 95] #rice
       ['Meat',1,'Beef'],
       ['Chicken',2],
       ['Soup',3],
@@ -222,16 +232,53 @@ class Recipe < ActiveRecord::Base
     ]
   end
 
+  def self.options_for_cookware
+    [
+      ['Microwave', 1],
+      ['Oven', 2],
+      ['Frying Pan', 3],
+      ['Barbecue Grill', 4],
+      ['Toaster', 5],
+      ['Pancake Maker', 6],
+      ['Fundu', 7]
+    ]
+  end
+
   def self.options_for_sorted_by
     [
-      ['Name (a-z)', 'name_asc'],
-      ['Registration date (newest first)', 'created_at_desc'],
-      ['Registration date (oldest first)', 'created_at_asc'],
-      ['Difficulty (hardest first)',       'difficulty_desc'],
-      ['Difficulty (easiest first)',       'difficulty_asc'],
+      # ['Name (a-z)', 'name_asc'],
+      ['Trending', 'name_asc'],
+      ['Latest', 'created_at_desc'],
+      ['Oldest', 'created_at_asc'],
+      # ['Difficulty (hardest first)',       'difficulty_desc'],
+      # ['Difficulty (easiest first)',       'difficulty_asc'],
       ['Cook Time (longest first)',        'cook_time_desc'],
-      ['Cook Time (shortest first)',       'cook_time_asc']
+      ['Cook Time (shortest first)',       'cook_time_asc'],
+      ['Prep Time (longest first)',        'prep_time_desc'],
+      ['Prep Time (shortest first)',       'prep_time_asc'],
+      ['Average Rating',       'prep_time_asc'],
+      # ['Lowest Rating',       'prep_time_asc'],
+      ['Popular',       'prep_time_asc'],
+      # ['Fewest Ratings',       'prep_time_asc']
     ]
+  end
+
+  def self.options_for_cook_time
+  end
+
+  def self.options_for_prep_time
+  end
+
+  def self.options_for_ratings_count
+  end
+
+  def self.options_for_ratings_average
+  end
+
+  def self.options_for_trending
+  end
+
+  def self.options_for_cooked
   end
 
   # Validates the size of an uploaded picture.
