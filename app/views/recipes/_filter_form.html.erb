@@ -1,35 +1,34 @@
 <%= form_for_filterrific @filterrific do |f| %>
   
-  <!--div>
-    <= f.select(:sorted_by, @filterrific.select_options[:sorted_by]) %>
-  </div-->
+  <!-- <div class='sort-by'>
+    <div id="sort-by-label">Sort By</div>
+    %= f.select(:sorted_by, @filterrific.select_options[:sorted_by]) %>
+  </div> -->
   
   <div class="filter-search">
+    <div id ="reset-filters">
+      <%= link_to(
+        'Reset filters',
+        reset_filterrific_url,
+      ) %>
+    </div>  
 
      <%= f.text_field(
        :search_query,
        class: 'filterrific-periodically-observed',
        placeholder: "Search"
      ) %>
-
-    <div id ="reset-filters">
-      <%= link_to(
-        'Reset filters',
-        reset_filterrific_url,
-      ) %>
-    </div>     
-
    </div>
 
   
   <div class="dropdowns">
 
-    <% @filterrific.select_options[:latest].each do |c| %>
+    <!-- % @filterrific.select_options[:latest].each do |c| %>
        <label class="latest checkbox label-for-check">
         Latest
-        <%= check_box_tag("filterrific[latest][]", c[1]) %>
+        %= check_box_tag("filterrific[latest][]", c[1]) %>
       </label>
-    <% end %>
+    % end %> -->
 
     <div class="dropdown main-ingredient">
       <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -47,6 +46,23 @@
         </li>
       </ul>
     </div>  
+
+    <div class="dropdown meal-type">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Meal Type
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li id="checkbox">
+          <% @filterrific.select_options[:meal_type].each do |c| %>
+            <label class="checkbox">
+              <%= c[0] %>
+              <%= check_box_tag("filterrific[meal_type][]",c[1]) %>
+            </label>
+          <% end %>
+        </li>
+      </ul>
+    </div>
 
     <div class="dropdown style">
       <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -82,22 +98,65 @@
       </ul>
     </div> 
 
-    <div class="dropdown meal-type">
+    <!-- <div class="dropdown time">
       <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-        Meal Type
+        Time
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
         <li id="checkbox">
-          <% @filterrific.select_options[:meal_type].each do |c| %>
-            <label class="checkbox">
-              <%= c[0] %>
-              <%= check_box_tag("filterrific[meal_type][]",c[1]) %>
-            </label>
-          <% end %>
+          <label class="checkbox">
+            Cook Time &#8804;
+            %= f.number_field(:cook_time, class: 'number filterrific-periodically-observed',) %> min
+          </label>
+          <label class="checkbox">
+            Prep Time &#8804;
+            %= f.number_field(:cook_time, class: 'number filterrific-periodically-observed') %> min
+          </label>
         </li>
       </ul>
-    </div>
+    </div> -->
+
+    <!-- <div class="dropdown rating">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Rating
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li id="checkbox">
+          <label class="checkbox">
+            Total Ratings &#8805;
+            %= f.number_field(:ratings_count, class: 'number filterrific-periodically-observed') %>
+          </label>
+          <label class="checkbox">
+            Average Rating &#8805;
+            </label>
+        </li>
+      </ul>
+    </div> -->
+
+    <!-- <div class="dropdown more">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        More
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li id="checkbox">
+         <label class="checkbox">
+            Latest
+            %= check_box_tag("filterrific[latest]") %>
+          </label>
+          <label class="checkbox">
+            Trending
+            %= check_box_tag("filterrific[rating]",'trending') %>
+          </label>
+          <label class="checkbox">
+            Recipes I've Cooked
+            %= check_box_tag("filterrific[cooked]",'cooked') %>
+          </label>
+        </li>
+      </ul>
+    </div> -->
 
  
 
