@@ -410,3 +410,247 @@ input:-webkit-autofill {
 		}
 	}
 }
+
+/* planner mobile page */
+
+
+
+.planner-mobile-header {
+	height: 4em;
+	background-color: $dark;
+
+	.spatula-mobile {
+		width: 3.5em;
+		height: 100%;
+
+		img {
+			height: 35px;
+			position: relative;
+			top: 50%;
+			transform: translateY(-50%);
+			padding-left: 6px;
+		}
+	}
+
+	.glyphicon {
+		font-size: 2em;
+		color: white;
+		position: absolute;
+	}
+
+	.glyphicon-chevron-left {
+		left: 25%;
+    	top: 25%;
+    	font-size: 1.75em;
+	}
+
+	.glyphicon-chevron-right {
+		right: 28%;
+    	top: 25%;
+    	font-size: 1.75em;
+	}
+
+	.glyphicon-shopping-cart {
+		right: 10px;
+    	top: 50%;
+    	transform: translateY(-50%);
+	}
+
+	h2 {
+		position: absolute;
+    	width: 100%;
+    	height: 2em;
+    	top: 25%;
+    	margin: 0;
+    	color: $green;
+    	letter-spacing: 3px;
+    	font-size: 1.75em;
+    	font-weight: 100;
+	}
+}
+
+.planner-view-control {
+	height: 3em;
+
+	#selected {
+		background-color: $green;
+		color: white;
+	}
+
+	.col-sm-6 {
+		width: 50%;
+		float: left;
+		height: 100%;
+
+		button {
+			width: 100%;
+			height: 100%;
+			text-align: center;
+			color: $green;
+			background-color: white;
+			font-size: 1.5em;
+			letter-spacing: 1.5px;
+			font-weight: 100;
+			border: none;
+			padding: 0;
+			}
+	}
+}
+
+.planner-instructions {
+	height:3em;
+	background-color: $dark;
+
+	.col-sm-12 {
+		height: 100%;
+		overflow: hidden;
+		.breakfast, .lunch, .dinner, .snack {
+			width: 23%;
+			height: 100%;
+    		position: relative;
+    		float: left;
+    		text-align: center;
+
+    		.circle {
+    			height: 8px;
+    			width: 8px;
+    			border-radius: 100%;
+    			position: absolute;
+    			top: 5px;
+    		}
+
+    		.tan {background-color: #f5b266;}
+    		.green {background-color: #819800;}
+    		.olive {background-color: #796c2d;}
+    		.brown {background-color: #bc9c63;}
+
+    		h5 {
+    			color: white;
+    			padding: 0;
+   			    margin: 0;
+    			font-weight: 100;
+    			letter-spacing: 1px;
+    			/* for some reason the letter spacing wasn't accounted for in text_align: center: */
+    			left: 5px;
+    			position: relative;
+    			top: 50%;
+    			transform: translateY(-50%);
+    		}
+		}
+
+		/*needed to move only breakfast over to make colored circles look correct */
+
+		#hide-chevron, #hide-chevron-1, #hide-chevron-2 {
+			position: absolute;
+    		height: 100%;
+    		font-size: 5em;
+    		right: -38px;
+    		top: -13px;
+		}
+
+		#hide-chevron {
+			right: -30px;
+			color: $green;
+			z-index: 10;
+		}
+
+		#hide-chevron-1 {
+			right: -38px;
+			color: white;
+			z-index: 20;
+		}
+
+		#hide-chevron-2 {
+			right: -46px;
+			color: $green;
+			z-index: 30;
+		}
+
+	    .details-left, .details-right {
+			position: absolute;
+    		font-size: 9px;
+   	    	bottom: 0px;
+    		height: 14px;
+    		color: $light;
+		}
+
+		.details-left {
+			left: 4em;
+		}
+
+		.details-right {
+			right: 4em;
+		}
+	}
+}
+
+#offset-margins {
+	margin-bottom: -100px;
+}
+
+.weekly-planner {
+	background-color: white;
+	position: relative;
+	overflow-x: auto;
+	white-space: nowrap;
+	padding-top: 3em;
+
+	#unhide-chevron {
+		position: absolute;
+    	color: #819800;
+    	font-size: 4em;
+    	left: -32px;
+    	top: -10px;
+    	display: none;
+
+	}
+
+	.one-day {
+		float: none;
+		display: inline-block;
+		width: 8.5em;
+
+		.one-day-header {
+			float: left;
+			color: $medium;
+			font-size: 1.1em;
+			bottom: 7px;
+			margin-top: 10px;
+    		margin-bottom: 10px;
+		}
+
+		.meals {
+			position: relative;
+
+			div {
+				width: 100%;
+				height: 6em;
+				border: .75px dashed $medium;
+				margin-bottom: 10px;
+				position: relative;
+				float: left;
+
+				span {
+					    color: $medium;
+    					position: absolute;
+    					text-align: center;
+    					width: 100%;
+    					left: 0;
+    					top: 1.5em;
+				}
+
+				h3 {
+					    font-size: .75em;
+    					position: absolute;
+    					float: left;
+    					margin: 0;
+    					width: 100%;
+    					text-align: center;
+    					text-decoration: none;
+    					color: $medium;
+    					bottom: 2.5em;
+				}
+			}
+		}
+	}
+}

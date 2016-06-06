@@ -1,7 +1,11 @@
 $outer-container: 90%;
 
-.disable-margins .row {
+.disable-margins, .row {
 	margin: 0;
+}
+
+.disable-padding {
+    padding: 0;
 }
 
 

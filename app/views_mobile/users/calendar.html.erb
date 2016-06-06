@@ -1,0 +1,152 @@
+<div class="row week-nav">
+  <div class="col-sm-12 disable-margins disable-padding planner-mobile-header">
+    <div class="spatula-mobile"><%= image_tag 'icons/spatula-selected.png' %></div>
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <h2>Week 1</h2>
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+  </div>
+</div>
+
+<div class="row planner-view-control">
+  <div class="col-sm-6 disable-margins disable-padding week-view">
+    <button class="week-view-button" id="selected">Week View</button>
+  </div>
+  <div class="col-sm-6 disable-margins disable-padding day-view">
+    <button class="day-view-button">Day View</button>
+  </div>
+</div>
+
+<div class="row planner-instructions open">
+  <div class="col-sm-12 disable-margins disable-padding">
+    <div class="breakfast">
+      <span class="circle tan"></span>
+      <h5>Breakfast</h5>
+    </div>
+    <div class="lunch">
+      <span class="circle green"></span>
+      <h5>Lunch</h5>
+    </div>
+    <div class="dinner">
+      <span class="circle olive"></span>
+      <h5>Dinner</h5>
+    </div>
+    <div class="snack">
+      <span class="circle brown"></span>
+      <h5>Snack</h5>
+    </div>
+    <span class="glyphicon glyphicon-chevron-left" id="hide-chevron" aria-hidden="true"></span>
+    <div class="details-left">
+      <p>*s = servings per recipe.</p>
+    </div>
+    <div class="details-right">
+      <p>**click image for options</p>
+    </div>
+  </div>
+</div>
+
+<div class="row weekly-planner" id="offset-margins">
+  <span class="glyphicon glyphicon-chevron-right" id="unhide-chevron" aria-hidden="true"></span>
+  <% @days_from_this_week.each do |day| %>
+	<div class="one-day col-md-4 col-xs-4 col-sm-4">
+	  <h2 class="one-day-header"><%= day.strftime("%A") %></h2>
+
+	  <div class="meals">
+	    <div class="breakfast">
+
+	      <a class="add-breakfast">
+	      	<div class="add-breakfast-box">
+	      	  <span class="glyphicon glyphicon-plus" id="hide-chevron" aria-hidden="true"></span>
+	      	  <h3>Add breakfast</h3>
+	      	</div>
+	      </a>
+
+	    </div>
+
+	    <div class="snack1">
+
+	      <a class="add-snack1">
+	      	<div class="add-snack1-box">
+	      	  <span class="glyphicon glyphicon-plus" id="hide-chevron" aria-hidden="true"></span>
+	      	  <h3>Add Snack</h3>
+	      	</div>
+	      </a>
+	      
+	    </div>
+
+	    <div class="lunch">
+
+	      <a class="add-lunch">
+	      	<div class="add-lunch-box">
+	      	  <span class="glyphicon glyphicon-plus" id="hide-chevron" aria-hidden="true"></span>
+	      	  <h3>Add Lunch</h3>
+	      	</div>
+	      </a>
+	      
+	    </div>
+
+	    <div class="snack2">
+
+	      <a class="add-snack2">
+	      	<div class="add-snack2-box">
+	      	  <span class="glyphicon glyphicon-plus" id="hide-chevron" aria-hidden="true"></span>
+	      	  <h3>Add Snack</h3>
+	      	</div>
+	      </a>
+	      
+	    </div>
+
+	    <div class="dinner">
+
+	      <a class="add-dinner">
+	      	<div class="add-dinner-box">
+	      	  <span class="glyphicon glyphicon-plus" id="hide-chevron" aria-hidden="true"></span>
+	      	  <h3>Add Dinner</h3>
+	      	</div>
+	      </a>
+	      
+	    </div>
+	  </div>
+	</div>
+  <% end %>
+</div>
+
+<script>
+  $(document).ready(function() {
+  	$('#hide-chevron').click(function() {
+      console.log("checked")
+        $('.planner-instructions').addClass('closed');
+        $('.planner-instructions').removeClass('open');
+        $('.planner-instructions').animate({width:'0px'}, 500);
+        $('.weekly-planner').animate({top:'-3em'}, 500);
+        $('#unhide-chevron').delay(500).css('display', 'block');
+     });
+
+  	$('#unhide-chevron').click(function() {
+  		$('.planner-instructions').addClass('open');
+        $('.planner-instructions').removeClass('closed');
+        $('.planner-instructions').animate({width:'100%'}, 500);
+        $('.weekly-planner').animate({top:'0em'}, 500);
+        $('#unhide-chevron').css('display', 'none');
+  	});
+
+
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
