@@ -13,6 +13,8 @@ class Recipe < ActiveRecord::Base
                                    dependent:   :destroy   
 
   ratyrate_rateable "review"
+  # has_many :rates, foreign_key: "rateable_id"
+  has_many :rating_caches, as: :cacheable, foreign_key: "cacheable_id"
 
   acts_as_commontable
 
@@ -52,9 +54,9 @@ class Recipe < ActiveRecord::Base
               :cookware,
               :ratings_count,
               :ratings_average,
+              :my_favorites,
               :trending,
-              :cooked,
-              :more
+              :cooked
               ]
 
 
@@ -100,6 +102,17 @@ class Recipe < ActiveRecord::Base
         order("recipes.difficulty #{ direction }")
       when /^cook_time_/
         order("recipes.cook_time #{ direction }")
+      when /^total_time_/
+        # order("recipes.cook_time + recipes.prep_time #{ direction 
+        order("COALESCE(recipes.cook_time,0) + COALESCE(recipes.prep_time,0) #{ direction }")
+      when /^ratings_average_/
+        order("rating_caches.avg #{ direction }").includes(:rating_caches)
+      when /^ratings_count_/
+        order("rating_caches.qty #{ direction }").includes(:rating_caches)
+        # order("rates.stars #{ direction }").includes(:rates)
+      when /^my_favorites_/
+        order("rates.stars #{ direction }").includes(:rates)
+        # order("rates. #{ direction }").includes(:rates)
       else
         raise(ArgumentError, "Invalid sort option: #{ sort_option.inspect }")
       end
@@ -166,16 +179,12 @@ class Recipe < ActiveRecord::Base
     )
   }
 
-  scope :more, lambda { |more|
-    # order("recipes.created_at desc")
-  }
-
   def self.options_for_sort_by_ingredients
     [
       ['Meat',1,'Beef'],
       ['Chicken',2],
       ['Soup',3],
-      ['Vegetarian',4],
+      ['Vegetarian',4,'vegetable'],
       ['Vegan',5],
       ['Fish',6],
       ['Lobster',7],
@@ -204,7 +213,8 @@ class Recipe < ActiveRecord::Base
       ['Mexican', 6],
       ['Salad', 7],
       ['Seafood', 8],
-      ['Soup', 9]
+      ['Soup', 9],
+      ['Mediterranean', 10]
     ]
   end
 
@@ -252,13 +262,17 @@ class Recipe < ActiveRecord::Base
       ['Oldest', 'created_at_asc'],
       # ['Difficulty (hardest first)',       'difficulty_desc'],
       # ['Difficulty (easiest first)',       'difficulty_asc'],
-      ['Cook Time (longest first)',        'cook_time_desc'],
-      ['Cook Time (shortest first)',       'cook_time_asc'],
-      ['Prep Time (longest first)',        'prep_time_desc'],
-      ['Prep Time (shortest first)',       'prep_time_asc'],
-      ['Average Rating',       'prep_time_asc'],
+      # ['Cook Time (longest first)',        'cook_time_desc'],
+      # ['Cook Time (shortest first)',       'cook_time_asc'],
+      # ['Prep Time (longest first)',        'prep_time_desc'],
+      # ['Prep Time (shortest first)',       'prep_time_asc'],
+      ['Time (shortest first)',              'total_time_asc'],
+      ['Time (longest first)',               'total_time_desc'],
+      ['Average Rating',                     'ratings_average_asc'],
+      ['Most Rated',                         'ratings_count_asc'],
+      ['My Favorites',                       'my_favorites_asc'],
       # ['Lowest Rating',       'prep_time_asc'],
-      ['Popular',       'prep_time_asc'],
+      # ['Popular',       'prep_time_asc'],
       # ['Fewest Ratings',       'prep_time_asc']
     ]
   end
@@ -273,6 +287,9 @@ class Recipe < ActiveRecord::Base
   end
 
   def self.options_for_ratings_average
+  end
+
+  def self.options_for_my_favorites
   end
 
   def self.options_for_trending

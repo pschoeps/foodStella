@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
 
   has_many :cookeds,             foreign_key: "cooker_id",
                                   dependent:   :destroy
-  # has_many :following, through: :relationships, source: :followed
+  has_many :cooked, through: :cookeds, source: :cooked
 
   has_many :others_photos, dependent: :destroy
   

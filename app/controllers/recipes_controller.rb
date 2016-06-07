@@ -95,6 +95,7 @@ class RecipesController < ApplicationController
         prep_time: Recipe.options_for_prep_time,
         ratings_count: Recipe.options_for_ratings_count,
         ratings_average: Recipe.options_for_ratings_average,
+        my_favorites: Recipe.options_for_my_favorites,
         cooked: Recipe.options_for_cooked,
         trending: Recipe.options_for_trending,
       },
@@ -103,7 +104,13 @@ class RecipesController < ApplicationController
     ) or return
 
     @recipes = @filterrific.find.page(params[:page])
-
+puts '======================================================================'
+@recipes.each do |r|
+  @cach = RatingCache.where(:cacheable_id => r.id)
+  # @cach.each do |c|
+  #   puts c.avg
+  # end
+end
     respond_to do |format|
       format.html
       format.js

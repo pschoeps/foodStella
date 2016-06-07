@@ -120,12 +120,15 @@
 
             <li class="control-group col-md-4 inline">
               <%= f.label :difficulty, "Difficulty:", class: "control-label" %>
-              <div class="controls"><%= f.select(:difficulty, options_for_select([['Easy', 1], ['Moderate', 2], ["Difficult", 3]])) %></div>
+              <div class="controls"><%= f.select(:difficulty, options_for_select([['Easy', 1], ['Moderate', 2], ["Difficult", 3]]), :include_blank=>true) %></div>
             </li>
 
             <li class="control-group">
               <%= f.label :category, "Category:", class: "control-label" %>
-              <div class="controls"><%= f.select(:category, options_for_select([['Mediterranean', 1], ['Chinese', 2], ["Mexican", 3]])) %></div>
+              <div class="controls"><%= f.select(:category, options_for_select(Recipe.options_for_style), :include_blank=>true) %></div>
+              <!-- [['Mediterranean', 1], ['Chinese', 2], ["Mexican", 3]])) %></div> -->
+              
+              
             </li>
 
             <li class="control-group">

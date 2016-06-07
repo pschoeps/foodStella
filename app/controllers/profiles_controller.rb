@@ -1,6 +1,52 @@
 class ProfilesController < ApplicationController
 	respond_to :html, :json
 
+	def preferences
+	    @followed_recipes = current_user.following
+	    @followed_recipe_ingredient_ids = []
+	    @followed_recipes.each do |r|
+	      r.ingredients.each do |i|
+	        @followed_recipe_ingredient_ids.push(i.id)
+	      end
+	    end
+	    @user_recipes = current_user.recipes
+	    @created_recipe_ingredient_ids = []
+	    @user_recipes.each do |r|
+	      r.ingredients.each do |i|
+	        @created_recipe_ingredient_ids.push(i.id)
+	      end
+	    end
+	    @cooked_ids = current_user.cooked.pluck(:cooked_id)
+	    @cooked_categories = []
+	    @cooked_recipes = Recipe.find(@cooked_ids)
+	    @cooked_recipe_ingredient_ids = []
+	    @cooked_recipes.each do |r|
+	      @cooked_categories.push(r.category)
+	      r.ingredients.each do |i|
+	        @cooked_recipe_ingredient_ids.push(i.id)
+	      end
+	    end
+	    @json = {
+	      user_id: current_user.id,
+	      averge_time_cooking: current_user.profile.average_cook_time,
+	      cookware_preferences: current_user.profile.cookware_preferences,
+	      preferred_ingredients: [],
+	      deferred_ingredients: [],
+	      following_recipe_ids: @followed_recipes.pluck(:id),
+	      following_recipe_categories: @followed_recipes.pluck(:category),
+	      follow_recipe_ingredient_ids: @followed_recipe_ingredient_ids,
+	      created_recipe_ids: @user_recipes.pluck(:id),
+	      created_recipe_categories: @user_recipes.pluck(:category),
+	      created_recipe_ingredient_ids: @created_recipe_ingredient_ids,
+	      cooked_recipe_ids: @cooked_ids,
+	      cooked_recipe_categories: @cooked_categories,
+	      cooked_recipe_ingredient_ids: @cooked_recipe_ingredient_ids
+	    }
+	    # @json = Ingredient.all()
+	    # @json = Quantity.select(Quantity.attribute_names - ['ingredient'])
+	    render json: JSON.pretty_generate(@json.as_json)
+	end
+
 	def new
 		@profile = current_user.build_profile
 	end
