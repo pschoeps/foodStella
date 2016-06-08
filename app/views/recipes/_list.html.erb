@@ -54,8 +54,14 @@
 <div class="clear" style="text-align:center;">
   <!-- <div class="col-sm-9 sidebar-content" id="show-more"> -->
     <% unless recipes.total_pages == recipes.current_page %>
-       <%= link_to 'Load More', recipes_next_page_path(:page => recipes.next_page), :remote => true, :id => 'show_more_link' %>
+       <%= link_to 'Load More', recipes_next_page_path(:page => recipes.next_page, :filterrific => params[:filterrific]), :remote => true, :id => 'show_more_link' %>
+
+       <!-- %= recipes.current_page.to_s + '/' + recipes.total_pages.to_s + ' Next: ' + recipes.next_page.to_s %> -->
     <% end %>
   <!-- </div> -->
   <!-- %= will_paginate recipes %> -->
 </div>
+
+<script>
+  resetStars();
+</script>

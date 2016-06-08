@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531144413) do
+ActiveRecord::Schema.define(version: 20160607160816) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,6 +114,7 @@ ActiveRecord::Schema.define(version: 20160531144413) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "abbreviated"
   end
 
   create_table "instructions", force: true do |t|
@@ -242,7 +243,6 @@ ActiveRecord::Schema.define(version: 20160531144413) do
     t.integer  "servings"
     t.string   "website_url"
     t.text     "cookware"
-    t.integer  "scraping_id"
     t.string   "remote_photo_url"
   end
 

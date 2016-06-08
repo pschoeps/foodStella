@@ -30,7 +30,11 @@ FoodStella::Application.routes.draw do
 
   end
 
-  resources :profiles
+  resources :profiles do
+    member do
+      get 'preferences'
+    end
+  end
   # resources :preferred_foods
 
   resources :recipes  do

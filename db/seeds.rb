@@ -11,37 +11,37 @@
 # Recipe.destroy_all
 
 # Manually clear all tables related to recipes
-sql = "truncate table average_caches"
+sql = "TRUNCATE table average_caches RESTART IDENTITY"
 ActiveRecord::Base.connection.execute(sql)
-sql = "truncate table commontator_comments"
+sql = "TRUNCATE table commontator_comments RESTART IDENTITY"
 ActiveRecord::Base.connection.execute(sql)
-sql = "truncate table commontator_subscriptions"
+sql = "TRUNCATE table commontator_subscriptions RESTART IDENTITY"
 ActiveRecord::Base.connection.execute(sql)
-sql = "truncate table commontator_threads"
+sql = "TRUNCATE table commontator_threads RESTART IDENTITY"
 ActiveRecord::Base.connection.execute(sql)
-sql = "truncate table cookeds"
+sql = "TRUNCATE table cookeds RESTART IDENTITY"
 ActiveRecord::Base.connection.execute(sql)
-sql = "truncate table events"
+sql = "TRUNCATE table events RESTART IDENTITY"
 ActiveRecord::Base.connection.execute(sql)
-sql = "truncate table ingredients"
+sql = "TRUNCATE table ingredients RESTART IDENTITY"
 ActiveRecord::Base.connection.execute(sql)
-sql = "truncate table instructions"
+sql = "TRUNCATE table instructions RESTART IDENTITY"
 ActiveRecord::Base.connection.execute(sql)
-sql = "truncate table others_photos"
+sql = "TRUNCATE table others_photos RESTART IDENTITY"
 ActiveRecord::Base.connection.execute(sql)
-sql = "truncate table overall_averages"
+sql = "TRUNCATE table overall_averages RESTART IDENTITY"
 ActiveRecord::Base.connection.execute(sql)
-sql = "truncate table quantities"
+sql = "TRUNCATE table quantities RESTART IDENTITY"
 ActiveRecord::Base.connection.execute(sql)
-sql = "truncate table rates"
+sql = "TRUNCATE table rates RESTART IDENTITY"
 ActiveRecord::Base.connection.execute(sql)
-sql = "truncate table rating_caches"
+sql = "TRUNCATE table rating_caches RESTART IDENTITY"
 ActiveRecord::Base.connection.execute(sql)
-sql = "truncate table recipes"
+sql = "TRUNCATE table recipes RESTART IDENTITY"
 ActiveRecord::Base.connection.execute(sql)
-sql = "truncate table relationships"
+sql = "TRUNCATE table relationships RESTART IDENTITY"
 ActiveRecord::Base.connection.execute(sql)
-sql = "truncate table votes"
+sql = "TRUNCATE table votes RESTART IDENTITY"
 ActiveRecord::Base.connection.execute(sql)
 
 records = JSON.parse(File.read('app/assets/data/recipes_with_serving_sizes.json'))
@@ -63,6 +63,17 @@ records.each do |record|
     meal_type = 4
   else
     meal_type = 3
+  end
+
+  styles = ['burgers','casserole','chili','healthy','italian','mexican','salad','seafood','soup','mediterranean']
+  category = ''
+  # styles.each_with_index do |s, index|
+  #   if record['meal_type'].downcase.include? s
+  #     category = styles[index]
+  #   end
+  # end
+  if category.blank?
+    category = record['meal_type'].downcase
   end
 
   if record['servings:'] == ''
@@ -112,7 +123,7 @@ records.each do |record|
   	difficulty: difficulty,
   	meal_type: meal_type,
   	servings: servings,
-    category: record['meal_type']
+    category: category
   })
 
 
@@ -129,10 +140,11 @@ records.each do |record|
     end
   end
 
-  ingredients = JSON.parse(File.read('app/assets/data/recipe_ingredients_parsed_with_units_2.json'))
+  ingredients = JSON.parse(File.read('app/assets/data/recipe_ingredients_6_7_16.json'))
   ingredients.each do |ingredient|
     if ingredient['recipe_id'] == record['recipe_id']
       new_ingredient = Ingredient.find_or_create_by!(name: ingredient['ingredient'])
+      new_ingredient.update_attributes(:abbreviated => ingredient['abbreviated'])
 
       if ingredient['unit'].downcase.include? "cup"
         unit = 1
