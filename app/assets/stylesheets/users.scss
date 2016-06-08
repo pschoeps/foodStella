@@ -621,16 +621,77 @@ input:-webkit-autofill {
 
 		.meals {
 			position: relative;
+			width: 100%;
+			height: 100em;
 
-			div {
+			.add-meal-short {
 				width: 100%;
-				height: 6em;
-				border: .75px dashed $medium;
+				height: 2em;
 				margin-bottom: 10px;
 				position: relative;
 				float: left;
 
-				span {
+				h3 {
+					font-size: .75em;
+    				position: absolute;
+    				float: left;
+    				margin: 0;
+    				width: 100%;
+    				text-align: center;
+    				text-decoration: none;
+    				color: #ababab;
+    				bottom: 7px;
+    				border-bottom: 1px dashed $medium;
+    				height: 15px;
+				}
+
+			}
+
+			.add-meal-big {
+				border: .75px dashed $medium;;
+			}
+
+			#hidden {
+				display: none;
+			}
+
+
+			.meal, .mobile-event {
+				width: 100%;
+				height: 6em;
+				margin-bottom: 10px;
+				position: relative;
+				float: left;
+				background-size: cover;
+    			background-repeat: no-repeat;
+
+				.servings {
+					position: absolute;
+					left: 0;
+					top: 0;
+					padding-left: 3px;
+					padding-right: 3px;
+					height: 1.5em;
+					color: $green;
+					background-color: rgba(171, 171, 171, .7);
+					text-align: center;
+
+				}
+
+				.event-title {
+					width: 100%;
+    				height: 1.5em;
+    				color: white;
+    				font-size: .75em;
+    				letter-spacing: .5px;
+    				position: absolute;
+    				bottom: 0;
+    				padding-left: 6px;
+    				padding-right: 6px;
+    			}
+
+
+				.glyphicon {
 					    color: $medium;
     					position: absolute;
     					text-align: center;
@@ -650,6 +711,63 @@ input:-webkit-autofill {
     					color: $medium;
     					bottom: 2.5em;
 				}
+			}
+		}
+	}
+}
+
+.recipe-selection-mobile {
+	position: absolute;
+    top: 12.8em;
+    background-color: rgba(255, 255, 255, .9);
+    width: 100%;
+    z-index: 40;
+    height: 100%;
+    display: none;
+
+    .recipe-selection-header {
+    	width: 100%;
+    	height: 5em;
+
+    	.glyphicon {
+    		position: absolute;
+    		top: 10px;
+    		right: 10px;
+    		font-size: 2em;
+    		color: $medium;
+    	}
+
+    	h3 {
+    		text-align: center;
+    		font-size: 1em;
+    		color: $medium;
+    	}
+
+    	h2 {
+    		text-align: center;
+    		font-size: 2em;
+    		color: $green;
+    		margin-top: 0;
+    	}
+    }
+	.meal-selection {
+
+		.recipe-title {
+			position: absolute;
+			width: 100%;
+			bottom: 0;
+			a {
+				color: white;
+			}
+		}
+		button {
+			width: 100%;
+			float: left;
+			color: $medium;
+			font-size: 1.25em;
+
+			span {
+				float: right;
 			}
 		}
 	}
