@@ -42,8 +42,9 @@ class ProfilesController < ApplicationController
 	      cooked_recipe_categories: @cooked_categories,
 	      cooked_recipe_ingredient_ids: @cooked_recipe_ingredient_ids
 	    }
+	    # @json = Recipe.all()
 	    # @json = Ingredient.all()
-	    # @json = Quantity.select(Quantity.attribute_names - ['ingredient'])
+	    # @json = Quantity.select(Quantity.attribute_names - ['ingredient','decimal'])
 	    render json: JSON.pretty_generate(@json.as_json)
 	end
 

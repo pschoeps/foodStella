@@ -56,7 +56,9 @@ class Recipe < ActiveRecord::Base
               :ratings_average,
               :my_favorites,
               :trending,
-              :cooked
+              :cooked,
+              :owns,
+              :following
               ]
 
 
@@ -106,13 +108,11 @@ class Recipe < ActiveRecord::Base
         # order("recipes.cook_time + recipes.prep_time #{ direction 
         order("COALESCE(recipes.cook_time,0) + COALESCE(recipes.prep_time,0) #{ direction }")
       when /^ratings_average_/
-        order("rating_caches.avg #{ direction }").includes(:rating_caches)
+        # order("rating_caches.avg #{ direction }").includes(:rating_caches)
       when /^ratings_count_/
-        order("rating_caches.qty #{ direction }").includes(:rating_caches)
-        # order("rates.stars #{ direction }").includes(:rates)
+        # order("rating_caches.qty #{ direction }").includes(:rating_caches)
       when /^my_favorites_/
-        order("rates.stars #{ direction }").includes(:rates)
-        # order("rates. #{ direction }").includes(:rates)
+        # order("rates.stars #{ direction }").includes(:rates)
       else
         raise(ArgumentError, "Invalid sort option: #{ sort_option.inspect }")
       end
@@ -128,24 +128,57 @@ class Recipe < ActiveRecord::Base
     # where(recipes[:category].eq("#{style[0]}"))
     styles = []
     style.each do |s|
-      styles.push(options_for_style[s-1][0].downcase)
+      styles.push(options_for_style[s-1][0].downcase) # use strings instead of keys
     end
     pg_styles = styles.map {|val| "%#{val}%" }
     where('lower(recipes.category) ILIKE ANY ( array[?] )', pg_styles)
   }
 
   scope :difficulty, lambda { |difficulty|
-    recipes = Recipe.arel_table
-    where(recipes[:difficulty].eq("#{difficulty[0]}"))
+    # recipes = Recipe.arel_table
+    # where(recipes[:difficulty].eq("#{difficulty[0]}"))
+    difficulty = difficulty.map(&:to_s)
+    where(difficulty: [*difficulty])
   }
 
   scope :meal_type, lambda { |meal_type|
-     recipes = Recipe.arel_table
-     where(recipes[:meal_type].eq("#{meal_type[0]}"))
+     # recipes = Recipe.arel_table
+     # where(recipes[:meal_type].eq("#{meal_type[0]}"))
+     meal_type = meal_type.map(&:to_s)
+     where(meal_type: [*meal_type])
   }
 
   scope :with_created_at_gte, lambda { |ref_date|
     where('recipes.created_at >= ?', ref_date)
+  }
+
+  scope :owns, lambda { |user_id|
+     recipes = Recipe.arel_table
+     where(recipes[:user_id].eq("#{user_id}"))
+  }
+
+  scope :following, lambda { |user_id|
+     recipes = Recipe.arel_table
+     relationships = Relationship.arel_table
+     # let AREL generate a complex SQL query
+     where(
+       Relationship \
+         .where(relationships[:followed_id].eq(recipes[:id])) \
+         .where(relationships[:follower_id].eq("#{user_id}")) \
+         .exists
+     )
+  }
+
+  scope :cooked, lambda { |user_id|
+     recipes = Recipe.arel_table
+     cookeds = Cooked.arel_table
+     # let AREL generate a complex SQL query
+     where(
+       Cooked \
+         .where(cookeds[:cooked_id].eq(recipes[:id])) \
+         .where(cookeds[:cooker_id].eq("#{user_id}")) \
+         .exists
+     )
   }
 
   scope :sort_by_ingredients, lambda { |ingredient_ids|
@@ -154,10 +187,9 @@ class Recipe < ActiveRecord::Base
     ingredients = Ingredient.arel_table
     # get a reference to the filtered table
     recipes = Recipe.arel_table
-
     main_ingredients = []
     ingredient_ids.each do |i|
-      main_ingredients.push(options_for_sort_by_ingredients[i-1][0].downcase)
+      main_ingredients.push(options_for_sort_by_ingredients[i-1][0].downcase) # get ingredient name
       if options_for_sort_by_ingredients[i-1][2]
         main_ingredients.push(options_for_sort_by_ingredients[i-1][2].downcase) # for alternate names
       end
@@ -268,9 +300,9 @@ class Recipe < ActiveRecord::Base
       # ['Prep Time (shortest first)',       'prep_time_asc'],
       ['Time (shortest first)',              'total_time_asc'],
       ['Time (longest first)',               'total_time_desc'],
-      ['Average Rating',                     'ratings_average_asc'],
-      ['Most Rated',                         'ratings_count_asc'],
-      ['My Favorites',                       'my_favorites_asc'],
+      ['Average Rating (x)',                     'ratings_average_asc'],
+      ['Most Rated (x)',                         'ratings_count_asc'],
+      ['My Favorites (x)',                       'my_favorites_asc'],
       # ['Lowest Rating',       'prep_time_asc'],
       # ['Popular',       'prep_time_asc'],
       # ['Fewest Ratings',       'prep_time_asc']
@@ -296,6 +328,12 @@ class Recipe < ActiveRecord::Base
   end
 
   def self.options_for_cooked
+  end
+
+  def self.options_for_following
+  end
+
+  def self.options_for_owns
   end
 
   # Validates the size of an uploaded picture.

@@ -1,8 +1,8 @@
 <%= form_for_filterrific @filterrific do |f| %>
   
   <div class='sort-by'>
-    <!-- <div id="sort-by-label">Sort By</div> -->
-    <!-- %= f.select(:sorted_by, @filterrific.select_options[:sorted_by]) %> -->
+    <div id="sort-by-label">Sort By</div>
+    <%= f.select(:sorted_by, @filterrific.select_options[:sorted_by]) %>
   </div>
   
   <div class="filter-search">
@@ -98,6 +98,8 @@
       </ul>
     </div> 
 
+
+
     <!-- <div class="dropdown time">
       <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
         Time
@@ -135,28 +137,28 @@
       </ul>
     </div> -->
 
-    <!-- <div class="dropdown more">
+    <div class="dropdown more">
       <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-        More
+        My Recipes
         <span class="caret"></span>
       </button>
       <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
         <li id="checkbox">
          <label class="checkbox">
-            Latest
-            %= check_box_tag("filterrific[latest]") %>
+            Recipes I've Created
+            <%= check_box_tag("filterrific[owns]", current_user.id) %>
           </label>
           <label class="checkbox">
-            Trending
-            %= check_box_tag("filterrific[rating]",'trending') %>
+            Recipes I'm Following
+            <%= check_box_tag("filterrific[following]", current_user.id) %>
           </label>
           <label class="checkbox">
             Recipes I've Cooked
-            %= check_box_tag("filterrific[cooked]",'cooked') %>
+            <%= check_box_tag("filterrific[cooked]",current_user.id) %>
           </label>
         </li>
       </ul>
-    </div> -->
+    </div>
 
  
 
