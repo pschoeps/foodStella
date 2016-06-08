@@ -80,7 +80,7 @@ http://www.strangerstudios.com/sandbox/pagination/diggstyle.php */
 .user_pic {
   width: 120px;
   height: 120px;
-  background-color: $dark;
+  background-color: #4D4D4D; 
   background-size: auto 100%;
   background-position: center center;
   /*margin: -60px auto 0;*/
