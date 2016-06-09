@@ -1,0 +1,241 @@
+<%= render 'layouts/recipe_css_variables' %>
+
+<div class="row week-nav">
+  <div class="col-sm-12 disable-margins disable-padding planner-mobile-header">
+    <div class="spatula-mobile"><%= image_tag 'icons/spatula-selected.png' %></div>
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <h2>Week 1</h2>
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
+  </div>
+</div>
+
+<div class="row planner-view-control">
+  <div class="col-sm-6 disable-margins disable-padding week-view">
+    <button class="week-view-button" id="selected">Week View</button>
+  </div>
+  <div class="col-sm-6 disable-margins disable-padding day-view">
+    <button class="day-view-button">Day View</button>
+  </div>
+</div>
+
+<div class="row planner-instructions open">
+  <div class="col-sm-12 disable-margins disable-padding">
+    <div class="breakfast">
+      <span class="circle tan"></span>
+      <h5>Breakfast</h5>
+    </div>
+    <div class="lunch">
+      <span class="circle green"></span>
+      <h5>Lunch</h5>
+    </div>
+    <div class="dinner">
+      <span class="circle olive"></span>
+      <h5>Dinner</h5>
+    </div>
+    <div class="snack">
+      <span class="circle brown"></span>
+      <h5>Snack</h5>
+    </div>
+    <span class="glyphicon glyphicon-chevron-left" id="hide-chevron" aria-hidden="true"></span>
+    <div class="details-left">
+      <p>*s = servings per recipe.</p>
+    </div>
+    <div class="details-right">
+      <p>**click image for options</p>
+    </div>
+  </div>
+</div>
+
+<div class="row weekly-planner" id="offset-margins">
+  <span class="glyphicon glyphicon-chevron-right" id="unhide-chevron" aria-hidden="true"></span>
+  <% @days_from_this_week.each do |day| %>
+	<div class="one-day col-md-4 col-xs-4 col-sm-4">
+	  <h2 class="one-day-header"><%= day.strftime("%A") %></h2>
+
+	  <div class="meals" id="<%= day %>">
+
+        <% @meal_types.each do |m| %>
+          <div class="meal-types" id="<%= m[3] %>">
+            <% events = @events.where(:start_at => day.strftime + m[1]) %>
+            <% events.each do |e| %>
+              <% recipe = e.get_recipe(e.recipe_id) %>
+	  	      <div class="meal">
+	            <a class="mobile-event fc-event-container <%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>">
+	              <span class="servings"><%= recipe.servings %>s</span>
+	              <span class="event-title" style="background-color: <%= m[2] %>"><%= truncate(recipe.name, length: 14) %></span>
+	            </a>
+	          </div>
+	        <% end %>
+
+	      </div>
+
+	      <% if events.length == 0 %>
+	        <div class="meal add-meal-big <%=day %>-<%= m[3] %>-big">
+	          <a class="add-meal" data="<%= day %>" data-one="<%= m[0] %>" data-two="<%= day.strftime("%A") %>" data-three="<%= m[1] %>" data-four="<%=m[3] %>" data-five="<%= m[2] %>">
+	      	    <div class="add-meal-box">
+	      	      <span class="glyphicon glyphicon-plus" id="hide-chevron" aria-hidden="true"></span>
+	      	      <h3>Add <%= m[0] %></h3>
+	      	    </div>
+	          </a>
+	        </div>
+
+	        <div class="add-meal-short <%=day %>-<%= m[3] %>-small" id="hidden">
+	          <a class="add-meal" data="<%= day %>" data-one="<%= m[0] %>" data-two="<%= day.strftime("%A") %>" data-three="<%= m[1] %>" data-four="<%=m[3] %>" data-five="<%= m[2] %>">
+	      	    <div class="add-meal-box">
+	      	      <h3>Add <%= m[0] %></h3>
+	      	    </div>
+	          </a>
+	        </div>
+	      <% else %>
+	      	<div class="meal add-meal-big <%=day %>-<%= m[3] %>-big" id="hidden">
+	          <a class="add-meal" data="<%= day %>" data-one="<%= m[0] %>" data-two="<%= day.strftime("%A") %>" data-three="<%= m[1] %>" data-four="<%=m[3] %>" data-five="<%= m[2] %>">
+	      	    <div class="add-meal-box">
+	      	      <span class="glyphicon glyphicon-plus" id="hide-chevron" aria-hidden="true"></span>
+	      	      <h3>Add <%= m[0] %></h3>
+	      	    </div>
+	          </a>
+	        </div>
+
+	        <div class="add-meal-short <%=day %>-<%= m[3] %>-small">
+	          <a class="add-meal" data="<%= day %>" data-one="<%= m[0] %>" data-two="<%= day.strftime("%A") %>" data-three="<%= m[1] %>" data-four="<%=m[3] %>" data-five="<%= m[2] %>">
+	      	    <div class="add-meal-box">
+	      	      <h3>Add <%= m[0] %></h3>
+	      	    </div>
+	          </a>
+	        </div>
+	      <% end %>
+	    <% end %>
+
+	  </div>
+	</div>
+  <% end %>
+</div>
+
+<%= render(
+    partial: 'recipe_selection_mobile',
+    locals: {
+      snacks: @snacks,
+      side_dishes: @side_dishes,
+      main_dishes: @main_dishes,
+      desserts: @desserts,
+      drinks: @drinks,
+      expanded: @expanded
+    }
+  ) %>
+
+<script>
+  $(document).ready(function() {
+  	$('#hide-chevron').click(function() {
+      console.log("checked")
+        $('.planner-instructions').addClass('closed');
+        $('.planner-instructions').removeClass('open');
+        $('.planner-instructions').animate({width:'0px'}, 500)
+        $('.weekly-planner').animate({top:'-3em'}, 500);
+        $('#unhide-chevron').css('display', 'block');
+     });
+
+  	$('#unhide-chevron').click(function() {
+  		$('.planner-instructions').addClass('open');
+        $('.planner-instructions').removeClass('closed');
+        $('.planner-instructions').animate({width:'100%'}, 500);
+        $('.weekly-planner').animate({top:'0em'}, 500);
+        $('#unhide-chevron').css('display', 'none');
+  	});
+
+  	$('.add-meal').click(function() { 
+  		date = $(this).attr('data');
+  		meal = $(this).attr('data-one');
+  		weekDay = $(this).attr('data-two')
+  		startAt= $(this).attr('data-three')
+  		mealData = $(this).attr('data-four')
+  		mealColor = $(this).attr('data-five')
+  		$("#meal-day").attr("data", date);
+  		$("#meal-day").attr("data-one", meal);
+  		$("#meal-day").attr("data-two", weekDay)
+  		$("#meal-day").attr("data-three", startAt)
+  		$("#meal-day").attr("data-four", mealData)
+  		$("#meal-day").attr("data-five", mealColor)
+  		$("#meal-day").text(weekDay + " " + meal);
+  		$(".recipe-selection-mobile").css("display", "block");
+  	});
+
+  	$('#hide-recipe-selection').click(function() { 
+  		$('.recipe-selection-mobile').css('display', 'none');
+  	});
+
+  	$('.fc-event').click(function() {
+  		date = $("#meal-day").attr('data');
+  		meal = $("#meal-day").attr('data-one');
+  		weekDay = $("#meal-day").attr('data-two')
+  		time = $("#meal-day").attr('data-three')
+  		mealData = $("#meal-day").attr('data-four')
+  		mealColor = $("#meal-day").attr('data-five')
+  		recipeFriendlyName = $(this).attr('data-three')
+  		recipeServings = $(this).attr('data-two')
+  		recipeId = $(this).attr('data-one')
+  		recipeName = $(this).attr('data')
+  		startAt = date + time 
+  		console.log(date, meal, weekDay, mealData, recipeId, recipeName, startAt)
+
+  		var data = {
+                  event: {
+                    start_at: startAt,
+                    recipe_id: recipeId,
+                    recipe_name: recipeName
+                  }
+                };
+
+  		$.ajax({//ajax call 
+                  type:'POST',
+                  data: data,
+                  url:'/events',
+              
+                  success:function (response) {
+                    console.log(response)
+                    element = "#" + date 
+                    childElement = "#" + mealData
+                    hideMealNameBig = "." + date + "-" + mealData + "-big"
+                    hideMealNameSmall = "." + date + "-" + mealData + "-small"
+                    console.log(hideMealNameSmall, hideMealNameBig)
+                    
+                    $(element).find(childElement).append("<div class='meal'><a class='mobile-event fc-event-container "+recipeName+"'><span class='servings'>"+recipeServings+"s</span><span class='event-title' style='background-color: "+mealColor+"'>"+recipeFriendlyName+"</span></a></div>")
+
+                    $(hideMealNameBig).attr("id", "hidden")
+                    $(hideMealNameSmall).removeAttr("id")
+
+                  }
+
+                });//end ajax call
+
+
+
+  	})
+
+  	
+
+
+  });
+</script>
+<!--div class="meal">
+	          <a class="mobile-event fc-event-container <= e.get_recipe(e.recipe_id).get_friendly_name %>id-<= e.recipe_id %>">
+	            <span class="servings"><= recipe.servings %>s</span>
+	            <span class="event-title" style="background-color: <= m[2] %>"><= truncate(recipe.name, length: 14) %></span>
+	          </a>
+	        </div-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

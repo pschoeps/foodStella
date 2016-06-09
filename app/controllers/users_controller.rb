@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+   include MobileHelper
+   before_action :check_for_mobile
+
 	def dashboard
 		@recipe = current_user.recipes.build
 		@recipes = current_user.recipes
@@ -87,6 +90,15 @@ class UsersController < ApplicationController
 		@day_after_tom = [(DateTime.now + 2.days).strftime('%A - %B %-d, %Y'), (DateTime.now + 2.days).strftime('%Y-%m-%d')]
 
 		@day_counter = 3
+
+
+
+		#logic for mobile calendar view (weekly)
+		today = Date.today # Today's date
+		@days_from_this_week = (today.at_beginning_of_week..today.at_end_of_week).map
+		@meal_types = [["Breakfast", "T00:00:00", "#f5b266", "breakfast"], ["Snack", "T00:30:00", "#bc9c63", "snack1"], ["Lunch", "T01:00:00", "#819800", "lunch"], ["Snack", "T01:30:00", "#bc9c63", "snack2"], ["Dinner", "T02:00:00", "#796c2d", "dinner"]]
+
+
 
 	end
 

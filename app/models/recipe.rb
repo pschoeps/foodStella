@@ -20,7 +20,7 @@ class Recipe < ActiveRecord::Base
 
   has_many :instructions, dependent: :destroy
 
-  has_many :others_photos, dependent: :destroy, :order => 'id DESC'
+  has_many :others_photos, dependent: :destroy #, :order => 'id DESC'
   accepts_nested_attributes_for :others_photos, allow_destroy: true
 
   #mount profile picture for recipes
