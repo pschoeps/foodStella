@@ -6,6 +6,6 @@ $("#recipes-col").html("<%= js %>");
 
 
 <% f = escape_javascript(
-  render(partial: 'filterring_by', locals: { filterring_by: params[:filterrific] })
+  render(partial: 'filtering_by', locals: { filtering_by: params[:filterrific] })
 ) %>
-$(".filterring-tags").html("<%= f %>");
+$(".filtering-tags").html("<%= f %>");

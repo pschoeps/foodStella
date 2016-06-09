@@ -1,7 +1,7 @@
 <ul>
   <li><span>Filtering by:</span></li>
-  <% if filterring_by %>
-    <% filterring_by.each do |f, options| %>
+  <% if filtering_by %>
+    <% filtering_by.each do |f, options| %>
       <% if f != 'sorted_by' && f != 'search_query' %>
         <% if options.kind_of?(Array) %>
           <% options.each do |o| %>

@@ -9,7 +9,7 @@
   <div class="col-md-12 filter-bar">
     <%= render(
       partial: 'filter_form',
-      locals: {filterring_by: params[:filterrific] }
+      locals: {filtering_by: params[:filterrific] }
     ) %>
   </div>
 </div>
@@ -218,7 +218,7 @@
         $(this).remove();
      });
 
-     $(document).on('click','.filterring-tags li',function(){
+     $(document).on('click','.filtering-tags li',function(){
         var value = $(this).attr('data-value');
         var name = $(this).attr('data-name');
         var string = 'input[name="' + name + '"][value=' + value + ']';
