@@ -16,15 +16,17 @@ class Quantity < ActiveRecord::Base
 	            "Oz."
 	          when "3"
 	            "Tsp."
-	           when "4"
+	          when "4"
 	           	"Tbsp."
-	           when "5"
+	          when "5"
 	           	if amount.to_i > 1
 	           		"Pinches"
 	           	else
 	           		"Pinch"
 	           	end
-	          end
+	         else
+	         	""
+	         end
 		string
 	end
 end

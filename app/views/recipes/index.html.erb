@@ -7,7 +7,10 @@
 
 <div class= "row">
   <div class="col-md-12 filter-bar">
-    <%= render 'filter_form' %>
+    <%= render(
+      partial: 'filter_form',
+      locals: {filterring_by: params[:filterrific] }
+    ) %>
   </div>
 </div>
 
@@ -215,8 +218,11 @@
         $(this).remove();
      });
 
-     $(document).on('click','.dropdown',function(){
-        
+     $(document).on('click','.filterring-tags li',function(){
+        var value = $(this).attr('data-value');
+        var name = $(this).attr('data-name');
+        var string = 'input[name="' + name + '"][value=' + value + ']';
+        $(string).click();
       });
 });
 </script>

@@ -33,7 +33,7 @@
 		</div> -->
 
 		<div class="row">
-			<h4>Foods I Like
+			<h4>Ingredients I Like
 				<%= link_to "EDIT", '#', class: "edit", id: 'edit-liked_foods' if @editable %>
 			</h4>
 			<div class="col-xs-12 col-md-10">
@@ -43,13 +43,13 @@
 					:ok_button => 'Save',
 					:activator => "#edit-liked_foods",
 					:html_attrs => {maxlength: 800},
-					:place_holder => 'List some of your favorite foods'
+					:place_holder => 'List some of your favorite ingredients'
 				%>
 			</div>
 		</div>
 
 		<div class="row">
-			<h4>Foods I Don't Like
+			<h4>Ingredients I Don't Like
 				<%= link_to "EDIT", '#', class: "edit", id: 'edit-disliked_foods' if @editable %>
 			</h4>
 			<div class="col-xs-12 col-md-10">
@@ -59,7 +59,7 @@
 					:ok_button => 'Save',
 					:activator => "#edit-disliked_foods",
 					:html_attrs => {maxlength: 800},
-					:place_holder => "List some foods that you don't like"
+					:place_holder => "List some ingredients that you don't like"
 				%>
 			</div>
 		</div>

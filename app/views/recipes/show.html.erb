@@ -141,22 +141,11 @@
 							      <%= q.detail %>
 							</li>
 							 <% end %>
-						<% elsif @recipe.user_id == -1 %>
-							<% @recipe.ingredients.each do |i| %>
-							    <li>
-							    <% i.quantities.where(recipe_id: @recipe.id).each do |q| %>
-							      <%= q.amount %>
-							      <%= ' ' if q.unit != '' %>
-							      <%= q.get_unit(q.unit, q.amount) %>
-							      <%= ' ' %>
-							    <% end %>
-							    <%= i.name %>
-							</li>
-							<% end %>
+						<!-- % elsif @recipe.user_id == -1 %> -->
 						<% else %>
 							<% @recipe.ingredients.each do |i| %>
 							    <li>
-							    <% i.quantities.each do |q| %>
+							    <% i.quantities.where(recipe_id: @recipe.id).each do |q| %>
 							      <%= q.amount %>
 							      <%= ' ' if q.unit != '' %>
 							      <%= q.get_unit(q.unit, q.amount) %>

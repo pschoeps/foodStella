@@ -41,6 +41,7 @@ FoodStella::Application.routes.draw do
     member do
       get 'sidebar'
     end
+    get :autocomplete_ingredient_name, on: :collection
   end
   get 'recipes/:page/next_page' => 'recipes#next_page', as: :recipes_next_page
   # get "/recipes/side" => 'recipes#sidebar', as: 'sidebar'

@@ -1,5 +1,7 @@
 class RecipesController < ApplicationController
 
+  autocomplete :ingredient, :name #, :full => true
+
   def new
     @recipe = current_user.recipes.build
     @recipe.quantities.build
@@ -9,10 +11,23 @@ class RecipesController < ApplicationController
     if params[:recipe]
       @other_recipe = Recipe.find(params[:recipe])
     end
+
+    respond_to do |format|
+      format.html
+      # format.json
+    end
   end
 
   def create
     @recipe = current_user.recipes.build(recipe_params)
+
+    @recipe.quantities.each do |q|
+      if ingredient = Ingredient.where(name: q.ingredient.name).first
+        q.ingredient = ingredient
+      else
+        q.ingredient.abbreviated = q.ingredient.name.split(' ').last
+      end
+    end
 
     if @recipe.save
       # redirect_to dashboard_user_path(current_user)
@@ -105,7 +120,9 @@ class RecipesController < ApplicationController
       # default_filter_params: {latest: false}
     ) or return
 
+    pp params[:filterrific]
     @recipes = @filterrific.find.page(params[:page])
+
 puts '======================================================================'
 @recipes.each do |r|
   # @cach = RatingCache.where(:cacheable_id => r.id)

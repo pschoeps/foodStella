@@ -149,6 +149,19 @@
 }
 .recipe-form input.small { width: 50px; }
 .recipe-form input.long { width: 354px; }
+.ui-autocomplete {
+	width: 354px;
+	background-color: rgba(240,240,240,0.85);
+	padding-left: 0;
+	list-style: none;
+	li {
+		padding-left: 10px;
+	}
+	li:hover {
+		color: $green;
+		background-color: white;
+	}
+}
 
 // .recipe-form textarea { width: 265px; }
 .recipe-form input[type=submit] {
@@ -869,8 +882,12 @@
 	padding-top: 5.6em;
 }
 
-.new_filterrific div {
-	float: none;
+.new_filterrific {
+	position: relative;
+	z-index: 2;
+	div {
+		float: none;
+	}
 }
 
 .recipe-page-header {
@@ -906,23 +923,24 @@
 
 .filter-bar {
 	background-color: $dark;
-	height: 8em;
+	min-height: 8em;
 	z-index: 500;
 	padding: 0;
 
 	#filterrific_filter {
-		height: 8em;
+		height: 5em;
 		width: 100%;
-		position: absolute;
+		// position: absolute;
 		text-align: center;
 	}
 
 	.dropdowns {
 		width: 100%;
 		margin: auto;
-		position: relative;
+		// position: relative;
     	top: 50%;
-    	transform: translateY(-50%);
+    	// transform: translateY(-50%);
+    	transform: translateY(2.6em);
 	}
 
 	.sort-by,
@@ -961,6 +979,7 @@
 		padding: 10px;
 		width: 11em;
 		display: inline;
+		position: initial;
 		button {
 			color: white;
 			background-color: transparent;
@@ -973,11 +992,11 @@
 			z-index: 999999;
     		background-color: white;
     		border-radius: 0px;
-    		position: relative;
+    		position: absolute;
     		width: 100%;
     		padding-left: 7em;
     		float: right;
-    		top: 2.6em;
+    		top: 3.6em;
     		height: 5.5em;
 
 			li {
@@ -1006,6 +1025,29 @@
 					}
 				}
 			}
+		}
+	}
+
+	.filterring-tags {
+		position: relative;
+		z-index: 1;
+		margin-top: 1em;
+		margin-bottom: 10px;
+		min-height: 24px;
+		ul { padding-left: 10px; }
+		li:hover { color: $light; }
+		li {
+				cursor: pointer;
+			    position: relative;
+			 	height: 1em;
+				padding: 4px;
+				padding-right: 10px;
+				margin: 0;
+				display: inline-block;
+				font-weight: lighter;
+				letter-spacing: 1px;
+				color: $green;
+				span { color: white; }
 		}
 	}
 }

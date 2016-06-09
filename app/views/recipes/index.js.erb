@@ -3,3 +3,9 @@
 ) %>
 // $("#filterrific_results").html("<%= js %>");
 $("#recipes-col").html("<%= js %>");
+
+
+<% f = escape_javascript(
+  render(partial: 'filterring_by', locals: { filterring_by: params[:filterrific] })
+) %>
+$(".filterring-tags").html("<%= f %>");

@@ -18,6 +18,8 @@
 //= require jquery-ui/mouse
 //= require jquery-ui/position
 //= require jquery-ui/draggable
+//= require jquery-ui/autocomplete
+//= require autocomplete-rails
 //= require fullcalendar-local
 //= require scheduler-local
 //= require cocoon

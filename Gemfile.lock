@@ -247,6 +247,8 @@ GEM
       activesupport (>= 3.2)
       choice (~> 0.2.0)
       ruby-graphviz (~> 1.2)
+    rails-jquery-autocomplete (1.0.3)
+      rails (>= 3.2)
     rails_12factor (0.0.2)
       rails_serve_static_assets
       rails_stdout_logging
@@ -328,6 +330,7 @@ DEPENDENCIES
   pg
   rails (= 4.0.0)
   rails-erd
+  rails-jquery-autocomplete
   rails_12factor (= 0.0.2)
   ratyrate
   sass-rails (~> 4.0.0)

@@ -2,7 +2,8 @@
   <div class="controls">
   	<%= f.fields_for :ingredient do |quantity_ingredient| %>
       <!-- %= f.label :name, "Ingredient:" %> -->
-      <%= quantity_ingredient.text_field :name, class: 'long', required: true %>
+      <!-- %= quantity_ingredient.text_field :name, class: 'long', required: true %> -->
+      <%= quantity_ingredient.autocomplete_field :name, autocomplete_ingredient_name_recipes_path, class: 'long', required: true %>
     <% end %>
 
     <%= f.label :amount, "Amount:" %>

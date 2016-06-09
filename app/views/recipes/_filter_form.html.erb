@@ -154,17 +154,24 @@
           </label>
           <label class="checkbox">
             Recipes I've Cooked
-            <%= check_box_tag("filterrific[cooked]",current_user.id) %>
+            <%= check_box_tag("filterrific[cooked]", current_user.id) %>
           </label>
         </li>
       </ul>
     </div>
 
- 
-
   </div> 
+
+
 
   <%# add an automated spinner to your form when the list is refreshed %>
   <%= render_filterrific_spinner %>
 <% end %>
 
+  <div class='filterring-tags'>
+    <!-- %= render(
+      partial: 'filter_form',
+      locals: {filterring_by: params[:filterrific] }
+    ) %> -->
+  </div>
+    

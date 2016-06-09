@@ -1,7 +1,7 @@
 class Recipe < ActiveRecord::Base
   belongs_to :user
   has_many :quantities, dependent: :destroy
-  has_many :ingredients, through: :quantities, dependent: :destroy
+  has_many :ingredients, through: :quantities #, dependent: :destroy
 
   belongs_to :event
 
@@ -77,16 +77,20 @@ class Recipe < ActiveRecord::Base
     # configure number of OR conditions for provision
     # of interpolation arguments. Adjust this if you
     # change the number of OR conditions.
-    num_or_conditions = 1
+    num_or_conditions = 3
     where(
       terms.map {
         or_clauses = [
-          "LOWER(recipes.name) LIKE ?"
+          "LOWER(recipes.name) LIKE ?",
+          "LOWER(recipes.description) LIKE ?",
+          "LOWER(ingredients.name) LIKE ?"
+          # "LOWER(user.fir_name) LIKE ?"
         ].join(' OR ')
         "(#{ or_clauses })"
       }.join(' AND '),
       *terms.map { |e| [e] * num_or_conditions }.flatten
-    )
+    ).includes(:ingredients)
+    #.joins(:user)
   }
 
   scope :sorted_by, lambda { |sort_option|
@@ -328,6 +332,9 @@ class Recipe < ActiveRecord::Base
   end
 
   def self.options_for_cooked
+    [
+      ["Recipes I've Cooked"]
+    ]
   end
 
   def self.options_for_following
