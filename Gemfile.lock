@@ -251,6 +251,8 @@ GEM
       ruby-graphviz (~> 1.2)
     rails-jquery-autocomplete (1.0.3)
       rails (>= 3.2)
+    rails-jquery-tokeninput (0.2.6)
+      jquery-rails (>= 2)
     rails_12factor (0.0.2)
       rails_serve_static_assets
       rails_stdout_logging
@@ -333,6 +335,7 @@ DEPENDENCIES
   rails (= 4.0.0)
   rails-erd
   rails-jquery-autocomplete
+  rails-jquery-tokeninput
   rails_12factor (= 0.0.2)
   ratyrate
   sass-rails (~> 4.0.0)

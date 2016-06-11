@@ -1,7 +1,5 @@
 class Profile < ActiveRecord::Base
 	belongs_to :user
-	# for favorite ingredients?
-	# has_many :ingredients
 
 	mount_uploader :picture_url, ProfilePictureUploader
 	mount_uploader :background_url, BackgroundPictureUploader
