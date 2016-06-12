@@ -94,8 +94,14 @@ class UsersController < ApplicationController
 
 
 		#logic for mobile calendar view (weekly)
-		today = Date.today # Today's date
-		@days_from_this_week = (today.at_beginning_of_week..today.at_end_of_week).map
+		if params[:week_counter] == nil
+		  day = Date.today # Today's date
+		else
+		  week_counter = params[:week_counter].to_i
+		  days = week_counter * 7
+		  day = Date.today + days
+		end
+		@days_from_week = (day.at_beginning_of_week..day.at_end_of_week).map
 		@meal_types = [["Breakfast", "T00:00:00", "#f5b266", "breakfast"], ["Snack", "T00:30:00", "#bc9c63", "snack1"], ["Lunch", "T01:00:00", "#819800", "lunch"], ["Snack", "T01:30:00", "#bc9c63", "snack2"], ["Dinner", "T02:00:00", "#796c2d", "dinner"]]
 
 

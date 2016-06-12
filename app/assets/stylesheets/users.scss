@@ -438,16 +438,30 @@ input:-webkit-autofill {
 		position: absolute;
 	}
 
-	.glyphicon-chevron-left {
+	.prev-week-link {
 		left: 25%;
     	top: 25%;
-    	font-size: 1.75em;
+    	position: absolute;
+    	z-index: 2000;
+	
+		.glyphicon-chevron-left {
+			left: 25%;
+    		top: 25%;
+    		font-size: 1.75em;
+    		z-index: 1000;
+    	}
 	}
 
-	.glyphicon-chevron-right {
+	.next-week-link {
 		right: 28%;
-    	top: 25%;
-    	font-size: 1.75em;
+		top: 25%;
+		position: absolute;
+		z-index: 2000;
+		.glyphicon-chevron-right {
+			right: 28%;
+    		top: 25%;
+    		font-size: 1.75em;
+    	}
 	}
 
 	.glyphicon-shopping-cart {
@@ -540,30 +554,15 @@ input:-webkit-autofill {
 
 		/*needed to move only breakfast over to make colored circles look correct */
 
-		#hide-chevron, #hide-chevron-1, #hide-chevron-2 {
+		#hide-chevron {
+			right: -30px;
+			color: $green;
+			z-index: 10;
 			position: absolute;
     		height: 100%;
     		font-size: 5em;
     		right: -38px;
     		top: -13px;
-		}
-
-		#hide-chevron {
-			right: -30px;
-			color: $green;
-			z-index: 10;
-		}
-
-		#hide-chevron-1 {
-			right: -38px;
-			color: white;
-			z-index: 20;
-		}
-
-		#hide-chevron-2 {
-			right: -46px;
-			color: $green;
-			z-index: 30;
 		}
 
 	    .details-left, .details-right {
@@ -765,10 +764,23 @@ input:-webkit-autofill {
 			float: left;
 			color: $medium;
 			font-size: 1.25em;
+			padding-top: .5em;
 
 			span {
 				float: right;
 			}
+		}
+
+		#selected {
+			display: block;
+    		width: 100%;
+    		height: 100%;
+    		background-image: url(/assets/fav-star-active.png);
+    		background-size: 50% 50%;
+    		background-repeat: no-repeat;
+    		background-position-x: 50%;
+    		background-position-y: 30%;
+    		background-color: rgba(77, 77, 77, .8);
 		}
 	}
 }

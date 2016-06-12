@@ -3,9 +3,9 @@
 <div class="row week-nav">
   <div class="col-sm-12 disable-margins disable-padding planner-mobile-header">
     <div class="spatula-mobile"><%= image_tag 'icons/spatula-selected.png' %></div>
-    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <a href="/users/<%= current_user.id %>/calendar" class="prev-week-link" data=<%= params[:week_counter] %>><span class="glyphicon glyphicon-chevron-left" id="prev-week" aria-hidden="true"></span></a>
     <h2>Week 1</h2>
-    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <a href="/users/<%= current_user.id %>/calendar" class="next-week-link" data=<%= params[:week_counter] %>><span class="glyphicon glyphicon-chevron-right" id="next-week" aria-hidden="true"></span></a>
     <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
   </div>
 </div>
@@ -49,7 +49,7 @@
 
 <div class="row weekly-planner" id="offset-margins">
   <span class="glyphicon glyphicon-chevron-right" id="unhide-chevron" aria-hidden="true"></span>
-  <% @days_from_this_week.each do |day| %>
+  <% @days_from_week.each do |day| %>
 	<div class="one-day col-md-4 col-xs-4 col-sm-4">
 	  <h2 class="one-day-header"><%= day.strftime("%A") %></h2>
 
@@ -60,7 +60,7 @@
             <% events = @events.where(:start_at => day.strftime + m[1]) %>
             <% events.each do |e| %>
               <% recipe = e.get_recipe(e.recipe_id) %>
-	  	      <div class="meal">
+	  	      <div class="meal" data ="<%= e.recipe_id %>">
 	            <a class="mobile-event fc-event-container <%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>">
 	              <span class="servings"><%= recipe.servings %>s</span>
 	              <span class="event-title" style="background-color: <%= m[2] %>"><%= truncate(recipe.name, length: 14) %></span>
@@ -150,6 +150,7 @@
   		startAt= $(this).attr('data-three')
   		mealData = $(this).attr('data-four')
   		mealColor = $(this).attr('data-five')
+
   		$("#meal-day").attr("data", date);
   		$("#meal-day").attr("data-one", meal);
   		$("#meal-day").attr("data-two", weekDay)
@@ -157,42 +158,84 @@
   		$("#meal-day").attr("data-four", mealData)
   		$("#meal-day").attr("data-five", mealColor)
   		$("#meal-day").text(weekDay + " " + meal);
+
+      loadEvents(date, mealData)
   		$(".recipe-selection-mobile").css("display", "block");
+      $("html, body").animate({ scrollTop: 180 }, "slow");
   	});
 
   	$('#hide-recipe-selection').click(function() { 
   		$('.recipe-selection-mobile').css('display', 'none');
+      recipes = $('.fc-event');
+      recipes.each(function(i, obj) {
+        selected = $(obj).find('#selected');
+        if ( selected )
+          selected.remove()
+
+      })
   	});
 
+    function loadEvents(day, mealData) {
+      element = "#" + day
+      childElement = "#" + mealData
+      section =  $(element).find(childElement);
+      events = section.children()
+      eventIds = []
+      events.each(function(i, obj) {
+        id = parseInt($(obj).attr('data'));
+        eventIds.push(id);
+      });
+      updateSelection(eventIds);
+    }
+
+    function updateSelection(eventIds) {
+      recipes = $('.fc-event');
+      recipes.each(function(i, obj) {
+        console.log('select')
+        recipeId = parseInt($(obj).attr('data-one'));
+        isSelected = ( $.inArray( recipeId, eventIds ) );
+        if ( isSelected == 1 || isSelected == 0 )
+          $(obj).append("<span id='selected'></span>");
+      });
+    }
+
+
+
+
+
   	$('.fc-event').click(function() {
-  		date = $("#meal-day").attr('data');
-  		meal = $("#meal-day").attr('data-one');
-  		weekDay = $("#meal-day").attr('data-two')
-  		time = $("#meal-day").attr('data-three')
-  		mealData = $("#meal-day").attr('data-four')
-  		mealColor = $("#meal-day").attr('data-five')
-  		recipeFriendlyName = $(this).attr('data-three')
-  		recipeServings = $(this).attr('data-two')
-  		recipeId = $(this).attr('data-one')
-  		recipeName = $(this).attr('data')
-  		startAt = date + time 
-  		console.log(date, meal, weekDay, mealData, recipeId, recipeName, startAt)
+      if ($(this).find('#selected').length) {
+        console.log('do nothing')
+      }
+      else {
+  		  date = $("#meal-day").attr('data');
+  		  meal = $("#meal-day").attr('data-one');
+  		  weekDay = $("#meal-day").attr('data-two')
+  		  time = $("#meal-day").attr('data-three')
+  		  mealData = $("#meal-day").attr('data-four')
+  		  mealColor = $("#meal-day").attr('data-five')
+  		  recipeFriendlyName = $(this).attr('data-three')
+  		  recipeServings = $(this).attr('data-two')
+  		  recipeId = $(this).attr('data-one')
+  		  recipeName = $(this).attr('data')
+  		  startAt = date + time 
+  		  console.log(date, meal, weekDay, mealData, recipeId, recipeName, startAt)
+        $(this).append("<span id='selected'></span>");
 
-  		var data = {
-                  event: {
-                    start_at: startAt,
-                    recipe_id: recipeId,
-                    recipe_name: recipeName
-                  }
-                };
+  		  var data = {
+                    event: {
+                      start_at: startAt,
+                      recipe_id: recipeId,
+                      recipe_name: recipeName
+                    }
+                  };
 
-  		$.ajax({//ajax call 
+  		  $.ajax({//ajax call 
                   type:'POST',
                   data: data,
                   url:'/events',
               
                   success:function (response) {
-                    console.log(response)
                     element = "#" + date 
                     childElement = "#" + mealData
                     hideMealNameBig = "." + date + "-" + mealData + "-big"
@@ -206,13 +249,25 @@
 
                   }
 
-                });//end ajax call
+        });//end ajax call
+
+      };
+
+  	});
+
+    $('.next-week-link').click(function(){ 
+      week_counter = <%= params[:week_counter].to_i %>
+      updated_week_counter = week_counter + 1
+      this.href = this.href + '?week_counter=' + (updated_week_counter)
+    });
+
+    $('.prev-week-link').click(function(){ 
+      week_counter = <%= params[:week_counter].to_i %>
+      updated_week_counter = week_counter - 1
+      this.href = this.href + '?week_counter=' + (updated_week_counter)
+    });
 
 
-
-  	})
-
-  	
 
 
   });
