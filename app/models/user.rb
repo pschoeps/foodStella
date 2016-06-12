@@ -47,10 +47,52 @@ class User < ActiveRecord::Base
     Relationship.create(follower_id: self.id, followed_id: dessert.id)
   end
 
-  has_many :preferred_ingredients, dependent: :destroy
-  # accepts_nested_attributes_for :preferred_ingredients
-  has_many :preferred_foods, dependent: :destroy
-  has_many :deferred_foods, dependent: :destroy
+  has_many :preferred_ingredients, order: 'name'
+  has_many :preferred,  through: :preferred_ingredients,  source: :ingredient
+  has_many :deferred_ingredients , order: 'name'
+  has_many :deferred,   through: :deferred_ingredients,   source: :ingredient
+
+  def self.preferred_ingredients(name)
+    Ingredient.find_by_name!(name).users
+  end
+
+  def preferred_list
+    preferred.map(&:name).join(", ")
+  end
+
+  def preferred_list=(names)
+    oldList = PreferredIngredient.where(user_id: self.id).pluck(:ingredient_name)
+    newList = names.split(",").map!(&:strip)
+
+    preferred = names.split(",").map do |i|
+      ingredient = Ingredient.where(name: i.strip).first_or_create!
+      ingredient.abbreviated = i.strip.split(' ').last
+      preference = PreferredIngredient.where(ingredient_id: ingredient.id).first_or_create!
+      preference.update_attributes(:ingredient_name => i.strip, :user_id => self.id)
+    end
+
+    diff = oldList - newList
+    PreferredIngredient.where(:user_id => self.id).where(:ingredient_name => diff).destroy_all
+  end
+
+  def deferred_list
+    deferred.map(&:name).join(", ")
+  end
+
+  def deferred_list=(names)
+    oldList = DeferredIngredient.where(user_id: self.id).pluck(:ingredient_name)
+    newList = names.split(",").map!(&:strip)
+
+    deferred = names.split(",").map do |i|
+      ingredient = Ingredient.where(name: i.strip).first_or_create!
+      ingredient.abbreviated = i.strip.split(' ').last
+      deference = DeferredIngredient.where(ingredient_id: ingredient.id).first_or_create!
+      deference.update_attributes(:ingredient_name => i.strip, :user_id => self.id)
+    end
+    
+    diff = oldList - newList
+    DeferredIngredient.where(:user_id => self.id).where(:ingredient_name => diff).destroy_all
+  end
 
   #friendships setup
   has_many :friendships

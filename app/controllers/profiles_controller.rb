@@ -121,7 +121,9 @@ class ProfilesController < ApplicationController
 		@pending = @myself? @user.pending_friends : []
 		@requests = @myself? @user.requested_friends : []
 
-		@preferred_ingredients = @user.preferred_ingredients
+		# @ingredients = Ingredient.all()
+		# @preferred_ingredients = @user.preferred_list
+		# @deferred_ingredients = @user.deferred_list
 
 		#filtering links to model 
 		@filterrific = initialize_filterrific(
@@ -149,7 +151,7 @@ class ProfilesController < ApplicationController
 	end
 
 	def profile_params
-	  	params.require(:profile).permit(:fir_name, :las_name, :email, :about_me, :picture_url, :country, :cooking_experience, :average_cook_time, :liked_foods, :disliked_foods, :username, :cookware_preferences, :tab, :background_url, :background_offset, :show_full_name )
+	  	params.require(:profile).permit(:fir_name, :las_name, :email, :about_me, :picture_url, :country, :cooking_experience, :average_cook_time, :preferred_ingredients, :deferred_ingredients, :username, :cookware_preferences, :tab, :background_url, :background_offset, :show_full_name )
 	end
 
 end

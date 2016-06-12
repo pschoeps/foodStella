@@ -1,6 +1,35 @@
 class UsersController < ApplicationController
    include MobileHelper
    before_action :check_for_mobile
+	respond_to :html, :json
+
+   def update
+   	puts '------------------------------------------------------'
+   	puts 'interesting'
+	
+	@user = User.find(params[:id])
+	if params[:user][:preferred_list]
+		@user.update_attribute(:preferred_list, params[:user][:preferred_list])
+	end
+	if params[:user][:deferred_list]
+		@user.update_attribute(:deferred_list, params[:user][:deferred_list])
+	end
+   	 #  	if params[:profile][:username]
+   		# 	current_user.update_attribute(:username, params[:profile][:username])
+   		# end
+   	 #  	respond_with @profile.user
+   	 #  else
+   	 #  	render :edit
+   	 #  end
+
+   	# puts params[:user][:preferred_list]
+   	# @user.preferred_list(params[:user][:preferred_list])
+   	# respond_to do |format|
+   	#   format.json
+   	# end
+   	# render 'show'
+   	respond_with @user
+   end
 
 	def dashboard
 		@recipe = current_user.recipes.build
