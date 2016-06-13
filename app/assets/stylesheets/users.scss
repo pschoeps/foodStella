@@ -583,6 +583,48 @@ input:-webkit-autofill {
 	}
 }
 
+.slider-container {
+	height: 3em;
+	background-color: white;
+
+	.col-md-12 {
+		height: 100%;
+
+		.glyphicon {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			color: $green;
+		}
+
+		.glyphicon-minus {
+			left: 30px;
+		}
+
+		.glyphicon-plus {
+			right:30px;
+		}
+
+		.ui-slider-horizontal {height: 1px;}
+		.ui-state-default {background: white;}
+
+		#zoomSlider {
+			position: relative;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 75%;
+			margin:auto;
+
+			.ui-slider-range { background: $dark;}
+  		    .ui-slider-handle { 
+  		    		border-color: $green; 
+  		    		border-radius: 100%;
+  		    		top: -.5em;
+  		    		}
+		}
+	}
+}
+
 #offset-margins {
 	margin-bottom: -100px;
 }
@@ -592,7 +634,6 @@ input:-webkit-autofill {
 	position: relative;
 	overflow-x: auto;
 	white-space: nowrap;
-	padding-top: 3em;
 
 	#unhide-chevron {
 		position: absolute;
@@ -639,9 +680,9 @@ input:-webkit-autofill {
     				text-align: center;
     				text-decoration: none;
     				color: #ababab;
-    				bottom: 7px;
+    				bottom: .5em;
     				border-bottom: 1px dashed $medium;
-    				height: 15px;
+    				height: 65%;
 				}
 
 			}
@@ -652,6 +693,10 @@ input:-webkit-autofill {
 
 			#hidden {
 				display: none;
+			}
+
+			#mobile-event {
+				height: 100%;
 			}
 
 
@@ -721,7 +766,6 @@ input:-webkit-autofill {
     background-color: rgba(255, 255, 255, .9);
     width: 100%;
     z-index: 40;
-    height: 100%;
     display: none;
 
     .recipe-selection-header {
@@ -764,7 +808,7 @@ input:-webkit-autofill {
 			float: left;
 			color: $medium;
 			font-size: 1.25em;
-			padding-top: .5em;
+			margin-top: 1em;
 
 			span {
 				float: right;

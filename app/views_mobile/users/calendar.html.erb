@@ -4,7 +4,7 @@
   <div class="col-sm-12 disable-margins disable-padding planner-mobile-header">
     <div class="spatula-mobile"><%= image_tag 'icons/spatula-selected.png' %></div>
     <a href="/users/<%= current_user.id %>/calendar" class="prev-week-link" data=<%= params[:week_counter] %>><span class="glyphicon glyphicon-chevron-left" id="prev-week" aria-hidden="true"></span></a>
-    <h2>Week 1</h2>
+    <h2><%= @days_from_week.first.strftime("%B") %></h2>
     <a href="/users/<%= current_user.id %>/calendar" class="next-week-link" data=<%= params[:week_counter] %>><span class="glyphicon glyphicon-chevron-right" id="next-week" aria-hidden="true"></span></a>
     <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
   </div>
@@ -47,6 +47,14 @@
   </div>
 </div>
 
+<div class="row slider-container">
+  <div class="col-md-12 col-xs-12 col-sm-12">
+    <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+    <div id="zoomSlider"></div>
+    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+  </div>
+</div>
+
 <div class="row weekly-planner" id="offset-margins">
   <span class="glyphicon glyphicon-chevron-right" id="unhide-chevron" aria-hidden="true"></span>
   <% @days_from_week.each do |day| %>
@@ -61,7 +69,7 @@
             <% events.each do |e| %>
               <% recipe = e.get_recipe(e.recipe_id) %>
 	  	      <div class="meal" data ="<%= e.recipe_id %>">
-	            <a class="mobile-event fc-event-container <%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>">
+	            <a class="mobile-event fc-event-container <%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" id="mobile-event">
 	              <span class="servings"><%= recipe.servings %>s</span>
 	              <span class="event-title" style="background-color: <%= m[2] %>"><%= truncate(recipe.name, length: 14) %></span>
 	            </a>
@@ -142,6 +150,34 @@
         $('.weekly-planner').animate({top:'0em'}, 500);
         $('#unhide-chevron').css('display', 'none');
   	});
+
+    $('#zoomSlider').slider({
+      orientation: "horizontal",
+      range: "min",
+      max: 200,
+      min: 1,
+      value: 100,
+      slide: changeZoom,
+      change: changeZoom
+    });
+
+    function changeZoom(){
+      var zoomLevel = $('#zoomSlider').slider( "value" )
+      zoom = zoomLevel * .01
+      console.log(zoom)
+      console.log('changing zoom')
+
+      if (zoom < .45) {
+        $('.meal').css('height', '7em');
+        $('.meal').css('margin-bottom', '1em');
+        console.log("changing css")
+      }
+      else {
+        $('.meal').css('height', '6em')
+        $('.meal').css('margin-bottom', '10px')
+      }
+      $('.weekly-planner').animate({ 'zoom': zoom }, 400);
+    };
 
   	$('.add-meal').click(function() { 
   		date = $(this).attr('data');
