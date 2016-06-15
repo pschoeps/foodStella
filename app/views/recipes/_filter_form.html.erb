@@ -2,7 +2,20 @@
   
   <div class='sort-by'>
     <div id="sort-by-label">Sort By</div>
-    <%= f.select(:sorted_by, @filterrific.select_options[:sorted_by]) %>
+    <div style='display:none'>
+      <%= f.select(:sorted_by, @filterrific.select_options[:sorted_by], class: 'sort-by-dropdown') %>
+    </div>
+    <div id='dd'>
+      <div class='selected-sort-by'>
+        <span><%= @filterrific.select_options[:sorted_by][0][0] %></span>
+        <%= image_tag "icons/down.png" %>
+      </div>
+      <ul class='custom-dropdown'>
+      <% @filterrific.select_options[:sorted_by].each do |o| %>
+        <li> <%= o[0] %> </li>
+      <% end %>
+      </ul>
+    </div>
   </div>
   
   <div class="filter-search">
@@ -174,4 +187,24 @@
       locals: {filtering_by: params[:filterrific] }
     ) %> -->
   </div>
-    
+
+<script>
+  $('.custom-dropdown li').on('click', function(event){
+    $(this).toggleClass('active');
+    var index = $(this).index();
+    $('#filterrific_sorted_by')[0].selectedIndex = index;
+    $('#filterrific_sorted_by').trigger('change');
+    $('.selected-sort-by span').text($(this).text())
+    // return false;
+  });
+
+  $('#dd').on('click', function(){
+    $(this).toggleClass('active');
+    return false;
+  });
+
+  $(document).click(function(){
+    $('#dd').removeClass('active');
+  });
+
+</script>

@@ -16,7 +16,7 @@
           Snacks
           <span class="badge"><%= snacks.count %></span>
        </button>
-      <div class="selection" id="snacks-selection" style="display: <%= 'block' if expanded[0] == 'true' %>">
+      <div class="selection" id="snacks-selection">
           <div id='external-events'>
             <div id='external-events-listing'>
               <% snacks.each do |r| %>
@@ -36,13 +36,15 @@
           Side Dishes
           <span class="badge"><%= side_dishes.count %></span>
        </button>
-      <div class="selection" id="sidedish-selection" style="display: <%= 'block' if expanded[1] == 'true' %>">
+      <div class="selection" id="sidedish-selection">
           <div id='external-events'>
             <div id='external-events-listing'>
               <% side_dishes.each do |r| %>
                 <%= link_to recipe_path(r) do %>
                   <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
-                    <span class="glyphicon glyphicon-remove remove" data='<%= r.id %>'></span>
+                    <% unless current_user.owns?(r) %>
+                      <span class="glyphicon glyphicon-remove remove" data='<%= r.id %>'></span>
+                    <% end %>
                   </div>
                 <% end %>
               <% end %>
@@ -54,13 +56,15 @@
           Main Dishes
           <span class="badge"><%= main_dishes.count %></span>
        </button>
-      <div class="selection" id="maindish-selection" style="display: <%= 'block' if expanded[2] == 'true' %>">
+      <div class="selection" id="maindish-selection">
           <div id='external-events'>
             <div id='external-events-listing'>
               <% main_dishes.each do |r| %>
                 <%= link_to recipe_path(r) do %>
                   <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
-                    <span class="glyphicon glyphicon-remove remove" data='<%= r.id %>'></span>
+                    <% unless current_user.owns?(r) %>
+                      <span class="glyphicon glyphicon-remove remove" data='<%= r.id %>'></span>
+                    <% end %>
                   </div>
                 <% end %>
               <% end %>
@@ -72,13 +76,15 @@
           Desserts
           <span class="badge"><%= desserts.count %></span>
        </button>
-      <div class="selection" id="dessert-selection" style="display: <%= 'block' if expanded[3] == 'true' %>">
+      <div class="selection" id="dessert-selection">
           <div id='external-events'>
             <div id='external-events-listing'>
               <% desserts.each do |r| %>
                 <%= link_to recipe_path(r) do %>
                   <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
-                    <span class="glyphicon glyphicon-remove remove" data='<%= r.id %>'></span>
+                    <% unless current_user.owns?(r) %>
+                      <span class="glyphicon glyphicon-remove remove" data='<%= r.id %>'></span>
+                    <% end %>
                   </div>
                 <% end %>
               <% end %>
@@ -90,13 +96,15 @@
           Drinks
           <span class="badge"><%= drinks.count %></span>
        </button>
-      <div class="selection" id="drink-selection" style="display: <%= 'block' if expanded[4] == 'true' %>">
+      <div class="selection" id="drink-selection">
           <div id='external-events'>
             <div id='external-events-listing'>
               <% drinks.each do |r| %>
                 <%= link_to recipe_path(r) do %>
                   <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
-                    <span class="glyphicon glyphicon-remove remove" data='<%= r.id %>'></span>
+                    <% unless current_user.owns?(r) %>
+                      <span class="glyphicon glyphicon-remove remove" data='<%= r.id %>'></span>
+                    <% end %>
                   </div>
                 <% end %>
               <% end %>
@@ -225,7 +233,8 @@ $(document).ready(function(){
     }
   });
 
-      $(document).one('click','.remove',function(e){
+      // $(document).on('click','.remove',function(e){
+        $('.remove').on('click', function(e){
           e.stopPropagation();
 
           $this = $(this)
@@ -246,6 +255,25 @@ $(document).ready(function(){
                   });//end ajax call
           return false;
       });
+
+      var newIndex = parseInt('<%= new_category %>');
+      newIndex -= 1;
+      if(newIndex){
+        $('.badge').eq(newIndex).animate({
+          color: "#819800"
+        }, 600, function(){
+          $('.badge').animate({
+            color: "white"
+          }, 600);
+        });
+        $('.meal-selection button').eq(newIndex).animate({
+          color: "#819800"
+        }, 600, function(){
+          $('.meal-selection button').animate({
+            color: "#ababab"
+          }, 600);
+        });
+      }
 
 });
 </script>

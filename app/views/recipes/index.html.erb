@@ -26,13 +26,14 @@
       desserts: @desserts,
       drinks: @drinks,
       dragNdrop: false,
-      expanded: @expanded
+      expanded: @expanded,
+      new_category: @new_category
     }
   ) %>
   </div>
 
 <div style='display:none' id='refresh-sidebar'>
-  <%= link_to 'Refresh recipes', action: :sidebar, remote: true, id: 'doesntmatter' %>
+  <!-- %= link_to 'Refresh recipes', action: :sidebar, remote: true, expanded: [], id: 'doesntmatter' %> -->
 </div>
 
   <div class="col-sm-9 sidebar-content" id="recipes-col">
@@ -125,7 +126,7 @@
     // }
   }
 
-  function updateMyFoods(){
+  function updateMyFoods(new_recipe_id){
     var expandedSections = [];
       $('.selection').each(function(){
       if( $(this).css('display') == 'block')
@@ -133,12 +134,36 @@
       else
         expandedSections.push('false');
     });
+    
+    // var dataString = 'expanded%5B%5D=' + expandedSections[0] + '&expanded%5B%5D=' + expandedSections[1] + '&expanded%5B%5D=' + expandedSections[2] + '&expanded%5B%5D=' + expandedSections[3] + '&expanded%5B%5D=' + expandedSections[4];
+  
+    // $('#refresh-sidebar>a').attr('data-params', dataString);
+    // $('#refresh-sidebar>a').click();
 
-    var dataString = 'expanded%5B%5D=' + expandedSections[0] + '&expanded%5B%5D=' + expandedSections[1] + '&expanded%5B%5D=' + expandedSections[2] + '&expanded%5B%5D=' + expandedSections[3] + '&expanded%5B%5D=' + expandedSections[4];
-   
-    $('#refresh-sidebar>a').attr('data-params', dataString);
-    $('#refresh-sidebar>a').click();
-    resetSidebar();
+        // disable remove button until sidebar reloads
+        $('.remove').off();
+        $('.remove').click(function(){
+          return false;
+        });
+
+        $.ajax({//ajax call for questions
+          type:'GET',
+          data: {new_recipe_id: new_recipe_id},
+          url:'/sidebar',
+          success:function (response) {
+           
+           $('.selection').each(function(index){
+             if( expandedSections[index] == 'true')
+               $(this).css('display','block');
+             else
+               $(this).css('display','none');
+           });
+
+           // active remove listener again
+
+           resetSidebar();
+          }
+        });//end ajax call
   }
 
   $(document).ready(function() {
@@ -168,15 +193,15 @@
                   	$this.addClass("spatula-selected");
                     $this.attr('id', 'unfollow');
                     $this.removeClass("spatula-unselected");
-                    updateMyFoods();
+                    updateMyFoods(recipe_id);
                   }
                 });//end ajax call
 		});
 
 		$(document).on('click','#unfollow',function(){
-    		$this = $(this)
-    		recipe_id = $this.attr('data')
-    		console.log(recipe_id)
+    		$this = $(this);
+    		recipe_id = $this.attr('data');
+    		console.log(recipe_id);
     		$.ajax({//ajax call for questions
                   type:'DELETE',
                   data: {id: recipe_id},

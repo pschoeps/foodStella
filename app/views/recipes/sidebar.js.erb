@@ -1,13 +1,14 @@
 <% my_foods = escape_javascript(
   render(partial: 'recipes/sidebar',
   	locals: {
-  		snacks: @snacks,
+  		  snacks: @snacks,
       	side_dishes: @side_dishes,
       	main_dishes: @main_dishes,
       	desserts: @desserts,
       	drinks: @drinks,
       	dragNdrop: false,
-      	expanded: @expanded
+      	expanded: @expanded,
+        new_category: @new_category
      }
    )
 ) %>

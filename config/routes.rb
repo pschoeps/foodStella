@@ -38,13 +38,14 @@ FoodStella::Application.routes.draw do
   # resources :preferred_foods
 
   resources :recipes  do
-    member do
-      get 'sidebar'
-    end
+    # member do
+      # get 'sidebar'
+      # get "/recipes/sidebar" => 'recipes#sidebar'
+    # end
     get :autocomplete_ingredient_name, on: :collection
   end
   get 'recipes/:page/next_page' => 'recipes#next_page', as: :recipes_next_page
-  # get "/recipes/side" => 'recipes#sidebar', as: 'sidebar'
+  get '/sidebar' => 'recipes#sidebar', as: :sidebar
   
   resources :others_photos,       only: [:create, :destroy]
 
