@@ -62,6 +62,15 @@ $(document).ready(function() {
         $('.meal').css('margin-bottom', '10px')
       }
 
+      if (zoom < .9) {
+        $('.add-meal-box').find('h3').css('margin-bottom', '-1em');
+        $('.add-meal-box').find('h3').css('font-size', '.6em');
+      }
+      else {
+        $('.add-meal-box').find('h3').css('margin-bottom', '0')
+        $('.add-meal-box').find('h3').css('font-size', '.75em');
+      }
+
       $('.weekly-planner').animate({ 'zoom': zoom }, 100);
     };
 
