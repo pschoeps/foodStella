@@ -432,41 +432,55 @@ input:-webkit-autofill {
 		}
 	}
 
-	.glyphicon {
-		font-size: 2em;
+
+	.arrow {
 		color: white;
 		position: absolute;
 	}
 
 	.prev-week-link {
-		left: 25%;
+		left: 28%;
     	top: 25%;
     	position: absolute;
-    	z-index: 2000;
+    	width: 2em;
+    	height: 2em;
+    	z-index: 20;
 	
-		.glyphicon-chevron-left {
-			left: 25%;
-    		top: 25%;
-    		font-size: 1.75em;
-    		z-index: 1000;
+		.arrow-left {
+			height: 100%;
+    		width: 100%;
+    		background-image: asset-url('left-arrow.png');
+    		background-size: 2em 2em;
+    		background-repeat: no-repeat;
     	}
 	}
 
 	.next-week-link {
-		right: 28%;
-		top: 25%;
-		position: absolute;
-		z-index: 2000;
-		.glyphicon-chevron-right {
-			right: 28%;
-    		top: 25%;
-    		font-size: 1.75em;
+		left: 64%;
+    	top: 25%;
+    	position: absolute;
+    	width: 2em;
+    	height: 2em;
+    	z-index: 20;
+
+		.arrow-right {
+			height: 100%;
+    		width: 100%;
+    		background-image: asset-url('right-arrow.png');
+    		background-size: 2em 2em;
+    		background-repeat: no-repeat;
     	}
 	}
 
-	.glyphicon-shopping-cart {
+	.shopping-cart {
+		color: white;
+		position: absolute;
 		right: 10px;
     	top: 50%;
+    	width: 3em;
+    	height: 3em;
+    	background-size: 3em 3em;
+    	background-image: asset-url('shopping-cart-white.png');
     	transform: translateY(-50%);
 	}
 
@@ -480,6 +494,16 @@ input:-webkit-autofill {
     	letter-spacing: 3px;
     	font-size: 1.75em;
     	font-weight: 100;
+	}
+
+	.week-subtitle {
+		position: absolute;
+    	top: 3.3em;
+    	letter-spacing: .75px;
+    	width: 100%;
+    	font-size: .8em;
+    	color: white;
+    	text-align: center;
 	}
 }
 
@@ -514,6 +538,7 @@ input:-webkit-autofill {
 .planner-instructions {
 	height:3em;
 	background-color: $dark;
+	display: block;
 
 	.col-sm-12 {
 		height: 100%;
@@ -586,9 +611,20 @@ input:-webkit-autofill {
 .slider-container {
 	height: 3em;
 	background-color: white;
+	position: relative;
 
 	.col-md-12 {
 		height: 100%;
+
+		#unhide-chevron {
+		position: absolute;
+    	color: #819800;
+    	font-size: 4em;
+    	left: -32px;
+    	top: 20px;
+    	display: none;
+
+	}
 
 		.glyphicon {
 			position: absolute;
@@ -605,7 +641,7 @@ input:-webkit-autofill {
 			right:30px;
 		}
 
-		.ui-slider-horizontal {height: 1px;}
+		.ui-slider-horizontal {height: 5px;}
 		.ui-state-default {background: white;}
 
 		#zoomSlider {
@@ -615,7 +651,7 @@ input:-webkit-autofill {
 			width: 75%;
 			margin:auto;
 
-			.ui-slider-range { background: $dark;}
+			.ui-slider-range { background: $green;}
   		    .ui-slider-handle { 
   		    		border-color: $green; 
   		    		border-radius: 100%;
@@ -635,16 +671,6 @@ input:-webkit-autofill {
 	overflow-x: auto;
 	white-space: nowrap;
 
-	#unhide-chevron {
-		position: absolute;
-    	color: #819800;
-    	font-size: 4em;
-    	left: -32px;
-    	top: -10px;
-    	display: none;
-
-	}
-
 	.one-day {
 		float: none;
 		display: inline-block;
@@ -662,7 +688,6 @@ input:-webkit-autofill {
 		.meals {
 			position: relative;
 			width: 100%;
-			height: 100em;
 
 			.add-meal-short {
 				width: 100%;
@@ -772,12 +797,14 @@ input:-webkit-autofill {
     	width: 100%;
     	height: 5em;
 
-    	.glyphicon {
+    	.close-x {
     		position: absolute;
     		top: 10px;
     		right: 10px;
-    		font-size: 2em;
-    		color: $medium;
+    		height: 2em;
+    		width: 2em;
+    		background-size: 2em 2em;
+    		background-image: asset-url('close-x.png');
     	}
 
     	h3 {
@@ -819,7 +846,7 @@ input:-webkit-autofill {
 			display: block;
     		width: 100%;
     		height: 100%;
-    		background-image: url(/assets/fav-star-active.png);
+    		background-image: asset-url('fav-star-active.png');
     		background-size: 50% 50%;
     		background-repeat: no-repeat;
     		background-position-x: 50%;
@@ -827,4 +854,148 @@ input:-webkit-autofill {
     		background-color: rgba(77, 77, 77, .8);
 		}
 	}
+}
+
+.event-actions-mobile {
+	position: absolute;
+    top: 0;
+    background-color: rgba(255, 255, 255, .9);
+    width: 100%;
+    z-index: 40;
+    display: none;
+    height: 80em;
+
+    #hide-event-actions {
+    	position: absolute;
+    	top: 10px;
+    	right: 10px;
+    	font-size: 2em;
+    	color: $medium;
+    }
+
+    .view-container {
+    	border: 1px solid $green;
+    	border-bottom: none;
+    	position: relative;
+    	width: 80%;
+    	height: 29em;
+    	margin: auto;
+    	top: 5em;
+
+    	.image-container {
+    		display: block;
+   		    width: 100%;
+    		height: 17em;
+
+    		#servings {
+    			width: 3em;
+    			height: 3em;
+    			background-color: rgba(255, 255, 255, 0.9);
+    			position: absolute;
+    			text-align: center;
+
+    			h3 {
+    				margin: 0;
+    				position: relative;
+    				top: 50%;
+    				transform: translateY(-50%);
+    				color: $green;
+    				font-weight: 100;
+    			}
+    		}
+    	}
+
+    	.recipe-title-container {
+    		position: relative;
+    		height: 2.5em;
+    		top: -2.5em;
+    		background-color: $green;
+
+    		#recipe-title {
+    			margin: 0;
+    			color: white;
+    			position: relative;
+    			top: 50%;
+    			transform: translateY(-50%);
+    			letter-spacing: 1px;
+    			font-weight: 100;
+    		}
+    		
+    	}
+
+
+    	.event-actions {
+    		height: 12em;
+    		position: relative;
+    		top: -2.5em;
+    		padding: 0;
+    		list-style-type: none;
+    		margin: 0;
+
+    		.action {
+    			height: 4em;
+    			border-bottom: 1px solid $medium;
+    			background-color: white;
+
+    			h2 {
+    				margin: 0;
+    				color: $medium;
+    				position: relative;
+    				top: 50%;
+    				transform: translateY(-50%);
+    			}
+
+    			#recipe-title-link {
+    				text-decoration: none;
+    				height: 4em;
+    				width: 100%;
+    				position: absolute;
+
+    				h2 {
+    					color: $medium;
+    				}
+    			}
+    		}
+
+    		.servings {
+    			h2 {
+    				display: block;
+    				color: #ababab;
+    				position: relative;
+    				margin: 0;
+    				top: 50%;
+    				transform: translateY(-50%);
+    				left: 20%;
+    				width: 30%;
+    			}
+
+    			#minus-serving {
+    				position: absolute;
+    				top: 50%;
+    				transform: translateY(-50%);
+    				color: $medium;
+    				left: 60%;
+    			}
+
+    			#add-serving {
+    				position: absolute;
+    				top: 50%;
+    				transform: translateY(-50%);
+    				left: 86%;
+    				color: $medium;
+    			}
+
+    			#num-servings {
+    				position: absolute;
+    				top: 50%;
+    				transform: translateY(-50%);
+    				left: 70%;
+    				padding: 3px;
+    				padding-left: 7px;
+    				padding-right: 7px;
+    				border: 1px solid $dark;
+    			}
+    		}
+    	}
+    }
 }

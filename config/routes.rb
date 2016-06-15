@@ -39,7 +39,8 @@ FoodStella::Application.routes.draw do
 
   resources :recipes  do
     member do
-      get 'sidebar'
+      get  'sidebar'
+      post 'change_serving'
     end
     get :autocomplete_ingredient_name, on: :collection
   end
