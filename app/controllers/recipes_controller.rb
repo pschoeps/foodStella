@@ -27,6 +27,8 @@ class RecipesController < ApplicationController
       else
         q.ingredient.abbreviated = q.ingredient.name.split(' ').last
       end
+
+      q.ounces = q.convert_to_ounces()
     end
 
     if @recipe.save

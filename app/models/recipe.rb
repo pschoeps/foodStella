@@ -90,6 +90,7 @@ class Recipe < ActiveRecord::Base
       }.join(' AND '),
       *terms.map { |e| [e] * num_or_conditions }.flatten
     ).includes(:ingredients)
+    .group('ingredients.id')
     #.joins(:user)
   }
 
