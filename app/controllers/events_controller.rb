@@ -11,6 +11,10 @@ class EventsController < ApplicationController
   def destroy
     @event = Event.find(params[:event][:id])
     @event.destroy
+
+    if params[:mobile_destroy]
+      redirect_to calendar_user_path(current_user), week_counter: params[:week_counter].to_i
+    end
   end
 
   def update

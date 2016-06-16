@@ -432,27 +432,55 @@ input:-webkit-autofill {
 		}
 	}
 
-	.glyphicon {
-		font-size: 2em;
+
+	.arrow {
 		color: white;
 		position: absolute;
 	}
 
-	.glyphicon-chevron-left {
-		left: 25%;
+	.prev-week-link {
+		left: 28%;
     	top: 25%;
-    	font-size: 1.75em;
+    	position: absolute;
+    	width: 2em;
+    	height: 2em;
+    	z-index: 20;
+	
+		.arrow-left {
+			height: 100%;
+    		width: 100%;
+    		background-image: asset-url('left-arrow.png');
+    		background-size: 2em 2em;
+    		background-repeat: no-repeat;
+    	}
 	}
 
-	.glyphicon-chevron-right {
-		right: 28%;
+	.next-week-link {
+		left: 64%;
     	top: 25%;
-    	font-size: 1.75em;
+    	position: absolute;
+    	width: 2em;
+    	height: 2em;
+    	z-index: 20;
+
+		.arrow-right {
+			height: 100%;
+    		width: 100%;
+    		background-image: asset-url('right-arrow.png');
+    		background-size: 2em 2em;
+    		background-repeat: no-repeat;
+    	}
 	}
 
-	.glyphicon-shopping-cart {
+	.shopping-cart {
+		color: white;
+		position: absolute;
 		right: 10px;
     	top: 50%;
+    	width: 3em;
+    	height: 3em;
+    	background-size: 3em 3em;
+    	background-image: asset-url('shopping-cart-white.png');
     	transform: translateY(-50%);
 	}
 
@@ -466,6 +494,16 @@ input:-webkit-autofill {
     	letter-spacing: 3px;
     	font-size: 1.75em;
     	font-weight: 100;
+	}
+
+	.week-subtitle {
+		position: absolute;
+    	top: 3.3em;
+    	letter-spacing: .75px;
+    	width: 100%;
+    	font-size: .8em;
+    	color: white;
+    	text-align: center;
 	}
 }
 
@@ -500,6 +538,7 @@ input:-webkit-autofill {
 .planner-instructions {
 	height:3em;
 	background-color: $dark;
+	display: block;
 
 	.col-sm-12 {
 		height: 100%;
@@ -540,30 +579,15 @@ input:-webkit-autofill {
 
 		/*needed to move only breakfast over to make colored circles look correct */
 
-		#hide-chevron, #hide-chevron-1, #hide-chevron-2 {
+		#hide-chevron {
+			right: -30px;
+			color: $green;
+			z-index: 10;
 			position: absolute;
     		height: 100%;
     		font-size: 5em;
     		right: -38px;
     		top: -13px;
-		}
-
-		#hide-chevron {
-			right: -30px;
-			color: $green;
-			z-index: 10;
-		}
-
-		#hide-chevron-1 {
-			right: -38px;
-			color: white;
-			z-index: 20;
-		}
-
-		#hide-chevron-2 {
-			right: -46px;
-			color: $green;
-			z-index: 30;
 		}
 
 	    .details-left, .details-right {
@@ -584,6 +608,59 @@ input:-webkit-autofill {
 	}
 }
 
+.slider-container {
+	height: 3em;
+	background-color: white;
+	position: relative;
+
+	.col-md-12 {
+		height: 100%;
+
+		#unhide-chevron {
+		position: absolute;
+    	color: #819800;
+    	font-size: 4em;
+    	left: -32px;
+    	top: 20px;
+    	display: none;
+
+	}
+
+		.glyphicon {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			color: $green;
+		}
+
+		.glyphicon-minus {
+			left: 30px;
+		}
+
+		.glyphicon-plus {
+			right:30px;
+		}
+
+		.ui-slider-horizontal {height: 5px;}
+		.ui-state-default {background: white;}
+
+		#zoomSlider {
+			position: relative;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 75%;
+			margin:auto;
+
+			.ui-slider-range { background: $green;}
+  		    .ui-slider-handle { 
+  		    		border-color: $green; 
+  		    		border-radius: 100%;
+  		    		top: -.5em;
+  		    		}
+		}
+	}
+}
+
 #offset-margins {
 	margin-bottom: -100px;
 }
@@ -593,17 +670,6 @@ input:-webkit-autofill {
 	position: relative;
 	overflow-x: auto;
 	white-space: nowrap;
-	padding-top: 3em;
-
-	#unhide-chevron {
-		position: absolute;
-    	color: #819800;
-    	font-size: 4em;
-    	left: -32px;
-    	top: -10px;
-    	display: none;
-
-	}
 
 	.one-day {
 		float: none;
@@ -622,7 +688,6 @@ input:-webkit-autofill {
 		.meals {
 			position: relative;
 			width: 100%;
-			height: 100em;
 
 			.add-meal-short {
 				width: 100%;
@@ -640,9 +705,9 @@ input:-webkit-autofill {
     				text-align: center;
     				text-decoration: none;
     				color: #ababab;
-    				bottom: 7px;
+    				bottom: .5em;
     				border-bottom: 1px dashed $medium;
-    				height: 15px;
+    				height: 65%;
 				}
 
 			}
@@ -655,6 +720,13 @@ input:-webkit-autofill {
 				display: none;
 			}
 
+			#mobile-event {
+				height: 100%;	
+				/* only used when as a fallback if a user has unfollowed a recipe but an event for that recipe still remains */
+				background-image: asset-url("background-picture-foodstella.jpg");
+
+			}
+
 
 			.meal, .mobile-event {
 				width: 100%;
@@ -662,8 +734,9 @@ input:-webkit-autofill {
 				margin-bottom: 10px;
 				position: relative;
 				float: left;
-				background-size: cover;
-    			background-repeat: no-repeat;
+				background-size: cover !important;
+    			background-repeat: no-repeat !important;
+    			background-position: 0 0 !important;
 
 				.servings {
 					position: absolute;
@@ -673,7 +746,7 @@ input:-webkit-autofill {
 					padding-right: 3px;
 					height: 1.5em;
 					color: $green;
-					background-color: rgba(171, 171, 171, .7);
+					background-color: rgba(171, 171, 171, .85);
 					text-align: center;
 
 				}
@@ -722,19 +795,20 @@ input:-webkit-autofill {
     background-color: rgba(255, 255, 255, .9);
     width: 100%;
     z-index: 40;
-    height: 100%;
     display: none;
 
     .recipe-selection-header {
     	width: 100%;
     	height: 5em;
 
-    	.glyphicon {
+    	.close-x {
     		position: absolute;
     		top: 10px;
     		right: 10px;
-    		font-size: 2em;
-    		color: $medium;
+    		height: 2em;
+    		width: 2em;
+    		background-size: 2em 2em;
+    		background-image: asset-url('close-x.png');
     	}
 
     	h3 {
@@ -765,10 +839,167 @@ input:-webkit-autofill {
 			float: left;
 			color: $medium;
 			font-size: 1.25em;
+			margin-top: 1em;
 
 			span {
 				float: right;
 			}
 		}
+
+		#selected {
+			display: block;
+    		width: 100%;
+    		height: 100%;
+    		background-image: asset-url('fav-star-active.png');
+    		background-size: 50% 50%;
+    		background-repeat: no-repeat;
+    		background-position-x: 50%;
+    		background-position-y: 30%;
+    		background-color: rgba(77, 77, 77, .8);
+		}
 	}
+}
+
+.event-actions-mobile {
+	position: absolute;
+    top: 0;
+    background-color: rgba(255, 255, 255, .9);
+    width: 100%;
+    z-index: 40;
+    display: none;
+    height: 80em;
+
+    #hide-event-actions {
+    	position: absolute;
+    	top: 10px;
+    	right: 10px;
+    	font-size: 2em;
+    	color: $medium;
+    }
+
+    .view-container {
+    	border: 1px solid $green;
+    	border-bottom: none;
+    	position: relative;
+    	width: 80%;
+    	height: 29em;
+    	margin: auto;
+    	top: 5em;
+
+    	.image-container {
+    		display: block;
+   		    width: 100%;
+    		height: 17em;
+
+    		#servings {
+    			width: 3em;
+    			height: 3em;
+    			background-color: rgba(255, 255, 255, 0.9);
+    			position: absolute;
+    			text-align: center;
+
+    			h3 {
+    				margin: 0;
+    				position: relative;
+    				top: 50%;
+    				transform: translateY(-50%);
+    				color: $green;
+    				font-weight: 100;
+    			}
+    		}
+    	}
+
+    	.recipe-title-container {
+    		position: relative;
+    		height: 2.5em;
+    		top: -2.5em;
+    		background-color: $green;
+
+    		#recipe-title {
+    			margin: 0;
+    			color: white;
+    			position: relative;
+    			top: 50%;
+    			transform: translateY(-50%);
+    			letter-spacing: 1px;
+    			font-weight: 100;
+    		}
+    		
+    	}
+
+
+    	.event-actions {
+    		height: 12em;
+    		position: relative;
+    		top: -2.5em;
+    		padding: 0;
+    		list-style-type: none;
+    		margin: 0;
+
+    		.action {
+    			height: 4em;
+    			border-bottom: 1px solid $medium;
+    			background-color: white;
+
+    			h2 {
+    				margin: 0;
+    				color: $medium;
+    				position: relative;
+    				top: 50%;
+    				transform: translateY(-50%);
+    			}
+
+    			#recipe-title-link {
+    				text-decoration: none;
+    				height: 4em;
+    				width: 100%;
+    				position: absolute;
+
+    				h2 {
+    					color: $medium;
+    				}
+    			}
+    		}
+
+    		.servings {
+    			h2 {
+    				display: block;
+    				color: #ababab;
+    				position: relative;
+    				margin: 0;
+    				top: 50%;
+    				transform: translateY(-50%);
+    				left: 20%;
+    				width: 30%;
+    			}
+
+    			#minus-serving {
+    				position: absolute;
+    				top: 50%;
+    				transform: translateY(-50%);
+    				color: $medium;
+    				left: 60%;
+    			}
+
+    			#add-serving {
+    				position: absolute;
+    				top: 50%;
+    				transform: translateY(-50%);
+    				left: 86%;
+    				color: $medium;
+    			}
+
+    			#num-servings {
+    				position: absolute;
+    				top: 50%;
+    				transform: translateY(-50%);
+    				left: 70%;
+    				padding: 3px;
+    				padding-left: 7px;
+    				padding-right: 7px;
+    				border: 1px solid $dark;
+    			}
+    		}
+    	}
+    }
 }

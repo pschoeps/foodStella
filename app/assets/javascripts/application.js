@@ -20,6 +20,7 @@
 //= require jquery-ui/position
 //= require jquery-ui/draggable
 //= require jquery-ui/autocomplete
+//= require jquery-ui/slider
 //= require autocomplete-rails
 //= require rails-jquery-tokeninput
 //= require fullcalendar-local
