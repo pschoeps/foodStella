@@ -721,7 +721,10 @@ input:-webkit-autofill {
 			}
 
 			#mobile-event {
-				height: 100%;
+				height: 100%;	
+				/* only used when as a fallback if a user has unfollowed a recipe but an event for that recipe still remains */
+				background-image: asset-url("background-picture-foodstella.jpg");
+
 			}
 
 
@@ -731,8 +734,9 @@ input:-webkit-autofill {
 				margin-bottom: 10px;
 				position: relative;
 				float: left;
-				background-size: cover;
-    			background-repeat: no-repeat;
+				background-size: cover !important;
+    			background-repeat: no-repeat !important;
+    			background-position: 0 0 !important;
 
 				.servings {
 					position: absolute;
@@ -742,7 +746,7 @@ input:-webkit-autofill {
 					padding-right: 3px;
 					height: 1.5em;
 					color: $green;
-					background-color: rgba(171, 171, 171, .7);
+					background-color: rgba(171, 171, 171, .85);
 					text-align: center;
 
 				}

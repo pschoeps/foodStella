@@ -2,7 +2,7 @@
 
   <% @recipes.each do |recipe| %>
     .<%= recipe.get_friendly_name %>id-<%= recipe.id %> {
-         background-image: url('<%= recipe.retrieve_pic %>');
+         background-image: url('<%= recipe.retrieve_pic %>') !important;
          cursor: pointer;
     }
        .fc-event-container .<%= recipe.get_friendly_name %>id-<%= recipe.id %>::after {}
