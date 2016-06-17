@@ -246,6 +246,8 @@
      $(document).on('click','.filtering-tags li',function(){
         var value = $(this).attr('data-value');
         var name = $(this).attr('data-name');
+        if(name=='filterrific[owns]' || name=='filterrific[following]' || name=='filterrific[cooked]')
+          value = '<%= current_user.id %>';
         var string = 'input[name="' + name + '"][value=' + value + ']';
         $(string).click();
       });
