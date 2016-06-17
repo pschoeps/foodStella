@@ -39,7 +39,7 @@ class Recipe < ActiveRecord::Base
   self.per_page = 12
 
   #this is some stuff I'm playing around with for searching and filtering recipes
-  filterrific :default_filter_params => { :sorted_by => 'RANDOM()'}, #created_at_desc' },
+  filterrific :default_filter_params => { :sorted_by => 'created_at_desc' },
               available_filters: [
               :sorted_by,
               :search_query,
@@ -91,6 +91,7 @@ class Recipe < ActiveRecord::Base
       *terms.map { |e| [e] * num_or_conditions }.flatten
     ).includes(:ingredients)
     .group('ingredients.id')
+    .group('recipes.id')
     #.joins(:user)
   }
 
@@ -133,7 +134,8 @@ class Recipe < ActiveRecord::Base
     # where(recipes[:category].eq("#{style[0]}"))
     styles = []
     style.each do |s|
-      styles.push(options_for_style[s-1][0].downcase) # use strings instead of keys
+      styles.push(options_for_style[s-1][0].downcase) # use strings as well as keys
+      styles.push(options_for_style[s-1][1])
     end
     pg_styles = styles.map {|val| "%#{val}%" }
     where('lower(recipes.category) ILIKE ANY ( array[?] )', pg_styles)
@@ -328,7 +330,7 @@ class Recipe < ActiveRecord::Base
   def self.options_for_sorted_by
     [
       # ['Name (a-z)', 'name_asc'],
-      ['Trending', 'name_asc'],
+      ['Trending', 'created_at_desc'],
       ['Latest', 'created_at_desc'],
       ['Oldest', 'created_at_asc'],
       # ['Difficulty (hardest first)',       'difficulty_desc'],

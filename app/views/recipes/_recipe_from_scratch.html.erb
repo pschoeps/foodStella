@@ -29,7 +29,7 @@
 
           <div class="row">
             <li class="control-group food-type">
-              <%= f.label :meal_type, "Food type:", class: "control-label" %>
+              <%= f.label :meal_type, "Meal type:", class: "control-label" %>
               <!-- <div class="controls">
                 %= f.select(:meal_type, options_for_select([['Snack', 1], ['Side dish', 2], ["Main dish", 3], ['Dessert', 4], ['Drink', 5], ['Appetizer', 6]])) %>
               </div> -->
@@ -124,10 +124,11 @@
             </li>
 
             <li class="control-group">
-              <%= f.label :category, "Category:", class: "control-label" %>
+              <%= f.label :category, "Food Style:", class: "control-label" %>
               <div class="controls"><%= f.select(:category, options_for_select(
-              [['Mediterranean', 1], ['Chinese', 2], ["Mexican", 3]])) %></div>
-              <!-- Recipe.options_for_style), :include_blank=>true) %></div> -->
+                Recipe.options_for_style), :include_blank=>true) %></div>
+                <!-- [['Mediterranean', 1], ['Chinese', 2], ["Mexican", 3]])) %></div> -->
+                
               
               
               

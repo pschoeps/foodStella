@@ -135,10 +135,10 @@
         expandedSections.push('false');
     });
     
-    // var dataString = 'expanded%5B%5D=' + expandedSections[0] + '&expanded%5B%5D=' + expandedSections[1] + '&expanded%5B%5D=' + expandedSections[2] + '&expanded%5B%5D=' + expandedSections[3] + '&expanded%5B%5D=' + expandedSections[4];
-  
-    // $('#refresh-sidebar>a').attr('data-params', dataString);
-    // $('#refresh-sidebar>a').click();
+      // var dataString = 'expanded%5B%5D=' + expandedSections[0] + '&expanded%5B%5D=' + expandedSections[1] + '&expanded%5B%5D=' + expandedSections[2] + '&expanded%5B%5D=' + expandedSections[3] + '&expanded%5B%5D=' + expandedSections[4];
+    
+      // $('#refresh-sidebar>a').attr('data-params', dataString);
+      // $('#refresh-sidebar>a').click();
 
         // disable remove button until sidebar reloads
         $('.remove').off();
@@ -249,5 +249,16 @@
         var string = 'input[name="' + name + '"][value=' + value + ']';
         $(string).click();
       });
-});
+
+      // reapply filterrific
+      setTimeout(function(){
+        $('#filterrific_sorted_by').trigger('change');
+      }, 1);
+
+      // reapply myfoods
+      setTimeout(function(){
+        updateMyFoods();
+      }, 1000);
+
+  });
 </script>
