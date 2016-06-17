@@ -259,19 +259,26 @@ $(document).ready(function(){
       var newIndex = parseInt('<%= new_category %>');
       newIndex -= 1;
       if(newIndex){
-        $('.badge').eq(newIndex).animate({
-          color: "#819800"
-        }, 600, function(){
-          $('.badge').animate({
-            color: "white"
-          }, 600);
-        });
+        // $('.badge').eq(newIndex).animate({
+        //   color: "#819800"
+        // }, 600, function(){
+        //   $('.badge').animate({
+        //     color: "white"
+        //   }, 600);
+        // });
         $('.meal-selection button').eq(newIndex).animate({
           color: "#819800"
         }, 600, function(){
           $('.meal-selection button').animate({
             color: "#ababab"
           }, 600);
+        });
+        $('.badge').eq(newIndex).animate({
+          'margin-right': '-8px'
+        }, 300, function(){
+          $('.badge').animate({
+            'margin-right': '0px'
+          }, 300);
         });
       }
 
