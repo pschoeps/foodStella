@@ -1,0 +1,195 @@
+<div class="row recipe-selection-mobile recipes">
+  <div class="col-md-12 col-xs-12 col-sm-12">
+    <div class="recipe-selection-header">
+      <h2>My Foods</h2>
+        <div class="row search">
+          <%= form_for_filterrific @filterrific do |f| %>
+              <div class="filter-search search">
+                <%= f.text_field(
+                    :search_query,
+                    class: 'filterrific-periodically-observed',
+                    placeholder: "Search my recipes"
+                ) %>
+              </div>
+            <% end %>
+          </div>
+    </div>
+  	<div class="meal-selection recipes">
+       <button type="button" id="snacks">
+          Snacks
+          <span class="badge"><%= snacks.count %></span>
+       </button>
+      <div class="selection" id="snacks-selection" style="display: <%= 'block' if expanded[0] == 'true' %>">
+          <div id='external-events'>
+            <div id='external-events-listing'>
+              <% snacks.each do |r| %>
+                <%= link_to recipe_path(r) do %>
+                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+      </div>
+
+      <button type="button" id="sidedish">
+          Side Dishes
+          <span class="badge"><%= side_dishes.count %></span>
+       </button>
+      <div class="selection" id="sidedish-selection" style="display: <%= 'block' if expanded[1] == 'true' %>">
+          <div id='external-events'>
+            <div id='external-events-listing'>
+              <% side_dishes.each do |r| %>
+                <%= link_to recipe_path(r) do %>
+                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+      </div>
+
+      <button type="button" id="maindish">
+          Main Dishes
+          <span class="badge"><%= main_dishes.count %></span>
+       </button>
+      <div class="selection" id="maindish-selection">
+          <div id='external-events'>
+            <div id='external-events-listing'>
+              <% main_dishes.each do |r| %>
+                <%= link_to recipe_path(r) do %>
+                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+      </div>
+
+      <button type="button" id="dessert">
+          Desserts
+          <span class="badge"><%= desserts.count %></span>
+       </button>
+      <div class="selection" id="dessert-selection" style="display: <%= 'block' if expanded[3] == 'true' %>">
+          <div id='external-events'>
+            <div id='external-events-listing'>
+              <% desserts.each do |r| %>
+                <%= link_to recipe_path(r) do %>
+                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+      </div>
+
+      <button type="button" id="drink">
+          Drinks
+          <span class="badge"><%= drinks.count %></span>
+       </button>
+      <div class="selection" id="drink-selection" style="display: <%= 'block' if expanded[4] == 'true' %>">
+          <div id='external-events'>
+            <div id='external-events-listing'>
+              <% drinks.each do |r| %>
+                <%= link_to recipe_path(r) do %>
+                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
+                  </div>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+
+$(document).ready(function(){
+
+    $('#snacks').click(function() {
+    if ( $('#snacks-selection').css('display') == 'none' )
+      $('#snacks-selection').css('display','block');
+    else
+      $('#snacks-selection').css('display','none');
+  });
+
+  $('#sidedish').click(function() {
+    if ( $('#sidedish-selection').css('display') == 'none' )
+      $('#sidedish-selection').css('display','block');
+    else
+      $('#sidedish-selection').css('display','none');
+  });
+
+  $('#maindish').click(function() {
+    if ( $('#maindish-selection').css('display') == 'none' )
+      $('#maindish-selection').css('display','block');
+    else
+      $('#maindish-selection').css('display','none');
+  });
+
+  $('#dessert').click(function() {
+    if ( $('#dessert-selection').css('display') == 'none' )
+      $('#dessert-selection').css('display','block');
+    else
+      $('#dessert-selection').css('display','none');
+  });
+
+  $('#drink').click(function() {
+    if ( $('#drink-selection').css('display') == 'none' )
+      $('#drink-selection').css('display','block');
+    else
+      $('#drink-selection').css('display','none');
+  });
+
+
+
+  $('button').click(function() {
+
+    // make selection scrollable
+    // var matchingSelection = $('#' + $(this).attr('id') + '-selection');
+    // if(matchingSelection.height() > $(window).height()*0.6)
+    //     matchingSelection.addClass('scrollable');
+
+    var contentHeight = $('.meal-selection').outerHeight() + 80;
+    var sidebarHeight = $('.recipe-selection-mobile').outerHeight()
+
+    if (contentHeight > sidebarHeight) {
+      $('.sidebar').css({
+        'height': contentHeight + 'px',
+        'max-height': contentHeight + 'px'
+      });
+      $('#sidebar-col').css({
+        'height': contentHeight + 'px',
+        'max-height': contentHeight + 'px'
+      });
+      $('.sidebar-content').css({
+        'min-height': contentHeight + 'px'
+      });
+      resetSidebar();
+    }
+    else {
+      if(contentHeight < $(window).height()){
+        $('.sidebar').css({
+          'height': '100vh',
+          'max-height': '100vh'
+        });
+        $('#sidebar-col').css({
+          'height': '100vh',
+          'max-height': '100vh'
+        });
+        $('.sidebar-content').css({
+          'min-height': ''
+        });
+        resetSidebar();
+      }
+    }
+  });
+
+
+
+});
+
+
+</script>

@@ -1,4 +1,7 @@
 class RecipesController < ApplicationController
+  include MobileHelper
+  before_action :check_for_mobile
+  respond_to :html, :json
 
   autocomplete :ingredient, :name #, :full => true
 

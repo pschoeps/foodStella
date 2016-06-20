@@ -1123,3 +1123,97 @@
 		}
 	}
 }
+
+ // mobile index page
+
+.recipe-page-header.mobile {
+	height: 4em;
+	padding: 0;
+	h1 {
+		font-size: 1.5em;
+		line-height: 3em;
+	}
+}
+.shadow-header {
+	z-index: 2;
+	position: relative;
+}
+.shadow-header::after {
+	content: '';
+	height: 1px;
+	background-color: $green;
+	width: 150%;
+	left: -25%;
+	box-shadow: 0 5px 10px #000;
+}
+.planner-view-control.recipes {
+	z-index: 1;
+	position: relative;
+	button {
+		color: $medium;
+		background-color: white;
+		line-height: 2em;
+		font-size: 1.3em;
+		.spatula { background-image: asset-url('icons/spatula-selected.png'); }
+		.fav-star { background-image: asset-url('fav-star-inactive.png'); }
+		box-sizing: border-box;
+		border-bottom: solid 1px #ddd;
+	}
+	button#selected {
+		background-color: $dark;
+		color: $green;
+		.spatual { background-image: asset-url('icons/spatula-unselected.png'); };
+		.fav-star { background-image: asset-url('fav-star-active.png'); }
+		border: none;
+	}
+	.fav-star,
+	.spatula {
+		display: inline-block;
+		width: 1.5em;
+		height: 1.5em;
+		background-size:100% 100%;
+		position: relative;
+		top: 0.25em;
+		margin-right: 0.25em;
+	}
+	// .spatula { float: left; }
+	// .fav-star { float: right; }
+}
+
+.recipe-selection-mobile.recipes {
+	display: block;
+	position: static;
+	// padding-bottom: 30px;
+	.recipe-selection-header {
+		height: auto;
+		padding-bottom: 20px;
+		h2 { margin-top: 20px; }
+		form {
+			border: solid 1px $green;
+			width: 90%;
+			margin: 0 auto;
+		}
+	}
+	.selection { display: none; }
+}
+.meal-selection.recipes {
+	button {
+		border: none;
+		background-color: white;
+		text-align: left;
+		width: 90%;
+		margin-left: auto;
+		margin-right: auto;
+		display: block;
+		float: none;
+	}
+	.recipe-title {
+		text-align: center;
+	}
+}
+.mobile-spacer {
+	position: absolute;
+	width: 100%;
+	height: 300px;
+	background-color: white;
+}

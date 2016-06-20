@@ -249,7 +249,8 @@ $(document).ready(function() {
 
     //user clicked a recipe in the recipe selection modal, adding it to there planner
   	$('.fc-event').click(function() {
-      if ($(this).find('#selected').length) {
+      if ($(this).find('#selected').length ||
+        $(this).closest('.recipe-selection-mobile.recipes').length) {
       }
       else {
   		  date = $("#meal-day").attr('data');
