@@ -13,8 +13,8 @@ class Recipe < ActiveRecord::Base
                                    dependent:   :destroy   
 
   ratyrate_rateable "review"
-  # has_many :rates, foreign_key: "rateable_id"
-  has_many :rating_caches, as: :cacheable, foreign_key: "cacheable_id"
+  has_many :rates, as: :rateable, foreign_key: "rateable_id"
+  has_many :rating_caches, as: :cacheable, foreign_key: "cacheable_id", class_name: RatingCache
 
   acts_as_commontable
 
@@ -39,7 +39,7 @@ class Recipe < ActiveRecord::Base
   self.per_page = 12
 
   #this is some stuff I'm playing around with for searching and filtering recipes
-  filterrific :default_filter_params => { :sorted_by => 'RANDOM()'}, #created_at_desc' },
+  filterrific :default_filter_params => { :sorted_by => 'created_at_desc' },
               available_filters: [
               :sorted_by,
               :search_query,
@@ -90,6 +90,8 @@ class Recipe < ActiveRecord::Base
       }.join(' AND '),
       *terms.map { |e| [e] * num_or_conditions }.flatten
     ).includes(:ingredients)
+    .group('ingredients.id')
+    .group('recipes.id')
     #.joins(:user)
   }
 
@@ -112,11 +114,11 @@ class Recipe < ActiveRecord::Base
         # order("recipes.cook_time + recipes.prep_time #{ direction 
         order("COALESCE(recipes.cook_time,0) + COALESCE(recipes.prep_time,0) #{ direction }")
       when /^ratings_average_/
-        # order("rating_caches.avg #{ direction }").includes(:rating_caches)
+        order("rating_caches.avg #{ direction } NULLS LAST").includes(:rating_caches).group('rating_caches.avg').group('rating_caches.id').group('recipes.id')
       when /^ratings_count_/
-        # order("rating_caches.qty #{ direction }").includes(:rating_caches)
+        order("rating_caches.qty #{ direction } NULLS LAST").includes(:rating_caches).group('rating_caches.qty').group('rating_caches.id').group('recipes.id')
       when /^my_favorites_/
-        # order("rates.stars #{ direction }").includes(:rates)
+        order("rates.stars #{ direction } NULLS LAST").includes(:rates).group('rates.stars').group('rates.id').group('recipes.id')
       else
         raise(ArgumentError, "Invalid sort option: #{ sort_option.inspect }")
       end
@@ -132,7 +134,8 @@ class Recipe < ActiveRecord::Base
     # where(recipes[:category].eq("#{style[0]}"))
     styles = []
     style.each do |s|
-      styles.push(options_for_style[s-1][0].downcase) # use strings instead of keys
+      styles.push(options_for_style[s-1][0].downcase) # use strings as well as keys
+      styles.push(options_for_style[s-1][1])
     end
     pg_styles = styles.map {|val| "%#{val}%" }
     where('lower(recipes.category) ILIKE ANY ( array[?] )', pg_styles)
@@ -187,32 +190,66 @@ class Recipe < ActiveRecord::Base
 
   scope :sort_by_ingredients, lambda { |ingredient_ids|
     # get a reference to the join table
-    quantities = Quantity.arel_table
-    ingredients = Ingredient.arel_table
-    # get a reference to the filtered table
-    recipes = Recipe.arel_table
-    main_ingredients = []
-    ingredient_ids.each do |i|
-      main_ingredients.push(options_for_sort_by_ingredients[i-1][0].downcase) # get ingredient name
-      if options_for_sort_by_ingredients[i-1][2]
-        main_ingredients.push(options_for_sort_by_ingredients[i-1][2].downcase) # for alternate names
-      end
-    end
-    pg_ingredients = main_ingredients.map {|val| "%#{val}%" }
-    @matching_ingredients = Ingredient.where('lower(name) ILIKE ANY ( array[?] )', pg_ingredients)
-    @ingred_ids = []
-    @matching_ingredients.each do |i|
-      @ingred_ids.push(i.id)
-    end
+        # quantities = Quantity.arel_table
+        # ingredients = Ingredient.arel_table
+        # recipes = Recipe.arel_table
+      puts ingredient_ids
+        main_ingredients = []
+        ingredient_ids.each do |i|
+          main_ingredients.push(options_for_sort_by_ingredients[i-1][0].downcase) # get ingredient name
+          # if options_for_sort_by_ingredients[i-1][2]
+          #   main_ingredients.push(options_for_sort_by_ingredients[i-1][2].downcase) # for alternate names
+          # end
+        end
+        pg_ingredients = main_ingredients.map {|val| "%#{val}%" }
+        @matching_ingredients = Ingredient.where('lower(name) ILIKE ANY ( array[?] )', pg_ingredients)
+        @ingred_ids = []
+        @matching_ingredients.each do |i|
+          @ingred_ids.push(i.id.to_i)
+        end
+        puts @ingred_ids
 
     # let AREL generate a complex SQL query
-    where(
-      Quantity \
-        .where(quantities[:recipe_id].eq(recipes[:id])) \
-        # .where(quantities[:ingredient_id].in([*ingredient_ids].map(&:to_i))) \
-        .where(quantities[:ingredient_id].in([*@ingred_ids].map(&:to_i))) \
-        .exists
-    )
+    # @ingred_ids.each do |id|
+    # id = 1
+    #   where(
+    #     Quantity \
+    #       .where(quantities[:recipe_id].eq(recipes[:id])) \
+    #       .where(quantities[:ingredient_id].eq(id)) \
+    #       # .where(quantities[:ingredient_id].in([*@ingred_ids].map(&:to_i))) \
+    #       .exists
+    #   )
+       #.join(' AND '),
+      # if id != @indred_ids.last
+        # " AND "
+      # end
+    # end
+
+      # num_or_conditions = 1
+      # where(
+      #   ingredient_ids.map {
+      #     or_clauses = [
+      #       "ingredients.id) = ?"
+      #     ].join(' OR ')
+      #     "(#{ or_clauses })"
+      #   }.join(' AND '),
+      #   *ingredient_ids.map { |e| [e] * num_or_conditions }.flatten
+      # ).includes(:ingredients)
+
+
+      # Recipe.joins(:ingredients).where("ingredients.id IN (?)", @ingred_ids)
+
+      # @people = Person.find(:all, 
+      #    :joins => :favourites,
+      #    :select => "person.*, count(favourites) favourite_count", 
+      #    :conditions => {:favourites => @array_of_favourites}, 
+      #    :group => "persons.id having favourite_count = #{@array_of_favourites.count}")
+
+      # .where(ingredients: { name: pg_ingredients })
+      Recipe.joins(:ingredients)
+        .where('lower(ingredients.name) ILIKE ANY ( array[?] )', pg_ingredients)
+        .group("recipes.id")
+        .having("count(ingredients.name) = #{pg_ingredients.count}")
   }
 
   def self.options_for_sort_by_ingredients
@@ -293,7 +330,7 @@ class Recipe < ActiveRecord::Base
   def self.options_for_sorted_by
     [
       # ['Name (a-z)', 'name_asc'],
-      ['Trending', 'name_asc'],
+      ['Trending', 'created_at_desc'],
       ['Latest', 'created_at_desc'],
       ['Oldest', 'created_at_asc'],
       # ['Difficulty (hardest first)',       'difficulty_desc'],
@@ -304,9 +341,9 @@ class Recipe < ActiveRecord::Base
       # ['Prep Time (shortest first)',       'prep_time_asc'],
       ['Time (shortest first)',              'total_time_asc'],
       ['Time (longest first)',               'total_time_desc'],
-      ['Average Rating (x)',                     'ratings_average_asc'],
-      ['Most Rated (x)',                         'ratings_count_asc'],
-      ['My Favorites (x)',                       'my_favorites_asc'],
+      ['Average Rating',                     'ratings_average_desc'],
+      ['Most Rated',                         'ratings_count_desc'],
+      ['My Favorites',                       'my_favorites_desc'],
       # ['Lowest Rating',       'prep_time_asc'],
       # ['Popular',       'prep_time_asc'],
       # ['Fewest Ratings',       'prep_time_asc']

@@ -1,0 +1,36 @@
+<%= render 'layouts/recipe_css_variables' %>
+
+<div class="row shadow-header">
+  <div class="col-md-12 recipe-page-header mobile">
+    <h1>What do you <i>stella</i> today?</h1>
+  </div>
+</div>
+
+<div class="row planner-view-control recipes">
+  <div class="col-sm-6 disable-margins disable-padding week-view">
+    <button class="week-view-button" id="selected"><div class="spatula"></div> My Foods</button>
+  </div>
+  <div class="col-sm-6 disable-margins disable-padding day-view">
+    <button class="day-view-button">Recipes <div class="fav-star"></div></button>
+  </div>
+</div>
+
+<%= render(
+    partial: 'recipe_selection_mobile',
+    locals: {
+      snacks: @snacks,
+      side_dishes: @side_dishes,
+      main_dishes: @main_dishes,
+      desserts: @desserts,
+      drinks: @drinks,
+      expanded: @expanded
+    }
+  ) %>
+
+<div class='mobile-spacer'></div>
+
+<script>
+  $(document).ready(function() {
+
+  });
+</script>

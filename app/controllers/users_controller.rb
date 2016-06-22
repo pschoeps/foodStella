@@ -4,9 +4,6 @@ class UsersController < ApplicationController
 	respond_to :html, :json
 
    def update
-   	puts '------------------------------------------------------'
-   	puts 'interesting'
-	
 	@user = User.find(params[:id])
 	if params[:user][:preferred_list]
 		@user.update_attribute(:preferred_list, params[:user][:preferred_list])

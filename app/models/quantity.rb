@@ -29,4 +29,40 @@ class Quantity < ActiveRecord::Base
 	         end
 		string
 	end
+
+	def convert_to_ounces()
+		oz = 0
+		a = self.amount
+		u = self.unit.to_i
+
+		whole = 0.0
+		if a.include?(' ')
+			whole = a.split(' ')[0].to_f
+			a = a.split(' ')[1]
+		end
+
+		if a.include?('/')
+			a = a.split('/')[0].to_f / a.split('/')[1].to_f
+		end
+
+		oz = a.to_f
+
+		if whole != 0
+			oz += whole
+		end
+
+		ratio = 1
+		if u == 1
+			ratio = 8
+		elsif u == 3
+			ratio = 0.166667
+		elsif u == 4
+			ratio = 0.5
+		elsif u == 5
+			raito = 0.013
+		end
+		oz *= ratio
+
+		oz
+	end
 end

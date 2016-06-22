@@ -1,4 +1,7 @@
 class RecipesController < ApplicationController
+  include MobileHelper
+  before_action :check_for_mobile
+  respond_to :html, :json
 
   autocomplete :ingredient, :name #, :full => true
 
@@ -27,6 +30,8 @@ class RecipesController < ApplicationController
       else
         q.ingredient.abbreviated = q.ingredient.name.split(' ').last
       end
+
+      q.ounces = q.convert_to_ounces()
     end
 
     if @recipe.save
@@ -94,7 +99,7 @@ class RecipesController < ApplicationController
     else
       @expanded = ['false','false','false','false','false']
     end
-
+    
     #filtering links to model 
     @filterrific = initialize_filterrific(
       Recipe,
@@ -173,14 +178,23 @@ end
     @desserts = @user_recipes.where(:meal_type => "4") + @followed_recipes.where(:meal_type => "4")
     @drinks = @user_recipes.where(:meal_type => "5") + @followed_recipes.where(:meal_type => "5")
     # render :partial => '/layouts/recipe_sidebar'
-    if params[:expanded]
-      @expanded = params[:expanded]
+    
+    # if params[:expanded]
+    #   @expanded = params[:expanded]
+    # else
+    #   @expanded = ['false','false','false','false','false']
+    # end
+    ######### expanded sidebar sections are now handled entirely by js
+    @expanded = ['false','false','false','false','false']
+
+    if params[:new_recipe_id]
+      @newRecipe = Recipe.where(:id => params[:new_recipe_id]).first
+      @new_category = @newRecipe.meal_type
     else
-      @expanded = ['false','false','false','false','false']
+      @new_category = nil
     end
 
     respond_to do |format|
-      format.html
       format.js
     end
   end

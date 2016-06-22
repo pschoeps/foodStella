@@ -8,7 +8,7 @@
             <li class="filtering-by" data-name='filterrific[<%= f %>][]' data-value='<%= o %>'>
               <% options = 'options_for_' + f %>
               <%= Recipe.send(options)[o.to_i-1][0] %>
-              <span>x</span>
+              <%= image_tag "icons/close.png", class: "remove-filter" %>
             </li>
           <% end %>
         <!-- % elsif options.kind_of?(String) %> -->
@@ -17,7 +17,7 @@
               <%= "Recipes I've Created" if f == 'owns' %>
               <%= "Recipes I'm Following" if f == 'following' %>
               <%= "Recipes I've Cooked" if f == 'cooked' %>
-              <span>x</span>
+              <%= image_tag "icons/close.png", class: "remove-filter" %>
             </li>
         <% end %>
       <% end %>
