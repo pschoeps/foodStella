@@ -185,26 +185,6 @@ end
     end
   end
 
-  def change_serving
-    @recipe = Recipe.find(params[:id])
-    if params[:add] == "true"
-      new_serving = @recipe.servings + 1
-    else
-      new_serving = @recipe.servings - 1
-    end
-
-    if new_serving < 0
-      new_serving = 0
-    end
-
-    @recipe.update_attributes!(servings: new_serving)
-    if @recipe.save
-      respond_to do |format|
-        format.js
-      end
-    end
-  end
-
   def get_difficulty(diff)
     string = case diff
                 when "1"
