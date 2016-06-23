@@ -1,19 +1,4 @@
-<div class="row recipe-selection-mobile recipes">
-  <div class="col-md-12 col-xs-12 col-sm-12">
-    <div class="recipe-selection-header">
-      <h2>My Foods</h2>
-        <div class="row search">
-          <%= form_for_filterrific @filterrific do |f| %>
-              <div class="filter-search search">
-                <%= f.text_field(
-                    :search_query,
-                    class: 'filterrific-periodically-observed',
-                    placeholder: "Search my recipes"
-                ) %>
-              </div>
-            <% end %>
-          </div>
-    </div>
+
   	<div class="meal-selection recipes">
        <button type="button" id="snacks">
           Snacks
@@ -101,12 +86,24 @@
       </div>
 
     </div>
-  </div>
-</div>
 
 <script>
 
 $(document).ready(function(){
+
+  console.log(expandedSections);
+  $('.selection').each(function(index){
+    if( expandedSections[index] == 'true')
+      $(this).css('display','block');
+    else
+      $(this).css('display','none');
+  });
+
+  $('.meal-selection button').on('click',function(){
+    setTimeout(function(){
+      updateMyFoods();
+    }, 1);
+  });
 
     $('#snacks').click(function() {
     if ( $('#snacks-selection').css('display') == 'none' )
@@ -167,7 +164,7 @@ $(document).ready(function(){
       $('.sidebar-content').css({
         'min-height': contentHeight + 'px'
       });
-      resetSidebar();
+      // resetSidebar();
     }
     else {
       if(contentHeight < $(window).height()){
@@ -182,7 +179,7 @@ $(document).ready(function(){
         $('.sidebar-content').css({
           'min-height': ''
         });
-        resetSidebar();
+        // resetSidebar();
       }
     }
   });

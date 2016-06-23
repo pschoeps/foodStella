@@ -1,0 +1,272 @@
+<div class='filtering-tags'></div>
+
+<%= form_for_filterrific @filterrific do |f| %>
+  
+  <div class="filter-search">
+     <%= f.text_field(
+       :search_query,
+       class: 'filterrific-periodically-observed',
+       placeholder: "Search"
+     ) %>
+
+    <div id="filter-options">Filter</div>
+  </div>
+  
+  <div class="dropdowns">
+
+    <div class="close-filter-options"></div>
+
+    <div class='sort-by dropdown'>
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <%= @filterrific.select_options[:sorted_by][0][0] %>
+      </button>
+      <div style='display:none'>
+        <%= f.select(:sorted_by, @filterrific.select_options[:sorted_by], class: 'sort-by-dropdown') %>
+      </div>
+        <ul class="dropdown-menu sort-by-dropdown-mobile" aria-labelledby="dropdownMenu1">
+          <li id="checkbox">
+            <% @filterrific.select_options[:sorted_by].each do |c| %>
+              <label class="checkbox">
+               <%= c[0] %>
+                <!-- %= check_box_tag("filterrific[sort_by_ingredients][]",c[1])  %> -->
+              </label>
+            <% end %>
+          </li>
+       </ul>
+    </div>
+
+    <div class="dropdown main-ingredient">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Main Ingredient
+        <!-- <span class="caret"></span> -->
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li id="ingredient-options checkbox">
+          <% @filterrific.select_options[:sort_by_ingredients].each do |c| %>
+            <label class="checkbox">
+              <%= c[0] %>
+              <%= check_box_tag("filterrific[sort_by_ingredients][]",c[1])  %>
+            </label>
+          <% end %>
+        </li>
+      </ul>
+    </div>  
+
+    <div class="dropdown meal-type">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Meal Type
+        <!-- <span class="caret"></span> -->
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li id="checkbox">
+          <% @filterrific.select_options[:meal_type].each do |c| %>
+            <label class="checkbox">
+              <%= c[0] %>
+              <%= check_box_tag("filterrific[meal_type][]",c[1]) %>
+            </label>
+          <% end %>
+        </li>
+      </ul>
+    </div>
+
+    <div class="dropdown style">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Food Style
+        <!-- <span class="caret"></span> -->
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li id="checkbox">
+          <% @filterrific.select_options[:style].each do |c| %>
+            <label class="checkbox">
+              <%= c[0] %>
+              <%= check_box_tag("filterrific[style][]",c[1]) %>
+            </label>
+          <% end %>
+        </li>
+      </ul>
+    </div>  
+
+    <div class="dropdown difficulty">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Difficulty
+        <!-- <span class="caret"></span> -->
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li id="checkbox">
+          <% @filterrific.select_options[:difficulty].each do |c| %>
+            <label class="checkbox">
+              <%= c[0] %>
+              <%= check_box_tag("filterrific[difficulty][]",c[1]) %>
+            </label>
+          <% end %>
+        </li>
+      </ul>
+    </div> 
+
+    <div class="dropdown more">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        My Recipes
+        <!-- <span class="caret"></span> -->
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li id="checkbox">
+         <label class="checkbox">
+            Recipes I've Created
+            <%= check_box_tag("filterrific[owns]", current_user.id) %>
+          </label>
+          <label class="checkbox">
+            Recipes I'm Following
+            <%= check_box_tag("filterrific[following]", current_user.id) %>
+          </label>
+          <label class="checkbox">
+            Recipes I've Cooked
+            <%= check_box_tag("filterrific[cooked]", current_user.id) %>
+          </label>
+        </li>
+      </ul>
+    </div>
+
+     <div id ="reset-filters">
+      <%= link_to(
+        'Reset filters',
+        reset_filterrific_url,
+        class: 'dropdown'
+      ) %>
+    </div>
+
+  </div> 
+
+
+
+  <%# add an automated spinner to your form when the list is refreshed %>
+  <%= render_filterrific_spinner %>
+<% end %>
+
+<script>
+  $(document).ready(function(){
+
+    // fixed filter bar
+    var $filterBar = $('.fixed-filter-bar');
+    var $controlBar = $('.planner-view-control.recipes');
+    
+    var filterHeight = $filterBar.height();
+    var anchorMin = $controlBar.offset().top + $controlBar.height();
+    var anchor = anchorMin;
+
+    $controlBar.css('margin-bottom', filterHeight + 'px');
+    $filterBar.css({
+      'position': 'absolute',
+      'top': anchor + 'px'
+    });
+
+    var scrollPos = 0;
+    var lastScrollPos = 0;
+
+    // Scroll event listener for dynamic search bar
+    $(document).scroll(function(e){
+      filterHeight = $filterBar.height();
+      lastScrollPos = scrollPos;
+      scrollPos = $(window).scrollTop();
+
+      if(lastScrollPos < scrollPos){            // scrolling down
+        if($filterBar.css('position')=='fixed')
+          anchor = scrollPos;
+        else if(scrollPos > anchor + filterHeight)
+          anchor = scrollPos - filterHeight;
+        else
+          null; // keep anchor unchanged
+
+        $filterBar.css({
+          'position': 'absolute',
+          'top': anchor + 'px'
+        });
+      }
+      else {                                    // scrolling up
+        if(scrollPos <= anchorMin){
+          anchor = anchorMin;
+          $filterBar.css({
+            'position': 'absolute',
+            'top': anchorMin + 'px'
+          });
+        }
+        else if(anchor >= scrollPos)
+          $filterBar.css({
+            'position': 'fixed',
+            'top': 0
+          });
+      }
+    });
+
+    // disable scrolling on dropdowns popup
+    $('.dropdowns').bind('touchmove', function(e){e.preventDefault()});
+    // $('.dropdowns').unbind('touchmove')
+
+    // dropdowns popup activator
+    $('#filter-options').on('click', function(event){
+      $(this).toggleClass('active');
+      if($(this).hasClass('active')){
+        // prevent footer from overlapping popup
+        var bottom = $('.footer').offset().top;
+        bottom -= $(window).height();
+        if($(window).scrollTop() > bottom)
+            $(window).scrollTop(bottom);
+        $('.dropdowns').show();
+      }
+      else
+        $('.dropdowns').hide();
+    });
+
+    $('.close-filter-options').on('click', function(e){
+      $('#filter-options').removeClass('active');
+      $('.dropdowns').hide();
+      $('.dropdown ul').hide();
+    });
+
+    $('.checkbox').on('click',function(e){
+      var checkbox = $(this).find('input');
+      checkbox.click();
+      $(window).scrollTop(anchorMin);
+      return false;
+    });
+
+    $('.checkbox input').click(function(e){
+      e.stopPropagation();
+    });
+
+    // change sort-by text
+    $('.sort-by-dropdown-mobile .checkbox').on('click', function(event){
+      $(this).siblings('.checkbox').removeClass('active');
+      $(this).addClass('active');
+      var index = $(this).index();
+      $('#filterrific_sorted_by')[0].selectedIndex = index;
+      $('#filterrific_sorted_by').trigger('change');
+      $('.sort-by .dropdown-toggle').text($(this).text());
+    });
+
+    // sliding animation for dropdowns
+    $('.dropdown .dropdown-toggle').on('click', function(e){
+      // e.stopPropagation();
+      if($(this).parent().hasClass('open'))
+        $(this).siblings('ul').first().slideUp();
+      else{
+        $(this).parent().siblings('.dropdown').each(function(){
+          $(this).find('ul').first().slideUp();
+        });
+        $(this).siblings('ul').first().slideDown();
+      }
+    });
+
+    $('.dropdown').on('click', function(e){
+      $('.dropdown').each(function(){
+        if($(this).hasClass('open')){
+          $(this).find('ul').first().slideUp(400, function(){
+            $(this).removeClass('open');
+          });
+        }
+      });
+    });
+
+  });
+
+
+</script>
