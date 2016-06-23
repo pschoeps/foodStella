@@ -161,41 +161,86 @@
 
     var scrollPos = 0;
     var lastScrollPos = 0;
+    var scrollDelta = 0;
+    var offset = 0;
 
     // Scroll event listener for dynamic search bar
     $(document).scroll(function(e){
       filterHeight = $filterBar.height();
       lastScrollPos = scrollPos;
       scrollPos = $(window).scrollTop();
+      scrollDelta = scrollPos - lastScrollPos;
 
-      if(lastScrollPos < scrollPos){            // scrolling down
-        if($filterBar.css('position')=='fixed')
-          anchor = scrollPos;
-        else if(scrollPos > anchor + filterHeight)
-          anchor = scrollPos - filterHeight;
-        else
-          null; // keep anchor unchanged
-
+      if(scrollPos <= anchorMin + filterHeight &&
+      $filterBar.css('position')=='absolute'){
+        anchor = anchorMin;
         $filterBar.css({
           'position': 'absolute',
           'top': anchor + 'px'
         });
+        offset = filterHeight;
       }
-      else {                                    // scrolling up
-        if(scrollPos <= anchorMin){
-          anchor = anchorMin;
-          $filterBar.css({
-            'position': 'absolute',
-            'top': anchorMin + 'px'
-          });
-        }
-        else if(anchor >= scrollPos)
-          $filterBar.css({
-            'position': 'fixed',
-            'top': 0
-          });
+      else if(scrollPos <= anchorMin){
+        anchor = anchorMin;
+        $filterBar.css({
+          'position': 'absolute',
+          'top': anchor + 'px'
+        });
+        offset = filterHeight;
+      }
+      else{
+        if(scrollDelta > 0)            // scrolling down
+          offset += scrollDelta;
+        else                           // scrolling up
+          offset += scrollDelta
+
+        offset = Math.min( filterHeight, Math.max(offset,0) ); // 0~100 range
+        $filterBar.css({
+          'position': 'fixed',
+          'top': -offset + 'px'
+        });
       }
     });
+    // previous approach was smoother,
+    // but transitioning FROM fixed TO absolute
+    // does not register on iOS until touchEnd()
+    // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+    // Scroll event listener for dynamic search bar
+      // $(document).scroll(function(e){
+      //   filterHeight = $filterBar.height();
+      //   lastScrollPos = scrollPos;
+      //   scrollPos = $(window).scrollTop();
+
+      //   if(lastScrollPos < scrollPos){            // scrolling down
+      //     if($filterBar.css('position')=='fixed')
+      //       anchor = scrollPos;
+      //     else if(scrollPos > anchor + filterHeight)
+      //       anchor = scrollPos - filterHeight;
+      //     else
+      //       null; // keep anchor unchanged
+
+      //     $filterBar.css({
+      //       'position': 'absolute',
+      //       'top': anchor + 'px'
+      //     });
+      //   }
+      //   else {                                    // scrolling up
+      //     if(scrollPos <= anchorMin){
+      //       anchor = anchorMin;
+      //       $filterBar.css({
+      //         'position': 'absolute',
+      //         'top': anchorMin + 'px'
+      //       });
+      //     }
+      //     else if(anchor >= scrollPos){
+      //       $filterBar.css({
+      //         'position': 'fixed',
+      //         'top': 0
+      //       });
+      //     }
+      //   }
+      // });
+    //
 
     // disable scrolling on dropdowns popup
     $('.dropdowns').bind('touchmove', function(e){e.preventDefault()});

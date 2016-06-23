@@ -1406,7 +1406,8 @@
 						height: auto;
 						white-space: nowrap;
 						input {
-							// display: none;
+							width: 0;
+							overflow: visible;
 							float: left;
 							left: 0;
 						}
@@ -1475,4 +1476,5 @@
  	z-index: 99;
  	min-height: 100px;
  	background-color: $dark;
+ 	box-shadow: 0 6px 20px $dark;
  }
