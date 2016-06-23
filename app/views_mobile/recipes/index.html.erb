@@ -167,6 +167,12 @@
   }
 
   $(document).ready(function() {
+
+      // prevent keyboard 'Search' button from submitting form
+      $('form').on('submit',function(e){
+        e.preventDefault();
+      });
+
       $(document).on('click','#follow',function(){
         $this = $(this)
         recipe_id = $this.attr('data')

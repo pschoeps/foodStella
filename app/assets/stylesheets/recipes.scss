@@ -1250,7 +1250,10 @@
 	}
 	.selection { display: none; }
 	.filter-search.my_foods {
-		input { width: 100%; }
+		input {
+			width: 100%;
+			border: none;
+		}
 	}
 }
 .meal-selection.recipes {
@@ -1466,7 +1469,7 @@
  	margin-bottom: 100px;
  }
  .fixed-filter-bar {
- 	position: fixed;
+ 	position: absolute;
  	top: 179px;
  	width: 100%;
  	z-index: 99;

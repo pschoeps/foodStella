@@ -150,45 +150,56 @@
     var $controlBar = $('.planner-view-control.recipes');
     
     var filterHeight = $filterBar.height();
-    var filterMinTop = $controlBar.offset().top + $controlBar.height();
-    var filterTop = filterMinTop;
+    var anchorMin = $controlBar.offset().top + $controlBar.height();
+    var anchor = anchorMin;
 
     $controlBar.css('margin-bottom', filterHeight + 'px');
-    $filterBar.offset({top:filterTop,left:0});
+    $filterBar.css({
+      'position': 'absolute',
+      'top': anchor + 'px'
+    });
 
     var scrollPos = 0;
     var lastScrollPos = 0;
 
+    // Scroll event listener for dynamic search bar
     $(document).scroll(function(e){
       filterHeight = $filterBar.height();
       lastScrollPos = scrollPos;
       scrollPos = $(window).scrollTop();
-      var scrollDelta = scrollPos - lastScrollPos;
-      
-      if(lastScrollPos < scrollPos){    // scrolling down
-        if(scrollPos < filterMinTop + filterHeight)
-          filterTop = filterMinTop - $(window).scrollTop();
-        else{
-          filterTop -= scrollDelta;
-          filterTop = Math.max(-filterHeight, filterTop)
-        }
+
+      if(lastScrollPos < scrollPos){            // scrolling down
+        if($filterBar.css('position')=='fixed')
+          anchor = scrollPos;
+        else if(scrollPos > anchor + filterHeight)
+          anchor = scrollPos - filterHeight;
+        else
+          null; // keep anchor unchanged
+
+        $filterBar.css({
+          'position': 'absolute',
+          'top': anchor + 'px'
+        });
       }
-      else {                            // scrollling up
-        if(scrollPos < filterMinTop)
-          filterTop = filterMinTop - $(window).scrollTop();
-        else{
-          filterTop -= scrollDelta;
-          filterTop = Math.min(0, filterTop);
+      else {                                    // scrolling up
+        if(scrollPos <= anchorMin){
+          anchor = anchorMin;
+          $filterBar.css({
+            'position': 'absolute',
+            'top': anchorMin + 'px'
+          });
         }
+        else if(anchor >= scrollPos)
+          $filterBar.css({
+            'position': 'fixed',
+            'top': 0
+          });
       }
-      // $filterBar.offset({top:filterTop,left:0});
-      $('.fixed-filter-bar').css('top',filterTop+'px');
     });
 
     // disable scrolling on dropdowns popup
     $('.dropdowns').bind('touchmove', function(e){e.preventDefault()});
     // $('.dropdowns').unbind('touchmove')
-
 
     // dropdowns popup activator
     $('#filter-options').on('click', function(event){
@@ -214,7 +225,7 @@
     $('.checkbox').on('click',function(e){
       var checkbox = $(this).find('input');
       checkbox.click();
-      $(window).scrollTop(filterMinTop);
+      $(window).scrollTop(anchorMin);
       return false;
     });
 
