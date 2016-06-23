@@ -21,6 +21,7 @@ FoodStella::Application.routes.draw do
       get 'json_list'
       get 'json_list_ing'
       get 'json_list_quant'
+      get 'day_calendar'
     end
 
     collection do 
@@ -38,10 +39,10 @@ FoodStella::Application.routes.draw do
   # resources :preferred_foods
 
   resources :recipes  do
-    # member do
-      # get 'sidebar'
-      # get "/recipes/sidebar" => 'recipes#sidebar'
-    # end
+    member do
+      get  'sidebar'
+    end
+
     get :autocomplete_ingredient_name, on: :collection
   end
   get 'recipes/:page/next_page' => 'recipes#next_page', as: :recipes_next_page
@@ -57,6 +58,10 @@ FoodStella::Application.routes.draw do
     collection do 
       get :get_events
       post :move
+    end
+
+    member do
+      post 'change_serving'
     end
   end
 

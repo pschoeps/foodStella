@@ -438,8 +438,8 @@ input:-webkit-autofill {
 		position: absolute;
 	}
 
-	.prev-week-link {
-		left: 28%;
+	.prev-arrow-link {
+		left: 24%;
     	top: 25%;
     	position: absolute;
     	width: 2em;
@@ -455,8 +455,8 @@ input:-webkit-autofill {
     	}
 	}
 
-	.next-week-link {
-		left: 64%;
+	.next-arrow-link {
+		left: 67%;
     	top: 25%;
     	position: absolute;
     	width: 2em;
@@ -513,6 +513,8 @@ input:-webkit-autofill {
 	#selected {
 		background-color: $green;
 		color: white;
+
+		a { color: white; }
 	}
 
 	.col-sm-6 {
@@ -532,6 +534,10 @@ input:-webkit-autofill {
 			border: none;
 			padding: 0;
 			}
+
+		a {
+			color: $green;
+		}
 	}
 }
 
@@ -1002,4 +1008,119 @@ input:-webkit-autofill {
     		}
     	}
     }
+}
+
+
+/* day calendar mobile view */
+
+.day-calendar-header {
+	padding: 0;
+	height: 3em;
+	background-color: white;
+
+	h1 {
+		color: $medium;
+		font-size: 1.5em;
+    	margin: 0;
+    	position: relative;
+    	top: 50%;
+    	transform: translateY(-50%);
+    	letter-spacing: 1.5px;
+    	font-weight: 100;
+	}
+}
+
+.day-calendar-meal {
+	background-color: white;
+	position: relative;
+	overflow-x: auto;
+	white-space: nowrap;
+	height: 10em;
+
+	.meal-types {
+		height: 100%;
+		.added-meals {
+			height: 100%;
+			.meal {
+				height: 100%;
+    			width: 11em;
+    			float: none;
+    			display: inline-block;
+    			padding: 0;
+    			margin: -.2em;
+    			overflow: hidden;
+    			margin-right: 1px;
+				.mobile-event {
+					height: 100%;
+					width: 11em;
+					position: absolute;
+					/* only used when as a fallback if a user has unfollowed a recipe but an event for that recipe still remains */
+					background-image: asset-url("background-picture-foodstella.jpg");
+					background-size: cover !important;
+    				background-repeat: no-repeat !important;
+    				background-position: 0 0 !important;
+
+    				.servings {
+    					width: 2em;
+    					height: 2em;
+    					position: absolute;
+    					top: 0;
+    					left: 0;
+    					text-align: center;
+    					background-color: rgba(255, 255, 255, .9);
+    					color: $green;
+    					padding-top: 5px;
+    					padding-left: 2px;
+    					font-size: 1.5em;
+    					font-weight: 100;
+    				}
+
+    				.event-title {
+    					position: absolute;
+    					bottom: 0;
+    					width: 100%;
+    					text-align: center;
+    					color: white;
+    				}
+				}
+			}
+
+			.add-meal-big {
+
+				a {
+					width: 11em;
+    				height: 100%;
+    				position: absolute;
+    				padding: 0;
+
+					.add-meal-box {
+						text-align: center;
+    					position: relative;
+    					top: 50%;
+    					transform: translateY(-50%);
+    					height: 80%;
+    					width: 80%;
+    					margin: auto;
+    					border: 1px dashed $medium;
+						span {
+							font-size: 1.5em;
+    						color: #ababab;
+    						margin: auto;
+    						top: 1.3em;
+
+						}
+						h3 {
+							font-size: 1.25em;
+    						font-weight: 200;
+    						color: $medium;
+    						margin: 0;
+    						position: relative;
+    						top: 50%;
+    						transform: translateY(-50%);
+						}
+					}
+				}
+			}
+		}
+	}
 }

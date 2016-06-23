@@ -3,59 +3,26 @@
 <div class="row week-nav">
   <div class="col-sm-12 disable-margins disable-padding planner-mobile-header">
     <div class="spatula-mobile"><%= image_tag 'icons/spatula-selected.png' %></div>
-    <a href="/users/<%= current_user.id %>/calendar" class="prev-week-link" data=<%= params[:week_counter] %>><span id="prev-week" class="arrow arrow-left" aria-hidden="true"></span></a>
+    <a href="/users/<%= current_user.id %>/calendar" class="prev-arrow-link prev-week-link" data=<%= params[:week_counter] %>><span id="prev-week" class="arrow arrow-left" aria-hidden="true"></span></a>
     <h2><%= @days_from_week.first.strftime("%B") %></h2>
     <span class="week-subtitle"><%= @week_subtitle %></span>
-    <a href="/users/<%= current_user.id %>/calendar" class="next-week-link" data=<%= params[:week_counter] %>><span class="arrow arrow-right" id="next-week" aria-hidden="true"></span></a>
+    <a href="/users/<%= current_user.id %>/calendar" class="next-arrow-link next-week-link" data=<%= params[:week_counter] %>><span class="arrow arrow-right" id="next-week" aria-hidden="true"></span></a>
     <span class="shopping-cart" aria-hidden="true"></span>
   </div>
 </div>
 
 <div class="row planner-view-control">
   <div class="col-sm-6 disable-margins disable-padding week-view">
-    <button class="week-view-button" id="selected">Week View</button>
+    <button class="week-view-button" id="selected"><%= link_to "Week View", calendar_user_path(current_user) %></button>
   </div>
   <div class="col-sm-6 disable-margins disable-padding day-view">
-    <button class="day-view-button">Day View</button>
+    <button class="day-view-button"><%= link_to "Day View", day_calendar_user_path(current_user) %></button>
   </div>
 </div>
 
-<div class="row planner-instructions open">
-  <div class="col-sm-12 disable-margins disable-padding">
-    <div class="breakfast">
-      <span class="circle tan"></span>
-      <h5>Breakfast</h5>
-    </div>
-    <div class="lunch">
-      <span class="circle green"></span>
-      <h5>Lunch</h5>
-    </div>
-    <div class="dinner">
-      <span class="circle olive"></span>
-      <h5>Dinner</h5>
-    </div>
-    <div class="snack">
-      <span class="circle brown"></span>
-      <h5>Snack</h5>
-    </div>
-    <span class="glyphicon glyphicon-chevron-left" id="hide-chevron" aria-hidden="true"></span>
-    <div class="details-left">
-      <p>*s = servings per recipe.</p>
-    </div>
-    <div class="details-right">
-      <p>**click image for options</p>
-    </div>
-  </div>
-</div>
+<%= render 'planner_instructions' %>
 
-<div class="row slider-container">
-  <div class="col-md-12 col-xs-12 col-sm-12">
-    <span class="glyphicon glyphicon-chevron-right" id="unhide-chevron" aria-hidden="true"></span>
-    <span class="glyphicon glyphicon-minus" id="tap-zoom-out" aria-hidden="true"></span>
-    <div id="zoomSlider"></div>
-    <span class="glyphicon glyphicon-plus" id="tap-zoom-in" aria-hidden="true"></span>
-  </div>
-</div>
+<%= render "jquery_slider" %>
 
 <div class="row weekly-planner" id="offset-margins" data="<%= current_user.id %>">
   <% @days_from_week.each do |day| %>
@@ -70,9 +37,9 @@
               <% events = @events.where(:start_at => day.strftime + m[1]) %>
               <% events.each do |e| %>
                 <% recipe = e.get_recipe(e.recipe_id) %>
-	  	          <div class="meal" data ="<%= e.recipe_id %>">
-	                <a class="mobile-event fc-event-container <%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" id="mobile-event" data-event="<%= e.id %>" data-recipe="<%= e.recipe_id %>" data-recipe-name="<%= recipe.name %>" data-image="<%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" data-servings="<%= recipe.servings %>">
-	                  <span class="servings"><%= recipe.servings %>s</span>
+	  	          <div class="meal week-meal" data ="<%= e.recipe_id %>">
+	                <a class="mobile-event fc-event-container <%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" id="mobile-event" data-event="<%= e.id %>" data-recipe="<%= e.recipe_id %>" data-recipe-name="<%= recipe.name %>" data-image="<%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" data-servings="<%= e.servings || recipe.servings %>">
+	                  <span class="servings"><%= e.servings || recipe.servings %>s</span>
 	                  <span class="event-title" style="background-color: <%= m[2] %>"><%= truncate(recipe.name, length: 14) %></span>
 	                </a>
 	              </div>
@@ -82,7 +49,7 @@
 	      <!-- div -->
 
 	      <% if events.length == 0 %>
-	        <div class="meal add-meal-big <%=day %>-<%= m[3] %>-big">
+	        <div class="meal week-meal add-meal-big <%=day %>-<%= m[3] %>-big">
 	          <a class="add-meal" data="<%= day %>" data-one="<%= m[0] %>" data-two="<%= day.strftime("%A") %>" data-three="<%= m[1] %>" data-four="<%=m[3] %>" data-five="<%= m[2] %>">
 	      	    <div class="add-meal-box">
 	      	      <span class="glyphicon glyphicon-plus" id="hide-chevron" aria-hidden="true"></span>
@@ -99,7 +66,7 @@
 	          </a>
 	        </div>
 	      <% else %>
-	      	<div class="meal add-meal-big <%=day %>-<%= m[3] %>-big" id="hidden">
+	      	<div class="meal week-meal add-meal-big <%=day %>-<%= m[3] %>-big" id="hidden">
 	          <a class="add-meal" data="<%= day %>" data-one="<%= m[0] %>" data-two="<%= day.strftime("%A") %>" data-three="<%= m[1] %>" data-four="<%=m[3] %>" data-five="<%= m[2] %>">
 	      	    <div class="add-meal-box">
 	      	      <span class="glyphicon glyphicon-plus" id="hide-chevron" aria-hidden="true"></span>

@@ -130,9 +130,32 @@ class UsersController < ApplicationController
 		@days_from_week = (day.at_beginning_of_week..day.at_end_of_week).map{|x| x}
 		@week_subtitle = @days_from_week.first.strftime('%m/%-d') + " - " + @days_from_week.last.strftime('%m/%-d')
 		@meal_types = [["Breakfast", "T00:00:00", "#f5b266", "breakfast"], ["Snack", "T00:30:00", "#bc9c63", "snack1"], ["Lunch", "T01:00:00", "#819800", "lunch"], ["Snack", "T01:30:00", "#bc9c63", "snack2"], ["Dinner", "T02:00:00", "#796c2d", "dinner"]]
+	end
 
+	def day_calendar
+		@calendar = true
+		@followed_recipes = current_user.following
+		@user_recipes = current_user.recipes
+		@recipes = @user_recipes + @followed_recipes
 
+		@snacks = @user_recipes.where(:meal_type => "1") + @followed_recipes.where(:meal_type => "1")
+		@side_dishes = @user_recipes.where(:meal_type => "2") + @followed_recipes.where(:meal_type => "2")
+		@main_dishes = @user_recipes.where(:meal_type => "3") + @followed_recipes.where(:meal_type => "3")
+		@desserts = @user_recipes.where(:meal_type => "4") + @followed_recipes.where(:meal_type => "4")
+		@drinks = @user_recipes.where(:meal_type => "5") + @followed_recipes.where(:meal_type => "5")
 
+		@expanded = ['false','false','true','false','false']
+
+		#logic for mobile calendar view (weekly)
+		if params[:day_counter] == nil
+		  @day = Date.today # Today's date
+		else
+		  day_counter = params[:day_counter].to_i
+		  @day = Date.today + day_counter
+		end
+		user_events = current_user.events
+		@events = user_events.where(:start_at => (@day.strftime + "T00:00:00")..(@day.strftime + "T:2:00:00"))
+		@meal_types = [["Breakfast", "T00:00:00", "#f5b266", "breakfast"], ["Snack", "T00:30:00", "#bc9c63", "snack1"], ["Lunch", "T01:00:00", "#819800", "lunch"], ["Snack", "T01:30:00", "#bc9c63", "snack2"], ["Dinner", "T02:00:00", "#796c2d", "dinner"]]
 	end
 
 	def add_day

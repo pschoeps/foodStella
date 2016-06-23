@@ -54,12 +54,12 @@ $(document).ready(function() {
       console.log(zoom)
 
       if (zoom < .45) {
-        $('.meal').css('height', '7em');
-        $('.meal').css('margin-bottom', '1em');
+        $('.week-meal').css('height', '7em');
+        $('.week-meal').css('margin-bottom', '1em');
       }
       else {
-        $('.meal').css('height', '6em')
-        $('.meal').css('margin-bottom', '10px')
+        $('.week-meal').css('height', '6em')
+        $('.week-meal').css('margin-bottom', '10px')
       }
 
       if (zoom < .9) {
@@ -72,6 +72,7 @@ $(document).ready(function() {
       }
 
       $('.weekly-planner').animate({ 'zoom': zoom }, 100);
+      $('.daily-planner').animate({ 'zoom': zoom }, 100);
     };
 
     //need to go old school because .click function doesn't work on newly appended elements
@@ -92,7 +93,7 @@ $(document).ready(function() {
       $("#recipe-title").text(recipeName)
       $("#servings").find('h3').text(recipeServings + "s")
       $("#num-servings").text(recipeServings)
-      $("#num-servings").attr("data", recipeId)
+      $("#num-servings").attr("data", eventId)
       $("#remove-event").attr("data", eventId)
     });
 
@@ -161,15 +162,17 @@ $(document).ready(function() {
         $.ajax({//ajax call 
                   type:'POST',
                   data: data,
-                  url:"/recipes/"+id+"/change_serving",
+                  url:"/events/"+id+"/change_serving",
               
                   success:function (response) {
+                    console.log("response")
                     $('#num-servings').text(response)
                     $('#servings').find('h3').text(response + "s")
                     events = $('.mobile-event')
                     events.each(function(i, obj) {
-                      if (parseInt($(obj).attr("data-recipe")) == id) {
+                      if (parseInt($(obj).attr("data-event")) == id) {
                         $(obj).find('.servings').text(response + "s")
+                        $(obj).attr('data-servings', response)
                       }
                     });
                   }

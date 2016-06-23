@@ -1,0 +1,99 @@
+<%= render 'layouts/recipe_css_variables' %>
+
+<div class="row">
+  <div class="col-sm-12 disable-margins disable-padding planner-mobile-header">
+    <div class="spatula-mobile"><%= image_tag 'icons/spatula-selected.png' %></div>
+    <a href="/users/<%= current_user.id %>/day_calendar" class="prev-arrow-link prev-day-link" data=<%= params[:week_counter] %>><span id="prev-day" class="arrow arrow-left" aria-hidden="true"></span></a>
+    <h2><%= @day.strftime("%A") %></h2>
+    <a href="/users/<%= current_user.id %>/day_calendar" class="next-arrow-link next-day-link" data=<%= params[:week_counter] %>><span class="arrow arrow-right" id="next-day" aria-hidden="true"></span></a>
+    <span class="shopping-cart" aria-hidden="true"></span>
+  </div>
+</div>
+
+<div class="row planner-view-control">
+  <div class="col-sm-6 disable-margins disable-padding week-view">
+    <button class="week-view-button"><%= link_to "Week View", calendar_user_path(current_user) %></button>
+  </div>
+  <div class="col-sm-6 disable-margins disable-padding day-view">
+    <button class="day-view-button" id="selected"><%= link_to "Day View", day_calendar_user_path(current_user) %></button>
+  </div>
+</div>
+
+<%= render 'planner_instructions' %>
+
+<%= render "jquery_slider" %>
+
+<div class="daily-planner" id="offset-margins">
+
+<% @meal_types.each do |m| %>
+  <div class="row disable-margins"><div class="col-md-12 day-calendar-header"><h1><%= m[0] %></h1></div></div>
+  <div class="row day-calendar-meal">
+    <div class="meal-types" id="<%= m[3] %>">
+      <div class="added-meals">
+        <% events = @events.where(:start_at => @day.strftime + m[1]) %>
+          <% events.each do |e| %>
+            <% recipe = e.get_recipe(e.recipe_id) %>
+            <div class="meal col-md-4" data ="<%= e.recipe_id %>">
+              <a class="mobile-event fc-event-container <%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" id="mobile-event" data-event="<%= e.id %>" data-recipe="<%= e.recipe_id %>" data-recipe-name="<%= recipe.name %>" data-image="<%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" data-servings="<%= e.servings || recipe.servings %>">
+                <span class="servings"><%= e.servings || recipe.servings %>s</span>
+                <span class="event-title" style="background-color: <%= m[2] %>"><%= truncate(recipe.name, length: 20) %></span>
+              </a>
+            </div>
+          <% end %>
+
+        <div class="meal add-meal-big <%= m[3] %>">
+            <a class="add-meal col-md-4" data-one="<%= m[0] %>" data-three="<%= m[1] %>" data-four="<%=m[3] %>" data-five="<%= m[2] %>">
+              <div class="add-meal-box">
+                <span class="glyphicon glyphicon-plus" id="hide-chevron" aria-hidden="true"></span>
+                <h3>Add <%= m[0] %></h3>
+              </div>
+            </a>
+        </div> 
+      </div>
+
+    </div>
+  </div>
+<% end %>
+
+
+</div>
+
+<%= render 'event_actions_mobile' %>
+
+<%= render(
+    partial: 'recipe_selection_mobile',
+    locals: {
+      snacks: @snacks,
+      side_dishes: @side_dishes,
+      main_dishes: @main_dishes,
+      desserts: @desserts,
+      drinks: @drinks,
+      expanded: @expanded
+    }
+  ) %>
+
+
+
+
+
+
+
+<script>
+  $(document).ready(function() {
+
+    $('.next-day-link').click(function(){ 
+      day_counter = <%= params[:day_counter].to_i %>
+      updated_day_counter = day_counter + 1
+      this.href = this.href + '?day_counter=' + (updated_day_counter)
+    });
+
+    $('.prev-day-link').click(function(){ 
+      day_counter = <%= params[:day_counter].to_i %>
+      updated_day_counter = day_counter - 1
+      this.href = this.href + '?day_counter=' + (updated_day_counter)
+    });
+
+
+
+  });
+</script>

@@ -24,6 +24,35 @@ class EventsController < ApplicationController
 
   end
 
+  def change_serving
+    @event = Event.find(params[:id])
+
+    if params[:add] == "true"
+      if @event.servings == nil
+        new_serving = 1
+      else
+        new_serving = @event.servings + 1
+      end
+    else
+      if @event.servings == nil 
+        new_serving = -1
+      else
+        new_serving = @event.servings - 1
+      end
+    end
+
+    if new_serving <= 0
+      new_serving = 1
+    end
+
+    @event.update_attributes!(servings: new_serving)
+    if @event.save
+      respond_to do |format|
+        format.js
+      end
+    end
+  end
+
 #  def get_events
 #    @events = Event.find(:all, :conditions => ["starttime >= '#{Time.at(params['start'].to_i).to_formatted_s(:db)}' and endtime <= '#{Time.at(params['end'].to_i).to_formatted_s(:db)}'"] )
 #    events = [] 
