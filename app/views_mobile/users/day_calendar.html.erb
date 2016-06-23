@@ -23,7 +23,7 @@
 
 <%= render "jquery_slider" %>
 
-<div class="daily-planner" id="offset-margins">
+<div class="daily-planner" id="offset-margins" data="<%= @day %>">
 
 <% @meal_types.each do |m| %>
   <div class="row disable-margins"><div class="col-md-12 day-calendar-header"><h1><%= m[0] %></h1></div></div>
@@ -41,6 +41,7 @@
             </div>
           <% end %>
 
+
         <div class="meal add-meal-big <%= m[3] %>">
             <a class="add-meal col-md-4" data-one="<%= m[0] %>" data-three="<%= m[1] %>" data-four="<%=m[3] %>" data-five="<%= m[2] %>">
               <div class="add-meal-box">
@@ -49,7 +50,8 @@
               </div>
             </a>
         </div> 
-      </div>
+    </div>
+      
 
     </div>
   </div>

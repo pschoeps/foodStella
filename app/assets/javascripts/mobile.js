@@ -106,13 +106,20 @@ $(document).ready(function() {
   		mealData = $(this).attr('data-four')
   		mealColor = $(this).attr('data-five')
 
-  		$("#meal-day").attr("data", date);
+      //conditional for week view or day view, if the day view is displayed, do not include the day of the week 
+      //in the popup header
+      if (date == undefined) {
+        $("#meal-day").text(meal);
+      }
+      else {
+  		  $("#meal-day").text(weekDay + " " + meal);
+      }
+      $("#meal-day").attr('data', date)
   		$("#meal-day").attr("data-one", meal);
   		$("#meal-day").attr("data-two", weekDay)
   		$("#meal-day").attr("data-three", startAt)
   		$("#meal-day").attr("data-four", mealData)
   		$("#meal-day").attr("data-five", mealColor)
-  		$("#meal-day").text(weekDay + " " + meal);
 
       loadEvents(date, mealData)
   		$(".recipe-selection-mobile").css("display", "block");
@@ -156,6 +163,7 @@ $(document).ready(function() {
       }
       var data = {
           id: id,
+          num_servings: numServings,
           add: add
                   };
 
@@ -165,7 +173,6 @@ $(document).ready(function() {
                   url:"/events/"+id+"/change_serving",
               
                   success:function (response) {
-                    console.log("response")
                     $('#num-servings').text(response)
                     $('#servings').find('h3').text(response + "s")
                     events = $('.mobile-event')
@@ -224,10 +231,20 @@ $(document).ready(function() {
     //loops through recipes in recipe selection modal and puts a white star with green background circle if those recipes
     //have been selected
     function loadEvents(day, mealData) {
-      element = "#" + day
-      childElement = "#" + mealData
-      section =  $(element).find(childElement);
-      events = section.children('.added-meals').children()
+
+      if (gon.dayView) {
+        console.log("this is true")
+        element = '#' + mealData
+        events = $(element).find('.added-meals').children()
+        console.log(events)
+      }
+
+      else {
+        element = "#" + day
+        childElement = "#" + mealData
+        section =  $(element).find(childElement);
+        events = section.children('.added-meals').children()
+      }
       eventIds = []
       events.each(function(i, obj) {
         id = parseInt($(obj).attr('data'));
@@ -266,6 +283,15 @@ $(document).ready(function() {
   		  recipeServings = $(this).attr('data-two')
   		  recipeId = $(this).attr('data-one')
   		  recipeName = $(this).attr('data')
+
+        //conditional for week or day view, if day view is displayed, we have to get
+        //the date from the date attr of daily planner
+        if (date == "") {
+          date = $('.daily-planner').attr('data');
+        }
+       // else {
+       //   date = $("#meal-day").attr('data');
+        //}
   		  startAt = date + time 
         $(this).append("<span id='selected'></span>");
 
@@ -283,17 +309,25 @@ $(document).ready(function() {
                   url:'/events',
               
                   success:function (response) {
-                    element = "#" + date 
-                    childElement = "#" + mealData
-                    hideMealNameBig = "." + date + "-" + mealData + "-big"
-                    hideMealNameSmall = "." + date + "-" + mealData + "-small"
 
-                    updateContainerHeight(50)
-                    
-                    $(element).find(childElement).children('.added-meals').append("<div class='meal' data="+recipeId+"><a class='mobile-event fc-event-container "+recipeName+"' id='mobile-event' data-event="+response+" data-recipe="+recipeId+" data-image="+recipeName+" data-servings="+recipeServings+" data-recipe-name="+recipeFriendlyName+"><span class='servings'>"+recipeServings+"s</span><span class='event-title' style='background-color: "+mealColor+"'>"+recipeFriendlyName+"</span></a></div>")
-
-                    $(hideMealNameBig).attr("id", "hidden")
-                    $(hideMealNameSmall).removeAttr("id")
+                    //conditional for daily vs weekly, determines to which div the new
+                    //event will be added to, and weather or not various other changes such as updating the
+                    //height of the page and evaluating weather the big/small add meal buttons need to be
+                    //changed
+                    if (gon.dayView) {
+                      element = '#' + mealData
+                      $(element).find('.added-meals').prepend("<div class='meal col-md-4' data="+recipeId+"><a class='mobile-event fc-event-container "+recipeName+"' id='mobile-event' data-event="+response+" data-recipe="+recipeId+" data-image="+recipeName+" data-servings="+recipeServings+" data-recipe-name="+recipeFriendlyName+"><span class='servings'>"+recipeServings+"s</span><span class='event-title' style='background-color: "+mealColor+"'>"+recipeFriendlyName+"</span></a></div>")
+                    }
+                    else {
+                      element = "#" + date 
+                      childElement = "#" + mealData
+                      hideMealNameBig = "." + date + "-" + mealData + "-big"
+                      hideMealNameSmall = "." + date + "-" + mealData + "-small"
+                      updateContainerHeight(50)
+                      $(element).find(childElement).children('.added-meals').append("<div class='meal' data="+recipeId+"><a class='mobile-event fc-event-container "+recipeName+"' id='mobile-event' data-event="+response+" data-recipe="+recipeId+" data-image="+recipeName+" data-servings="+recipeServings+" data-recipe-name="+recipeFriendlyName+"><span class='servings'>"+recipeServings+"s</span><span class='event-title' style='background-color: "+mealColor+"'>"+recipeFriendlyName+"</span></a></div>")
+                      $(hideMealNameBig).attr("id", "hidden")
+                      $(hideMealNameSmall).removeAttr("id")
+                    }
 
                   }
 
