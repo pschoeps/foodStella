@@ -58,7 +58,8 @@ class Recipe < ActiveRecord::Base
               :trending,
               :cooked,
               :owns,
-              :following
+              :following,
+              :search_query_my_foods
               ]
 
 
@@ -250,6 +251,38 @@ class Recipe < ActiveRecord::Base
         .where('lower(ingredients.name) ILIKE ANY ( array[?] )', pg_ingredients)
         .group("recipes.id")
         .having("count(ingredients.name) = #{pg_ingredients.count}")
+  }
+
+  scope :search_query_my_foods, lambda { |query|
+    return nil  if query.blank?
+    # condition query, parse into individual keywords
+    terms = query.downcase.split(/\s+/)
+    # replace "*" with "%" for wildcard searches,
+    # append '%', remove duplicate '%'s
+    terms = terms.map { |e|
+      # (e.gsub('*', '%') + '%').gsub(/%+/, '%')
+      # prepend '%' to search full name
+      ('%' + e.gsub('*', '%') + '%').gsub(/%+/, '%')
+    }
+    # configure number of OR conditions for provision
+    # of interpolation arguments. Adjust this if you
+    # change the number of OR conditions.
+    num_or_conditions = 1
+    where(
+      terms.map {
+        or_clauses = [
+          "LOWER(recipes.name) LIKE ?",
+          # "LOWER(recipes.description) LIKE ?",
+          # "LOWER(ingredients.name) LIKE ?"
+        ].join(' OR ')
+        "(#{ or_clauses })"
+      }.join(' AND '),
+      *terms.map { |e| [e] * num_or_conditions }.flatten
+    )
+    # .includes(:ingredients)
+    # .group('ingredients.id')
+    # .group('recipes.id')
+    #.joins(:user)
   }
 
   def self.options_for_sort_by_ingredients

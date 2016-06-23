@@ -1,8 +1,12 @@
 <div id="filterrific_results">
 
+    <% if recipes.empty? %>
+      <div class='empty-results'>
+        No recipes match your filters. Try broadening your search.
+      </div>
+    <% end %>
 
     <ul>
-
 
     <% recipes.each do |recipe| %>
       <li> 

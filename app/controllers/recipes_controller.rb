@@ -99,6 +99,27 @@ class RecipesController < ApplicationController
     else
       @expanded = ['false','false','false','false','false']
     end
+
+    if params[:mobile_tab]
+      @mobile_tab = params[:mobile_tab]
+    else
+      @mobile_tab = 'my_foods'
+    end
+    #filtering links to model 
+    @filterrific_my_foods = initialize_filterrific(
+      Recipe,
+      params[:filterrific] #,
+      # :select_options => {
+      #   sort_my_foods:   Recipe.options_for_sort_my_foods
+      # },
+      # :search_query_my_foods
+    ) or return
+    @filtered_my_foods = Recipe.filterrific_find(@filterrific_my_foods)
+    @snacks = @snacks & @filtered_my_foods
+    @side_dishes = @side_dishes & @filtered_my_foods
+    @main_dishes = @main_dishes & @filtered_my_foods
+    @desserts = @desserts & @filtered_my_foods
+    @drinks = @drinks & @filtered_my_foods
     
     #filtering links to model 
     @filterrific = initialize_filterrific(
@@ -125,18 +146,8 @@ class RecipesController < ApplicationController
       # default_filter_params: {latest: false}
     ) or return
 
-    pp params[:filterrific]
     @recipes = @filterrific.find.page(params[:page])
 
-puts '======================================================================'
-@recipes.each do |r|
-  # @cach = RatingCache.where(:cacheable_id => r.id)
-  # @cach.each do |c|
-  #   puts c.avg
-  # end
-  @cach = Rate.where(:rateable_id => r.id)
-  puts @cach.length
-end
     respond_to do |format|
       format.html
       format.js
