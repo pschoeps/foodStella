@@ -83,6 +83,8 @@ class UsersController < ApplicationController
   	
 
 	def calendar
+		gon.dayView = false
+
 		@calendar = true
 		@followed_recipes = current_user.following
 		@user_recipes = current_user.recipes
@@ -133,6 +135,7 @@ class UsersController < ApplicationController
 	end
 
 	def day_calendar
+		gon.dayView = true
 		@calendar = true
 		@followed_recipes = current_user.following
 		@user_recipes = current_user.recipes

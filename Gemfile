@@ -19,6 +19,7 @@ gem 'jquery-ui-rails'
 
 gem 'rails-jquery-autocomplete'
 gem 'rails-jquery-tokeninput'
+gem 'gon'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'

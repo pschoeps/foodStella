@@ -26,16 +26,17 @@ class EventsController < ApplicationController
 
   def change_serving
     @event = Event.find(params[:id])
+    @num_servings = params[:num_servings]
 
     if params[:add] == "true"
       if @event.servings == nil
-        new_serving = 1
+        new_serving = @num_servings + 1
       else
         new_serving = @event.servings + 1
       end
     else
       if @event.servings == nil 
-        new_serving = -1
+        new_serving = @num_servings - 1
       else
         new_serving = @event.servings - 1
       end
