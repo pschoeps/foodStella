@@ -15,13 +15,11 @@
     <button class="week-view-button"><%= link_to "Week View", calendar_user_path(current_user) %></button>
   </div>
   <div class="col-sm-6 disable-margins disable-padding day-view">
-    <button class="day-view-button" id="selected"><%= link_to "Day View", day_calendar_user_path(current_user) %></button>
+    <button class="day-view-button" id="selected">Day View</button>
   </div>
 </div>
 
 <%= render 'planner_instructions' %>
-
-<%= render "jquery_slider" %>
 
 <div class="daily-planner" id="offset-margins" data="<%= @day %>">
 
@@ -33,9 +31,10 @@
         <% events = @events.where(:start_at => @day.strftime + m[1]) %>
           <% events.each do |e| %>
             <% recipe = e.get_recipe(e.recipe_id) %>
+            <% servings = e.servings? ? true : false %>
             <div class="meal col-md-4" data ="<%= e.recipe_id %>">
               <a class="mobile-event fc-event-container <%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" id="mobile-event" data-event="<%= e.id %>" data-recipe="<%= e.recipe_id %>" data-recipe-name="<%= recipe.name %>" data-image="<%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" data-servings="<%= e.servings || recipe.servings %>">
-                <span class="servings"><%= e.servings || recipe.servings %>s</span>
+                <span class="servings"><%= servings ? e.servings : recipe.servings %>s</span>
                 <span class="event-title" style="background-color: <%= m[2] %>"><%= truncate(recipe.name, length: 20) %></span>
               </a>
             </div>
@@ -73,6 +72,8 @@
       expanded: @expanded
     }
   ) %>
+
+  <%= render 'day_selector_mobile' %>
 
 
 

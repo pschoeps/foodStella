@@ -1,0 +1,11 @@
+<div class="row day-selector-mobile">
+  <div class="col-md-12 col-xs-12 col-sm-12">
+    <span class="close-x" id="hide-day-selector" aria-hidden="true"></span>
+    <ul class="mobile-days-list">
+        <li><h2>Select a day</h2></li>
+      <% @days_from_week.each do |day| %>
+        <li><h2><%= link_to day.strftime("%A"), day_calendar_user_path(day: day) %></h2></li>
+      <% end %>
+    </ul>
+  </div>
+</div>

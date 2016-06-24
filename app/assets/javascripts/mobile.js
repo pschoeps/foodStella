@@ -72,7 +72,6 @@ $(document).ready(function() {
       }
 
       $('.weekly-planner').animate({ 'zoom': zoom }, 100);
-      $('.daily-planner').animate({ 'zoom': zoom }, 100);
     };
 
     //need to go old school because .click function doesn't work on newly appended elements
@@ -93,9 +92,18 @@ $(document).ready(function() {
       $("#recipe-title").text(recipeName)
       $("#servings").find('h3').text(recipeServings + "s")
       $("#num-servings").text(recipeServings)
+      $("#num-servings").attr("data-servings", recipeServings)
       $("#num-servings").attr("data", eventId)
       $("#remove-event").attr("data", eventId)
     });
+
+    $('.day-view-button').click(function () {
+      $('.day-selector-mobile').css('display', 'block');
+    }) 
+
+    $('#hide-day-selector').click(function() {
+      $('.day-selector-mobile').css('display', 'none');
+    })
 
     //user clicked the 'add meal' box
   	$('.add-meal').click(function() { 
@@ -154,7 +162,8 @@ $(document).ready(function() {
     $(".change-serving").click(function() {
       var id = parseInt($("#num-servings").attr("data"))
       var add
-      var numServings = parseInt($('#num-servings').text)
+      var numServings = parseInt($('#num-servings').attr("data-servings"))
+      console.log(numServings);
       if ($(this).hasClass("add")) {
        add = true
       }
@@ -174,6 +183,7 @@ $(document).ready(function() {
               
                   success:function (response) {
                     $('#num-servings').text(response)
+                    $("#num-servings").attr("data-servings", response)
                     $('#servings').find('h3').text(response + "s")
                     events = $('.mobile-event')
                     events.each(function(i, obj) {
@@ -314,6 +324,10 @@ $(document).ready(function() {
                     //event will be added to, and weather or not various other changes such as updating the
                     //height of the page and evaluating weather the big/small add meal buttons need to be
                     //changed
+                    $('#meal-added-alert').animate({ opacity: 100 })
+                    setTimeout(function() {
+                      $('#meal-added-alert').animate({ opacity: 0 })
+                    }, 2000);
                     if (gon.dayView) {
                       element = '#' + mealData
                       $(element).find('.added-meals').prepend("<div class='meal col-md-4' data="+recipeId+"><a class='mobile-event fc-event-container "+recipeName+"' id='mobile-event' data-event="+response+" data-recipe="+recipeId+" data-image="+recipeName+" data-servings="+recipeServings+" data-recipe-name="+recipeFriendlyName+"><span class='servings'>"+recipeServings+"s</span><span class='event-title' style='background-color: "+mealColor+"'>"+recipeFriendlyName+"</span></a></div>")
