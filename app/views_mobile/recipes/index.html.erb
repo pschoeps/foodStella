@@ -148,9 +148,8 @@
 
   $(document).ready(function() {
 
-
       $(document).on('click','#unfollow-sidebar',function(){
-          var recipe_id = $(this).attr('data-recipe-id');
+          recipe_id = $(this).attr('data-recipe-id');
           $.ajax({//ajax call for questions
                     type:'DELETE',
                     data: {id: recipe_id},
