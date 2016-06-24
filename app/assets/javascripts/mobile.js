@@ -78,7 +78,7 @@ $(document).ready(function() {
     //opens actios for an existing event on the page
     $(document).on('click', '.mobile-event', function() {
       $(".event-actions-mobile").css("display", "block");
-      $("html, body").animate({ scrollTop: 0 }, "slow");
+      $("html, body").animate({ scrollTop: 179 }, "slow");
       var imageClass = $(this).attr('data-image')
       var recipeId =   $(this).attr('data-recipe')
       var recipeLink = "/recipes/"+recipeId+""
@@ -371,3 +371,14 @@ $(document).ready(function() {
     };
 
 });
+
+function getMobileOperatingSystem() {
+  var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+  if( userAgent.match( /iPad/i ) || userAgent.match( /iPhone/i ) || userAgent.match( /iPod/i ) )
+    return 'iOS';
+  else if( userAgent.match( /Android/i ) )
+    return 'Android';
+  else
+    return 'unknown';
+}

@@ -136,7 +136,7 @@
   };
 
   var expandedSections = [];
-  function updateMyFoods(){
+  function updateMyFoods( reload ){
     expandedSections = [];
       $('.selection').each(function(){
       if( $(this).css('display') == 'block')
@@ -144,29 +144,24 @@
       else
         expandedSections.push('false');
     });
-      console.log(expandedSections);
-
-        // $.ajax({//ajax call for questions
-        //   type:'GET',
-        //   data: {new_recipe_id: new_recipe_id},
-        //   url:'/sidebar',
-        //   success:function (response) {
-           
-           // $('.selection').each(function(index){
-           //   if( expandedSections[index] == 'true')
-           //     $(this).css('display','block');
-           //   else
-           //     $(this).css('display','none');
-           // });
-
-           // active remove listener again
-
-           // resetSidebar();
-          // }
-        // });//end ajax call
   }
 
   $(document).ready(function() {
+
+      $(document).on('click','#unfollow-sidebar',function(){
+          recipe_id = $(this).attr('data-recipe-id');
+          $.ajax({//ajax call for questions
+                    type:'DELETE',
+                    data: {id: recipe_id},
+                    url:"/relationships/" + recipe_id,
+                
+                    success:function (response) {
+                      $(".event-actions-mobile").css("display", "none");
+                      // update my_foods partial
+                      $('form input').trigger('change');
+                    }
+                  });//end ajax call
+      });
 
       // prevent keyboard 'Search' button from submitting form
       $('form').on('submit',function(e){
