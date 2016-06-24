@@ -1,3 +1,6 @@
+  <!-- %= render 'layouts/recipe_css_variables' %> -->
+
+  <%= render 'event_actions_mobile' %>
 
   	<div class="meal-selection recipes">
        <button type="button" id="snacks">
@@ -8,10 +11,11 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% snacks.each do |r| %>
-                <%= link_to recipe_path(r) do %>
-                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
-                  </div>
-                <% end %>
+                <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list"
+                data-image-url="<%= r.retrieve_pic %>" data-recipe-id="<%= r.id %>" data-name="<%= r.name %>"
+                style='background-image: url("<%= r.retrieve_pic %>")'>
+                  <span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
+                </div>
               <% end %>
             </div>
           </div>
@@ -25,10 +29,11 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% side_dishes.each do |r| %>
-                <%= link_to recipe_path(r) do %>
-                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
+                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list"
+                  data-image-url="<%= r.retrieve_pic %>" data-recipe-id="<%= r.id %>" data-name="<%= r.name %>"
+                  style='background-image: url("<%= r.retrieve_pic %>")'>
+                    <span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
                   </div>
-                <% end %>
               <% end %>
             </div>
           </div>
@@ -42,10 +47,11 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% main_dishes.each do |r| %>
-                <%= link_to recipe_path(r) do %>
-                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
-                  </div>
-                <% end %>
+                <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list"
+                data-image-url="<%= r.retrieve_pic %>" data-recipe-id="<%= r.id %>" data-name="<%= r.name %>"
+                style='background-image: url("<%= r.retrieve_pic %>")'>
+                  <span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
+                </div>
               <% end %>
             </div>
           </div>
@@ -59,10 +65,11 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% desserts.each do |r| %>
-                <%= link_to recipe_path(r) do %>
-                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
-                  </div>
-                <% end %>
+                <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list"
+                data-image-url="<%= r.retrieve_pic %>" data-recipe-id="<%= r.id %>" data-name="<%= r.name %>"
+                style='background-image: url("<%= r.retrieve_pic %>")'>
+                  <span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
+                </div>
               <% end %>
             </div>
           </div>
@@ -76,10 +83,11 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% drinks.each do |r| %>
-                <%= link_to recipe_path(r) do %>
-                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
-                  </div>
-                <% end %>
+                <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list"
+                data-image-url="<%= r.retrieve_pic %>" data-recipe-id="<%= r.id %>" data-name="<%= r.name %>"
+                style='background-image: url("<%= r.retrieve_pic %>")'>
+                  <span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
+                </div>
               <% end %>
             </div>
           </div>
@@ -91,7 +99,6 @@
 
 $(document).ready(function(){
 
-  console.log(expandedSections);
   $('.selection').each(function(index){
     if( expandedSections[index] == 'true')
       $(this).css('display','block');
@@ -184,7 +191,24 @@ $(document).ready(function(){
     }
   });
 
+  $('.fc-event').on('click', function() {
+    $(".event-actions-mobile").css("display", "block");
+    $("html, body").animate({ scrollTop: 179 }, "slow");
 
+    var imageUrl = $(this).attr('data-image-url');
+    var recipeId =   $(this).attr('data-recipe-id');
+    var recipeLink = "/recipes/"+recipeId+"";
+    var recipeName = $(this).attr('data-name');
+
+    $(".image-container").css('background-image', 'url('+imageUrl+')');
+    $("#recipe-title-link").attr("href", recipeLink);
+    $("#recipe-title").text(recipeName);
+    $('#unfollow-sidebar').attr('data-recipe-id', recipeId);
+  });
+
+  $('.close-recipe-actions').click(function() {
+    $(".event-actions-mobile").css("display", "none");
+  });
 
 });
 
