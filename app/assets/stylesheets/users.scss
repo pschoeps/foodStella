@@ -830,7 +830,7 @@ input:-webkit-autofill {
     		margin-top: 0;
     	}
 
-    	#meal-added-alert {
+    	.alert {
     		position: relative;
     		text-align: center;
     		opacity: 0;
@@ -868,6 +868,16 @@ input:-webkit-autofill {
     		background-position-x: 50%;
     		background-position-y: 30%;
     		background-color: rgba(77, 77, 77, .8);
+
+    		#remove-event-from-selection {
+    			position: absolute;
+    			top: 2px;
+    			left: 2px;
+    			font-size: 1.4em;
+    			width: 1em;
+    			color: $red;
+    			background: none;
+    		}
 		}
 	}
 }
@@ -900,7 +910,7 @@ input:-webkit-autofill {
     	position: relative;
     	list-style-type: none;
     	padding: 0;
-    	top: 8em;
+    	top: 4em;
 
     	li {
     		width: 100%;

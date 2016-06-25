@@ -158,9 +158,16 @@ class UsersController < ApplicationController
 		elsif day_counter && day == nil
 		  day_counter = params[:day_counter].to_i
 		  @day = Date.today + day_counter
-		else
+		elsif day_counter && day 
+		  @day = params[:day].to_date + day_counter
+		elsif day && day_counter == nil
 			@day = params[:day].to_date
+		else
+		  @day = params[:day].to_date
 		end
+
+		gon.nextDay = @day + 1.days 
+		gon.previousDay = @day - 1.days
 		
 		@days_from_week = (@day.at_beginning_of_week..@day.at_end_of_week).map{|x| x}
 		user_events = current_user.events
