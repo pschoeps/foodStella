@@ -831,7 +831,9 @@ input:-webkit-autofill {
     	}
 
     	.alert {
-    		position: relative;
+    		position: absolute;
+   			 width: 92%;
+    		margin: auto;
     		text-align: center;
     		opacity: 0;
     	}
