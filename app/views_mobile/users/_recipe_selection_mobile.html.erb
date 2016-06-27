@@ -4,13 +4,15 @@
       <span class="close-x" id="hide-recipe-selection" aria-hidden="true"></span>
       <h3 id="meal-day" data="" data-one="" data-two="" data-three="" data-four="" data-five=""></h3>
       <h2>My Foods</h2>
+      <div class="alert alert-success" id="meal-added-alert" role="alert">Recipe added to planner!</div>
+      <div class="alert alert-danger" id="meal-removed-alert" role="alert">Recipe removed from planner.</div>
     </div>
   	<div class="meal-selection">
        <button type="button" id="snacks">
           Snacks
           <span class="badge"><%= snacks.count %></span>
        </button>
-      <div class="selection" id="snacks-selection" style="display: <%= 'block' if expanded[0] == 'true' %>">
+      <div class="selection" id="snacks-selection" style="display: <%= expanded[0] %>">
           <div id='external-events'>
             <div id='external-events-listing'>
               <% snacks.each do |r| %>
@@ -24,7 +26,7 @@
           Side Dishes
           <span class="badge"><%= side_dishes.count %></span>
        </button>
-      <div class="selection" id="sidedish-selection" style="display: <%= 'block' if expanded[1] == 'true' %>">
+      <div class="selection" id="sidedish-selection" style="display: <%= expanded[1] %>">
           <div id='external-events'>
             <div id='external-events-listing'>
               <% side_dishes.each do |r| %>
@@ -38,7 +40,7 @@
           Main Dishes
           <span class="badge"><%= main_dishes.count %></span>
        </button>
-      <div class="selection" id="maindish-selection" style="display: <%= 'block' if expanded[2] == 'true' %>">
+      <div class="selection" id="maindish-selection" style="display: <%= expanded[2] %>">
           <div id='external-events'>
             <div id='external-events-listing'>
               <% main_dishes.each do |r| %>
@@ -52,7 +54,7 @@
           Desserts
           <span class="badge"><%= desserts.count %></span>
        </button>
-      <div class="selection" id="dessert-selection" style="display: <%= 'block' if expanded[3] == 'true' %>">
+      <div class="selection" id="dessert-selection" style="display: <%= expanded[3] %>">
           <div id='external-events'>
             <div id='external-events-listing'>
               <% desserts.each do |r| %>
@@ -66,7 +68,7 @@
           Drinks
           <span class="badge"><%= drinks.count %></span>
        </button>
-      <div class="selection" id="drink-selection" style="display: <%= 'block' if expanded[4] == 'true' %>">
+      <div class="selection" id="drink-selection" style="display: <%= expanded[4] %>">
           <div id='external-events'>
             <div id='external-events-listing'>
               <% drinks.each do |r| %>

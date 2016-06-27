@@ -829,6 +829,15 @@ input:-webkit-autofill {
     		color: $green;
     		margin-top: 0;
     	}
+
+    	.alert {
+    		position: absolute;
+   			 width: 92%;
+    		margin: auto;
+    		text-align: center;
+    		opacity: 0;
+    		top: 38px;
+    	}
     }
 	.meal-selection {
 
@@ -864,6 +873,54 @@ input:-webkit-autofill {
     		background-color: rgba(77, 77, 77, .8);
 		}
 	}
+}
+
+.day-selector-mobile {
+	position: absolute;
+    top: 0;
+    background-color: rgba(255, 255, 255, .9);
+    width: 100%;
+    z-index: 40;
+    display: none;
+    height: 80em;
+
+    .close-x {
+    	position: absolute;
+    	top: 10px;
+    	right: 10px;
+    	height: 2em;
+    	width: 2em;
+    	background-size: 2em 2em;
+    	background-image: asset-url('close-x.png');
+    }
+
+    .col-md-12 {
+    	padding: 0;
+    }
+
+    .mobile-days-list {
+    	width: 100%;
+    	position: relative;
+    	list-style-type: none;
+    	padding: 0;
+    	top: 4em;
+
+    	li {
+    		width: 100%;
+    		text-align: center;
+    		height: 4em;
+    		border-bottom: 1px solid $green;
+    		color: $green;
+
+    		h2 {
+    			margin: 0;
+    			padding: 0;
+    			position: relative;
+    			top: 50%;
+    			transform: translateY(-50%);
+    		}
+    	}
+    }
 }
 
 .event-actions-mobile {
@@ -1034,6 +1091,7 @@ input:-webkit-autofill {
 	background-color: white;
 	position: relative;
 	overflow-x: auto;
+	overflow-y: hidden;
 	white-space: nowrap;
 	height: 10em;
 
