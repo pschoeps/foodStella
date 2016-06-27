@@ -19,8 +19,13 @@ development:
   encoding: unicode
   database: foodStella_development
   pool: 5
+<<<<<<< Updated upstream
   username: salsaia
   password:
+=======
+  username: rails
+  password: password
+>>>>>>> Stashed changes
 
   # Connect on a TCP socket. Omitted by default since the client uses a
   # domain socket that doesn't need configuration. Windows does not have
