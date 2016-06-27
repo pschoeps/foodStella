@@ -146,63 +146,99 @@
   $(document).ready(function(){
 
     // fixed filter bar
-    var $filterBar = $('.fixed-filter-bar');
     var $controlBar = $('.planner-view-control.recipes');
+
+    var $wrapperBar = $('.fixed-filter-bar');
+    var $filterBar = $('.filter-bar');
     
     var filterHeight = $filterBar.height();
-    var anchorMin = $controlBar.offset().top + $controlBar.height();
-    var anchor = anchorMin;
-
-    // $controlBar.css('margin-bottom', filterHeight + 'px');
-    // $controlBar.css('margin-bottom', 0 + 'px');
-    // $filterBar.css({
-    //   'position': 'relative',
-    //   'top': 0 + 'px'
-    // });
+    var anchorMin = $wrapperBar.offset().top;
+    var anchor = 0;
 
     var scrollPos = 0;
     var lastScrollPos = 0;
-    var scrollDelta = 0;
-    var offset = 0;
-    var animating = false;
+    // var scrollDelta = 0;
+    // var offset = 0;
+    // var animating = false;
+
+    $wrapperBar.css('height',filterHeight+'px');
+
+    $(document).scroll(function(e){
+      filterHeight = $filterBar.height();
+      anchorMin = $wrapperBar.offset().top;
+
+      lastScrollPos = scrollPos;
+      scrollPos = $(window).scrollTop();
+
+      $wrapperBar.css('height',filterHeight+'px');
+
+      if(lastScrollPos < scrollPos){            // scrolling down
+        if($filterBar.css('position')=='fixed'){
+          anchor = scrollPos - (scrollPos-lastScrollPos) - anchorMin;
+          $filterBar.css('position', 'absolute');
+        }
+        else if(scrollPos > anchor + anchorMin + filterHeight){
+          anchor = scrollPos - anchorMin - filterHeight;
+        }
+        else
+          null; // leave anchor unchanged
+
+        $filterBar.css('top', anchor + 'px');
+      }
+      else {                                    // scrolling up
+        if(scrollPos <= anchorMin){
+          anchor = 0;
+          $filterBar.css('position', 'relative');
+          $filterBar.css('top', 0);
+        }
+        else if(anchor >= scrollPos-anchorMin){
+          anchor = scrollPos-anchorMin;
+          // mobile scroll event hack: transform to force re-render
+          $filterBar.css('transform', 'translate3d(0px,0px,0px)');
+          $filterBar.css('position', 'fixed');
+          $filterBar.css('top', 0);
+        }
+      }
+    });
 
     // third approach using jQuery's slideUp()/slideDown()
     // not as *visceral* but seems the most stable so far
     // scroll listener for dynamic search bar header
-    $(document).scroll(function(e){
-      filterHeight = $filterBar.height();
-      lastScrollPos = scrollPos;
-      scrollPos = $(window).scrollTop();
-      scrollDelta = scrollPos - lastScrollPos;
-      anchorMin = $controlBar.offset().top + $controlBar.height();
+      // $(document).scroll(function(e){
+      //   filterHeight = $filterBar.height();
+      //   lastScrollPos = scrollPos;
+      //   scrollPos = $(window).scrollTop();
+      //   scrollDelta = scrollPos - lastScrollPos;
+      //   anchorMin = $controlBar.offset().top + $controlBar.height();
 
-      if(scrollPos <= anchorMin + filterHeight && 
-      $filterBar.css('position')=='relative'){
-        $('.fluid-container').removeClass('fixed-filter-bar');
-      }
-      else if(scrollPos <= anchorMin &&
-      $filterBar.css('position')=='fixed'){
-        $('.fluid-container').removeClass('fixed-filter-bar');
-      }
-      else {
-        if(!$('.fluid-container').hasClass('fixed-filter-bar')){
-          $('.fluid-container').addClass('fixed-filter-bar');
-          $filterBar.css('display','none');
-        }
+      //   if(scrollPos <= anchorMin + filterHeight && 
+      //   $filterBar.css('position')=='relative'){
+      //     $('.fluid-container').removeClass('fixed-filter-bar');
+      //   }
+      //   else if(scrollPos <= anchorMin &&
+      //   $filterBar.css('position')=='fixed'){
+      //     $('.fluid-container').removeClass('fixed-filter-bar');
+      //   }
+      //   else {
+      //     if(!$('.fluid-container').hasClass('fixed-filter-bar')){
+      //       $('.fluid-container').addClass('fixed-filter-bar');
+      //       $filterBar.css('display','none');
+      //     }
 
-        if(!animating){
-          animating = true;
-          if(scrollDelta > 0)
-              $filterBar.slideUp(250, function(){
-                animating = false;
-              });
-          else
-            $filterBar.slideDown(250, function(){
-              animating = false;
-            });
-        }
-      }
-    });
+      //     if(!animating){
+      //       animating = true;
+      //       if(scrollDelta > 0)
+      //           $filterBar.slideUp(250, function(){
+      //             animating = false;
+      //           });
+      //       else
+      //         $filterBar.slideDown(250, function(){
+      //           animating = false;
+      //         });
+      //     }
+      //   }
+      // });
+    //
     
     // second approach was choppy,
     // but worked consistently on iOS
@@ -264,46 +300,6 @@
       // });
     // 
 
-    // first approach was smoother,
-    // but transitioning FROM fixed TO absolute
-    // does not register on iOS until touchEnd()
-    // vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-    // Scroll event listener for dynamic search bar
-      // $(document).scroll(function(e){
-      //   filterHeight = $filterBar.height();
-      //   lastScrollPos = scrollPos;
-      //   scrollPos = $(window).scrollTop();
-
-      //   if(lastScrollPos < scrollPos){            // scrolling down
-      //     if($filterBar.css('position')=='fixed')
-      //       anchor = scrollPos;
-      //     else if(scrollPos > anchor + filterHeight)
-      //       anchor = scrollPos - filterHeight;
-      //     else
-      //       null; // keep anchor unchanged
-
-      //     $filterBar.css({
-      //       'position': 'absolute',
-      //       'top': anchor + 'px'
-      //     });
-      //   }
-      //   else {                                    // scrolling up
-      //     if(scrollPos <= anchorMin){
-      //       anchor = anchorMin;
-      //       $filterBar.css({
-      //         'position': 'absolute',
-      //         'top': anchorMin + 'px'
-      //       });
-      //     }
-      //     else if(anchor >= scrollPos){
-      //       $filterBar.css({
-      //         'position': 'fixed',
-      //         'top': 0
-      //       });
-      //     }
-      //   }
-      // });
-    //
 
     // disable scrolling on dropdowns popup
     $('.dropdowns').bind('touchmove', function(e){e.preventDefault()});
@@ -317,8 +313,11 @@
         // $(window).scrollTop(anchorMin);
         var bottom = $('.footer').offset().top;
         bottom -= $(window).height();
+        var top = $('.fixed-filter-bar').offset().top;
         if($(window).scrollTop() > bottom)
-            $(window).scrollTop(bottom);
+            $("html, body").animate({ scrollTop: bottom }, "slow");
+        else if($(window).scrollTop() < top)
+            $("html, body").animate({ scrollTop: top }, "slow");
         $('.dropdowns').show();
       }
       else

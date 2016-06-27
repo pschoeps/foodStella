@@ -202,7 +202,7 @@
 		<!-- <div class="container"> -->
 			<div class="row">
 				<div class="col-md-2"></div>
-				<div class="col-xs-12 col-md-8 recipe-reviews">
+				<div class="col-xs-12 col-md-8 recipe-reviews" id='recipe-reviews'>
 					<h3>REVIEWS</h3>
 					<div class="row">
 						<%= commontator_thread(@recipe) %>
@@ -227,7 +227,9 @@
 
 	$(document).ready(function() {
 		console.log("loaded");
-    	$(document).on('click','#follow',function(){
+
+    	$(document).on('click','#follow',function(e){
+    		e.preventDefault();
     		$this = $(this)
     		recipe_id = $this.attr('data')
     		console.log(recipe_id)
@@ -245,7 +247,8 @@
                 });//end ajax call
 		});
 
-		$(document).on('click','#unfollow',function(){
+		$(document).on('click','#unfollow',function(e){
+			e.preventDefault();
     		$this = $(this)
     		recipe_id = $this.attr('data')
     		console.log(recipe_id)
@@ -263,7 +266,8 @@
 		});
 
 
-    	$(document).on('click','#cooked_false',function(){
+    	$(document).on('click','#cooked_false',function(e){
+    		e.preventDefault();
     		$this = $(this)
     		recipe_id = $this.attr('data')
     		console.log(recipe_id)
@@ -281,7 +285,8 @@
                 });//end ajax call
 		});
 
-		$(document).on('click','#cooked_true',function(){
+		$(document).on('click','#cooked_true',function(e){
+			e.preventDefault();
     		$this = $(this)
     		recipe_id = $this.attr('data')
     		$.ajax({//ajax call for questions
@@ -297,6 +302,8 @@
                 });//end ajax call
 		});
 
+
+		// left/right on similar recipes
 		$(document).on('click','.next:not(.inactive)',function(){
 			var left_perc = parseInt($('.slider-horizontal')[0].style.left);
 			$('.slider-horizontal').animate({left: (left_perc-100) + '%'},

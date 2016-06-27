@@ -148,25 +148,25 @@
 
   $(document).ready(function() {
 
-      $(document).on('click','#unfollow-sidebar',function(){
-          recipe_id = $(this).attr('data-recipe-id');
-          $.ajax({//ajax call for questions
-                    type:'DELETE',
-                    data: {id: recipe_id},
-                    url:"/relationships/" + recipe_id,
+      // $('#unfollow-sidebar').on('click', function(){
+      //     var recipe_id = $(this).attr('data-recipe-id');
+      //     $.ajax({//ajax call for questions
+      //               type:'DELETE',
+      //               data: {id: recipe_id},
+      //               url:"/relationships/" + recipe_id,
                 
-                    success:function (response) {
-                      $(".event-actions-mobile").css("display", "none");
-                      // update my_foods partial
-                      $('form input').trigger('change');
-                    }
-                  });//end ajax call
-      });
+      //               success:function (response) {
+      //                 $(".event-actions-mobile").css("display", "none");
+      //                 // update my_foods partial
+      //                 $('form input').trigger('change');
+      //               }
+      //             });//end ajax call
+      // });
 
-      // prevent keyboard 'Search' button from submitting form
-      $('form').on('submit',function(e){
-        e.preventDefault();
-      });
+      // // prevent keyboard 'Search' button from submitting form
+      // $('form').on('submit',function(e){
+      //   e.preventDefault();
+      // });
 
       $(document).on('click','#follow',function(){
         $this = $(this)
