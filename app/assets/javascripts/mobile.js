@@ -418,7 +418,6 @@ $(document).ready(function() {
                     var addMealBig = $(targetDiv).children('.add-meal-big')
                     var addMealSmall = $(targetDiv).children('.add-meal-short')
                     var childCount =  $(targetDiv).children('.added-meals').children('.meal').length;
-                    console.log(childCount);
                     //change add meal will only happen when there is on event left in category
                     //in this case, since we update the box before the meal is deleted, the number of children
                     //in the meal types category will be 1
@@ -482,9 +481,9 @@ $(document).ready(function() {
                     //height of the page and evaluating weather the big/small add meal buttons need to be
                     //changed
                     $('#meal-added-alert').animate({ opacity: 100 })
-                    setTimeout(function() {
-                      $('#meal-added-alert').animate({ opacity: 0 })
-                    }, 2000);
+                      setTimeout(function() {
+                        $('#meal-added-alert').animate({ opacity: 0 })
+                      }, 2000);
                     if (gon.dayView) {
                       element = '#' + mealData
                       $(element).find('.added-meals').prepend("<div class='meal col-md-4' data="+recipeId+"><a class='mobile-event fc-event-container "+recipeName+"' id='mobile-event' data-event="+response+" data-recipe="+recipeId+" data-image="+recipeName+" data-servings="+recipeServings+" data-recipe-name="+recipeFriendlyName+"><span class='servings'>"+recipeServings+"s</span><span class='event-title' style='background-color: "+mealColor+"'>"+recipeFriendlyName+"</span></a></div>")
