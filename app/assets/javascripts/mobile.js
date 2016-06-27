@@ -1,5 +1,7 @@
 $(document).ready(function() {
     calcContainerHeight()
+    console.log(gon.zoomLevel)
+
     //hide color defs
   	$('#hide-chevron').click(function() {
         $('.planner-instructions').addClass('closed');
@@ -42,15 +44,29 @@ $(document).ready(function() {
       range: "min",
       max: 200,
       min: 60,
-      value: 130,
+      value: gon.zoomLevel,
       slide: changeZoom,
       change: changeZoom
     });
 
+    if (gon.zoomLevel){
+      changeZoom(parseInt(gon.zoomLevel))
+      //$('#zoomSlider').slider({value: gon.zoomLevel})
+    };
+
     //changes zoom of '.weekly-planner'
-    function changeZoom(){
-      var zoomLevel = $('#zoomSlider').slider( "value" )
-      zoom = zoomLevel * .01
+    function changeZoom(updatedZoomLevel){
+      var zoom
+      console.log(updatedZoomLevel)
+      if ($.isNumeric(updatedZoomLevel)){
+        console.log("option 1")
+        zoom = updatedZoomLevel * .01
+      }
+      else {
+        var zoomLevel = $('#zoomSlider').slider( "value" )
+        console.log("option 2")
+        zoom = zoomLevel * .01
+      }
       console.log(zoom)
 
       if (zoom < .45) {
