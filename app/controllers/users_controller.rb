@@ -84,10 +84,11 @@ class UsersController < ApplicationController
 
 	def calendar
 		gon.dayView = false
-		gon.zoomLevel = params[:zoom_level]
-		puts params[:zoom_level]
-		puts "zoom level"
-
+		if params[:zoom_level]
+		  gon.zoomLevel = params[:zoom_level]
+		else
+		  gon.zoomLevel = 130
+		end
 		@calendar = true
 		@followed_recipes = current_user.following
 		@user_recipes = current_user.recipes
