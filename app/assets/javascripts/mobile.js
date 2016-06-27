@@ -1,4 +1,5 @@
 $(document).ready(function() {
+  console.log(gon.zoomLevel)
     calcContainerHeight()
     //hide color defs
   	$('#hide-chevron').click(function() {
