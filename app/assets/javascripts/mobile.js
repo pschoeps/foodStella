@@ -350,7 +350,7 @@ $(document).ready(function() {
         recipeId = parseInt($(obj).attr('data-one'));
         isSelected = ( $.inArray( recipeId, eventIds ) );
         if ( isSelected >= 0 ) {
-          $(obj).append("<span id='selected'><span id='remove-event-from-selection' class='glyphicon glyphicon-remove'></span>");
+          $(obj).append("<span id='selected'></span>");
         }
       });
     };
@@ -361,14 +361,73 @@ $(document).ready(function() {
 
     //user clicked a recipe in the recipe selection modal, adding it to there planner
   	$('.fc-event').click(function() {
+      date = $("#meal-day").attr('data');
+      mealData = $("#meal-day").attr('data-four');
       if ($(this).find('#selected').length || $(this).closest('.recipe-selection-mobile.recipes').length) {
+        recipeId = parseInt($(this).closest('.fc-event').attr('data-one'));
+        selectedSpan = $(this).find('#selected')
+        element = "#" + date 
+        childElement = "#" + mealData
+
+        if (gon.dayView) {
+          targetDiv = $(childElement)
+        }
+        else {
+          targetDiv = $(element).find(childElement)
+        }
+
+        var eventToBeDeleted
+
+        $(targetDiv).children('.added-meals').children('.meal').each(function(i, obj) {
+          eventRecipeId = parseInt($(obj).attr('data'))
+          if (eventRecipeId == recipeId) {
+            eventToBeDeleted = parseInt($(obj).find('.mobile-event').attr('data-event'))
+            $(obj).remove()
+          }
+        })
+
+        data = {
+            event: {
+              id: eventToBeDeleted
+            }
+          }
+
+          $.ajax({//ajax call 
+              type:'DELETE',
+              data: data,
+              url:'/events/destroy',
+              success:function (response) {
+                  if (gon.dayView == false) {
+                    var addMealBig = $(targetDiv).children('.add-meal-big')
+                    var addMealSmall = $(targetDiv).children('.add-meal-short')
+                    var childCount =  $(targetDiv).children('.added-meals').children('.meal').length;
+                    console.log(childCount);
+                    //change add meal will only happen when there is on event left in category
+                    //in this case, since we update the box before the meal is deleted, the number of children
+                    //in the meal types category will be 1
+                    if (childCount == 0) {
+                      $(addMealSmall).attr("id", "hidden")
+                      $(addMealBig).removeAttr("id")
+                    }
+                  }
+
+                  $('#meal-removed-alert').animate({ opacity: 100 })
+                      setTimeout(function() {
+                        $('#meal-removed-alert').animate({ opacity: 0 })
+                  },   2000);
+                  $(selectedSpan).remove()
+
+              }
+
+
+                //add a red popup
+                //remove the selected span
+          });
       }
       else {
-  		  date = $("#meal-day").attr('data');
   		  meal = $("#meal-day").attr('data-one');
   		  weekDay = $("#meal-day").attr('data-two')
   		  time = $("#meal-day").attr('data-three')
-  		  mealData = $("#meal-day").attr('data-four')
   		  mealColor = $("#meal-day").attr('data-five')
   		  recipeFriendlyName = $(this).attr('data-three')
   		  recipeServings = $(this).attr('data-two')
@@ -384,7 +443,7 @@ $(document).ready(function() {
        //   date = $("#meal-day").attr('data');
         //}
   		  startAt = date + time 
-        $(this).append("<span id='selected'><span id='remove-event-from-selection' class='glyphicon glyphicon-remove'></span>");
+        $(this).append("<span id='selected'></span>");
 
   		  var data = {
                     event: {

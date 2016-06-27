@@ -836,6 +836,7 @@ input:-webkit-autofill {
     		margin: auto;
     		text-align: center;
     		opacity: 0;
+    		top: 38px;
     	}
     }
 	.meal-selection {
@@ -870,16 +871,6 @@ input:-webkit-autofill {
     		background-position-x: 50%;
     		background-position-y: 30%;
     		background-color: rgba(77, 77, 77, .8);
-
-    		#remove-event-from-selection {
-    			position: absolute;
-    			top: 2px;
-    			left: 2px;
-    			font-size: 1.4em;
-    			width: 1em;
-    			color: $red;
-    			background: none;
-    		}
 		}
 	}
 }
