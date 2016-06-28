@@ -8,50 +8,17 @@
 
 <div class="row planner-view-control recipes <%= 'fixed-margin' if @mobile_tab == 'recipes' %>">
   <div class="col-sm-6 disable-margins disable-padding">
-    <%= link_to recipes_path(:mobile_tab => 'my_foods') do %>
-      <button class="week-view-button" id="<%= 'selected' if @mobile_tab=='my_foods' %>"><div class="spatula"></div> My Foods</button>
+    <%= link_to sidebar_path do %>
+      <button class="week-view-button"><div class="spatula"></div> My Foods</button>
     <% end %>
   </div>
   <div class="col-sm-6 disable-margins disable-padding">
-    <%= link_to recipes_path(:mobile_tab => 'recipes') do %>
-      <button class="day-view-button" id="<%= 'selected' if @mobile_tab=='recipes' %>">Recipes <div class="fav-star"></div></button>
+    <%= link_to recipes_path do %>
+      <button class="day-view-button" id="selected">Recipes <div class="fav-star"></div></button>
     <% end %>
   </div>
 </div>
 
-<% if @mobile_tab == 'my_foods' %>
-    <div class="row recipe-selection-mobile recipes">
-      <div class="col-md-12 col-xs-12 col-sm-12">
-        <div class="recipe-selection-header">
-          <h2>My Foods</h2>
-          <div class="row search">
-            <%= form_for_filterrific @filterrific_my_foods do |f| %>
-              <div class="filter-search search my_foods">
-                <%= f.text_field(
-                    :search_query_my_foods,
-                    class: 'filterrific-periodically-observed',
-                    placeholder: "Search my recipes"
-                ) %>
-              </div>
-            <% end %>
-          </div>
-        </div>
-        <div id='sidebar-col-mobile'>
-          <%= render(
-              partial: 'recipe_selection_mobile',
-              locals: {
-                snacks: @snacks,
-                side_dishes: @side_dishes,
-                main_dishes: @main_dishes,
-                desserts: @desserts,
-                drinks: @drinks,
-                expanded: @expanded
-              }
-            ) %>
-        </div>
-      </div>
-  </div>
-<% else %>
   <div class= "row fixed-filter-bar">
     <div class="col-md-12 filter-bar mobile">
       <%= render(
@@ -66,7 +33,6 @@
       locals: { recipes: @recipes }
     ) %>
   </div>
-<% end %>
 
 <div class='mobile-spacer'></div>
 
@@ -148,42 +114,22 @@
 
   $(document).ready(function() {
 
-      // $('#unfollow-sidebar').on('click', function(){
-      //     var recipe_id = $(this).attr('data-recipe-id');
-      //     $.ajax({//ajax call for questions
-      //               type:'DELETE',
-      //               data: {id: recipe_id},
-      //               url:"/relationships/" + recipe_id,
-                
-      //               success:function (response) {
-      //                 $(".event-actions-mobile").css("display", "none");
-      //                 // update my_foods partial
-      //                 $('form input').trigger('change');
-      //               }
-      //             });//end ajax call
-      // });
+    $(document).on('click','#follow',function(){
+      $this = $(this)
+      recipe_id = $this.attr('data')
+      console.log(recipe_id)
+      $.ajax({//ajax call for questions
+                type:'POST',
+                data: {id: recipe_id},
+                url:'/relationships',
 
-      // // prevent keyboard 'Search' button from submitting form
-      // $('form').on('submit',function(e){
-      //   e.preventDefault();
-      // });
-
-      $(document).on('click','#follow',function(){
-        $this = $(this)
-        recipe_id = $this.attr('data')
-        console.log(recipe_id)
-        $.ajax({//ajax call for questions
-                  type:'POST',
-                  data: {id: recipe_id},
-                  url:'/relationships',
-
-                  success:function (response) {
-                    console.log('done');
-                    $this.addClass("spatula-selected");
-                    $this.attr('id', 'unfollow');
-                    $this.removeClass("spatula-unselected");
-                  }
-                });//end ajax call
+                success:function (response) {
+                  console.log('done');
+                  $this.addClass("spatula-selected");
+                  $this.attr('id', 'unfollow');
+                  $this.removeClass("spatula-unselected");
+                }
+              });//end ajax call
     });
 
     $(document).on('click','#unfollow',function(){

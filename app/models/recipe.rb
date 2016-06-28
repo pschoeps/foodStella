@@ -362,7 +362,7 @@ class Recipe < ActiveRecord::Base
 
   def self.options_for_sorted_by
     [
-      # ['Name (a-z)', 'name_asc'],
+      ['Recommended', 'created_at_asc'],
       ['Trending', 'created_at_desc'],
       ['Latest', 'created_at_desc'],
       ['Oldest', 'created_at_asc'],
@@ -459,6 +459,55 @@ class Recipe < ActiveRecord::Base
     else
       new_name
     end
+  end
+
+  def get_short_time(cookOrPrep)
+    if cookOrPrep == 'cook'
+      minutes = cook_time.to_i
+    else
+      minutes = prep_time.to_i
+    end
+    if minutes < 60
+      minutes.to_s + ' mins'
+    else
+      hrs = minutes/60
+      mins = minutes % 60
+      mins = '0' + mins.to_s if mins < 10
+      if mins == '00'
+        hrs.to_s + ' hour' if hrs == 1
+        hrs.to_s + ' hrs' if hrs != 1
+      else
+        # hrs.to_s + 'h ' + mins.to_s + 'mins'
+        hrs.to_s + ':' + mins.to_s + ' hrs'
+      end
+    end
+  end
+
+  def get_friendly_time(cookOrPrep)
+    if cookOrPrep == 'cook'
+      minutes = cook_time.to_i
+    else
+      minutes = prep_time.to_i
+    end
+    timeString = ''
+    unitString = ''
+    if minutes < 60
+      timeString = minutes.to_s
+      unitString = 'Minutes'
+    else
+      hrs = minutes/60
+      unitString = hrs > 1 ? 'Hours' : 'Hour'
+
+      mins = minutes % 60
+      mins = '0' + mins.to_s if mins < 10
+
+      if mins == '00'
+        timeString = hrs.to_s
+      else
+        timeString =  hrs.to_s + ':' + mins.to_s
+      end
+    end
+    [timeString, unitString]
   end
 
   def similar_recipes

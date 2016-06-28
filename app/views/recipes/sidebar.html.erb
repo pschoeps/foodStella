@@ -1,0 +1,266 @@
+<%= render 'layouts/recipe_css_variables' %>
+<div class="row">
+  <div class="col-md-12 recipe-page-header">
+    <h1>What do you <i>stella</i> today?</h1>
+  </div>
+</div>
+
+<div class= "row">
+  <div class="col-md-12 filter-bar">
+    <%= render(
+      partial: 'filter_form',
+      locals: {filtering_by: params[:filterrific] }
+    ) %>
+  </div>
+</div>
+
+<div class="row recipes-page">
+
+  <div id='sidebar-col' class='col-sm-3'>
+  <%= render(
+    partial: 'recipes/sidebar',
+    locals: {
+      snacks: @snacks,
+      side_dishes: @side_dishes,
+      main_dishes: @main_dishes,
+      desserts: @desserts,
+      drinks: @drinks,
+      dragNdrop: false,
+      expanded: @expanded,
+      new_category: @new_category
+    }
+  ) %>
+  </div>
+
+<div style='display:none' id='refresh-sidebar'>
+  <!-- %= link_to 'Refresh recipes', action: :sidebar, remote: true, expanded: [], id: 'doesntmatter' %> -->
+</div>
+
+  <div class="col-sm-9 sidebar-content" id="recipes-col">
+    <%= render(
+      partial: 'recipes/list',
+      locals: { recipes: @recipes }
+    ) %>
+  </div>
+
+</div>
+
+
+<script>
+
+
+  // copied from ratyrate.js.erb
+  function resetStars(){
+    console.log('resetting stars!!');
+    $(".star").each(function() {
+      var $readonly = ($(this).attr('data-readonly') == 'true');
+      // CUSTOM readonly override
+      if( $(this).attr('data-cancel-hint') == 'readonly' ) $readonly = true;
+      var $half     = ($(this).attr('data-enable-half') == 'true');
+      var $halfShow = ($(this).attr('data-half-show') == 'true');
+      var $single   = ($(this).attr('data-single') == 'true');
+      $(this).raty({
+        score: function() {
+          return $(this).attr('data-rating')
+        },
+        number: function() {
+          return $(this).attr('data-star-count')
+        },
+        half:        $half,
+        halfShow:    $halfShow,
+        single:      $single,
+        path:        $(this).attr('data-star-path'),
+        starOn:      $(this).attr('data-star-on'),
+        starOff:     $(this).attr('data-star-off'),
+        starHalf:    $(this).attr('data-star-half'),
+        cancel:      $(this).attr('data-cancel'),
+        cancelPlace: $(this).attr('data-cancel-place'),
+        cancelHint:  $(this).attr('data-cancel-hint'),
+        cancelOn:    $(this).attr('data-cancel-on'),
+        cancelOff:   $(this).attr('data-cancel-off'),
+        noRatedMsg:  $(this).attr('data-no-rated-message'),
+        round:       $(this).attr('data-round'),
+        space:       $(this).attr('data-space'),
+        target:      $(this).attr('data-target'),
+        targetText:  $(this).attr('data-target-text'),
+        targetType:  $(this).attr('data-target-type'),
+        targetFormat: $(this).attr('data-target-format'),
+        targetScoret: $(this).attr('data-target-score'),
+        readOnly: $readonly,
+        click: function(score, evt) {
+          var _this = this;
+          if (score == null) { score = 0; }
+          $.post('<%= Rails.application.class.routes.url_helpers.rate_path %>',
+          {
+            score: score,
+            dimension: $(this).attr('data-dimension'),
+            id: $(this).attr('data-id'),
+            klass: $(this).attr('data-classname')
+          },
+          function(data) {
+            if(data) {
+              // success code goes here ...
+
+              if ($(_this).attr('data-disable-after-rate') == 'true') {
+                $(_this).raty('set', { readOnly: true, score: score });
+              }
+            }
+          });
+        }
+      });
+    });
+  };
+
+
+  function resetSidebar(){
+    console.log('RESET');
+    $('#sidebar-col').trigger('detach.ScrollToFixed');
+    $('#sidebar-col').scrollToFixed({
+      // limit: $('.footer').offset().top - $('#sidebar-col').height(),
+      spacerClass: 'sidebar-spacer'
+    });
+    // var contentHeight = $('.footer').offset().top - $('#recipes-col').offset().top;
+    // if( contentHeight < $(window).height()){
+    //   $('#sidebar-col').css('height', contentHeight + 'px');
+    //   $('.sidebar').css('height', contentHeight + 'px');
+    // }
+  }
+
+  function updateMyFoods(new_recipe_id){
+    var expandedSections = [];
+      $('.selection').each(function(){
+      if( $(this).css('display') == 'block')
+        expandedSections.push('true');
+      else
+        expandedSections.push('false');
+    });
+    
+      // var dataString = 'expanded%5B%5D=' + expandedSections[0] + '&expanded%5B%5D=' + expandedSections[1] + '&expanded%5B%5D=' + expandedSections[2] + '&expanded%5B%5D=' + expandedSections[3] + '&expanded%5B%5D=' + expandedSections[4];
+    
+      // $('#refresh-sidebar>a').attr('data-params', dataString);
+      // $('#refresh-sidebar>a').click();
+
+        // disable remove button until sidebar reloads
+        $('.remove').off();
+        $('.remove').click(function(){
+          return false;
+        });
+
+        $.ajax({//ajax call for questions
+          type:'GET',
+          data: {new_recipe_id: new_recipe_id},
+          url:'/sidebar',
+          success:function (response) {
+           
+           $('.selection').each(function(index){
+             if( expandedSections[index] == 'true')
+               $(this).css('display','block');
+             else
+               $(this).css('display','none');
+           });
+
+           // active remove listener again
+
+           resetSidebar();
+          }
+        });//end ajax call
+  }
+
+  $(document).ready(function() {
+    
+      resetSidebar();
+
+      $(window).resize( function(e){
+        resetSidebar();
+      });
+
+      $('.sidebar').scroll(function(e){
+        e.stopPropagation();
+        // resetSidebar();
+      })
+
+    	$(document).on('click','#follow',function(){
+    		$this = $(this)
+    		recipe_id = $this.attr('data')
+    		console.log(recipe_id)
+    		$.ajax({//ajax call for questions
+                  type:'POST',
+                  data: {id: recipe_id},
+                  url:'/relationships',
+
+                  success:function (response) {
+                    console.log('done');
+                  	$this.addClass("spatula-selected");
+                    $this.attr('id', 'unfollow');
+                    $this.removeClass("spatula-unselected");
+                    updateMyFoods(recipe_id);
+                  }
+                });//end ajax call
+		});
+
+		$(document).on('click','#unfollow',function(){
+    		$this = $(this);
+    		recipe_id = $this.attr('data');
+    		console.log(recipe_id);
+    		$.ajax({//ajax call for questions
+                  type:'DELETE',
+                  data: {id: recipe_id},
+                  url:"/relationships/" + recipe_id,
+              
+                  success:function (response) {
+                  	$this.addClass("spatula-unselected");
+                    $this.attr('id', 'follow');
+                    $this.removeClass("spatula-selected");
+                    updateMyFoods();
+                  }
+                });//end ajax call
+		});
+
+    //resizes boxes based on screen width;
+
+    wi = $(window).width();
+    win = wi * (3/4);
+    box_size = win * (1/4);
+
+    console.log(wi);
+    $('ox').css({
+                    'height': box_size + 'px',
+                    'width': box_size + 'px'
+                  });
+     $('.dails').css({
+                    //adding height for the "details" div containing recipe information
+                    'height': box_size - 40 + 'px',
+                    'width': box_size + 'px'
+                  });
+
+     $(document).on('click','#show_more_link',function(){
+        $.ajax({
+          success:function(){
+            resetSidebar();
+            // resetStars();
+          }
+        });
+        $(this).remove();
+     });
+
+     $(document).on('click','.filtering-tags li',function(){
+        var value = $(this).attr('data-value');
+        var name = $(this).attr('data-name');
+        if(name=='filterrific[owns]' || name=='filterrific[following]' || name=='filterrific[cooked]')
+          value = '<%= current_user.id %>';
+        var string = 'input[name="' + name + '"][value=' + value + ']';
+        $(string).click();
+      });
+
+      // reapply filterrific
+      setTimeout(function(){
+        $('#filterrific_sorted_by').trigger('change');
+      }, 1);
+
+      // reapply myfoods
+      setTimeout(function(){
+        updateMyFoods();
+      }, 1000);
+
+  });
+</script>

@@ -1,0 +1,77 @@
+<!-- %= render 'layouts/recipe_css_variables' %> -->
+
+<div class="row shadow-header">
+  <div class="col-md-12 recipe-page-header mobile">
+    <h1>What do you <i>stella</i> today?</h1>
+  </div>
+</div>
+
+<div class="row planner-view-control recipes <%= 'fixed-margin' if @mobile_tab == 'recipes' %>">
+  <div class="col-sm-6 disable-margins disable-padding">
+    <%= link_to sidebar_path do %>
+      <button class="week-view-button" id='selected'><div class="spatula"></div> My Foods</button>
+    <% end %>
+  </div>
+  <div class="col-sm-6 disable-margins disable-padding">
+    <%= link_to recipes_path do %>
+      <button class="day-view-button">Recipes <div class="fav-star"></div></button>
+    <% end %>
+  </div>
+</div>
+
+  <div class="row recipe-selection-mobile recipes">
+    <div class="col-md-12 col-xs-12 col-sm-12">
+      <div class="recipe-selection-header">
+        <h2>My Foods</h2>
+        <div class="row search">
+          <%= form_for_filterrific @filterrific_my_foods do |f| %>
+            <div class="filter-search search my_foods">
+              <%= f.text_field(
+                  :search_query_my_foods,
+                  class: 'filterrific-periodically-observed',
+                  placeholder: "Search my recipes"
+              ) %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div id='sidebar-col-mobile'>
+        <%= render(
+            partial: 'sidebar_mobile',
+            locals: {
+              snacks: @snacks,
+              side_dishes: @side_dishes,
+              main_dishes: @main_dishes,
+              desserts: @desserts,
+              drinks: @drinks
+            }
+          ) %>
+      </div>
+    </div>
+</div>
+
+<div class='mobile-spacer'></div>
+
+
+<script>
+
+  var expandedSections = [];
+  function updateMyFoods( reload ){
+    expandedSections = [];
+      $('.selection').each(function(){
+      if( $(this).css('display') == 'block')
+        expandedSections.push('true');
+      else
+        expandedSections.push('false');
+    });
+  }
+
+  $(document).ready(function() {
+
+      // reapply myfoods
+      setTimeout(function(){
+        // updateMyFoods();
+      }, 1000);
+
+  });
+</script>

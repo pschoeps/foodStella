@@ -9,17 +9,3 @@ $("#recipes-col").html("<%= js %>");
   render(partial: 'filtering_by', locals: { filtering_by: params[:filterrific] })
 ) %>
 $(".filtering-tags").html("<%= f %>");
-
-<% my_foods = escape_javascript(
-  render(partial: 'recipe_selection_mobile',
-  	locals: {
-	  	snacks: @snacks,
-      	side_dishes: @side_dishes,
-      	main_dishes: @main_dishes,
-      	desserts: @desserts,
-      	drinks: @drinks,
-      	expanded: @expanded
-     }
-   )
-) %>
-$("#sidebar-col-mobile").html("<%= my_foods %>");
