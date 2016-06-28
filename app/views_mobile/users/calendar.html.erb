@@ -110,16 +110,19 @@
 <script>
   $(document).ready(function() {
 
+
     $('.next-week-link').click(function(){ 
       week_counter = <%= params[:week_counter].to_i %>
       updated_week_counter = week_counter + 1
-      this.href = this.href + '?week_counter=' + (updated_week_counter)
+      var zoomLevel = $( "#zoomSlider" ).slider( "value" )
+      this.href = this.href + '?week_counter=' + (updated_week_counter) + '&zoom_level=' + zoomLevel
     });
 
     $('.prev-week-link').click(function(){ 
       week_counter = <%= params[:week_counter].to_i %>
       updated_week_counter = week_counter - 1
-      this.href = this.href + '?week_counter=' + (updated_week_counter)
+      var zoomLevel = $( "#zoomSlider" ).slider( "value" )
+      this.href = this.href + '?week_counter=' + (updated_week_counter) + '&zoom_level=' + zoomLevel
     });
 
 
