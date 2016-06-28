@@ -1,4 +1,8 @@
 $(document).ready(function() {
+
+    // exclude from recipes views to avoid conflicts
+    if($('.recipe-page-header').length) return;
+
     calcContainerHeight()
     //hide color defs
   	$('#hide-chevron').click(function() {
