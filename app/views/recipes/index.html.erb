@@ -249,7 +249,15 @@
         if(name=='filterrific[owns]' || name=='filterrific[following]' || name=='filterrific[cooked]')
           value = '<%= current_user.id %>';
         var string = 'input[name="' + name + '"][value=' + value + ']';
-        $(string).click();
+
+        if(name=='filterrific[total_time][]'){
+          $(string).prop('checked', false);
+          $(string).closest('.dropdown').find('.dropdown-toggle').css('color','white');
+          $(this).remove();
+          $('#filterrific_sorted_by').trigger('change');
+        }
+        else
+          $(string).click();
       });
 
       // reapply filterrific
@@ -263,4 +271,4 @@
       }, 1000);
 
   });
-</script>
+</script>j

@@ -8,7 +8,7 @@
 
 <div class="row planner-view-control recipes <%= 'fixed-margin' if @mobile_tab == 'recipes' %>">
   <div class="col-sm-6 disable-margins disable-padding">
-    <%= link_to sidebar_path do %>
+    <%= link_to sidebar_path(:mobile => true) do %>
       <button class="week-view-button"><div class="spatula"></div> My Foods</button>
     <% end %>
   </div>
@@ -164,7 +164,15 @@
         if(name=='filterrific[owns]' || name=='filterrific[following]' || name=='filterrific[cooked]')
           value = '<%= current_user.id %>';
         var string = 'input[name="' + name + '"][value=' + value + ']';
-        $(string).click();
+        
+        if(name=='filterrific[total_time][]'){
+          $(string).prop('checked', false);
+          $(string).closest('.dropdown').find('.dropdown-toggle').css('color','white');
+          $(this).remove();
+          $('#filterrific_sorted_by').trigger('change');
+        }
+        else
+          $(string).click();
       });
 
       // reapply filterrific

@@ -141,6 +141,7 @@ class RecipesController < ApplicationController
         following: Recipe.options_for_following,
         owns: Recipe.options_for_owns,
         trending: Recipe.options_for_trending,
+        total_time: Recipe.options_for_total_time,
       },
       persistence_id: false
       # default_filter_params: {latest: false}

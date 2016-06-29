@@ -59,7 +59,8 @@ class Recipe < ActiveRecord::Base
               :cooked,
               :owns,
               :following,
-              :search_query_my_foods
+              :search_query_my_foods,
+              :total_time,
               ]
 
 
@@ -187,6 +188,12 @@ class Recipe < ActiveRecord::Base
          .where(cookeds[:cooker_id].eq("#{user_id}")) \
          .exists
      )
+  }
+
+  scope :total_time, lambda { |total_time|
+    bottom = options_for_total_time[total_time[0]-1][2]
+    top = options_for_total_time[total_time[0]-1][3]
+    where('cook_time + prep_time >= :b AND cook_time + prep_time < :t', {b: bottom, t: top})
   }
 
   scope :sort_by_ingredients, lambda { |ingredient_ids|
@@ -380,6 +387,16 @@ class Recipe < ActiveRecord::Base
       # ['Lowest Rating',       'prep_time_asc'],
       # ['Popular',       'prep_time_asc'],
       # ['Fewest Ratings',       'prep_time_asc']
+    ]
+  end
+
+  def self.options_for_total_time
+    [
+      ['< 15 min', 1, 0,14],
+      ['15-30 min', 2, 15,29],
+      ['30-45 min', 3, 20,44],
+      ['45-60 min', 4, 45,59],
+      ['> 1 hour', 5, 60,9999]
     ]
   end
 
