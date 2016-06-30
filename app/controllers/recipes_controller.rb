@@ -100,26 +100,26 @@ class RecipesController < ApplicationController
       @expanded = ['false','false','false','false','false']
     end
 
-    if params[:mobile_tab]
-      @mobile_tab = params[:mobile_tab]
-    else
-      @mobile_tab = 'my_foods'
-    end
-    #filtering links to model 
-    @filterrific_my_foods = initialize_filterrific(
-      Recipe,
-      params[:filterrific] #,
-      # :select_options => {
-      #   sort_my_foods:   Recipe.options_for_sort_my_foods
-      # },
-      # :search_query_my_foods
-    ) or return
-    @filtered_my_foods = Recipe.filterrific_find(@filterrific_my_foods)
-    @snacks = @snacks & @filtered_my_foods
-    @side_dishes = @side_dishes & @filtered_my_foods
-    @main_dishes = @main_dishes & @filtered_my_foods
-    @desserts = @desserts & @filtered_my_foods
-    @drinks = @drinks & @filtered_my_foods
+    # if params[:mobile_tab]
+    #   @mobile_tab = params[:mobile_tab]
+    # else
+    #   @mobile_tab = 'my_foods'
+    # end
+    # #filtering links to model 
+    # @filterrific_my_foods = initialize_filterrific(
+    #   Recipe,
+    #   params[:filterrific] #,
+    #   # :select_options => {
+    #   #   sort_my_foods:   Recipe.options_for_sort_my_foods
+    #   # },
+    #   # :search_query_my_foods
+    # ) or return
+    # @filtered_my_foods = Recipe.filterrific_find(@filterrific_my_foods)
+    # @snacks = @snacks & @filtered_my_foods
+    # @side_dishes = @side_dishes & @filtered_my_foods
+    # @main_dishes = @main_dishes & @filtered_my_foods
+    # @desserts = @desserts & @filtered_my_foods
+    # @drinks = @drinks & @filtered_my_foods
     
     #filtering links to model 
     @filterrific = initialize_filterrific(
@@ -141,6 +141,7 @@ class RecipesController < ApplicationController
         following: Recipe.options_for_following,
         owns: Recipe.options_for_owns,
         trending: Recipe.options_for_trending,
+        total_time: Recipe.options_for_total_time,
       },
       persistence_id: false
       # default_filter_params: {latest: false}
@@ -183,20 +184,30 @@ class RecipesController < ApplicationController
   def sidebar
     @followed_recipes = current_user.following
     @user_recipes = current_user.recipes
+    # @recipes = @user_recipes + @followed_recipes
+
     @snacks = @user_recipes.where(:meal_type => "1") + @followed_recipes.where(:meal_type => "1")
     @side_dishes = @user_recipes.where(:meal_type => "2") + @followed_recipes.where(:meal_type => "2")
     @main_dishes = @user_recipes.where(:meal_type => "3") + @followed_recipes.where(:meal_type => "3")
     @desserts = @user_recipes.where(:meal_type => "4") + @followed_recipes.where(:meal_type => "4")
     @drinks = @user_recipes.where(:meal_type => "5") + @followed_recipes.where(:meal_type => "5")
-    # render :partial => '/layouts/recipe_sidebar'
-    
-    # if params[:expanded]
-    #   @expanded = params[:expanded]
-    # else
-    #   @expanded = ['false','false','false','false','false']
-    # end
-    ######### expanded sidebar sections are now handled entirely by js
+
     @expanded = ['false','false','false','false','false']
+
+    @filterrific_my_foods = initialize_filterrific(
+      Recipe,
+      params[:filterrific] #,
+      # :select_options => {
+      #   sort_my_foods:   Recipe.options_for_sort_my_foods
+      # },
+      # :search_query_my_foods
+    ) or return
+    @filtered_my_foods = Recipe.filterrific_find(@filterrific_my_foods)
+    @snacks = @snacks & @filtered_my_foods
+    @side_dishes = @side_dishes & @filtered_my_foods
+    @main_dishes = @main_dishes & @filtered_my_foods
+    @desserts = @desserts & @filtered_my_foods
+    @drinks = @drinks & @filtered_my_foods
 
     if params[:new_recipe_id]
       @newRecipe = Recipe.where(:id => params[:new_recipe_id]).first
@@ -205,8 +216,15 @@ class RecipesController < ApplicationController
       @new_category = nil
     end
 
-    respond_to do |format|
-      format.js
+    if params[:mobile]
+      respond_to do |format|
+        format.html
+        format.js
+      end
+    else
+      respond_to do |format|
+        format.js
+      end
     end
   end
 

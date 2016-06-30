@@ -1,5 +1,11 @@
 $(document).ready(function() {
+
+    // exclude from recipes views to avoid conflicts
+    if($('.recipe-page-header').length || $('.recipe-title').length) return;
+    // not the best way of escaping, so please replace if you know of a more foolproof way
+
   console.log(gon.zoomLevel)
+
     calcContainerHeight()
     console.log(gon.zoomLevel)
 

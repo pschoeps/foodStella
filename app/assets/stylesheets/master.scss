@@ -171,3 +171,9 @@ p {
   // position: relative;
   z-index: 1;
  }
+
+ .navbar-nav {
+  @media (min-width: 768px) {
+    .mobile-nav { display: none;}
+  }
+ }

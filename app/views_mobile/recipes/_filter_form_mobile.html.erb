@@ -126,6 +126,22 @@
       </ul>
     </div>
 
+    <div class="dropdown total_time">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        Duration
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+        <li id="checkbox">
+          <% @filterrific.select_options[:total_time].each do |c| %>
+            <label class="checkbox">
+              <%= c[0] %>
+              <%= radio_button_tag("filterrific[total_time][]",c[1]) %>
+            </label>
+          <% end %>
+        </li>
+      </ul>
+    </div> 
+
      <div id ="reset-filters">
       <%= link_to(
         'Reset filters',
@@ -162,6 +178,7 @@
     // var animating = false;
 
     $wrapperBar.css('height',filterHeight+'px');
+    $filterBar.css('transform', 'translate3d(0px,0px,0px)');
 
     $(document).scroll(function(e){
       filterHeight = $filterBar.height();

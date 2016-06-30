@@ -1,0 +1,12 @@
+<% my_foods = escape_javascript(
+  render(partial: 'sidebar_mobile',
+  	locals: {
+	  	snacks: @snacks,
+      	side_dishes: @side_dishes,
+      	main_dishes: @main_dishes,
+      	desserts: @desserts,
+      	drinks: @drinks
+     }
+   )
+) %>
+$("#sidebar-col-mobile").html("<%= my_foods %>");

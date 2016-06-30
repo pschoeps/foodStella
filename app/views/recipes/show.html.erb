@@ -30,8 +30,8 @@
 						</div>
 						<div class="menu-info">
 							<div><%= @recipe.ingredients.count %></div>
-							<div><%= @recipe.prep_time %><br><span>Minutes</span></div>
-							<div><%= @recipe.cook_time %><br><span>Minutes</span></div>
+							<div><%= @recipe.get_friendly_time('prep')[0] %><br><span><%= @recipe.get_friendly_time('prep')[1] %></span></div>
+							<div><%= @recipe.get_friendly_time('cook')[0] %><br><span><%= @recipe.get_friendly_time('cook')[1] %></span></div>
 							<div class="reviews">
 								<%= rating_for @recipe, "review", disable_after_rate: false %>
 								<span>Review</span>

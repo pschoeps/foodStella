@@ -59,7 +59,8 @@ class Recipe < ActiveRecord::Base
               :cooked,
               :owns,
               :following,
-              :search_query_my_foods
+              :search_query_my_foods,
+              :total_time,
               ]
 
 
@@ -187,6 +188,12 @@ class Recipe < ActiveRecord::Base
          .where(cookeds[:cooker_id].eq("#{user_id}")) \
          .exists
      )
+  }
+
+  scope :total_time, lambda { |total_time|
+    bottom = options_for_total_time[total_time[0]-1][2]
+    top = options_for_total_time[total_time[0]-1][3]
+    where('cook_time + prep_time >= :b AND cook_time + prep_time < :t', {b: bottom, t: top})
   }
 
   scope :sort_by_ingredients, lambda { |ingredient_ids|
@@ -362,7 +369,7 @@ class Recipe < ActiveRecord::Base
 
   def self.options_for_sorted_by
     [
-      # ['Name (a-z)', 'name_asc'],
+      ['Recommended', 'created_at_asc'],
       ['Trending', 'created_at_desc'],
       ['Latest', 'created_at_desc'],
       ['Oldest', 'created_at_asc'],
@@ -380,6 +387,16 @@ class Recipe < ActiveRecord::Base
       # ['Lowest Rating',       'prep_time_asc'],
       # ['Popular',       'prep_time_asc'],
       # ['Fewest Ratings',       'prep_time_asc']
+    ]
+  end
+
+  def self.options_for_total_time
+    [
+      ['< 15 min', 1, 0,14],
+      ['15-30 min', 2, 15,29],
+      ['30-45 min', 3, 20,44],
+      ['45-60 min', 4, 45,59],
+      ['> 1 hour', 5, 60,9999]
     ]
   end
 
@@ -459,6 +476,55 @@ class Recipe < ActiveRecord::Base
     else
       new_name
     end
+  end
+
+  def get_short_time(cookOrPrep)
+    if cookOrPrep == 'cook'
+      minutes = cook_time.to_i
+    else
+      minutes = prep_time.to_i
+    end
+    if minutes < 60
+      minutes.to_s + ' mins'
+    else
+      hrs = minutes/60
+      mins = minutes % 60
+      mins = '0' + mins.to_s if mins < 10
+      if mins == '00'
+        hrs.to_s + ' hour' if hrs == 1
+        hrs.to_s + ' hrs' if hrs != 1
+      else
+        # hrs.to_s + 'h ' + mins.to_s + 'mins'
+        hrs.to_s + ':' + mins.to_s + ' hrs'
+      end
+    end
+  end
+
+  def get_friendly_time(cookOrPrep)
+    if cookOrPrep == 'cook'
+      minutes = cook_time.to_i
+    else
+      minutes = prep_time.to_i
+    end
+    timeString = ''
+    unitString = ''
+    if minutes < 60
+      timeString = minutes.to_s
+      unitString = 'Minutes'
+    else
+      hrs = minutes/60
+      unitString = hrs > 1 ? 'Hours' : 'Hour'
+
+      mins = minutes % 60
+      mins = '0' + mins.to_s if mins < 10
+
+      if mins == '00'
+        timeString = hrs.to_s
+      else
+        timeString =  hrs.to_s + ':' + mins.to_s
+      end
+    end
+    [timeString, unitString]
   end
 
   def similar_recipes
