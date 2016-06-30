@@ -173,7 +173,7 @@
 
     var scrollPos = 0;
     var lastScrollPos = 0;
-    // var scrollDelta = 0;
+    var scrollDelta = 0;
     // var offset = 0;
     // var animating = false;
 
@@ -186,12 +186,14 @@
 
       lastScrollPos = scrollPos;
       scrollPos = $(window).scrollTop();
+      // scrollDelta = scrollPos-lastScrollPos;
 
       $wrapperBar.css('height',filterHeight+'px');
 
       if(lastScrollPos < scrollPos){            // scrolling down
         if($filterBar.css('position')=='fixed'){
           anchor = scrollPos - (scrollPos-lastScrollPos) - anchorMin;
+          $filterBar.css('transform', 'translate3d(0px,0px,0px)');
           $filterBar.css('position', 'absolute');
         }
         else if(scrollPos > anchor + anchorMin + filterHeight){

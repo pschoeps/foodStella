@@ -204,7 +204,8 @@ $(document).ready(function(){
   });
 
   // $(document).on('click','#unfollow-sidebar',function(){
-  $('#unfollow-sidebar').on('click', function(){
+  $('#unfollow-sidebar').on('click', function(e){
+      e.preventDefault();
       var recipe_id = $(this).attr('data-recipe-id');
       $.ajax({//ajax call for questions
                 type:'DELETE',
