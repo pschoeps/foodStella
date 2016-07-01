@@ -1332,7 +1332,10 @@
 		}
 	}
 	.event-actions-mobile {
+		z-index: 999;
 		left: 0;
+		position: fixed;
+		top: 0;
 		> div {
 			padding: 0;
 			.view-container {
