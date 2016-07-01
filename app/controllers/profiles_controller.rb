@@ -97,6 +97,7 @@ class ProfilesController < ApplicationController
 		@user = User.find(params[:id])
 		@myself = @user.id == current_user.id ? true : false;
 
+
 		# if !current_user.profile && params[:id].to_i == current_user.id
 		if !@user.profile
 			if @myself
@@ -109,6 +110,7 @@ class ProfilesController < ApplicationController
 		end
 		
 		@profile = Profile.find_by_user_id(params[:id])
+		puts @profile
 		if(params.has_key?(:tab))
 			@tab = params[:tab]
 		else

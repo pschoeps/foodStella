@@ -289,6 +289,37 @@ class UsersController < ApplicationController
                 end
       string
 	end
+
+	def python
+		#require "rubypython"
+
+		RubyPython.start(:python_exe => "python2.6")
+
+		  sys = RubyPython.import("sys")
+		  mod = RubyPython.import("do_work")
+		 p mod
+		  #sys.path.append("#{Rails.root}/lib")
+		  #p "test"
+		  render :text => mod.printy()
+
+		RubyPython.stop # stop the Python interpreter
+
+=begin
+
+		#result = `python recommender.py params`
+		#puts result
+
+		python_cmd = Escape.shell_command(['python', "../lib/do_work.py"]).to_s
+        system python_cmd
+        render :text => python_cmd
+=end
+
+=begin
+result = `python do_work.py foo bar`
+puts result
+render :text => result
+=end
+	end
 end
 
 

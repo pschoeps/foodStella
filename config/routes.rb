@@ -5,6 +5,7 @@ FoodStella::Application.routes.draw do
   get "static_pages/home"
   match 'events/destroy'   => 'events#destroy',    :via => :delete
   match 'events/udpate'   => 'events#update',    :via => :put
+  match 'python'          =>'users#python', :via => :get
 
   # root "static_pages#home"
   root "recipes#index"
