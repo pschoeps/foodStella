@@ -153,6 +153,8 @@ class RecipesController < ApplicationController
       format.html
       format.js
     end
+
+    gon.recipes_page = true
   end
 
   def next_page

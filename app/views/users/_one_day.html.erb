@@ -1,8 +1,8 @@
 <div class="col-md-9 calendar-container">
 
-    <div class="calendar-title"><h1><%= day[0] %></h1></div>
+    <div class="calendar-title"><h1><%= day.strftime('%A - %B %-d, %Y') %></h1></div>
 
-    <div class="event-trash" id="event-trash-<%= day[1] %>"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div>
+    <div class="event-trash" id="event-trash-<%= day.strftime('%Y-%m-%d') %>"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></div>
 
 
       <div class="calendar-box">          
@@ -13,7 +13,7 @@
           <h1>Snack</h1>
           <h1>Dinner</h1>
         </div>         
-        <div id='calendar-<%= day[1] %>' class="calendar"></div>   
+        <div id='calendar-<%= day.strftime('%Y-%m-%d') %>' class="calendar"></div>   
       </div>       
 
 
@@ -29,7 +29,7 @@ $(document).ready(function() {
             -----------------------------------------------------------------*/
             
 
-            $('#calendar-<%= day[1] %>').fullCalendar({
+            $('#calendar-<%= day.strftime('%Y-%m-%d') %>').fullCalendar({
               defaultView: 'timelineDay',
               // defaultView: 'agendaWeek',
               events: 'calendar.json',
@@ -64,7 +64,7 @@ $(document).ready(function() {
               
                 
                 if (isElemOverDiv()) {
-                  $('#calendar-<%= day[1] %>').fullCalendar('removeEvents', event._id);
+                  $('#calendar-<%= day.strftime('%Y-%m-%d') %>').fullCalendar('removeEvents', event._id);
 
                   $.ajax({//ajax call 
                   type:'DELETE',
@@ -104,7 +104,7 @@ $(document).ready(function() {
                 element.find(".glyphicon").click(function(e) {
                   // e.stopPropagation();
                   console.log("clicked")
-                  $('#calendar-<%= day[1] %>').fullCalendar('removeEvents', event._id);
+                  $('#calendar-<%= day.strftime('%Y-%m-%d')%>').fullCalendar('removeEvents', event._id);
                   $.ajax({//ajax call 
                     type:'DELETE',
                     data: data,
@@ -186,7 +186,7 @@ $(document).ready(function() {
                     event.id = response;
                     event.recipe_id = recipe_id;
                     event.recipe_name = recipe_name;
-                    $('#calendar-<%= day[1] %>').fullCalendar('updateEvent', event)
+                    $('#calendar-<%= day.strftime('%Y-%m-%d') %>').fullCalendar('updateEvent', event)
                     console.log('recived id:' + recipe_id);
                   }
 
@@ -196,13 +196,13 @@ $(document).ready(function() {
 
         }); //end of iniialize calendar
 
-        $('#calendar-<%= day[1] %>').fullCalendar('gotoDate', "<%= day[1] %>");
+        $('#calendar-<%= day.strftime('%Y-%m-%d') %>').fullCalendar('gotoDate', "<%= day.strftime('%Y-%m-%d') %>");
 
 
 
        function isElemOverDiv() {
 
-          var trashEl = $('#event-trash-<%= day[1] %>');
+          var trashEl = $('#event-trash-<%= day.strftime('%Y-%m-%d') %>');
 
           var ofs = trashEl.offset();
 

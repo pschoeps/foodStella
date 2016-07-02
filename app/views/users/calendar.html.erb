@@ -45,10 +45,9 @@
     </div>
 
    
-
-    <%= render 'one_day', :day => @today %>
-    <%= render 'one_day', :day => @tomorrow %>
-    <%= render 'one_day', :day => @day_after_tom %>
+    <% @days_from_week.each do |day| %>
+      <%= render 'one_day', :day => day %>
+    <% end %>
 
   </div>
 
