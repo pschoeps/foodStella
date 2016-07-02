@@ -184,9 +184,11 @@ $(document).ready(function(){
   //   }
   // });
 
+  $(".event-actions-mobile").bind('touchmove', function(e){e.preventDefault()});
   $('.fc-event').on('click', function() {
     $(".event-actions-mobile").css("display", "block");
-    $("html, body").animate({ scrollTop: 179 }, "slow");
+    if( $(window).scrollTop() + $(window).height() > $('.footer').offset().top )
+      $("html, body").animate({ scrollTop: 179 }, "slow");
 
     var imageUrl = $(this).attr('data-image-url');
     var recipeId =   $(this).attr('data-recipe-id');
@@ -204,7 +206,8 @@ $(document).ready(function(){
   });
 
   // $(document).on('click','#unfollow-sidebar',function(){
-  $('#unfollow-sidebar').on('click', function(){
+  $('#unfollow-sidebar').on('click', function(e){
+      e.preventDefault();
       var recipe_id = $(this).attr('data-recipe-id');
       $.ajax({//ajax call for questions
                 type:'DELETE',

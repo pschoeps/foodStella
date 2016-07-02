@@ -5,6 +5,7 @@ $(document).ready(function() {
       console.log("not rendering")
       return;
      }
+
     // not the best way of escaping, so please replace if you know of a more foolproof way
 
 
