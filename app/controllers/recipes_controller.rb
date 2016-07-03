@@ -78,9 +78,11 @@ class RecipesController < ApplicationController
     @category = get_category(@recipe.category) if @recipe.category
     commontator_thread_show(@recipe)
     @others_photos = @recipe.others_photos
+    gon.recipes_page = true
   end
 
   def index
+    gon.recipes_page = true
     #variables contained in recipes sidebar
     @followed_recipes = current_user.following
     @user_recipes = current_user.recipes
@@ -153,8 +155,6 @@ class RecipesController < ApplicationController
       format.html
       format.js
     end
-
-    gon.recipes_page = true
   end
 
   def next_page
@@ -228,6 +228,7 @@ class RecipesController < ApplicationController
         format.js
       end
     end
+    gon.recipes_page = true
   end
 
   def get_difficulty(diff)

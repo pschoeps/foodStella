@@ -32,7 +32,7 @@
 //= require best_in_place
 //= require jquery-scrolltofixed
 //= require icheck
-//=mobile
+//= mobile
 
 //= require_tree
 

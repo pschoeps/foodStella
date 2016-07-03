@@ -1,7 +1,7 @@
 $(document).ready(function() {
 
     // exclude from recipes views to avoid conflicts
-    if(gon.recipes_page) { 
+    if (gon.recipes_page) { 
       console.log("not rendering")
       return;
      }
