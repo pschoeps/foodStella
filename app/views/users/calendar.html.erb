@@ -1,7 +1,7 @@
 <!-- rendering dynamic css tags for images in a recipe  -->
 <%= render 'layouts/recipe_css_variables' %>
 
-<div>
+
 
 <div class="row">
   <div class="col-md-12 calendar-page-header">
@@ -12,12 +12,7 @@
   </div>
 </div>
 
-<!-- <div class="row">
-  %= render(partial: 'header') %>
-</div> -->
 
-<div class="row calendar-days" css="margin: 0;">
-  <!-- %= render 'layouts/recipe_sidebar' %> -->
   <div id='sidebar-col' class="col-sm-3">
   <%= render(
     partial: 'layouts/recipe_sidebar',
@@ -33,138 +28,104 @@
   ) %>
   </div>
 
-  <div class="sidebar-content">
-    <div class="col-sm-9 calendar-nav">
-      <span class="btn" id="previous-day" data="1">Previous Day</span>
-      <span class="btn" id="add-day" data="<%= @day_counter %>">Add Day</span>
-      <%= link_to "Generate Shopping List", shopping_list_user_path(current_user), id: "shopping-list", class: "btn" %>
-    </div>
+<div class="col-sm-9 calendar-nav">
+  <span id="previous-day" data="1"><%= image_tag('left-arrow.png') %> Previous Week</span>
+  <span id="next-day" data="<%= @day_counter %>">Next Week<%= image_tag('right-arrow.png') %></span>
+  <%= link_to "Week View", calendar_user_path(current_user), id: "selected", class: "week-view btn" %>
+  <%= link_to "Day View", day_calendar_user_path(current_user), class: "day-view btn" %>
+</div>
 
-    <div class="previous-days">
-      <div class="row prev-days" id="prev-day-1"></div>
-    </div>
-
-   
-    <% @days_from_week.each do |day| %>
-      <%= render 'one_day', :day => day %>
-    <% end %>
-
+<div class="col-md-9 day-view-header">
+  <div class="col-md-11">
+    <%= link_to "Generate shopping list", shopping_list_user_path(current_user, view_type: "day", day: @day), id: "gen-shop-list" %>
   </div>
+</div>
 
-  <div class="added-days">
-    <div class="row added-day" id="day-<%= @day_counter %>"></div>
+<div class="col-md-9 desktop-planner-details">
+  <div class="details-box">
+      <p>*s = servings per recipe</p>
+      <p>*x = remove food</p>
+      <p>Click on the servings to change</p>
   </div>
+</div>
+
+<div class="row desktop-calendar-container weekly-planner" id="offset-margins" data="<%= current_user.id %>">
+  <% @days_from_week.each do |day| %>
+  <div class="one-day col-md-4 col-xs-4 col-sm-4" id="one-day-desktop">
+    <h2 class="one-day-header"><%= day.strftime("%A") %></h2>
+
+    <div class="meals" id="<%= day %>">
+
+        <% @meal_types.each do |m| %>
+          <div class="meal-types" id="<%= m[3] %>">
+            <div class="added-meals">
+              <% events = @events.where(:start_at => day.strftime + m[1]) %>
+              <% events.each do |e| %>
+                <% recipe = e.get_recipe(e.recipe_id) %>
+                <% servings = e.servings? ? true : false %>
+                <div class="meal week-meal desktop-meal" data ="<%= e.recipe_id %>">
+                  <a class="desktop-event fc-event-container <%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" id="desktop-event" data-event="<%= e.id %>" data-recipe="<%= e.recipe_id %>" data-recipe-name="<%= recipe.name %>" data-image="<%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" data-servings="<%= e.servings || recipe.servings %>">
+                    <span class="delete-event"></span>
+                    <span class="servings" id="desktop-week-servings"><%= servings ? e.servings : recipe.servings %>s</span>
+                    <span class="event-title" style="background-color: <%= m[2] %>"><%= truncate(recipe.name, length: 18) %></span>
+                  </a>
+
+                  <div class="change-servings-box hidden">
+                    <span class="change-servings-box-close">close</span>
+                    <span class="glyphicon glyphicon-minus change-serving" id="minus-serving" aria-hidden="true"></span>
+                    <span id ="num-servings" data="<%= e.id %>" data-servings="<%= servings ? e.servings : recipe.servings %>"><%= servings ? e.servings : recipe.servings %></span>
+                    <span class="glyphicon glyphicon-plus change-serving add" id="add-serving" aria-hidden="true"></span>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+
+        <!-- div -->
+
+        <% if events.length == 0 %>
+          <div class="meal week-meal add-meal-big <%=day %>-<%= m[3] %>-big">
+            <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
+              <div class="add-meal-box">
+                <span class="glyphicon glyphicon-plus" id="hide-chevron" aria-hidden="true"></span>
+                <h3>Add <%= m[0] %></h3>
+              </div>
+            </a>
+          </div>
+
+          <div class="add-meal-short <%=day %>-<%= m[3] %>-small" id="hidden">
+            <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
+              <div class="add-meal-box">
+                <h3>Add <%= m[0] %></h3>
+              </div>
+            </a>
+          </div>
+        <% else %>
+          <div class="meal week-meal add-meal-big <%=day %>-<%= m[3] %>-big" id="hidden">
+            <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
+              <div class="add-meal-box">
+                <span class="glyphicon glyphicon-plus" id="hide-chevron" aria-hidden="true"></span>
+                <h3>Add <%= m[0] %></h3>
+              </div>
+            </a>
+          </div>
+
+          <div class="add-meal-short <%=day %>-<%= m[3] %>-small">
+            <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
+              <div class="add-meal-box">
+                <h3>Add <%= m[0] %></h3>
+              </div>
+            </a>
+          </div>
+        <% end %>
+        </div>
+      <% end %>
+
+    </div>
+  </div>
+  <% end %>
 </div>
 
 
 
-</div>
-
-
-<script>
-
-  $(document).ready(function(e) {
-
-    $('html, body').animate({
-        scrollTop: $('.calendar-nav').offset().top
-    }, 'slow');
-    e.preventDefault
-  });
-
-  function resetSidebar(){
-    $('#sidebar-col').trigger('detach.ScrollToFixed');
-    $('#sidebar-col').scrollToFixed({
-      limit: $('.footer').offset().top - $('#sidebar-col').height(),
-      spacerClass: 'sidebar-spacer'
-    });
-  }
-
-  $(document).ready(function() {
-      resetSidebar();
-
-      $(window).resize( function(e){
-        resetSidebar();
-      });
-
-      $('a#shopping-list').on('click', function() { 
-        console.log("clicked link")
-        day_counter = $('#add-day').attr('data')
-        prev_day_counter = $('#previous-day').attr('data')
-        this.href = this.href + '?day_counter=' + day_counter + '&prev_day_counter=' + prev_day_counter
-      });
-
-      $(document).on('click','#add-day',function(){
-        $this = $(this)
-        day_counter = $this.attr('data')
-        $.ajax({//ajax call for questions
-                  type:'GET',
-                  data: {day_counter: day_counter},
-                  url:'/users/add_day',
-              
-                  success:function (response) {
-                    console.log("ajax success")
-                    $("#day-" + day_counter).html(response);
-
-                    new_day_counter = parseInt(day_counter) + 1
-                    console.log(new_day_counter)
-                    $this.attr('data', new_day_counter)
-
-
-                    string = parse('<div class="row added-day" id="day-%s"> </div>', new_day_counter);
-                    $('.added-days').append($(string))
-
-                    element_id = '#day-' + new_day_counter
-                    console.log(element_id)
-                    $(element_id)[0].scrollIntoView( false );
-
-                     // recalc scrollToFixed
-                    resetSidebar();
-                    
-                  }
-                  
-                });//end ajax call
-    });
-
-    $(document).on('click','#previous-day',function(){
-        $this = $(this)
-        previous_day_counter = $this.attr('data')
-        $.ajax({//ajax call for questions
-                  type:'GET',
-                  data: {day_counter: previous_day_counter},
-                  url:'/users/previous_day',
-              
-                  success:function (response) {
-                    console.log("ajax success")
-                    $("#prev-day-" + previous_day_counter).html(response);
-
-                    new_day_counter = parseInt(previous_day_counter) + 1
-                    $this.attr('data', new_day_counter)
-
-
-                    string = parse('<div class="row prev-day" id="prev-day-%s"> </div>', new_day_counter);
-                    $('.prev-days').prepend($(string))
-
-                    element_id = '#day-' + new_day_counter
-
-                    // recalc scrollToFixed
-                    resetSidebar();
-
-                  }
-                  
-                });//end ajax call
-    });
-
-    function parse(str) {
-      var args = [].slice.call(arguments, 1),
-        i = 0;
-
-      return str.replace(/%s/g, function() {
-        return args[i++];
-      });
-    }
-
-  });
-
-</script>
 
 

@@ -1,0 +1,42 @@
+convert ingredients to fractions
+add categories to ingredients
+add recipes being added for the week to the ingredients
+adding better way to sort ingredients
+//add servingts pop up to day view
+look into recommendations
+prioritize foods that are in my planner
+//change popup on daily and weekly planner view to pop up where the user is on the screen
+make popup closer actual views
+finish weekly desktop view
+//change so that you can manually slide on mobile view for zoom
+//add generate calendar button to day view and make it accurate
+make box for recipe drop glow when you hover over it
+customize json views
+look into making sql calls from python
+get third party libraries in
+
+
+recipes.json {
+	no need for:
+	{
+	recipe ingredients
+	recipe instructions
+	recipe description
+	}
+
+	need {
+	recipe id
+	name
+	meal type
+
+	}
+}
+
+third party: pandas
+dumps whold file into a dataframe which can clean using c++ (faster)
+
+desktop-meal is present in day_calenddar, but changing it breaks meals
+mobile and day views (not calendar) need to redefine data attr's to be more useful
+
+
+
