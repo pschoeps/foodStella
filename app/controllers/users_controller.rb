@@ -111,7 +111,10 @@ class UsersController < ApplicationController
 		if params[:week]
 		  day = params[:week].to_date
 		else
-		  day = Date.today
+		  sorted_events = @events.sort_by &:start_at
+		  puts sorted_events.last
+		  last_day = sorted_events.last
+		  day = Date.parse(last_day.start_at)
 		end
 
 		gon.nextWeek = day + 7.days 
@@ -127,13 +130,6 @@ class UsersController < ApplicationController
 		@today = [DateTime.now.strftime('%A - %B %-d, %Y'), DateTime.now.strftime('%Y-%m-%d')]
 	
 
-
-
-
-		sorted_events = @events.sort_by &:start_at
-		puts sorted_events.last
-		last_day = sorted_events.last
-		day = Date.parse(last_day.start_at)
 
 		@days_from_week = (day.at_beginning_of_week..day.at_end_of_week).map{|x| x}
 		@week_subtitle = @days_from_week.first.strftime('%m/%-d') + " - " + @days_from_week.last.strftime('%m/%-d')
@@ -157,7 +153,10 @@ class UsersController < ApplicationController
 		if params[:day]
 			@day = params[:day].to_date
 		else
-			@day = Date.today 
+		  sorted_events = @events.sort_by &:start_at
+		  puts sorted_events.last
+		  last_day = sorted_events.last
+		  @day = Date.parse(last_day.start_at)
 		end
 
 		gon.nextDay = @day + 1.days 
