@@ -36,13 +36,18 @@
   <%= link_to "Day View", day_calendar_user_path(current_user), class: "day-view btn" %>
 </div>
 
-<div class="col-md-9 day-view-header">
+<div class="col-md-9 week-view-header">
   <div class="col-md-11">
     <%= link_to "Generate shopping list", shopping_list_user_path(current_user, view_type: "day", day: @day), id: "gen-shop-list" %>
   </div>
 </div>
 
 <div class="col-md-9 desktop-planner-details">
+
+
+  <!-- code for colors goes here -->
+
+
   <div class="details-box">
       <p>*s = servings per recipe</p>
       <p>*x = remove food</p>
