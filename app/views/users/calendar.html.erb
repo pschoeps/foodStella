@@ -28,9 +28,10 @@
   ) %>
   </div>
 
+
 <div class="col-sm-9 calendar-nav">
-  <span id="previous-day" data="1"><%= image_tag('left-arrow.png') %> Previous Week</span>
-  <span id="next-day" data="<%= @day_counter %>">Next Week<%= image_tag('right-arrow.png') %></span>
+  <a href="/users/<%= current_user.id %>/calendar" class="prev-week-link"><span id="previous-week" data="1"><%= image_tag('left-arrow.png') %> Previous Week</span></a>
+  <a href="/users/<%= current_user.id %>/calendar" class="next-week-link"><span id="next-week">Next Week<%= image_tag('right-arrow.png') %></span></a>
   <%= link_to "Week View", calendar_user_path(current_user), id: "selected", class: "week-view btn" %>
   <%= link_to "Day View", day_calendar_user_path(current_user), class: "day-view btn" %>
 </div>
