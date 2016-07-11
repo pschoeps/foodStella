@@ -107,13 +107,9 @@ class UsersController < ApplicationController
 
 		@expanded = ['none', 'none', 'none', 'none', 'none']
 
-<<<<<<< HEAD
-		# @day_counter = 3
-		
-		
-=======
->>>>>>> 76d64833d125d1112d151c4c1b6334b121a3bd9e
+
 		d = Date.today
+
 		@month = d.strftime("%B")
 
 		@planner_begin = d.strftime("%-d")
@@ -131,16 +127,23 @@ class UsersController < ApplicationController
 
 
 		#logic for mobile calendar view (weekly)
-		if params[:week_counter] == nil
-		  day = Date.today # Today's date
-		else
-		  week_counter = params[:week_counter].to_i
+		#if params[:week_counter] == nil
+		 # day = Date.today # Today's date
+		#else
+		#  week_counter = params[:week_counter].to_i
+=begin
 		  days = week_counter * 7
 		  day = Date.today + days
 		end
+=end
+		sorted_events = @events.sort_by &:start_at
+		puts sorted_events.last
+		last_day = sorted_events.last
+		day = Date.parse(last_day.start_at)
 		@days_from_week = (day.at_beginning_of_week..day.at_end_of_week).map{|x| x}
 		@week_subtitle = @days_from_week.first.strftime('%m/%-d') + " - " + @days_from_week.last.strftime('%m/%-d')
 		@meal_types = [["Breakfast", "T00:00:00", "#f5b266", "breakfast"], ["Snack", "T00:30:00", "#bc9c63", "snack1"], ["Lunch", "T01:00:00", "#819800", "lunch"], ["Snack", "T01:30:00", "#bc9c63", "snack2"], ["Dinner", "T02:00:00", "#796c2d", "dinner"]]
+
 	end
 
 	def day_calendar
