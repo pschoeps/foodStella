@@ -104,7 +104,8 @@ class UsersController < ApplicationController
 		@expanded = ['none', 'none', 'none', 'none', 'none']
 
 		# @day_counter = 3
-
+		
+		
 		d = Date.today
 		@month = d.strftime("%B")
 		# @week_begin = d.at_beginning_of_week.strftime("%-d")
