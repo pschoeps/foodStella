@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
    include MobileHelper
    before_action :check_for_mobile
+   before_filter :find_meals_and_events, :only => [:day_calendar, :calendar, :shopping_list]
 	respond_to :html, :json
 
    def update
@@ -80,6 +81,19 @@ class UsersController < ApplicationController
   		render :json => @stuff
   	end
 
+  	def find_meals_and_events
+  		@followed_recipes = current_user.following
+		@user_recipes = current_user.recipes
+		@recipes = @user_recipes + @followed_recipes
+		@events = current_user.events
+
+		@snacks = @user_recipes.where(:meal_type => "1") + @followed_recipes.where(:meal_type => "1")
+		@side_dishes = @user_recipes.where(:meal_type => "2") + @followed_recipes.where(:meal_type => "2")
+		@main_dishes = @user_recipes.where(:meal_type => "3") + @followed_recipes.where(:meal_type => "3")
+		@desserts = @user_recipes.where(:meal_type => "4") + @followed_recipes.where(:meal_type => "4")
+		@drinks = @user_recipes.where(:meal_type => "5") + @followed_recipes.where(:meal_type => "5")
+	end
+
   	
 
 	def calendar
@@ -90,27 +104,17 @@ class UsersController < ApplicationController
 		  gon.zoomLevel = 130
 		end
 		@calendar = true
-		@followed_recipes = current_user.following
-		@user_recipes = current_user.recipes
-		@recipes = @user_recipes + @followed_recipes
-		@events = current_user.events
-
-		@snacks = @user_recipes.where(:meal_type => "1") + @followed_recipes.where(:meal_type => "1")
-		@side_dishes = @user_recipes.where(:meal_type => "2") + @followed_recipes.where(:meal_type => "2")
-		@main_dishes = @user_recipes.where(:meal_type => "3") + @followed_recipes.where(:meal_type => "3")
-		@desserts = @user_recipes.where(:meal_type => "4") + @followed_recipes.where(:meal_type => "4")
-		@drinks = @user_recipes.where(:meal_type => "5") + @followed_recipes.where(:meal_type => "5")
 
 		@expanded = ['none', 'none', 'none', 'none', 'none']
 
+<<<<<<< HEAD
 		# @day_counter = 3
 		
 		
+=======
+>>>>>>> 76d64833d125d1112d151c4c1b6334b121a3bd9e
 		d = Date.today
 		@month = d.strftime("%B")
-		# @week_begin = d.at_beginning_of_week.strftime("%-d")
-		# @week_end = d.at_end_of_week.strftime("%-d")
-		# @date_string = @month + " " + @week_begin + " - " + @week_end
 
 		@planner_begin = d.strftime("%-d")
 		# @planner_end = (d + (@day_counter-1).days).strftime("%-d")
@@ -140,24 +144,19 @@ class UsersController < ApplicationController
 	end
 
 	def day_calendar
+		unless mobile_device?
+		  gon.recipes_page = true
+		end
+
 		gon.dayView = true
 		@calendar = true
-		@followed_recipes = current_user.following
-		@user_recipes = current_user.recipes
-		@recipes = @user_recipes + @followed_recipes
-
-		@snacks = @user_recipes.where(:meal_type => "1") + @followed_recipes.where(:meal_type => "1")
-		@side_dishes = @user_recipes.where(:meal_type => "2") + @followed_recipes.where(:meal_type => "2")
-		@main_dishes = @user_recipes.where(:meal_type => "3") + @followed_recipes.where(:meal_type => "3")
-		@desserts = @user_recipes.where(:meal_type => "4") + @followed_recipes.where(:meal_type => "4")
-		@drinks = @user_recipes.where(:meal_type => "5") + @followed_recipes.where(:meal_type => "5")
 
 		@expanded = ['none', 'none', 'none', 'none', 'none']
 
 		day_counter = params[:day_counter]
 		day = params[:day]
 
-		#logic for mobile calendar view (weekly)
+		#logic for mobile calendar view (daily)
 		if day_counter == nil && day == nil
 		  @day = Date.today # Today's date
 		elsif day_counter && day == nil
@@ -178,6 +177,7 @@ class UsersController < ApplicationController
 		user_events = current_user.events
 		@events = user_events.where(:start_at => (@day.strftime + "T00:00:00")..(@day.strftime + "T:2:00:00"))
 		@meal_types = [["Breakfast", "T00:00:00", "#f5b266", "breakfast"], ["Snack", "T00:30:00", "#bc9c63", "snack1"], ["Lunch", "T01:00:00", "#819800", "lunch"], ["Snack", "T01:30:00", "#bc9c63", "snack2"], ["Dinner", "T02:00:00", "#796c2d", "dinner"]]
+		#@layout = false
 	end
 
 	def add_day
@@ -199,38 +199,44 @@ class UsersController < ApplicationController
 
     def shopping_list
 
-    	@followed_recipes = current_user.following
-		@user_recipes = current_user.recipes
-		@recipes = @user_recipes + @followed_recipes
-		@events = current_user.events
-
-		@snacks = @user_recipes.where(:meal_type => "1") + @followed_recipes.where(:meal_type => "1")
-		@side_dishes = @user_recipes.where(:meal_type => "2") + @followed_recipes.where(:meal_type => "2")
-		@main_dishes = @user_recipes.where(:meal_type => "3") + @followed_recipes.where(:meal_type => "3")
-		@desserts = @user_recipes.where(:meal_type => "4") + @followed_recipes.where(:meal_type => "4")
-		@drinks = @user_recipes.where(:meal_type => "5") + @followed_recipes.where(:meal_type => "5")
-
 		@expanded = ['false','false','false','false','false']
 
-    	d = Date.today
-		@month = d.strftime("%B")
-		@week_begin = d.at_beginning_of_week.strftime("%-d")
-		@week_end = d.at_end_of_week.strftime("%-d")
-		@date_string = @month + " " + @week_begin + " - " + @week_end
+    
 
-		day_counter = params[:day_counter].to_i
-		prev_day_counter = params[:prev_day_counter].to_i
+		if params[:view_type] == "day"
+		  if params[:day]
+		  	@day = params[:day].to_date
+		  	puts "day here"
+		  	puts @day
+		  else
+		  	@day = DateTime.now
+		  end
 
-		if prev_day_counter == 1
-			@first_day = DateTime.now
-		else
-			subtracted_days = prev_day_counter - 1
-			@first_day = DateTime.now - subtracted_days.days 
+		  @events = Event.where(start_at: (@day.strftime + "T00:00:00")..(@day.strftime + "T:2:00:00"))
+		  puts "events count"
+		  puts @events.length
+		  @date_string = @day.strftime("%A")
+		elsif params[:view_type] == "week"
+
+			day_counter = params[:day_counter].to_i
+			prev_day_counter = params[:prev_day_counter].to_i
+
+			if prev_day_counter == 1
+				@first_day = DateTime.now
+			else
+				subtracted_days = prev_day_counter - 1
+				@first_day = DateTime.now - subtracted_days.days 
+			end
+
+			@last_day = DateTime.now + day_counter.days
+		 	@events = Event.where(start_at: (@first_day)..@last_day)
+
+			@month = @last_day.strftime("%B")
+			@week_begin = @last_day.at_beginning_of_week.strftime("%-d")
+			@week_end = @last_day.at_end_of_week.strftime("%-d")
+			@date_string = @month + " " + @week_begin + " - " + @week_end
 		end
 
-		@last_day = DateTime.now + day_counter.days
-
-		@events = Event.where(start_at: (@first_day)..@last_day)
 
 		@planned_recipes = []
 		@events.each do |e|
@@ -244,27 +250,22 @@ class UsersController < ApplicationController
 		@shopping_items = []
 
 		@planned_recipes.each do |r|
-			r.ingredients.each do |i|
-				i.quantities.where(recipe_id: r.id).each do |q|
-					unique_r = true
-					@shopping_items.each do |s|
-						if s[0] == i.name
-							unique_r = false
-							s[1] += q.ounces
-						end
-					end
-					if unique_r
-						unit = q.unit == '' ? '' : 'oz'
-						@shopping_items << [i.name, q.ounces, 'oz.']
-					end
+		  r.ingredients.each do |i|
+			i.quantities.where(recipe_id: r.id).each do |q|
+			  unique_r = true
+			  @shopping_items.each do |s|
+			    if s[0] == i.name
+				  unique_r = false
+				  s[1] += q.ounces
 				end
-				# i.quantities.each do |q|
-					# unit = get_unit(q.unit, q.amount)
-					# @shopping_items << [i.name, q.amount, unit]
-				# end
+			  end
+			  if unique_r
+				unit = q.unit == '' ? '' : 'oz'
+				@shopping_items << [i.name, q.ounces, 'oz.']
+			  end
 			end
+		  end
 		end
-
     end
 
     def get_unit(unit, amount)
@@ -294,16 +295,29 @@ class UsersController < ApplicationController
 	def python
 		#require "rubypython"
 
+
+
 		RubyPython.start(:python_exe => "python2.6")
 
 		  sys = RubyPython.import("sys")
-		  mod = RubyPython.import("do_work")
-		 p mod
+		  mod = RubyPython.import("initial")
+		  p mod
 		  #sys.path.append("#{Rails.root}/lib")
 		  #p "test"
-		  render :text => mod.printy()
+		  render :text => mod.print_string("this is a param")
 
 		RubyPython.stop # stop the Python interpreter
+
+
+	
+
+  		#@pretty_recipes = @recipes.to_json
+  		#@render = JSON.pretty_generate(@recipes)
+  		#@pretty_json = JSON.pretty_generate(@recipes)
+  		
+
+
+	
 
 =begin
 

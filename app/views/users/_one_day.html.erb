@@ -45,9 +45,7 @@ $(document).ready(function() {
               dragRevertDuration: 0,
               eventLimit: true, // allow "more" link when too many events
               eventDragStop: function( event ) {
-                console.log("eventDragStop fired")
                 recipe_id = event.title.split('id-')[1];
-                console.log(recipe_id)
                 start_at = event.start.format();
                 name = event.title;
                 id = event.id;
@@ -84,7 +82,6 @@ $(document).ready(function() {
               eventRender: function(event, element) {
 
                 recipe_id = event.title.split('id-')[1];
-                console.log('id: ' + recipe_id)
                 start_at = event.start.format();
                 name = event.title;
                 id = event.id;
@@ -103,7 +100,6 @@ $(document).ready(function() {
                 element.append('<span class="glyphicon glyphicon-remove"></span>');
                 element.find(".glyphicon").click(function(e) {
                   // e.stopPropagation();
-                  console.log("clicked")
                   $('#calendar-<%= day.strftime('%Y-%m-%d')%>').fullCalendar('removeEvents', event._id);
                   $.ajax({//ajax call 
                     type:'DELETE',
@@ -125,11 +121,8 @@ $(document).ready(function() {
 
             },
             eventDrop: function(event) {
-              console.log("eventDrop fired")
 
               recipe_id = event.title.split('id-')[1];
-              console.log("eventDrop")
-              console.log(recipe_id)
 
               var data = {
                   event: {
@@ -157,7 +150,6 @@ $(document).ready(function() {
               })
             },
              eventReceive: function( event ) {
-              console.log("event recieved");
 
                 //var originalEventObject = $(this).data('eventObject');
                 //var copiedEventObject = $.extend({}, originalEventObject);
@@ -187,7 +179,6 @@ $(document).ready(function() {
                     event.recipe_id = recipe_id;
                     event.recipe_name = recipe_name;
                     $('#calendar-<%= day.strftime('%Y-%m-%d') %>').fullCalendar('updateEvent', event)
-                    console.log('recived id:' + recipe_id);
                   }
 
                 });//end ajax call

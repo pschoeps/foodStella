@@ -1,8 +1,4 @@
-module MobileHelper
-  
-  
-  
-  #appends the file path is the device is mobile
+module MobileHelper 
   def check_for_mobile
     #session[:mobile_override] = params[:mobile] if params[:mobile]
     prepare_for_mobile if mobile_device?
@@ -19,7 +15,7 @@ module MobileHelper
       session[:mobile_override] == "1"
     else
       # Season this regexp to taste.
-      (request.user_agent =~ /Mobile|webOS|iPhone/) && (request.user_agent !~ /iPad/)
+      (request.user_agent =~ /Mobile|webOS|iPhone|iPad/) 
     end
   end
 end

@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$('.users.day_calendar.mobile, .users.calendar.mobile').ready(function() {
 
     // exclude from recipes views to avoid conflicts
     if (gon.recipes_page) { 
@@ -58,6 +58,8 @@ $(document).ready(function() {
       change: changeZoom
     });
 
+   // $('#zoomSlider').draggable();
+
     if (gon.zoomLevel){
       changeZoom(parseInt(gon.zoomLevel))
       //$('#zoomSlider').slider({value: gon.zoomLevel})
@@ -96,14 +98,17 @@ $(document).ready(function() {
         $('.add-meal-box').find('h3').css('font-size', '.75em');
       }
 
-      $('.weekly-planner').animate({ 'zoom': zoom }, 100);
+      $('.weekly-planner').animate({ 'zoom': zoom }, 0);
     };
 
     //need to go old school because .click function doesn't work on newly appended elements
     //opens actios for an existing event on the page
     $(document).on('click', '.mobile-event', function() {
+      scrollTop = $(document).scrollTop();
+      console.log(scrollTop)
+      $(".event-actions-mobile").css("top", scrollTop)
       $(".event-actions-mobile").css("display", "block");
-      $("html, body").animate({ scrollTop: 0 }, "slow");
+      //$("html, body").animate({ scrollTop: 0 }, "slow");
       var imageClass = $(this).attr('data-image')
       var recipeId =   $(this).attr('data-recipe')
       var recipeLink = "/recipes/"+recipeId+""
@@ -138,6 +143,7 @@ $(document).ready(function() {
   		startAt= $(this).attr('data-three')
   		mealData = $(this).attr('data-four')
   		mealColor = $(this).attr('data-five')
+      scrollTop = $(document).scrollTop();
 
       //conditional for week view or day view, if the day view is displayed, do not include the day of the week 
       //in the popup header
@@ -155,8 +161,10 @@ $(document).ready(function() {
   		$("#meal-day").attr("data-five", mealColor)
 
       loadEvents(date, mealData)
+      console.log(scrollTop)
+      $(".recipe-selection-mobile").css("top", scrollTop)
   		$(".recipe-selection-mobile").css("display", "block");
-      $("html, body").animate({ scrollTop: 180 }, "slow");
+      
   	});
 
     //user clicked the x in the recipe selection modal
@@ -265,14 +273,6 @@ $(document).ready(function() {
 
     //when the user clicks the small red "x" in the recipe selection popup.  Again needs pure javascript because
     //the element it selects was rendered after the page loads
-
-    //good progress here: checklist
-    //event gets removed, but the add meal big or small evaluation doesn't work
-    //add red pop up saying meal has been removed
-    //remove "selected" span from recipe element
-    //in day view, don't do any of the evaluations
-    //in day view, conditional for finding child elements nested not as deep
-    //also fix the bug in the day view when you use the arrow after navigating from a day
 
     $(document).on('click', '#remove-event-from-selection', function() {
       recipeId = parseInt($(this).closest('.fc-event').attr('data-one'));

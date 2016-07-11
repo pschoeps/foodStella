@@ -206,7 +206,7 @@ $outer-container: 90%;
 }
 
 .calendar-nav {
-	height: 5em;
+	height: 8em;
 	padding: 0;
 	z-index: 10;
     // float: left;
@@ -214,128 +214,41 @@ $outer-container: 90%;
     // width: 60%;
     // width: 80%;
     float: right;
+    background-color: white;
 
     min-width: 600px;
     max-width: calc(100% - 280px);
 
-    #add-day, #previous-day {
+    #next-day, #previous-day {
         position: relative;
-        top: 50%;
+        top: 40%;
+        left: 4%;
         transform: translateY(-50%);
-        color: white;
-        background-color: $green;
+        color: $green;
         margin-left: 10px;
+
+        img {
+            height: 18px;
+            margin-bottom: 2px;
+        }
     }
 
-    #shopping-list {
+    .day-view, .week-view {
         position: relative;
         top: 50%;
         transform: translateY(-50%);
-        color: white;
-        background-color: $green;
+        color: $green;
+        background-color: white;
         float: right;
         margin-right: 10px;
-    }
-}
-
-.calendar-days {
-    height: 100%;
-    min-width: 900px;
-}
-
-.previous-days {
-    height: 3em;
-}
-
-.prev-day {
-    height: 1em;
-}
-
-#added-day {
-    background-color: white;
-    z-index: 10;
-    padding: 0;
-    float: right;
-    margin: auto;
-    width: 100%;
-}
-
-.calendar-container {
-	background-color: white;
-    z-index: 10;
-    padding: 0;
-    float: right;
-    // margin-right: 20%;
-    // margin: 0 auto;
-    // width: 60%;
-    // width: 80%;
-
-    min-width: 600px;
-    max-width: calc(100% - 280px);
-
-	.calendar-title {
-		position: relative;
-		height: 4em;
-		width: 100%;
-		top: 0;
-		padding-left: 1em;
-
-		h1 {
-			font-weight: 100;
-    		letter-spacing: 3px;
-            font-size: 2em;
-		}
-	}
-
-    .event-trash {
-        float: right;
-        z-index: 20;
-        position: relative;
-        right: 4em;
-        bottom: 3em;
-
-      span {
-        font-size: 2em;
-      }
-
+        border: 1px solid $green;
+        width: 10em;
     }
 
-
-	.calendar-box {
-		width: 90%;
-		margin: auto;
-		position: relative;
-
-	  .calendar-header {
-		background-color: white;
-		width: 100%;
-		height: 4em;
-		top: 0;
-		position: absolute;
- 		border-bottom: 1px solid #819800;
-
- 			h1 {
- 			width: 20%;
-    		position: relative;
-    		height: 1em;
-    		font-weight: 200;
-    		letter-spacing: 1.5px;
-    		margin: 0;
-    		padding: 0;
-    		color: $medium;
-    		font-size: 16px;
-    		display: inline-block;
-    		float: left;
-    		top: 50%;
-    		transform: translateY(-50%);
-
- 			}
-	  }
-
-	 .calendar {
-	 	padding-top: 4.5em;
-	 }
-	}
+    #selected {
+        background-color: $green;
+        color: white;
+    }
 }
 
 
@@ -386,6 +299,1037 @@ $outer-container: 90%;
     40% { text-shadow: 0 0 8px $orange; }
     100% { text-shadow: 0 0 14px $orange; }
 }
+
+// day view desktop
+
+.day-calendar-desktop-container {
+    height: 80em;
+    background-color: white;
+}
+
+.day-view-header {
+    background-color: white;
+    float: right;
+    height: 4em;
+
+    .col-md-11 {
+        border-top: 1px solid $medium;
+        border-bottom: 1px solid $medium;
+        height: 100%;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    h1 {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        color: $medium;
+        font-weight: 100;
+        letter-spacing: 2px;
+        font-size: 2em;
+        margin: 0;
+        width: 5.5em;
+        left: 0;
+    }
+
+    #gen-shop-list {
+        color: $medium;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 2em;
+
+    }
+}
+
+.desktop-planner-details {
+    width: 75%;
+    position: relative;
+    left: 25%;
+    padding: 0;
+    padding-bottom: 20px;
+    margin: 0;
+    background-color: white;
+    
+    .details-box {
+        position: relative;
+        left: 5em;
+        width: 30em;
+
+        p:first-child {
+            width: 12em;
+        }
+        p:nth-child(2) {
+            width: 9em;
+        }
+        p {
+            margin: 0;
+            font-size: .75em;
+            width: 15em;
+            display: inline-block;
+            color: $medium;
+
+        }
+    }
+}
+
+//begin week view planner desktop
+
+.desktop-calendar-container {
+
+    .desktop-meal {
+
+        #desktop-week-servings {
+            width: 1.5em;
+            font-size: 1.5em;
+            padding: 0;
+            margin: 0;
+            font-weight: 100;
+        }
+
+        .delete-event, .change-servings-box-close {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            color: $medium;
+            cursor: pointer;
+            height: 25px;
+            width: 25px;
+            img {
+                height: 25px;
+            }
+        }
+
+        .delete-event {
+            background-image: asset-url('close-x.png');
+            background-size: cover;
+        }
+
+        .change-servings-box {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, .9);
+
+            #minus-serving, #add-serving, #num-servings {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 1.5em;
+                cursor: pointer;
+            }
+
+            #num-servings {
+                color: $medium;
+                position: absolute;
+                width: 100%;
+                text-align: center;
+                z-index: 20;
+
+            }
+
+
+            #minus-serving {
+                left: 12px;
+                width: 20px;
+                color: $green;
+                z-index: 200;
+            }
+            #add-serving {
+                float: right;
+                position: relative;
+                margin-right: 12px;
+                width: 20px;
+                color: $green;
+                z-index: 200;
+            }
+        }
+    }
+
+}
+
+//begin day view planner desktop
+
+#day-calendar-meal-desktop {
+    width: 75%;
+    float: right;
+    padding-left: 42px;
+    padding-right: 42px;
+    margin-bottom: 20px;
+
+    .col-md-2 {
+        width: 11%;
+    }
+
+    .desktop-meal-header {
+        font-size: 1.25em;
+        font-weight: 100;
+        letter-spacing: 1px;
+        margin: 0;
+    }
+
+    .desktop-meal {
+        margin-right: 14px;
+
+        .delete-event, .change-servings-box-close {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            color: $medium;
+            cursor: pointer;
+            height: 30px;
+            width: 30px;
+            img {
+                height: 25px;
+            }
+        }
+
+        .delete-event {
+            background-image: asset-url('close-x.png');
+            background-size: cover;
+        }
+
+        .change-servings-box {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, .9);
+
+            #minus-serving, #add-serving, #num-servings {
+                position: absolute;
+                top: 50%;
+                transform: translateY(-50%);
+                font-size: 1.5em;
+                cursor: pointer;
+            }
+
+            #num-servings {
+                color: $medium;
+                position: absolute;
+                width: 100%;
+                text-align: center;
+                z-index: 20;
+
+            }
+
+
+            #minus-serving {
+                left: 15px;
+                color: $green;
+                z-index: 200;
+            }
+            #add-serving {
+                right: 15px;
+                color: $green;
+                z-index: 200;
+            }
+        }
+    }
+}
+
+.meal-heeder {
+    position: relative;
+
+    h2 {
+        position: relative;
+    }
+}
+
+/* begin tweaking of mobile weekly view to adjust for desktop */
+
+.desktop-calendar-container {
+    //something good
+    width: 75%;
+    left: 25%;
+
+    #one-day-desktop {
+        float: left;
+        left: 4.5%;
+        width: 10em;
+
+        .meal {
+            height: 7em;
+        }
+    }
+}
+
+
+/* planner mobile page */
+
+
+
+.planner-mobile-header {
+    height: 4em;
+    background-color: $dark;
+
+    .spatula-mobile {
+        width: 3.5em;
+        height: 100%;
+
+        img {
+            height: 35px;
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            padding-left: 6px;
+        }
+    }
+
+
+    .arrow {
+        color: white;
+        position: absolute;
+    }
+
+    .prev-arrow-link {
+        left: 24%;
+        top: 25%;
+        position: absolute;
+        width: 2em;
+        height: 2em;
+        z-index: 20;
+    
+        .arrow-left {
+            height: 100%;
+            width: 100%;
+            background-image: asset-url('left-arrow.png');
+            background-size: 2em 2em;
+            background-repeat: no-repeat;
+        }
+    }
+
+    .next-arrow-link {
+        left: 67%;
+        top: 25%;
+        position: absolute;
+        width: 2em;
+        height: 2em;
+        z-index: 20;
+
+        .arrow-right {
+            height: 100%;
+            width: 100%;
+            background-image: asset-url('right-arrow.png');
+            background-size: 2em 2em;
+            background-repeat: no-repeat;
+        }
+    }
+
+    .shopping-cart {
+        color: white;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        width: 3em;
+        height: 3em;
+        background-size: 3em 3em;
+        background-image: asset-url('shopping-cart-white.png');
+        transform: translateY(-50%);
+    }
+
+    h2 {
+        position: absolute;
+        width: 100%;
+        height: 2em;
+        top: 25%;
+        margin: 0;
+        color: $green;
+        letter-spacing: 3px;
+        font-size: 1.75em;
+        font-weight: 100;
+    }
+
+    .week-subtitle {
+        position: absolute;
+        top: 3.3em;
+        letter-spacing: .75px;
+        width: 100%;
+        font-size: .8em;
+        color: white;
+        text-align: center;
+    }
+}
+
+.planner-view-control {
+    height: 3em;
+
+    #selected {
+        background-color: $green;
+        color: white;
+
+        a { color: white; }
+    }
+
+    .col-sm-6 {
+        width: 50%;
+        float: left;
+        height: 100%;
+
+        button {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            color: $green;
+            background-color: white;
+            font-size: 1.5em;
+            letter-spacing: 1.5px;
+            font-weight: 100;
+            border: none;
+            padding: 0;
+            }
+
+        a {
+            color: $green;
+        }
+    }
+}
+
+.planner-instructions {
+    height:3em;
+    background-color: $dark;
+    display: block;
+
+    .col-sm-12 {
+        height: 100%;
+        overflow: hidden;
+        .breakfast, .lunch, .dinner, .snack {
+            width: 23%;
+            height: 100%;
+            position: relative;
+            float: left;
+            text-align: center;
+
+            .circle {
+                height: 8px;
+                width: 8px;
+                border-radius: 100%;
+                position: absolute;
+                top: 5px;
+            }
+
+            .tan {background-color: #f5b266;}
+            .green {background-color: #819800;}
+            .olive {background-color: #796c2d;}
+            .brown {background-color: #bc9c63;}
+
+            h5 {
+                color: white;
+                padding: 0;
+                margin: 0;
+                font-weight: 100;
+                letter-spacing: 1px;
+                /* for some reason the letter spacing wasn't accounted for in text_align: center: */
+                left: 5px;
+                position: relative;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        }
+
+        /*needed to move only breakfast over to make colored circles look correct */
+
+        #hide-chevron {
+            right: -30px;
+            color: $green;
+            z-index: 10;
+            position: absolute;
+            height: 100%;
+            font-size: 5em;
+            right: -38px;
+            top: -13px;
+        }
+
+        .details-left, .details-right {
+            position: absolute;
+            font-size: 9px;
+            bottom: 0px;
+            height: 14px;
+            color: $light;
+        }
+
+        .details-left {
+            left: 4em;
+        }
+
+        .details-right {
+            right: 4em;
+        }
+    }
+}
+
+.slider-container {
+    height: 3em;
+    background-color: white;
+    position: relative;
+
+    .col-md-12 {
+        height: 100%;
+
+        #unhide-chevron {
+        position: absolute;
+        color: #819800;
+        font-size: 4em;
+        left: -32px;
+        top: 20px;
+        display: none;
+
+    }
+
+        .glyphicon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: $green;
+        }
+
+        .glyphicon-minus {
+            left: 30px;
+        }
+
+        .glyphicon-plus {
+            right:30px;
+        }
+
+        .ui-slider-horizontal {height: 5px;}
+        .ui-state-default {background: white;}
+
+        #zoomSlider {
+            position: relative;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 75%;
+            margin:auto;
+
+            .ui-slider-range { background: $green;}
+            .ui-slider-handle { 
+                    border-color: $green; 
+                    border-radius: 100%;
+                    top: -.5em;
+                    }
+        }
+    }
+}
+
+#offset-margins {
+    margin-bottom: -100px;
+}
+
+.weekly-planner {
+    background-color: white;
+    position: relative;
+    overflow-x: auto;
+    white-space: nowrap;
+
+    .one-day {
+        float: none;
+        display: inline-block;
+        width: 8.5em;
+
+        .one-day-header {
+            float: left;
+            color: $medium;
+            font-size: 1.1em;
+            bottom: 7px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .meals {
+            position: relative;
+            width: 100%;
+
+            .add-meal-short {
+                width: 100%;
+                height: 2em;
+                margin-bottom: 10px;
+                position: relative;
+                float: left;
+
+                h3 {
+                    font-size: .75em;
+                    position: absolute;
+                    float: left;
+                    margin: 0;
+                    width: 100%;
+                    text-align: center;
+                    text-decoration: none;
+                    color: #ababab;
+                    bottom: .5em;
+                    border-bottom: 1px dashed $medium;
+                    height: 65%;
+                }
+
+            }
+
+            .add-meal-big {
+                border: .75px dashed $medium;;
+            }
+
+            #hidden {
+                display: none;
+            }
+
+            #mobile-event, #desktop-event {
+                height: 100%;   
+                /* only used when as a fallback if a user has unfollowed a recipe but an event for that recipe still remains */
+                background-image: asset-url("background-picture-foodstella.jpg");
+
+            }
+
+
+            .meal, .mobile-event, .desktop-event {
+                width: 100%;
+                height: 6em;
+                margin-bottom: 10px;
+                position: relative;
+                float: left;
+                background-size: cover !important;
+                background-repeat: no-repeat !important;
+                background-position: 0 0 !important;
+
+                .servings {
+                    position: absolute;
+                    left: 0;
+                    top: 0;
+                    padding-left: 3px;
+                    padding-right: 3px;
+                    height: 1.5em;
+                    color: $green;
+                    background-color: rgba(255, 255, 255, 0.95);
+                    text-align: center;
+
+                }
+
+                .event-title {
+                    width: 100%;
+                    height: 1.5em;
+                    color: white;
+                    font-size: .75em;
+                    letter-spacing: .5px;
+                    position: absolute;
+                    bottom: 0;
+                    padding-left: 6px;
+                    padding-right: 6px;
+                }
+
+
+                .glyphicon {
+                        color: $medium;
+                        position: absolute;
+                        text-align: center;
+                        width: 100%;
+                        left: 0;
+                        top: 1.5em;
+                }
+
+                h3 {
+                        font-size: .75em;
+                        position: absolute;
+                        float: left;
+                        margin: 0;
+                        width: 100%;
+                        text-align: center;
+                        text-decoration: none;
+                        color: $medium;
+                        bottom: 2.5em;
+                }
+            }
+        }
+    }
+}
+
+.recipe-selection-mobile {
+    position: absolute;
+    background-color: rgba(255, 255, 255, .9);
+    width: 100%;
+    z-index: 40;
+    display: none;
+
+    .recipe-selection-header {
+        width: 100%;
+        height: 5em;
+
+        .close-x {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            height: 2em;
+            width: 2em;
+            background-size: 2em 2em;
+            background-image: asset-url('close-x.png');
+        }
+
+        h3 {
+            text-align: center;
+            font-size: 1em;
+            color: $medium;
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 2em;
+            color: $green;
+            margin-top: 0;
+        }
+
+        .alert {
+            position: absolute;
+             width: 92%;
+            margin: auto;
+            text-align: center;
+            opacity: 0;
+            top: 38px;
+        }
+    }
+    .meal-selection {
+
+        .recipe-title {
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            a {
+                color: white;
+            }
+        }
+        button {
+            width: 100%;
+            float: left;
+            color: $medium;
+            font-size: 1.25em;
+            margin-top: 1em;
+
+            span {
+                float: right;
+            }
+        }
+
+        #selected {
+            display: block;
+            width: 100%;
+            height: 100%;
+            background-image: asset-url('fav-star-active.png');
+            background-size: 50% 50%;
+            background-repeat: no-repeat;
+            background-position-x: 50%;
+            background-position-y: 30%;
+            background-color: rgba(77, 77, 77, .8);
+        }
+    }
+}
+
+.day-selector-mobile {
+    position: absolute;
+    top: 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    width: 100%;
+    z-index: 40;
+    display: none;
+    height: 80em;
+
+    .close-x {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        height: 2em;
+        width: 2em;
+        background-size: 2em 2em;
+        background-image: asset-url('close-x.png');
+    }
+
+    .col-md-12 {
+        padding: 0;
+    }
+
+    .mobile-days-list {
+        width: 100%;
+        position: relative;
+        list-style-type: none;
+        padding: 0;
+        top: 4em;
+
+        li {
+            width: 100%;
+            text-align: center;
+            height: 4em;
+            border-bottom: 1px solid $green;
+            color: $green;
+
+            h2 {
+                margin: 0;
+                padding: 0;
+                position: relative;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+        }
+    }
+}
+
+.event-actions-mobile {
+    position: absolute;
+    //top: 0;
+    background-color: rgba(255, 255, 255, .9);
+    width: 100%;
+    z-index: 40;
+    display: none;
+    border: 1px solid $dark;
+    height: 38em;
+
+    #hide-event-actions {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-size: 2em;
+        color: $medium;
+    }
+
+    .view-container {
+        border: 1px solid $green;
+        border-bottom: none;
+        position: relative;
+        width: 80%;
+        height: 29em;
+        margin: auto;
+        top: 5em;
+
+        .image-container {
+            display: block;
+            width: 100%;
+            height: 17em;
+
+            #servings {
+                width: 3em;
+                height: 3em;
+                background-color: rgba(255, 255, 255, 0.9);
+                position: absolute;
+                text-align: center;
+
+                h3 {
+                    margin: 0;
+                    position: relative;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    color: $green;
+                    font-weight: 100;
+                }
+            }
+        }
+
+        .recipe-title-container {
+            position: relative;
+            height: 2.5em;
+            top: -2.5em;
+            background-color: $green;
+
+            #recipe-title {
+                margin: 0;
+                color: white;
+                position: relative;
+                top: 50%;
+                transform: translateY(-50%);
+                letter-spacing: 1px;
+                font-weight: 100;
+            }
+            
+        }
+
+
+        .event-actions {
+            height: 12em;
+            position: relative;
+            top: -2.5em;
+            padding: 0;
+            list-style-type: none;
+            margin: 0;
+
+            .action {
+                height: 4em;
+                border-bottom: 1px solid $medium;
+                background-color: white;
+
+                h2 {
+                    margin: 0;
+                    color: $medium;
+                    position: relative;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
+
+                #recipe-title-link {
+                    text-decoration: none;
+                    height: 4em;
+                    width: 100%;
+                    position: absolute;
+
+                    h2 {
+                        color: $medium;
+                    }
+                }
+            }
+
+            .servings {
+                h2 {
+                    display: block;
+                    color: #ababab;
+                    position: relative;
+                    margin: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    left: 20%;
+                    width: 30%;
+                }
+
+                #minus-serving {
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    color: $medium;
+                    left: 60%;
+                }
+
+                #add-serving {
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    left: 86%;
+                    color: $medium;
+                }
+
+                #num-servings {
+                    position: absolute;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    left: 70%;
+                    padding: 3px;
+                    padding-left: 7px;
+                    padding-right: 7px;
+                    border: 1px solid $dark;
+                }
+            }
+        }
+    }
+}
+
+
+/* day calendar mobile view */
+
+.day-calendar-header {
+    padding: 0;
+    height: 3em;
+    background-color: white;
+
+    h1 {
+        color: $medium;
+        font-size: 1.5em;
+        margin: 0;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        letter-spacing: 1.5px;
+        font-weight: 100;
+    }
+}
+
+.day-calendar-meal {
+    background-color: white;
+    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    height: 10em;
+
+    .meal-types {
+        height: 100%;
+        .added-meals {
+            height: 100%;
+            .meal {
+                height: 100%;
+                width: 11em;
+                float: none;
+                display: inline-block;
+                padding: 0;
+                /*margin: -.2em;*/
+                overflow: hidden;
+                /*margin-right: 1px;*/
+                .mobile-event {
+                    height: 100%;
+                    width: 11em;
+                    position: absolute;
+                    /* only used when as a fallback if a user has unfollowed a recipe but an event for that recipe still remains */
+                    background-image: asset-url("background-picture-foodstella.jpg");
+                    background-size: cover !important;
+                    background-repeat: no-repeat !important;
+                    background-position: 0 0 !important;
+
+                    .servings {
+                        width: 2em;
+                        height: 2em;
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        text-align: center;
+                        background-color: rgba(255, 255, 255, .9);
+                        color: $green;
+                        padding-top: 5px;
+                        padding-left: 2px;
+                        font-size: 1.5em;
+                        font-weight: 100;
+                    }
+
+                    .event-title {
+                        position: absolute;
+                        bottom: 0;
+                        width: 100%;
+                        text-align: center;
+                        color: white;
+                    }
+                }
+            }
+
+            .add-meal-big {
+
+                a {
+                    width: 11em;
+                    height: 100%;
+                    position: absolute;
+                    padding: 0;
+
+                    .add-meal-box {
+                        text-align: center;
+                        position: relative;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        height: 80%;
+                        width: 80%;
+                        margin: auto;
+                        border: 1px dashed $medium;
+                        span {
+                            font-size: 1.5em;
+                            color: #ababab;
+                            margin: auto;
+                            top: 1.3em;
+
+                        }
+                        h3 {
+                            font-size: 1.25em;
+                            font-weight: 200;
+                            color: $medium;
+                            margin: 0;
+                            position: relative;
+                            top: 50%;
+                            transform: translateY(-50%);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+
 
 
 

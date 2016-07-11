@@ -1,0 +1,103 @@
+<%= render 'layouts/recipe_css_variables' %>
+
+
+<div class="row">
+  <div class="col-md-12 calendar-page-header">
+    <div class="planner-details">
+      <h3 id="desktop-day-date" data="<%= @day %>"><%= @day.strftime("%A") %></h3>
+      <p>Planner</p>
+    </div>
+  </div>
+</div>
+
+<div class="day-calendar-desktop-container">
+
+<div class="row" css="margin: 0;">
+  <!-- %= render 'layouts/recipe_sidebar' %> -->
+  <div id='sidebar-col' class="col-sm-3">
+  <%= render(
+    partial: 'layouts/recipe_sidebar',
+    locals: {
+      snacks: @snacks,
+      side_dishes: @side_dishes,
+      main_dishes: @main_dishes,
+      desserts: @desserts,
+      drinks: @drinks,
+      dragNdrop: true,
+      expanded: @expanded
+    }
+  ) %>
+  </div>
+
+
+  <div class="col-sm-9 calendar-nav">
+      <a href="/users/<%= current_user.id %>/day_calendar" class="prev-arrow-link prev-day-link" data=<%= params[:week_counter] %>><span id="previous-day" data="1"><%= image_tag('left-arrow.png') %> Previous Day</span></a>
+      <a href="/users/<%= current_user.id %>/day_calendar" class="next-arrow-link next-day-link" data=<%= params[:week_counter] %>><span id="next-day" data="<%= @day_counter %>">Next Day<%= image_tag('right-arrow.png') %></span></a>
+      <%= link_to "Week View", calendar_user_path(current_user), class: "week-view btn" %>
+      <%= link_to "Day View", day_calendar_user_path(current_user), id: "selected", class: "day-view btn" %>
+  </div>
+
+  <div class="col-md-9 day-view-header">
+    <div class="col-md-11">
+      <h1><%= @day.strftime("%A") %></h1>
+      <%= link_to "Generate shopping list", shopping_list_user_path(current_user, view_type: "day", day: @day), id: "gen-shop-list" %>
+    </div>
+  </div>
+<div class="col-md-9 desktop-planner-details">
+  <div class="details-box">
+      <p>*s = servings per recipe</p>
+      <p>*x = remove food</p>
+      <p>Click on the servings to change</p>
+  </div>
+</div>
+
+
+
+<% @meal_types.each do |m| %>
+  <div class="row day-calendar-meal" id="day-calendar-meal-desktop">
+    <h3 class="desktop-meal-header col-md-2" style="color: <%= m[2] %>"><%= m[0] %></h3>
+    <div class="meal-types" id="<%= m[3] %>">
+      <div class="added-meals">
+        <% events = @events.where(:start_at => @day.strftime + m[1]) %>
+          <% events.each do |e| %>
+            <% recipe = e.get_recipe(e.recipe_id) %>
+            <% servings = e.servings? ? true : false %>
+            <div class="meal desktop-meal col-md-4" data ="<%= e.recipe_id %>">
+              <a class="mobile-event desktop-event fc-event-container <%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" id="mobile-event" data-event="<%= e.id %>" data-recipe="<%= e.recipe_id %>" data-recipe-name="<%= recipe.name %>" data-image="<%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" data-servings="<%= e.servings || recipe.servings %>">
+                <span class="delete-event"></span>
+                <span class="servings"><%= servings ? e.servings : recipe.servings %>s</span>
+                <span class="event-title" style="background-color: <%= m[2] %>"><%= truncate(recipe.name, length: 20) %></span>
+              </a>
+              <div class="change-servings-box hidden">
+                <span class="change-servings-box-close">close</span>
+                <span class="glyphicon glyphicon-minus change-serving" id="minus-serving" aria-hidden="true"></span>
+                <span id ="num-servings" data="<%= e.id %>" data-servings="<%= servings ? e.servings : recipe.servings %>"><%= servings ? e.servings : recipe.servings %></span>
+                <span class="glyphicon glyphicon-plus change-serving add" id="add-serving" aria-hidden="true"></span>
+              </div>
+            </div>
+          <% end %>
+
+
+        <div class="meal add-meal-big <%= m[3] %>">
+            <a class="add-meal col-md-4" data-one="<%= m[0] %>" data-three="<%= m[1] %>" data-four="<%=m[3] %>" data-five="<%= m[2] %>">
+              <div class="add-meal-box">
+                <span class="glyphicon glyphicon-plus" id="hide-chevron" aria-hidden="true"></span>
+                <h3>Drag <%= m[0] %></h3>
+              </div>
+            </a>
+        </div> 
+    </div>
+      
+
+    </div>
+  </div>
+<% end %>
+
+</div>
+
+
+
+
+
+
+
