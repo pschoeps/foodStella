@@ -107,31 +107,29 @@ class UsersController < ApplicationController
 
 		@expanded = ['none', 'none', 'none', 'none', 'none']
 
-		d = Date.today
-		@month = d.strftime("%B")
 
-		@planner_begin = d.strftime("%-d")
+		if params[:week]
+		  day = params[:week].to_date
+		else
+		  day = Date.today
+		end
+
+		gon.nextWeek = day + 7.days 
+		gon.previousWeek = day - 7.days
+
+		@month = day.strftime("%B")
+
+		@planner_begin = day.strftime("%-d")
 		# @planner_end = (d + (@day_counter-1).days).strftime("%-d")
-		@planner_end = (d + (2).days).strftime("%-d")
+		@planner_end = (day + (2).days).strftime("%-d")
 		@date_string = @month + " " + @planner_begin + " - " + @planner_end
 
 		@today = [DateTime.now.strftime('%A - %B %-d, %Y'), DateTime.now.strftime('%Y-%m-%d')]
-		# @tomorrow = [DateTime.tomorrow.strftime('%A - %B %-d, %Y'), DateTime.tomorrow.strftime('%Y-%m-%d')]
-		@tomorrow = [(DateTime.now + 1.days).strftime('%A - %B %-d, %Y'), (DateTime.now + 1.days).strftime('%Y-%m-%d')]
-		@day_after_tom = [(DateTime.now + 2.days).strftime('%A - %B %-d, %Y'), (DateTime.now + 2.days).strftime('%Y-%m-%d')]
-
-		@day_counter = 3
+	
 
 
 
-		#logic for mobile calendar view (weekly)
-		if params[:week_counter] == nil
-		  day = Date.today # Today's date
-		else
-		  week_counter = params[:week_counter].to_i
-		  days = week_counter * 7
-		  day = Date.today + days
-		end
+
 		@days_from_week = (day.at_beginning_of_week..day.at_end_of_week).map{|x| x}
 		@week_subtitle = @days_from_week.first.strftime('%m/%-d') + " - " + @days_from_week.last.strftime('%m/%-d')
 		@meal_types = [["Breakfast", "T00:00:00", "#f5b266", "breakfast"], ["Snack", "T00:30:00", "#bc9c63", "snack1"], ["Lunch", "T01:00:00", "#819800", "lunch"], ["Snack", "T01:30:00", "#bc9c63", "snack2"], ["Dinner", "T02:00:00", "#796c2d", "dinner"]]
@@ -150,18 +148,10 @@ class UsersController < ApplicationController
 		day_counter = params[:day_counter]
 		day = params[:day]
 
-		#logic for mobile calendar view (daily)
-		if day_counter == nil && day == nil
-		  @day = Date.today # Today's date
-		elsif day_counter && day == nil
-		  day_counter = params[:day_counter].to_i
-		  @day = Date.today + day_counter
-		elsif day_counter && day 
-		  @day = params[:day].to_date + day_counter
-		elsif day && day_counter == nil
+		if params[:day]
 			@day = params[:day].to_date
 		else
-		  @day = params[:day].to_date
+			@day = Date.today 
 		end
 
 		gon.nextDay = @day + 1.days 
@@ -294,7 +284,7 @@ class UsersController < ApplicationController
 		RubyPython.start(:python_exe => "python2.6")
 
 		  sys = RubyPython.import("sys")
-		  mod = RubyPython.import("initial")
+		  mod = RubyPython.import("do_work")
 		  p mod
 		  #sys.path.append("#{Rails.root}/lib")
 		  #p "test"

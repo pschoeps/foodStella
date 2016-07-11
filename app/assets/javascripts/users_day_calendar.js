@@ -198,6 +198,8 @@ $('.users.day_calendar').ready(function() {
 
   });
 
+  
+
 
   $('.next-day-link').click(function(){ 
       var updated_day = (gon.nextDay)

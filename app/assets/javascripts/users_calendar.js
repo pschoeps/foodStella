@@ -84,4 +84,17 @@ $('.users.calendar').ready(function() {
       }         
     });//end ajax call
   });
+console.log(gon.nextWeek)
+console.log(gon.previousWeek)
+
+  $('.next-week-link').click(function(){ 
+      var updated_week = (gon.nextWeek)
+      console.log(updated_week)
+      this.href = this.href + '?week=' + (updated_week)
+    });
+
+  $('.prev-week-link').click(function(){ 
+    updated_week = gon.previousWeek
+    this.href = this.href + '?week=' + (updated_week)
+  });
 });
