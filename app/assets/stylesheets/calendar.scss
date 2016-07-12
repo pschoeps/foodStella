@@ -307,42 +307,45 @@ $outer-container: 90%;
     background-color: white;
 }
 
-.day-view-header {
+.day-view-header, .week-view-header {
     background-color: white;
     float: right;
     height: 4em;
 
-    .col-md-11 {
+}
+
+.day-view-header h1, .week-view-header h1 {
+     position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $medium;
+    font-weight: 100;
+    letter-spacing: 2px;
+    font-size: 2em;
+    margin: 0;
+    width: 5.5em;
+    left: 0;
+}
+
+.day-view-header .col-md-11, .week-view-header .col-md-11 {
         border-top: 1px solid $medium;
         border-bottom: 1px solid $medium;
         height: 100%;
         position: relative;
         left: 50%;
         transform: translateX(-50%);
-    }
+}
 
-    h1 {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        color: $medium;
-        font-weight: 100;
-        letter-spacing: 2px;
-        font-size: 2em;
-        margin: 0;
-        width: 5.5em;
-        left: 0;
-    }
-
-    #gen-shop-list {
+.day-view-header .col-md-11 #gen-shop-list, .week-view-header #gen-shop-list {
         color: $medium;
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
         right: 2em;
-
-    }
 }
+
+
+
 
 .desktop-planner-details {
     width: 75%;
