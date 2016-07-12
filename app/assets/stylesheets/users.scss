@@ -355,10 +355,12 @@ input:-webkit-autofill {
     max-width: calc(100% - 250px);
 
     min-height: 100vh;
+    background-color: white;
 }
+.shopping-list-recipes,
 .shopping-list-container {
-	width: 100%;
-	background-color: white;
+	// width: 100%;
+	// background-color: white;
 	// position: absolute;
 	padding-bottom: 3em;
 
@@ -390,12 +392,14 @@ input:-webkit-autofill {
 			padding: 0;
 
 			li {
-				padding:15px;
+				// padding:15px;
+				padding: 12px;
 				font-size:1.3em;
 				float: left;
 				width: 100%;
     			float: left;
-    			height: 2.5em;
+    			// height: 2.5em;
+    			font-weight: 200;
 
     			div {
     				margin-right: 10px;
@@ -406,7 +410,29 @@ input:-webkit-autofill {
     				// letter-spacing: 2px;
     				// word-spacing: 25px;
     			}
+
+    			a {
+    				color: $medium;
+    				text-decoration: none;
+    			}
 			}
+		}
+	}
+}
+.shopping-list-recipes {
+	text-align: right;
+	.shopping-list-header {
+		// border-bottom: solid 2px $medium;
+		border-bottom-color: $medium;
+		h1 {
+			color: $medium;
+			float: right;
+		}
+	}
+	ol li:hover {
+		a {
+			color: black;
+			text-decoration: underline;
 		}
 	}
 }
