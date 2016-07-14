@@ -114,7 +114,7 @@ class UsersController < ApplicationController
 		  sorted_events = @events.sort_by &:start_at
 		  puts sorted_events.last
 		  last_day = sorted_events.last
-		  if last_day.lenth 
+		  if last_day
 		    day = Date.parse(last_day.start_at)
 		  else
 		  	day = Date.today
