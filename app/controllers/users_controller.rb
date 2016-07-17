@@ -244,40 +244,29 @@ class UsersController < ApplicationController
     def shopping_list
 
 		@expanded = ['false','false','false','false','false']
-
-    
-
-		if params[:view_type] == "day"
-		  if params[:day]
+		if params[:day]
 		  	@day = params[:day].to_date
 		  	puts "day here"
 		  	puts @day
-		  else
-		  	@day = DateTime.now
-		  end
+		else
+		  @day = DateTime.now
+		end
 
+		if params[:view_type] == "day"
 		  @events = Event.where(start_at: (@day.strftime + "T00:00:00")..(@day.strftime + "T:2:00:00"))
 		  puts "events count"
 		  puts @events.length
 		  @date_string = @day.strftime("%A")
 		elsif params[:view_type] == "week"
 
-			day_counter = params[:day_counter].to_i
-			prev_day_counter = params[:prev_day_counter].to_i
+			@beginning_of_week = @day.at_beginning_of_week.to_datetime
+			@end_of_week = @day.at_end_of_week.to_datetime
 
-			if prev_day_counter == 1
-				@first_day = DateTime.now
-			else
-				subtracted_days = prev_day_counter - 1
-				@first_day = DateTime.now - subtracted_days.days 
-			end
+		 	@events = Event.where(start_at: (@beginning_of_week)..@end_of_week)
 
-			@last_day = DateTime.now + day_counter.days
-		 	@events = Event.where(start_at: (@first_day)..@last_day)
-
-			@month = @last_day.strftime("%B")
-			@week_begin = @last_day.at_beginning_of_week.strftime("%-d")
-			@week_end = @last_day.at_end_of_week.strftime("%-d")
+			@month = @day.strftime("%B")
+			@week_begin = @day.at_beginning_of_week.strftime("%-d")
+			@week_end = @day.at_end_of_week.strftime("%-d")
 			@date_string = @month + " " + @week_begin + " - " + @week_end
 		end
 
