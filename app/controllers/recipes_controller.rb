@@ -95,10 +95,12 @@ class RecipesController < ApplicationController
 
     array.each do |response|
       if Recipe.exists?(id: response)
+        puts "the recipe exists"
         recipe = Recipe.find(response)
         pic = recipe.retrieve_pic
         truncated_name = truncate(recipe.name, length: 55)
 
+        puts "just before action cable"
         ActionCable.server.broadcast 'recommended',
           recipe: recipe,
           pic: pic,
