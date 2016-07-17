@@ -15,7 +15,7 @@ FoodStella::Application.configure do
   config.action_controller.perform_caching = true
 
   #action cable stuff
-  config.web_socket_server_url = "wss://foodstella.herokuapp.com/cable" 
+  config.web_socket_server_url = "wss://foodstella.com/cable" 
   config.action_cable.allowed_request_origins = ['https://foodstella.herokuapp.com', 'http://foodstella.herokuapp.com', 'http://foodstella.com', 'https://foodstella.com']
 
   # Enable Rack::Cache to put a simple HTTP cache in front of your application
