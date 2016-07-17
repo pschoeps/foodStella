@@ -12,6 +12,9 @@ module FoodStella
 
     # the new line added for autoload of lib
     # config.autoload_paths += %W(#{config.root}/lib)
+    Rails.application.config.action_cable.disable_request_forgery_protection = true
+    config.action_cable.allowed_request_origins = ['https://foodstella.herokuapp.com', 'http://foodstella.herokuapp.com', 'http://foodstella.com', 'https://foodstella.com', 'foodstella.com']
+  config.action_cable.allowed_request_origins = ['http://www.foodstella.com ']
 
     
     # Settings in config/environments/* take precedence over those specified here.
