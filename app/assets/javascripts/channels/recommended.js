@@ -1,8 +1,6 @@
 
 
 $('.recipes.show').ready(function() {
-	console.log('this is the recommended channel booting')
-
 App.recommendations = App.cable.subscriptions.create('RecommendedChannel', {  
   received: function(data) {
     console.log("recieved data")

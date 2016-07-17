@@ -3,12 +3,12 @@
 //
 //= require action_cable
 //= require cable
-//= require_tree ./channels
 
 
-console.log('this comes first. cable.js')
+
 (function() {
   this.App || (this.App = {});
+  console.log('inside cable setup')
 
   App.cable = ActionCable.createConsumer();
 
