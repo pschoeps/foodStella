@@ -1,4 +1,4 @@
-
+console.log("the search channel is up")
 
 App.recommendations = App.cable.subscriptions.create('SearchChannel', {  
   received: function(data) {
