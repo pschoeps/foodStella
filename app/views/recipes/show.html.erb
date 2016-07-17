@@ -223,8 +223,10 @@
 		getRecommendedRecipes()
 
 		function getRecommendedRecipes() {
+			data = {recipe_id: gon.recipe_id}
 			$.ajax({//ajax call for questions
                   type:'GET',
+                  data: data,
                   url: "/recipes/"+gon.recipe_id+"/get_recommended_recipes",
             });//end ajax call
 		}
