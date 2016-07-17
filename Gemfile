@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '5.0.0'
-gem 'puma'
 
 
 #api calls
@@ -11,6 +10,9 @@ gem 'httparty'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
+gem 'redis'
+gem 'puma'
+
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '2.5.3'
