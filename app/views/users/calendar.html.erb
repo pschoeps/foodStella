@@ -1,8 +1,6 @@
 <!-- rendering dynamic css tags for images in a recipe  -->
 <%= render 'layouts/recipe_css_variables' %>
 
-
-
 <div class="row">
   <div class="col-md-12 calendar-page-header">
     <div class="planner-details">
@@ -34,6 +32,12 @@
   <a href="/users/<%= current_user.id %>/calendar" class="next-week-link"><span id="next-week">Next Week<%= image_tag('right-arrow.png') %></span></a>
   <%= link_to "Week View", calendar_user_path(current_user), id: "selected", class: "week-view btn" %>
   <%= link_to "Day View", day_calendar_user_path(current_user), class: "day-view btn" %>
+
+  <div class="change-all-servings-box">
+    <span class="header">Change all servings</span>
+    <span class="glyphicon glyphicon-minus" id="minus-all-servings" aria-hidden="true"></span>
+    <span class="glyphicon glyphicon-plus add" id="plus-all-servings" aria-hidden="true"></span>
+  </div>
 </div>
 
 <div class="col-md-9 week-view-header">
@@ -80,7 +84,7 @@
                     <span class="change-servings-box-close">close</span>
                     <span class="glyphicon glyphicon-minus change-serving" id="minus-serving" aria-hidden="true"></span>
                     <span id ="num-servings" data="<%= e.id %>" data-servings="<%= servings ? e.servings : recipe.servings %>"><%= servings ? e.servings : recipe.servings %></span>
-                    <span class="glyphicon glyphicon-plus change-serving add" id="add-serving" aria-hidden="true"></span>
+                    <span class="glyphicon glyphicon-plus add change-serving" id="add-serving" aria-hidden="true"></span>
                   </div>
                 </div>
               <% end %>
@@ -93,7 +97,7 @@
             <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
               <div class="add-meal-box">
                 <span class="glyphicon glyphicon-plus" id="hide-chevron" aria-hidden="true"></span>
-                <h3>Add <%= m[0] %></h3>
+                <h3>Drag <%= m[0] %></h3>
               </div>
             </a>
           </div>
@@ -101,7 +105,7 @@
           <div class="add-meal-short <%=day %>-<%= m[3] %>-small" id="hidden">
             <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
               <div class="add-meal-box">
-                <h3>Add <%= m[0] %></h3>
+                <h3>Drag <%= m[0] %></h3>
               </div>
             </a>
           </div>
@@ -110,7 +114,7 @@
             <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
               <div class="add-meal-box">
                 <span class="glyphicon glyphicon-plus" id="hide-chevron" aria-hidden="true"></span>
-                <h3>Add <%= m[0] %></h3>
+                <h3>Drag <%= m[0] %></h3>
               </div>
             </a>
           </div>
@@ -118,7 +122,7 @@
           <div class="add-meal-short <%=day %>-<%= m[3] %>-small">
             <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
               <div class="add-meal-box">
-                <h3>Add <%= m[0] %></h3>
+                <h3>Drag <%= m[0] %></h3>
               </div>
             </a>
           </div>

@@ -49,26 +49,73 @@ class UsersController < ApplicationController
   	end
 
   	def json_list
+  		@layout = false
+  		master_array = []
   		@recipes = Recipe.all
-  		@stuff = @recipes.as_json
+  		@recipes.each do |r|
+  			list = {
+  				"total_time": "#{r.prep_time + r.cook_time}",
+  				"servings": "#{r.servings}",
+  				"recipe_id": r.id,
+  				"recipe_name": r.name,
+  				"meal_type": get_meal_type(r.meal_type),
+  				"prep_time": "#{r.prep_time}"
+
+  			}
+  			master_array << list
+  		end
+  		@array = master_array
+
+  	
+
+  		#@json = master_array.as_json
 
   		#@pretty_recipes = @recipes.to_json
   		#@render = JSON.pretty_generate(@recipes)
   		#@pretty_json = JSON.pretty_generate(@recipes)
   		
-  		render :json => JSON.pretty_generate(@stuff)
+		#@json = JSON.pretty_generate(@json, :indent => "\t")
+  		
+  		#render :json => @json
     end
 
     def json_list_ing
-    	@ing = Ingredient.all
-  		@stuff = @ing.as_json
+    	@layout = false
+    	@recipes = Recipe.all
 
-  		#@pretty_recipes = @recipes.to_json
-  		#@render = JSON.pretty_generate(@recipes)
-  		#@pretty_json = JSON.pretty_generate(@recipes)
-  		
-  		render :json => JSON.pretty_generate(@stuff)
+  		@recipes.each do |r|
+  			@ings = r.ingredients
+  			@ings.each do |i|
+  				@quants = i.quantities.where(recipe_id: r.id).each do |q|
+  					list = {   :ingredient_id => "#{i.id}",
+      				 	:recipe_id => r.id,
+      					:detail => q.detail,
+      					:quantity => "#{q.amount}",
+      					:ingredient => i.name
+    				}
+  				end
+  			end
+  		end
+
   	end
+
+  	def get_meal_type(typ)
+    string = case typ 
+                when "1"
+                  "Snack"
+                when "2"
+                  "Side Dish"
+                when "3"
+                  "Main Dish"
+                when "4"
+                  "Dessert"
+                when "5"
+                  "Drink"
+                # when "6"
+                   # "Appetizer"
+                end
+    string
+  end
 
   	def json_list_quant
   		@qua = Quantity.all
@@ -114,7 +161,11 @@ class UsersController < ApplicationController
 		  sorted_events = @events.sort_by &:start_at
 		  puts sorted_events.last
 		  last_day = sorted_events.last
-		  day = Date.parse(last_day.start_at)
+		  if last_day
+		    day = Date.parse(last_day.start_at)
+		  else
+		  	day = Date.today
+		  end
 		end
 
 		gon.nextWeek = day + 7.days 
@@ -156,7 +207,11 @@ class UsersController < ApplicationController
 		  sorted_events = @events.sort_by &:start_at
 		  puts sorted_events.last
 		  last_day = sorted_events.last
-		  @day = Date.parse(last_day.start_at)
+		  if last_day
+		    @day = Date.parse(last_day.start_at)
+		  else
+		  	@day = Date.today
+		  end
 		end
 
 		gon.nextDay = @day + 1.days 
@@ -286,14 +341,15 @@ class UsersController < ApplicationController
 
 
 
+		#RubyPython.start(:python_exe => "python2.6")
 		RubyPython.start(:python_exe => "python2.6")
 
 		  sys = RubyPython.import("sys")
-		  mod = RubyPython.import("do_work")
+		  mod = RubyPython.import("initial")
 		  p mod
 		  #sys.path.append("#{Rails.root}/lib")
 		  #p "test"
-		  render :text => mod.print_string("this is a param")
+		  render :text => mod
 
 		RubyPython.stop # stop the Python interpreter
 

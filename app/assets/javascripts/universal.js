@@ -3,6 +3,24 @@ var currentMousePos = {
     y: -1
 };
 
+//selects for all pages that show sidebar on desktop
+$('.users.calendar.comp, .recipes.index.comp, .users.day_calendar.comp').ready(function() {
+  console.log("inside")
+  resetSidebar();
+  $(window).resize( function(e){
+        resetSidebar();
+  });
+
+  function resetSidebar() {
+    $('#sidebar-col').trigger('detach.ScrollToFixed');
+    console.log("is this working");
+    $('#sidebar-col').scrollToFixed({
+      limit: $('.footer').offset().top - $('#sidebar-col').height(),
+      spacerClass: 'sidebar-spacer'
+    });
+  };
+});
+
 
 
 

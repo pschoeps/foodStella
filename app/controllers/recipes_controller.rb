@@ -1,5 +1,6 @@
 class RecipesController < ApplicationController
   include MobileHelper
+  include ActionView::Helpers::TextHelper
   before_action :check_for_mobile
   respond_to :html, :json
 
@@ -76,9 +77,83 @@ class RecipesController < ApplicationController
     @meal_type = get_meal_type(@recipe.meal_type) if @recipe.meal_type
     # @cookware = get_meal_type(@recipe.meal_type) if @recipe.meal_type
     @category = get_category(@recipe.category) if @recipe.category
+
     commontator_thread_show(@recipe)
     @others_photos = @recipe.others_photos
     gon.recipes_page = true
+    gon.recipe_id = @recipe.id
+  end
+
+  def get_recommended_recipes
+    response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend")
+    puts response.body, response.code, response.message, response.headers.inspect
+    puts "searchy"
+    response = response.body
+    if response
+      response.gsub!(/(\,)(\S)/, "\\1 \\2")
+      array = YAML::load(response)
+    end
+
+    array.each do |response|
+      if Recipe.exists?(id: response)
+        recipe = Recipe.find(response)
+        pic = recipe.retrieve_pic
+        truncated_name = truncate(recipe.name, length: 55)
+
+        ActionCable.server.broadcast 'recommended',
+          recipe: recipe,
+          pic: pic,
+          truncated_name: truncated_name
+      end
+
+    end
+  end
+
+  def broadcast
+    # Use the class methods to get down to business quickly
+    response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/search")
+    puts response.body, response.code, response.message, response.headers.inspect
+    puts "searchy"
+    response = response.body
+    if response
+      response.gsub!(/(\,)(\S)/, "\\1 \\2")
+      array = YAML::load(response)
+    end
+
+    array.each do |response|
+      if Recipe.exists?(id: response)
+        recipe = Recipe.find(response)
+        pic = recipe.retrieve_pic
+        truncated_name = truncate(recipe.name, length: 30)
+        truncated_description = truncate(recipe.description, length: 60)
+        recipe_short_cook = recipe.get_short_time('cook') 
+        recipe_short_prep = recipe.get_short_time('prep') 
+
+        if recipe.user_id != 0 
+          recipe_by = recipe.get_user(recipe.user_id).retrieve_name('check') 
+        else
+          recipe_by = "Stock"
+        end
+
+        unless current_user.owns?(recipe) 
+          if current_user.following?(recipe) 
+            spatula = "<div data='"+recipe.id.to_s+"' class='spatula spatula-selected' id='unfollow'><div class='label'></div></div>" 
+          else
+            spatula = "<div data='"+recipe.id.to_s+"' class='spatula spatula-unselected' id='follow'><div class='label'></div></div>" 
+          end
+        end
+
+        ActionCable.server.broadcast 'search',
+          recipe: recipe,
+          pic: pic,
+          truncated_name: truncated_name,
+          truncated_description: truncated_description,
+          recipe_short_cook: recipe_short_cook,
+          recipe_short_prep: recipe_short_prep,
+          recipe_by: recipe_by,
+          spatula: spatula
+      end
+    end
   end
 
   def index
@@ -89,6 +164,8 @@ class RecipesController < ApplicationController
     @recipes = @user_recipes + @followed_recipes
     @calendar_title = Time.now.strftime("%A")
     @events = current_user.events
+
+    broadcast
 
     @snacks = @user_recipes.where(:meal_type => "1") + @followed_recipes.where(:meal_type => "1")
     @side_dishes = @user_recipes.where(:meal_type => "2") + @followed_recipes.where(:meal_type => "2")

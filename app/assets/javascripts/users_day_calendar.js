@@ -1,19 +1,43 @@
 $('.users.day_calendar, .users.calendar').ready(function(e) {
-  resetSidebar()
 
-  $(window).resize( function(e){
-        resetSidebar();
-  });
-
-  function resetSidebar(){
-    $('#sidebar-col').trigger('detach.ScrollToFixed');
-    $('#sidebar-col').scrollToFixed({
-      //took this out for now, was causing problems with how far the sidebar would scroll down the page... but I think it looks
-      //find?  let me know
-      //limit: $('.footer').offset().top - $('#sidebar-col').height(),
-      spacerClass: 'sidebar-spacer'
+  $('#minus-all-servings, #plus-all-servings').on('click', function() { 
+    var events = $('.desktop-meal')
+    events_array = []
+    var add 
+    if ($(this).hasClass('add')) {
+      add = true
+    }
+    events.each(function(i, obj) {
+      var eventBox = $(obj).find('.desktop-event')
+      var eventId = $(eventBox).attr('data-event')
+      console.log(eventId)
+      var servingsSmallBox = $(eventBox).children('.servings')
+      var servingsBigBox = $(obj).find('.change-servings-box').find('#num-servings')
+      var servingsCount = $(servingsBigBox).attr('data-servings')
+      console.log(servingsCount)
+      if (add == true) {
+        var newServingsCount = parseInt(servingsCount) + 1
+      }
+      else {
+        var newServingsCount = parseInt(servingsCount) - 1
+      }
+      servingsSmallBox.text(newServingsCount + "s")
+      servingsBigBox.text(newServingsCount)
+      servingsBigBox.attr("data-servings", newServingsCount)
+      events_array.push(eventId);
     });
-  }
+
+    data = {
+      add: add,
+      events: events_array
+    }
+
+    $.ajax({//ajax call for questions
+      type:'POST',
+      data: data,
+      url:'/events/change_all_servings',  
+    });//end ajax call
+  });
 
 
   $('a#shopping-list').on('click', function() { 
@@ -143,11 +167,7 @@ $('.users.day_calendar').ready(function() {
       recipeName = recipe.attr('data')
       recipeFriendlyName = recipe.attr('data-name')
       recipeServings = recipe.attr('data-servings')
-      console.log(recipe)
-      console.log(recipeFriendlyName)
-      console.log(recipeServings)
-      console.log(recipeName)
-      console.log(recipeId)
+      console.log("inside the function")
 
 
       var data = {
@@ -162,10 +182,10 @@ $('.users.day_calendar').ready(function() {
         type:'POST',
         data: data,
         url:'/events',
-              
         success:function (response) {
+          console.log("this was succesful")
           element = '#' + mealData
-          $(element).find('.added-meals').prepend("<div class='meal desktop-meal col-md-4' data="+recipeId+"><a class='mobile-event fc-event-container "+recipeName+"' id='mobile-event' data-event="+response+" data-recipe="+recipeId+" data-image="+recipeName+" data-servings="+recipeServings+" data-recipe-name="+recipeFriendlyName+"><span class='delete-event'></span><span class='servings'>"+recipeServings+"s</span><span class='event-title' style='background-color: "+mealColor+"'>"+recipeFriendlyName+"</span></a><div class='change-servings-box hidden'><span class='change-servings-box-close'>close</span><span class='glyphicon glyphicon-minus change-serving' id='minus-serving' aria-hidden='true'></span><span id='num-servings' data="+response+" data-servings="+recipeServings+">"+recipeServings+"</span><span class='glyphicon glyphicon-plus change-serving add' id='add-serving' aria-hidden=true></span></div>")  
+          $(element).find('.added-meals').prepend("<div class='meal desktop-meal col-md-4' data="+recipeId+"><a class='mobile-event desktop-event fc-event-container "+recipeName+"' id='mobile-event' data-event="+response+" data-recipe="+recipeId+" data-image="+recipeName+" data-servings="+recipeServings+" data-recipe-name="+recipeFriendlyName+"><span class='delete-event'></span><span class='servings'>"+recipeServings+"s</span><span class='event-title' style='background-color: "+mealColor+"'>"+recipeFriendlyName+"</span></a><div class='change-servings-box hidden'><span class='change-servings-box-close'>close</span><span class='glyphicon glyphicon-minus change-serving' id='minus-serving' aria-hidden='true'></span><span id='num-servings' data="+response+" data-servings="+recipeServings+">"+recipeServings+"</span><span class='glyphicon glyphicon-plus change-serving add' id='add-serving' aria-hidden=true></span></div>")  
                 }
       });//end ajax call
 

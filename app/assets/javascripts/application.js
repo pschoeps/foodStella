@@ -35,6 +35,8 @@
 //= require jquery-scrolltofixed
 //= require icheck
 //= mobile
+//= require cable
+//= require_tree ./channels
 
 //= require_tree
 

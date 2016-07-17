@@ -185,14 +185,6 @@
 		</div>
 		<div class="col-md-12 horizontal-wrapper">
 			<div class="slider-horizontal" style="left: 0%">
-				<% @recipe.similar_recipes.each do |recipe| %>
-					<%= link_to recipe_path(recipe) do %>
-						<div class="similar-recipe">
-							<%= image_tag(recipe.retrieve_pic) %>
-							<span><%= truncate(recipe.name, length: 55) %></span>
-						</div>
-					<% end %>
-				 <% end %>
 			</div>
 
 		</div>
@@ -227,6 +219,15 @@
 
 	$(document).ready(function() {
 		console.log("loaded");
+
+		getRecommendedRecipes()
+
+		function getRecommendedRecipes() {
+			$.ajax({//ajax call for questions
+                  type:'GET',
+                  url: "/recipes/"+gon.recipe_id+"/get_recommended_recipes",
+            });//end ajax call
+		}
 
     	$(document).on('click','#follow',function(e){
     		e.preventDefault();

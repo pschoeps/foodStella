@@ -52,6 +52,57 @@ $outer-container: 90%;
     position: absolute !important;
 }
 
+//different stylings for the
+//meal selection on mobile:
+
+.meal-selection .mobile-selection-button {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 3em;
+    background-color: white;
+    border-top: 1px solid $medium;
+    border-bottom: 1px solid $medium;
+    box-shadow: none;
+    border: none;
+    color: $medium;
+    text-align: left;
+    font-size: 1.55em;
+    font-weight: 400;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+
+
+.meal-selection .mobile-selection-button span {
+    float: right;
+    font-size: 15px;
+    background-color: $green;
+    border-radius: 100%;
+    height: 2.5em;
+    width: 2.5em;
+    padding-top: 10px;
+}
+
+//and different styling for the meal selectiion on desktop:
+.meal-selection button {
+    width: 100%;
+    background-color: white;
+    box-shadow: none;
+    border: none;
+    color: $medium;
+    text-align: left;
+    font-size: 1.25em;
+    font-weight: 200;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.meal-selection span {
+    float: right;
+}
+
 #sidebar-col{
     position: absolute;
     height: 100vh;
@@ -146,22 +197,6 @@ $outer-container: 90%;
         	padding-top: 10px;
         	padding-bottom: 10px;
 
-        	button {
-        		width: 100%;
-        		background-color: white;
-        		box-shadow: none;
-        		border: none;
-        		color: $medium;
-        		text-align: left;
-        		font-size: 1.25em;
-        		font-weight: 200;
-        		padding-top: 5px;
-        		padding-bottom: 5px;
-
-        		span {
-        			float: right;
-        		}
-        	}
 
             .selection {
                 .recipe-title {
@@ -251,6 +286,32 @@ $outer-container: 90%;
     }
 }
 
+.calendar-nav .change-all-servings-box {
+    width: 15em;
+    position: absolute;
+    bottom: .5em;
+    left: 5%;
+}
+
+.calendar-nav .change-all-servings-box .header {
+    color: $green;
+}
+
+.calendar-nav .change-all-servings-box {
+    #minus-all-servings {
+        padding-right: .5em;
+        padding-left: 1em;
+        font-size: 1.2em;
+        top: 0.2em;
+        color: $medium;
+        cursor: pointer;
+    }
+    #plus-all-servings {
+        position: relative;
+        color: $medium;
+        cursor: pointer;
+    }
+}
 
 // .dragNdrop { animation: highlight_dnd 1s linear 3.5s 2 alternate; }
 @-webkit-keyframes highlight_dnd {
@@ -385,8 +446,8 @@ $outer-container: 90%;
     .desktop-meal {
 
         #desktop-week-servings {
-            width: 1.5em;
-            font-size: 1.5em;
+            width: 1.7em;
+            font-size: 1.3em;
             padding: 0;
             margin: 0;
             font-weight: 100;
