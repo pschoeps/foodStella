@@ -78,7 +78,7 @@ FoodStella::Application.routes.draw do
 
   mount Commontator::Engine => '/commontator'
   # Serve websocket cable requests in-process
-  mount ActionCable.server => '/cable'
+  #mount ActionCable.server => '/cable'
 
 
 
