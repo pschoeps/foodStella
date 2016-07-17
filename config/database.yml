@@ -20,6 +20,7 @@ development:
   database: foodStella_development
   pool: 5
   username: pschoeps
+  # username: salsaia
   password: 
 
   # Connect on a TCP socket. Omitted by default since the client uses a

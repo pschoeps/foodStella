@@ -17,7 +17,9 @@
 
 # Mailer files
 .env
+
 Procfile
 /config/database.yml
 
-/config/database.yml
+
+

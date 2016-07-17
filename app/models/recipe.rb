@@ -31,7 +31,7 @@ class Recipe < ActiveRecord::Base
   accepts_nested_attributes_for :instructions, allow_destroy: true
 
   validates :name, presence: true
-  validates :category, presence: true
+  # validates :category, presence: true
   validate  :picture_size
   validate :instructions_order
 

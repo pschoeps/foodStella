@@ -298,18 +298,62 @@ class UsersController < ApplicationController
 			i.quantities.where(recipe_id: r.id).each do |q|
 			  unique_r = true
 			  @shopping_items.each do |s|
-			    if s[0] == i.name
+			    if s[2] == i.name
 				  unique_r = false
-				  s[1] += q.ounces
+				  s[3] += q.ounces
+				  s[0] = get_fraction(s[3], s[4])
 				end
 			  end
 			  if unique_r
 				unit = q.unit == '' ? '' : 'oz'
-				@shopping_items << [i.name, q.ounces, 'oz.']
+				@shopping_items << [get_fraction(q.ounces, q.unit), get_unit(q.unit, q.amount), i.name, q.ounces, q.unit]
 			  end
 			end
 		  end
 		end
+    end
+
+    def get_fraction(oz, unit)
+    	oz_in_unit = case unit
+                when "1"
+                  8
+                when "2"
+                  1
+                when "3"
+                  0.166
+                 when "4"
+                 	0.5
+                 when "5"
+                 	0.013
+                 else
+                 	1
+                end
+        amount = oz / oz_in_unit
+        
+		# rounded to nearest .25
+		quarter = (amount*4).round / 4.0
+		number = 1.23
+		whole_num = quarter.to_s.split(".")[0]
+		whole_num = '' if whole_num == '0'
+		dec = quarter.to_s.split(".")[1]
+		fraction = case dec
+	            when "25"
+	              '1/4'
+	            when "5"
+	              '1/2'
+	            when "75"
+	              '3/4'
+	             else
+	             	''
+	            end
+		if whole_num == ''
+			string = fraction
+		elsif fraction == ''
+			string = whole_num
+		else
+			string = whole_num + ' ' + fraction
+		end
+		return string
     end
 
     def get_unit(unit, amount)
@@ -381,9 +425,6 @@ render :text => result
 =end
 	end
 end
-
-
-
 
 
 

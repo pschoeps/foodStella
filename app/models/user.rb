@@ -260,4 +260,24 @@ class User < ActiveRecord::Base
   ]
   end
 
+  # Adds a 'to_fraction' method to Float. Eg. 0.5.to_fraction => [1,2]
+    def number_decimal_places(d)
+      self.to_s.length-2
+    end
+
+    def greatest_common_divisor(a, b)
+      while a%b != 0
+        a,b = b.round,(a%b).round
+      end 
+      return b
+    end
+    
+    def to_fraction(decimal)
+      # return decimal
+      higher = 10**decimal.to_s.length-2
+      lower = decimal*higher
+      gcden = greatest_common_divisor(higher, lower)
+      return (lower/gcden).round, (higher/gcden).round
+    end
+
 end
