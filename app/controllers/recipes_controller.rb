@@ -92,8 +92,12 @@ class RecipesController < ApplicationController
       response.gsub!(/(\,)(\S)/, "\\1 \\2")
       array = YAML::load(response)
     end
+    puts "search for array"
+    puts array
 
     array.each do |response|
+      puts response
+      puts "search for response"
       if Recipe.exists?(id: response)
         puts "the recipe exists"
         recipe = Recipe.find(response)
