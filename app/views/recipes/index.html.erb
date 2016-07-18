@@ -16,7 +16,7 @@
 
 <div class="row recipes-page">
 
-  <div id='sidebar-col' class='col-sm-3'>
+  <div id='sidebar-col' class='col-xs-3'>
   <%= render(
     partial: 'recipes/sidebar',
     locals: {
@@ -36,7 +36,7 @@
   <!-- %= link_to 'Refresh recipes', action: :sidebar, remote: true, expanded: [], id: 'doesntmatter' %> -->
 </div>
 
-  <div class="col-sm-9 sidebar-content" id="recipes-col">
+  <div class="col-xs-9 sidebar-content" id="recipes-col">
     <%= render(
       partial: 'recipes/list',
       locals: { recipes: @recipes }
@@ -119,6 +119,7 @@
       // limit: $('.footer').offset().top - $('#sidebar-col').height(),
       spacerClass: 'sidebar-spacer'
     });
+      $('#sidebar-col').css('overflow', 'hidden');
     // var contentHeight = $('.footer').offset().top - $('#recipes-col').offset().top;
     // if( contentHeight < $(window).height()){
     //   $('#sidebar-col').css('height', contentHeight + 'px');
@@ -232,6 +233,18 @@
                     'height': box_size - 40 + 'px',
                     'width': box_size + 'px'
                   });
+
+     // close dropdown when out of view
+     var dd_menu = $(".dropdown-menu").first();
+     var target = dd_menu.offset().top + dd_menu.height();
+     var interval = setInterval(function() {
+      if($('.dropdown.open').length){
+        var dd_menu = $('.dropdown.open').first().find('.dropdown-menu');
+        var target = dd_menu.offset().top + dd_menu.height();
+        if ($(window).scrollTop() >= target)
+          $('.dropdown.open').removeClass('open');
+      }
+     }, 250);
 
      $(document).on('click','#show_more_link',function(){
         $.ajax({

@@ -112,7 +112,6 @@ class UsersController < ApplicationController
 		  day = params[:week].to_date
 		else
 		  sorted_events = @events.sort_by &:start_at
-		  puts sorted_events.last
 		  last_day = sorted_events.last
 		  day = Date.parse(last_day.start_at)
 		end

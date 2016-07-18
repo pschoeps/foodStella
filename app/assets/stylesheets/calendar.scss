@@ -55,7 +55,8 @@ $outer-container: 90%;
 #sidebar-col{
     position: absolute;
     height: 100vh;
-    min-width: 280px;
+    // min-width: 280px;
+    min-width: 250px;
     padding: 0;
     z-index: 20;
 
@@ -71,7 +72,8 @@ $outer-container: 90%;
         max-height: 100vh;
         // overflow: hidden;
         // width: 20%;
-        min-width: 280px;
+        
+        // min-width: 280px;
 
         .fc-event .remove {
             display: none;

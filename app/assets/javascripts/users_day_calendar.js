@@ -10,7 +10,7 @@ $('.users.day_calendar, .users.calendar').ready(function(e) {
     $('#sidebar-col').scrollToFixed({
       //took this out for now, was causing problems with how far the sidebar would scroll down the page... but I think it looks
       //find?  let me know
-      //limit: $('.footer').offset().top - $('#sidebar-col').height(),
+      // limit: $('.footer').offset().top - $('#sidebar-col').height(),
       spacerClass: 'sidebar-spacer'
     });
   }

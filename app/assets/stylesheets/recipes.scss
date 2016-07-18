@@ -761,7 +761,8 @@
 
 
 .recipes-page {
-	min-width: 900px;
+	// min-width: 900px;
+	position: relative;
 }
 #show_more_link {
 	font-size: 1.5em;
@@ -775,7 +776,8 @@
 	padding: 0;
 	float: right;
 
-	min-width: 600px;
+	// min-width: 600px;
+	width: 75%;
 	max-width: calc(100% - 250px);
 
 	min-height: 100vh;
@@ -963,6 +965,12 @@
 			.spatula-unselected > .label::after { content: 'Follow'; }
 
 		}
+		@media (max-width: 992px) {
+			li { width: 33%; }
+		}
+		@media (max-width: 768px) {
+			li { width: 50%; }
+		}
 	}
 }
 
@@ -1036,6 +1044,14 @@
     	// transform: translateY(-50%);
     	transform: translateY(2.6em);
 	}
+	@media (max-width: 992px) {
+		.dropdowns {
+			transform: translateY(3.8em);
+			.dropdown ul {
+				top: 2.4em;
+			}
+		}
+	}
 
 	.sort-by,
 	.filter-search {
@@ -1043,6 +1059,15 @@
 		position: absolute;
     	transform: translateY(-50%);
     	z-index: 2;
+	}
+	@media (max-width: 992px) {
+		.sort-by,
+		.filter-search {
+			margin: 2.7em 5px 5px;
+			position: absolute;
+	    	transform: translateY(-50%);
+	    	z-index: 2;
+		}
 	}
 	.filter-search {
 		right: 5px;
@@ -1213,10 +1238,18 @@
 	.filtering-tags {
 		position: relative;
 		z-index: 1;
-		padding-top: 1em;
-		margin-bottom: 10px;
-		min-height: 24px;
-		ul { padding-left: 10px; }
+		overflow: hidden;
+		ul {
+			// padding-left: 10px;
+			padding-left: 0;
+			padding-top: 1em;
+			// margin-bottom: 10px;
+			padding-bottom: 10px;
+			min-height: 24px;
+			width: 75%;
+			max-width: calc(100% - 250px);
+			float: right;
+		}
 		li:hover {
 			color: white;
 			.remove-filter {
