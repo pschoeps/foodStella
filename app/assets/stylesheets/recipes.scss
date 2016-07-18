@@ -772,15 +772,18 @@
 	padding-top: 1em;
 }
 
-#recipes-col, #recommended-col {
+#recipes-col { min-height: 100vh; }
+
+#recipes-col,
+#recommended-col {
 	padding: 0;
 	float: right;
 
 	// min-width: 600px;
 	width: 75%;
-	max-width: calc(100% - 250px);
+	max-width: calc(100% - 250px); 
 
-	min-height: 100vh;
+	min-height: 0;
 
 	#filterrific_results {
 		padding-top: 1px;
