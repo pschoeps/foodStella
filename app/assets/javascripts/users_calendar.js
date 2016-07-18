@@ -1,4 +1,6 @@
 $('.users.calendar').ready(function() {
+
+
 	$('.add-meal-big, .add-meal-short').droppable({
     drop: function(event, ui) {
       $this = $(this)
@@ -34,7 +36,7 @@ $('.users.calendar').ready(function() {
           dateDiv = '#' + date
           mealDiv = $(dateDiv).find('#' + mealData)
 
-          $(mealDiv).find('.added-meals').append("<div class='meal week-meal desktop-meal' data="+recipeId+"><a class='desktop-event fc-event-container "+recipeName+"' id='mobile-event' data-event="+response+" data-recipe="+recipeId+" data-image="+recipeName+" data-servings="+recipeServings+" data-recipe-name="+recipeFriendlyName+"><span class='delete-event'></span><span class='servings'>"+recipeServings+"s</span><span class='event-title' style='background-color: "+mealColor+"'>"+recipeFriendlyName+"</span></a><div class='change-servings-box hidden'><span class='change-servings-box-close'>close</span><span class='glyphicon glyphicon-minus change-serving' id='minus-serving' aria-hidden='true'></span><span id='num-servings' data="+response+" data-servings="+recipeServings+">"+recipeServings+"</span><span class='glyphicon glyphicon-plus change-serving add' id='add-serving' aria-hidden=true></span></div>") 
+          $(mealDiv).find('.added-meals').append("<div class='meal week-meal desktop-meal' data="+recipeId+"><a class='desktop-event fc-event-container "+recipeName+"' id='mobile-event' data-event="+response+" data-recipe="+recipeId+" data-image="+recipeName+" data-servings="+recipeServings+" data-recipe-name="+recipeFriendlyName+"><span class='delete-event'></span><span class='servings' id='desktop-week-servings'>"+recipeServings+"s</span><span class='event-title' style='background-color: "+mealColor+"'>"+recipeFriendlyName+"</span></a><div class='change-servings-box hidden'><span class='change-servings-box-close'>close</span><span class='glyphicon glyphicon-minus change-serving' id='minus-serving' aria-hidden='true'></span><span id='num-servings' data="+response+" data-servings="+recipeServings+">"+recipeServings+"</span><span class='glyphicon glyphicon-plus change-serving add' id='add-serving' aria-hidden=true></span></div>") 
           var addMealBig = $(mealDiv).children('.add-meal-big')
           var addMealSmall = $(mealDiv).children('.add-meal-short')
           var childCount =  $(mealDiv).children('.added-meals').children('.meal').length;

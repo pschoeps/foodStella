@@ -1,1 +1,38 @@
-<pre><%= @json_pretty %></pre>
+<%
+def get_meal_type(typ)
+    string = case typ 
+                when "1"
+                  "Snack"
+                when "2"
+                  "Side Dish"
+                when "3"
+                  "Main Dish"
+                when "4"
+                  "Dessert"
+                when "5"
+                  "Drink"
+                # when "6"
+                   # "Appetizer"
+                end
+    string
+  end
+ %>
+
+
+[
+<br>
+
+<% @recipes.each do |r| %>
+{
+  			    "total_time": "<%= r.prep_time + r.cook_time %>",
+  				"servings": "<%= r.servings%>",
+  				"recipe_id": <%= r.id %>,
+  				"recipe_name": "<%= r.name %>",
+  				"meal_type": "<%= get_meal_type(r.meal_type) %>",
+  				"prep_time": "<%= r.prep_time %>"
+
+  			},<br>
+<% end %>
+
+<br>
+]

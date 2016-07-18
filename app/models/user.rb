@@ -47,9 +47,9 @@ class User < ActiveRecord::Base
     Relationship.create(follower_id: self.id, followed_id: dessert.id)
   end
 
-  has_many :preferred_ingredients, order: 'name'
+  has_many :preferred_ingredients, -> { order(name: :desc) }
   has_many :preferred,  through: :preferred_ingredients,  source: :ingredient
-  has_many :deferred_ingredients , order: 'name'
+  has_many :deferred_ingredients, -> { order(name: :desc) }
   has_many :deferred,   through: :deferred_ingredients,   source: :ingredient
 
   def self.preferred_ingredients(name)

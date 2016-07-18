@@ -36,6 +36,12 @@
   <!-- %= link_to 'Refresh recipes', action: :sidebar, remote: true, expanded: [], id: 'doesntmatter' %> -->
 </div>
 
+<div class="col-xs-9" id="recommended-col">
+  <ul class="recommended">
+  </ul>
+</div>
+
+
   <div class="col-xs-9 sidebar-content" id="recipes-col">
     <%= render(
       partial: 'recipes/list',

@@ -10,6 +10,7 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.  I removed // require turbolinks for now
 //
+//= require cable
 //= require moment
 //= require jquery
 //= require jquery_ujs
@@ -35,6 +36,7 @@
 //= require jquery-scrolltofixed
 //= require icheck
 //= mobile
+//= require_tree ./channels
 
 //= require_tree
 
