@@ -164,8 +164,8 @@ p {
  // sidebar overflow fix
  .footer {
   position: relative;
-  z-index: 30;
-  // z-index: 1001;
+  // z-index: 30;
+  z-index: 1001;
  }
  body > .fluid-container,
  body > .container, {

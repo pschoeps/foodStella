@@ -16,7 +16,7 @@ $('.users.calendar.comp, .recipes.index.comp, .users.day_calendar.comp').ready(f
     $('#sidebar-col').trigger('detach.ScrollToFixed');
     console.log("is this working");
     $('#sidebar-col').scrollToFixed({
-      limit: $('.footer').offset().top - $('#sidebar-col').height(),
+      // limit: $('.footer').offset().top - $('#sidebar-col').height(),
       spacerClass: 'sidebar-spacer'
     });
   };
