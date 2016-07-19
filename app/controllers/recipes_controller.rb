@@ -171,7 +171,7 @@ class RecipesController < ApplicationController
     @calendar_title = Time.now.strftime("%A")
     @events = current_user.events
 
-    broadcast
+    #broadcast
 
     @snacks = @user_recipes.where(:meal_type => "1") + @followed_recipes.where(:meal_type => "1")
     @side_dishes = @user_recipes.where(:meal_type => "2") + @followed_recipes.where(:meal_type => "2")

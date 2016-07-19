@@ -51,7 +51,6 @@
 
   // copied from ratyrate.js.erb
   function resetStars(){
-    console.log('resetting stars!!');
     $(".star").each(function() {
       var $readonly = ($(this).attr('data-readonly') == 'true');
       // CUSTOM readonly override
@@ -113,7 +112,6 @@
 
 
   function resetSidebar(){
-    console.log('RESET');
     $('#sidebar-col').trigger('detach.ScrollToFixed');
     $('#sidebar-col').scrollToFixed({
       // limit: $('.footer').offset().top - $('#sidebar-col').height(),

@@ -23,6 +23,7 @@ FoodStella::Application.routes.draw do
       get 'json_list_ing'
       get 'json_list_quant'
       get 'day_calendar'
+      get 'load_user_recommended_recipes'
     end
 
     collection do 

@@ -1,6 +1,6 @@
-convert ingredients to fractions
+//convert ingredients to fractions
 add categories to ingredients
-add recipes being added for the week to the ingredients
+//add recipes being added for the week to the ingredients
 adding better way to sort ingredients
 //add servingts pop up to day view
 look into recommendations
@@ -16,7 +16,7 @@ look into making sql calls from python
 //get third party libraries in
 fix mailer
 
-keep sidebar from scrolling down
+//keep sidebar from scrolling down
 
 
 recipes.json {
@@ -45,6 +45,15 @@ need to redefine data attr's to be more useful
 integrate forgot password sending
 //change "add breakfast" to "drag breakfast"
 //some servings aren't changing in the day 
+check into different screen sizes
+add shuffle feature :(
+
+change all servings can have negative servings
+make x smaller and make a transparent background for x
+
+need a startup pop up/flow that takes to planner
+send sheng email detailing database queries
+menu sliding stopping
 
 add the ability to change the serving size for every event in your planner (for every other event created)
 

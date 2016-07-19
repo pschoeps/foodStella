@@ -1,7 +1,9 @@
+
 $('.users.calendar').ready(function() {
 
 
 	$('.add-meal-big, .add-meal-short').droppable({
+    hoverClass: "ui-state-active",
     drop: function(event, ui) {
       $this = $(this)
       meal = $this.find('.add-meal')

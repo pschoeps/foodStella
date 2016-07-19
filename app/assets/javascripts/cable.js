@@ -8,7 +8,6 @@
 
 (function() {
   this.App || (this.App = {});
-  console.log('inside cable setup')
 
   App.cable = ActionCable.createConsumer();
 

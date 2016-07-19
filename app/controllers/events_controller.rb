@@ -68,7 +68,9 @@ class EventsController < ApplicationController
         else
           new_serving = event_object.servings + 1
         end
-        event_object.update_attributes!(servings: new_serving)
+        unless new_serving < 1
+          event_object.update_attributes!(servings: new_serving)
+        end
       end
     else
       events.each do |event|
@@ -79,7 +81,9 @@ class EventsController < ApplicationController
         else
           new_serving = event_object.servings - 1
         end
-        event_object.update_attributes!(servings: new_serving)
+        unless new_serving < 1
+          event_object.update_attributes!(servings: new_serving)
+        end
       end
     end
     respond_to do |format|

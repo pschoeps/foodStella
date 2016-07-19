@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
    include MobileHelper
+   include ActionView::Helpers::TextHelper
    before_action :check_for_mobile
    before_filter :find_meals_and_events, :only => [:day_calendar, :calendar, :shopping_list]
+   before_filter :get_user_recommended_recipes, :only => [:day_calendar, :calendar]
 	respond_to :html, :json
 
    def update
@@ -141,10 +143,84 @@ class UsersController < ApplicationController
 		@drinks = @user_recipes.where(:meal_type => "5") + @followed_recipes.where(:meal_type => "5")
 	end
 
-  	
+	def get_user_recommended_recipes
+		recommended_recipe_ids = []
+		@recommended_recipes = []
+		if @events.length != 0
+		  @events.last(2).each do |event|
+			recommended_recipe_ids << event.recipe_id
+			@recommended_recipes << Recipe.find(event.recipe_id)
+		  end
+		end
+
+		if @user_recipes.length != 0
+		  @user_recipes.last(3) do |recipe|
+		  	recommended_recipe_ids << recipe.id 
+		  	@recommended_recipes << recipe
+		  end
+		end
+
+		if recommended_recipe_ids.length == 0
+			Recipe.last(5).each do |recipe|
+			  recommended_recipe_ids << recipe.id 
+			  @recommended_recipes << recipe
+			end
+		end
+		@recommended_recipe_ids = recommended_recipe_ids
+		puts "search for me"
+		puts @recommended_recipes 
+		@recommended_recipes.each do |r|
+			puts r.name 
+		end
+
+	end
+
+	def load_user_recommended_recipes
+	  recommended_recipe_ids = params[:ids]
+	  loader_counter = 0
+	  recommended_recipe_ids.each do |r|
+		response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend_fake")
+		puts response.body
+		response = response.body
+		if response
+      	  response.gsub!(/(\,)(\S)/, "\\1 \\2")
+      	  array = YAML::load(response)
+    	end
+    	array.each do |response|
+    	  puts "array first three"
+    	  if Recipe.exists?(id: response.to_i)
+            puts "the recipe exists"
+            recipe = Recipe.find(response)
+            pic = recipe.retrieve_pic
+            friendly_name = recipe.get_friendly_name
+            truncated_name = truncate(recipe.name, length: 30)
+            ActionCable.server.broadcast 'recommended',
+              recipe: recipe,
+          	  pic: pic,
+          	  recipe_class: "#{friendly_name}-#{recipe.id}",
+          	  recipe_friendly_name: friendly_name,
+          	  truncated_name: truncated_name,
+          	  pic: pic
+
+          	loader_counter += 1
+          	puts "loader"
+          	puts loader_counter
+
+          	if loader_counter == 6
+          	  return
+          	end
+      	  end
+
+		end
+	  end
+	  respond_to do |format|
+	  	format.js 
+	  end
+	end
 
 	def calendar
 		gon.dayView = false
+		gon.recommended_recipe_ids = @recommended_recipe_ids
 		if params[:zoom_level]
 		  gon.zoomLevel = params[:zoom_level]
 		else
@@ -192,6 +268,8 @@ class UsersController < ApplicationController
 		unless mobile_device?
 		  gon.recipes_page = true
 		end
+
+		gon.recommended_recipe_ids = @recommended_recipe_ids
 
 		gon.dayView = true
 		@calendar = true

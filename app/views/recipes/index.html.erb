@@ -35,13 +35,6 @@
 <div style='display:none' id='refresh-sidebar'>
   <!-- %= link_to 'Refresh recipes', action: :sidebar, remote: true, expanded: [], id: 'doesntmatter' %> -->
 </div>
-
-<div class="col-sm-9" id="recommended-col">
-  <ul class="recommended">
-  </ul>
-</div>
-
-
   <div class="col-sm-9 sidebar-content" id="recipes-col">
     <%= render(
       partial: 'recipes/list',
@@ -57,7 +50,6 @@
 
   // copied from ratyrate.js.erb
   function resetStars(){
-    console.log('resetting stars!!');
     $(".star").each(function() {
       var $readonly = ($(this).attr('data-readonly') == 'true');
       // CUSTOM readonly override
@@ -118,20 +110,6 @@
   };
 
 
-  function resetSidebar(){
-    console.log('RESET');
-    $('#sidebar-col').trigger('detach.ScrollToFixed');
-    $('#sidebar-col').scrollToFixed({
-      // limit: $('.footer').offset().top - $('#sidebar-col').height(),
-      spacerClass: 'sidebar-spacer'
-    });
-    // var contentHeight = $('.footer').offset().top - $('#recipes-col').offset().top;
-    // if( contentHeight < $(window).height()){
-    //   $('#sidebar-col').css('height', contentHeight + 'px');
-    //   $('.sidebar').css('height', contentHeight + 'px');
-    // }
-  }
-
   function updateMyFoods(new_recipe_id){
     var expandedSections = [];
       $('.selection').each(function(){
@@ -167,18 +145,12 @@
 
            // active remove listener again
 
-           resetSidebar();
           }
         });//end ajax call
   }
 
   $(document).ready(function() {
-    
-      resetSidebar();
-
-      $(window).resize( function(e){
-        resetSidebar();
-      });
+  
 
       $('.sidebar').scroll(function(e){
         e.stopPropagation();
