@@ -12,6 +12,7 @@
 </div>
 
 <div class="row">
+
 	<!-- %= render 'layouts/recipe_sidebar' %> -->
   <div id='sidebar-col' class='col-sm-3'>
   <%= render(
@@ -28,8 +29,8 @@
   ) %>
   </div>
 
-	<div class="col-sm-9 shopping-list sidebar-content">
-		<div class="shopping-list-container">
+	<div class="col-sm-9 shopping-list sidebar-content row">
+		<div class="shopping-list-container col-sm-8">
 			<div class="shopping-list-header">
 			  <h1><%= @date_string %></h1>
 			</div>
@@ -48,7 +49,24 @@
 				</ol>
 			</div>
 		</div>
+    <div class="col-sm-4 shopping-list-recipes">
+      <div class="shopping-list-header">
+        <h1>Recipes</h1>
+      </div>
+      <div class='list-box'>
+        <ol>
+          <% @planned_recipes.uniq.each do |r| %>
+            <li>
+              <%= '(' + @planned_recipes.count(r).to_s + ')' if @planned_recipes.count(r) > 1 %> <%= link_to r.name, recipe_path(r) %>
+            </li>
+          <% end %>
+
+
+        </ol>
+      </div>
+  </div>
 	</div>
+
 </div>
 </div>
 

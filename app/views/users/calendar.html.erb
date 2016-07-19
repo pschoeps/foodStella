@@ -39,13 +39,31 @@
 
 <div class="col-md-9 week-view-header">
   <div class="col-md-11">
+
+    <div class="circle breakfast-circle">
+    </div>
+
+    <p class="circle-text circle-text-breakfast"> Breakfast </p>
+
+    <div class="circle lunch-circle">
+    </div>
+
+    <p class="circle-text circle-text-lunch"> Lunch </p>
+
+    <div class="circle dinner-circle" >
+    </div>
+
+    <p class="circle-text circle-text-dinner"> Dinner </p>
+
+    <div class="circle snack-circle">
+    </div>
+
+    <p class="circle-text circle-text-snack"> Snack </p>
     <%= link_to "Generate shopping list", shopping_list_user_path(current_user, view_type: "day", day: @day), id: "gen-shop-list" %>
   </div>
 </div>
 
 <div class="col-md-9 desktop-planner-details">
-
-
 
   <!-- code for colors goes here -->
 

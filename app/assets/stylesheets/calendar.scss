@@ -344,8 +344,52 @@ $outer-container: 90%;
         right: 2em;
 }
 
+/*Planner design changes 7/12/16*/
+.week-view-header .circle {
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    height: 1.5em;
+    width: 1.5em;
+    top: 50%;
+    transform: translateY(-50%);
+}
+ 
+ .week-view-header .breakfast-circle{
+    background-color: #f5b266;
+}
+.week-view-header .lunch-circle{
+    background-color: #819800;
+}
+.week-view-header .dinner-circle{
+    background-color: #796c2d;
+}
+.week-view-header .snack-circle{
+    background-color: #bc9c63;
+}
 
-
+.week-view-header .circle-text {
+    margin: 0;
+    display: inline-block;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 4px;
+}
+ .week-view-header .circle-text-breakfast {
+    color: #f5b266;
+}
+ .week-view-header .circle-text-lunch {
+    color: #819800;
+}
+ .week-view-header .circle-text-dinner {
+    color: #796c2d;
+}
+ .week-view-header .circle-text-snack {
+    color: #bc9c63;
+}
 
 .desktop-planner-details {
     width: 75%;
