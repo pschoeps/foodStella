@@ -16,7 +16,7 @@
 
 <div class="row recipes-page">
 
-  <div id='sidebar-col' class='col-sm-3'>
+  <div id='sidebar-col' class='col-xs-3'>
   <%= render(
     partial: 'recipes/sidebar',
     locals: {
@@ -36,7 +36,7 @@
   <!-- %= link_to 'Refresh recipes', action: :sidebar, remote: true, expanded: [], id: 'doesntmatter' %> -->
 </div>
 
-  <div class="col-sm-9 sidebar-content" id="recipes-col">
+  <div class="col-xs-9 sidebar-content" id="recipes-col">
     <%= render(
       partial: 'recipes/list',
       locals: { recipes: @recipes }
@@ -116,9 +116,10 @@
     console.log('RESET');
     $('#sidebar-col').trigger('detach.ScrollToFixed');
     $('#sidebar-col').scrollToFixed({
-      // limit: $('.footer').offset().top - $('#sidebar-col').height(),
+      limit: $('.footer').offset().top - $('#sidebar-col').height(),
       spacerClass: 'sidebar-spacer'
     });
+      $('#sidebar-col').css('overflow', 'hidden');
     // var contentHeight = $('.footer').offset().top - $('#recipes-col').offset().top;
     // if( contentHeight < $(window).height()){
     //   $('#sidebar-col').css('height', contentHeight + 'px');

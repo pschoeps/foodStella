@@ -49,26 +49,73 @@ class UsersController < ApplicationController
   	end
 
   	def json_list
+  		@layout = false
+  		master_array = []
   		@recipes = Recipe.all
-  		@stuff = @recipes.as_json
+  		@recipes.each do |r|
+  			list = {
+  				"total_time": "#{r.prep_time + r.cook_time}",
+  				"servings": "#{r.servings}",
+  				"recipe_id": r.id,
+  				"recipe_name": r.name,
+  				"meal_type": get_meal_type(r.meal_type),
+  				"prep_time": "#{r.prep_time}"
+
+  			}
+  			master_array << list
+  		end
+  		@array = master_array
+
+  	
+
+  		#@json = master_array.as_json
 
   		#@pretty_recipes = @recipes.to_json
   		#@render = JSON.pretty_generate(@recipes)
   		#@pretty_json = JSON.pretty_generate(@recipes)
   		
-  		render :json => JSON.pretty_generate(@stuff)
+		#@json = JSON.pretty_generate(@json, :indent => "\t")
+  		
+  		#render :json => @json
     end
 
     def json_list_ing
-    	@ing = Ingredient.all
-  		@stuff = @ing.as_json
+    	@layout = false
+    	@recipes = Recipe.all
 
-  		#@pretty_recipes = @recipes.to_json
-  		#@render = JSON.pretty_generate(@recipes)
-  		#@pretty_json = JSON.pretty_generate(@recipes)
-  		
-  		render :json => JSON.pretty_generate(@stuff)
+  		@recipes.each do |r|
+  			@ings = r.ingredients
+  			@ings.each do |i|
+  				@quants = i.quantities.where(recipe_id: r.id).each do |q|
+  					list = {   :ingredient_id => "#{i.id}",
+      				 	:recipe_id => r.id,
+      					:detail => q.detail,
+      					:quantity => "#{q.amount}",
+      					:ingredient => i.name
+    				}
+  				end
+  			end
+  		end
+
   	end
+
+  	def get_meal_type(typ)
+    string = case typ 
+                when "1"
+                  "Snack"
+                when "2"
+                  "Side Dish"
+                when "3"
+                  "Main Dish"
+                when "4"
+                  "Dessert"
+                when "5"
+                  "Drink"
+                # when "6"
+                   # "Appetizer"
+                end
+    string
+  end
 
   	def json_list_quant
   		@qua = Quantity.all
@@ -112,9 +159,12 @@ class UsersController < ApplicationController
 		  day = params[:week].to_date
 		else
 		  sorted_events = @events.sort_by &:start_at
-		  puts sorted_events.last
 		  last_day = sorted_events.last
-		  day = Date.parse(last_day.start_at)
+		  if last_day
+		    day = Date.parse(last_day.start_at)
+		  else
+		  	day = Date.today
+		  end
 		end
 
 		gon.nextWeek = day + 7.days 
@@ -156,7 +206,11 @@ class UsersController < ApplicationController
 		  sorted_events = @events.sort_by &:start_at
 		  puts sorted_events.last
 		  last_day = sorted_events.last
-		  @day = Date.parse(last_day.start_at)
+		  if last_day
+		    @day = Date.parse(last_day.start_at)
+		  else
+		  	@day = Date.today
+		  end
 		end
 
 		gon.nextDay = @day + 1.days 
@@ -189,40 +243,29 @@ class UsersController < ApplicationController
     def shopping_list
 
 		@expanded = ['false','false','false','false','false']
-
-    
-
-		if params[:view_type] == "day"
-		  if params[:day]
+		if params[:day]
 		  	@day = params[:day].to_date
 		  	puts "day here"
 		  	puts @day
-		  else
-		  	@day = DateTime.now
-		  end
+		else
+		  @day = DateTime.now
+		end
 
+		if params[:view_type] == "day"
 		  @events = Event.where(start_at: (@day.strftime + "T00:00:00")..(@day.strftime + "T:2:00:00"))
 		  puts "events count"
 		  puts @events.length
 		  @date_string = @day.strftime("%A")
 		elsif params[:view_type] == "week"
 
-			day_counter = params[:day_counter].to_i
-			prev_day_counter = params[:prev_day_counter].to_i
+			@beginning_of_week = @day.at_beginning_of_week.to_datetime
+			@end_of_week = @day.at_end_of_week.to_datetime
 
-			if prev_day_counter == 1
-				@first_day = DateTime.now
-			else
-				subtracted_days = prev_day_counter - 1
-				@first_day = DateTime.now - subtracted_days.days 
-			end
+		 	@events = Event.where(start_at: (@beginning_of_week)..@end_of_week)
 
-			@last_day = DateTime.now + day_counter.days
-		 	@events = Event.where(start_at: (@first_day)..@last_day)
-
-			@month = @last_day.strftime("%B")
-			@week_begin = @last_day.at_beginning_of_week.strftime("%-d")
-			@week_end = @last_day.at_end_of_week.strftime("%-d")
+			@month = @day.strftime("%B")
+			@week_begin = @day.at_beginning_of_week.strftime("%-d")
+			@week_end = @day.at_end_of_week.strftime("%-d")
 			@date_string = @month + " " + @week_begin + " - " + @week_end
 		end
 
@@ -243,18 +286,62 @@ class UsersController < ApplicationController
 			i.quantities.where(recipe_id: r.id).each do |q|
 			  unique_r = true
 			  @shopping_items.each do |s|
-			    if s[0] == i.name
+			    if s[2] == i.name
 				  unique_r = false
-				  s[1] += q.ounces
+				  s[3] += q.ounces
+				  s[0] = get_fraction(s[3], s[4])
 				end
 			  end
 			  if unique_r
 				unit = q.unit == '' ? '' : 'oz'
-				@shopping_items << [i.name, q.ounces, 'oz.']
+				@shopping_items << [get_fraction(q.ounces, q.unit), get_unit(q.unit, q.amount), i.name, q.ounces, q.unit]
 			  end
 			end
 		  end
 		end
+    end
+
+    def get_fraction(oz, unit)
+    	oz_in_unit = case unit
+                when "1"
+                  8
+                when "2"
+                  1
+                when "3"
+                  0.166
+                 when "4"
+                 	0.5
+                 when "5"
+                 	0.013
+                 else
+                 	1
+                end
+        amount = oz / oz_in_unit
+        
+		# rounded to nearest .25
+		quarter = (amount*4).round / 4.0
+		number = 1.23
+		whole_num = quarter.to_s.split(".")[0]
+		whole_num = '' if whole_num == '0'
+		dec = quarter.to_s.split(".")[1]
+		fraction = case dec
+	            when "25"
+	              '1/4'
+	            when "5"
+	              '1/2'
+	            when "75"
+	              '3/4'
+	             else
+	             	''
+	            end
+		if whole_num == ''
+			string = fraction
+		elsif fraction == ''
+			string = whole_num
+		else
+			string = whole_num + ' ' + fraction
+		end
+		return string
     end
 
     def get_unit(unit, amount)
@@ -286,14 +373,15 @@ class UsersController < ApplicationController
 
 
 
+		#RubyPython.start(:python_exe => "python2.6")
 		RubyPython.start(:python_exe => "python2.6")
 
 		  sys = RubyPython.import("sys")
-		  mod = RubyPython.import("do_work")
+		  mod = RubyPython.import("initial")
 		  p mod
 		  #sys.path.append("#{Rails.root}/lib")
 		  #p "test"
-		  render :text => mod.print_string("this is a param")
+		  render :text => mod
 
 		RubyPython.stop # stop the Python interpreter
 
@@ -325,9 +413,6 @@ render :text => result
 =end
 	end
 end
-
-
-
 
 
 

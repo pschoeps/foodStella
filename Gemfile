@@ -2,20 +2,29 @@ source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.4'
+gem 'rails', '5.0.0'
+
+
+#api calls
+gem 'httparty'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
+gem 'redis'
+gem 'puma'
+
 
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+gem 'uglifier', '2.5.3'
 
 # Use CoffeeScript for .js.coffee assets and views
-gem 'coffee-rails', '~> 4.0.0'
+gem 'coffee-rails'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+
+gem 'rake',                 '11.2.2'
 
 gem 'rails-jquery-autocomplete'
 gem 'rails-jquery-tokeninput'
@@ -31,7 +40,7 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 1.2'
 #bootrap and sass front end frameworks
 gem 'bootstrap-sass',       '3.2.0.0'
-gem 'sass-rails', '~> 4.0.0'
+gem 'sass-rails'
 
 #for checkboxes
 gem 'icheck-rails'

@@ -42,6 +42,7 @@ FoodStella::Application.routes.draw do
   resources :recipes  do
     member do
       get  'sidebar'
+      get  'get_recommended_recipes'
     end
 
     get :autocomplete_ingredient_name, on: :collection
@@ -59,6 +60,7 @@ FoodStella::Application.routes.draw do
     collection do 
       get :get_events
       post :move
+      post 'change_all_servings'
     end
 
     member do
@@ -75,6 +77,8 @@ FoodStella::Application.routes.draw do
   end
 
   mount Commontator::Engine => '/commontator'
+  # Serve websocket cable requests in-process
+  mount ActionCable.server => '/websocket'
 
 
 

@@ -47,9 +47,9 @@ class User < ActiveRecord::Base
     Relationship.create(follower_id: self.id, followed_id: dessert.id)
   end
 
-  has_many :preferred_ingredients, order: 'name'
+  has_many :preferred_ingredients, -> { order(name: :desc) }
   has_many :preferred,  through: :preferred_ingredients,  source: :ingredient
-  has_many :deferred_ingredients , order: 'name'
+  has_many :deferred_ingredients, -> { order(name: :desc) }
   has_many :deferred,   through: :deferred_ingredients,   source: :ingredient
 
   def self.preferred_ingredients(name)
@@ -259,5 +259,25 @@ class User < ActiveRecord::Base
     ['Registration date (oldest first)', 'created_at_asc']
   ]
   end
+
+  # Adds a 'to_fraction' method to Float. Eg. 0.5.to_fraction => [1,2]
+    def number_decimal_places(d)
+      self.to_s.length-2
+    end
+
+    def greatest_common_divisor(a, b)
+      while a%b != 0
+        a,b = b.round,(a%b).round
+      end 
+      return b
+    end
+    
+    def to_fraction(decimal)
+      # return decimal
+      higher = 10**decimal.to_s.length-2
+      lower = decimal*higher
+      gcden = greatest_common_divisor(higher, lower)
+      return (lower/gcden).round, (higher/gcden).round
+    end
 
 end

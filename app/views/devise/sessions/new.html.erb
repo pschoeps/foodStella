@@ -79,7 +79,8 @@
     <br />
 
     <!-- %= link_to "Facebook", user_omniauth_authorize_path(:facebook), style: 'color: blue;' %> -->
-    <%= link_to user_omniauth_authorize_path(:facebook) do %>
+    <!-- %= link_to user_facebook_omniauth_authorize_path(:facebook) do %> -->
+    <%= link_to user_facebook_omniauth_authorize_path do %>
       <%= image_tag('log_in_with_facebook.png') %>
       <!-- <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="false"></div> -->
     <% end %>

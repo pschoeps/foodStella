@@ -13,7 +13,7 @@ class Recipe < ActiveRecord::Base
                                    dependent:   :destroy   
 
   ratyrate_rateable "review"
-  has_many :rates, as: :rateable, foreign_key: "rateable_id"
+  has_many :ratings, as: :rateable, foreign_key: "rateable_id"
   has_many :rating_caches, as: :cacheable, foreign_key: "cacheable_id", class_name: RatingCache
 
   acts_as_commontable
@@ -31,7 +31,7 @@ class Recipe < ActiveRecord::Base
   accepts_nested_attributes_for :instructions, allow_destroy: true
 
   validates :name, presence: true
-  validates :category, presence: true
+  # validates :category, presence: true
   validate  :picture_size
   validate :instructions_order
 
@@ -554,6 +554,24 @@ class Recipe < ActiveRecord::Base
 
   def ratings_count
     Rate.where("rateable_id = ?", id).length
+  end
+
+  def get_meal_type(typ)
+    string = case typ 
+                when "1"
+                  "Snack"
+                when "2"
+                  "Side Dish"
+                when "3"
+                  "Main Dish"
+                when "4"
+                  "Dessert"
+                when "5"
+                  "Drink"
+                # when "6"
+                   # "Appetizer"
+                end
+    string
   end
 
 end

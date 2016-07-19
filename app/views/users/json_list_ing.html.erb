@@ -1,0 +1,16 @@
+
+[<br>
+<% @recipes.each do |r| %>
+  <% r.ingredients.each do |i| %>
+    <% i.quantities.where(recipe_id: r.id).each do |q| %>
+    {
+					    "ingredient_id": "<%= i.id %>",
+      				 	"recipe_id": <%= r.id %>,
+      					"detail": "<%= q.detail %>",
+      					"quantity": "<%= q.amount %>",
+      					"ingredient": "<%= i.name %>"
+    },<br>
+    <% end %>
+  <% end %>
+<% end %>
+]

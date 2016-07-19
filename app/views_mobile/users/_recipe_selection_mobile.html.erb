@@ -8,10 +8,10 @@
       <div class="alert alert-danger" id="meal-removed-alert" role="alert">Recipe removed from planner.</div>
     </div>
   	<div class="meal-selection">
-       <button type="button" id="snacks">
+       <span id="snacks" class="mobile-selection-button">
           Snacks
           <span class="badge"><%= snacks.count %></span>
-       </button>
+       </span>
       <div class="selection" id="snacks-selection" style="display: <%= expanded[0] %>">
           <div id='external-events'>
             <div id='external-events-listing'>
@@ -22,10 +22,10 @@
           </div>
       </div>
 
-      <button type="button" id="sidedish">
+      <span id="sidedish" class="mobile-selection-button">
           Side Dishes
           <span class="badge"><%= side_dishes.count %></span>
-       </button>
+       </span>
       <div class="selection" id="sidedish-selection" style="display: <%= expanded[1] %>">
           <div id='external-events'>
             <div id='external-events-listing'>
@@ -36,10 +36,10 @@
           </div>
       </div>
 
-      <button type="button" id="maindish">
+      <span id="maindish" class="mobile-selection-button">
           Main Dishes
           <span class="badge"><%= main_dishes.count %></span>
-       </button>
+       </span>
       <div class="selection" id="maindish-selection" style="display: <%= expanded[2] %>">
           <div id='external-events'>
             <div id='external-events-listing'>
@@ -50,10 +50,10 @@
           </div>
       </div>
 
-      <button type="button" id="dessert">
+      <span id="dessert" class="mobile-selection-button">
           Desserts
           <span class="badge"><%= desserts.count %></span>
-       </button>
+       </span>
       <div class="selection" id="dessert-selection" style="display: <%= expanded[3] %>">
           <div id='external-events'>
             <div id='external-events-listing'>
@@ -64,10 +64,10 @@
           </div>
       </div>
 
-      <button type="button" id="drink">
+      <span id="drink" class="mobile-selection-button">
           Drinks
           <span class="badge"><%= drinks.count %></span>
-       </button>
+       </span>
       <div class="selection" id="drink-selection" style="display: <%= expanded[4] %>">
           <div id='external-events'>
             <div id='external-events-listing'>

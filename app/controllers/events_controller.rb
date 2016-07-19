@@ -58,6 +58,34 @@ class EventsController < ApplicationController
     end
   end
 
+  def change_all_servings
+    events = params[:events]
+    if params[:add] == "true"
+      events.each do |event|
+        event_object = Event.find(event.to_i)
+        if event_object.servings == nil
+          new_serving = Recipe.find(event_object.recipe_id).servings + 1
+        else
+          new_serving = event_object.servings + 1
+        end
+        event_object.update_attributes!(servings: new_serving)
+      end
+    else
+      events.each do |event|
+        event_object = Event.find(event.to_i)
+        puts event_object
+        if event_object.servings == nil 
+          new_serving = Recipe.find(event_object.recipe_id).servings - 1
+        else
+          new_serving = event_object.servings - 1
+        end
+        event_object.update_attributes!(servings: new_serving)
+      end
+    end
+    respond_to do |format|
+      format.js
+    end
+  end
 #  def get_events
 #    @events = Event.find(:all, :conditions => ["starttime >= '#{Time.at(params['start'].to_i).to_formatted_s(:db)}' and endtime <= '#{Time.at(params['end'].to_i).to_formatted_s(:db)}'"] )
 #    events = [] 

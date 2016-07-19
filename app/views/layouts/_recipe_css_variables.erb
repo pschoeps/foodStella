@@ -1,4 +1,4 @@
-<% content_for(:style) do %>
+<% content_for :style do %>
 
   <% @recipes.each do |recipe| %>
     .<%= recipe.get_friendly_name %>id-<%= recipe.id %> {

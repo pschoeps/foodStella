@@ -6,14 +6,17 @@ adding better way to sort ingredients
 look into recommendations
 prioritize foods that are in my planner
 //change popup on daily and weekly planner view to pop up where the user is on the screen
-make popup closer actual views
-finish weekly desktop view
+//make popup closer actual views
+//finish weekly desktop view
 //change so that you can manually slide on mobile view for zoom
 //add generate calendar button to day view and make it accurate
 make box for recipe drop glow when you hover over it
-customize json views
+//customize json views
 look into making sql calls from python
-get third party libraries in
+//get third party libraries in
+fix mailer
+
+keep sidebar from scrolling down
 
 
 recipes.json {
@@ -36,7 +39,15 @@ third party: pandas
 dumps whold file into a dataframe which can clean using c++ (faster)
 
 desktop-meal is present in day_calenddar, but changing it breaks meals
-mobile and day views (not calendar) need to redefine data attr's to be more useful
+mobile and day views (not calendar) 
+need to redefine data attr's to be more useful
+
+integrate forgot password sending
+//change "add breakfast" to "drag breakfast"
+//some servings aren't changing in the day 
+
+add the ability to change the serving size for every event in your planner (for every other event created)
+
 
 
 

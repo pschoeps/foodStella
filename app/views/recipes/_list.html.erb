@@ -17,8 +17,8 @@
         <div class="details">
           <h3><%= truncate(recipe.name, length: 30) %></h3>
           <p><%= truncate(recipe.description, length: 60) %></p>
-          <span class="cook-time">Cook Time: <p><%= recipe.get_short_time('cook') %></p></span>
-          <span class="prep-time">Prep Time: <p><%= recipe.get_short_time('prep') %></p></span>
+          <span class='cook-time'>Cook Time: <p><%= recipe.get_short_time('cook') %></p></span>
+          <span class='prep-time'>Prep Time: <p><%= recipe.get_short_time('prep') %></p></span>
           <span class="rating">
             <% if recipe.ratings_count == 1 %>
               1 Rating: 
