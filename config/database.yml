@@ -19,7 +19,6 @@ development:
   encoding: unicode
   database: foodStella_development
   pool: 5
-  # username: pschoeps
   # username: salsaia
   username: pschoeps
   password:

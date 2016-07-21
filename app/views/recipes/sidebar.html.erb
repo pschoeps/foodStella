@@ -111,10 +111,11 @@
   };
 
 
-  function resetSidebar(){
+  function resetSidebar_RecipesOnly(){
+    console.log('recipes only');
     $('#sidebar-col').trigger('detach.ScrollToFixed');
     $('#sidebar-col').scrollToFixed({
-      limit: $('.footer').offset().top - $('#sidebar-col').height(),
+      // limit: $('.footer').offset().top - $('#sidebar-col').height(),
       spacerClass: 'sidebar-spacer'
     });
       $('#sidebar-col').css('overflow', 'hidden');
@@ -160,17 +161,17 @@
 
            // active remove listener again
 
-           resetSidebar();
+           resetSidebar_RecipesOnly();
           }
         });//end ajax call
   }
 
   $(document).ready(function() {
     
-      resetSidebar();
+      resetSidebar_RecipesOnly();
 
       $(window).resize( function(e){
-        resetSidebar();
+        resetSidebar_RecipesOnly();
       });
 
       $('.sidebar').scroll(function(e){
@@ -235,7 +236,7 @@
      $(document).on('click','#show_more_link',function(){
         $.ajax({
           success:function(){
-            resetSidebar();
+            resetSidebar_RecipesOnly();
             // resetStars();
           }
         });
