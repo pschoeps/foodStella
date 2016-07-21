@@ -16,6 +16,13 @@ $('.users.calendar').ready(function() {
       startAt = date + time 
 
       recipe = $(ui.draggable)
+
+      if ($(recipe).attr('id') == "in-list-recommended") {
+        console.log("from recommended")
+        imageUrl = recipe.attr('data-image-src')
+        console.log(imageUrl)
+      }
+
       recipeId = recipe.attr('data-id')
       recipeName = recipe.attr('data')
       recipeFriendlyName = recipe.attr('data-name')
@@ -38,7 +45,7 @@ $('.users.calendar').ready(function() {
           dateDiv = '#' + date
           mealDiv = $(dateDiv).find('#' + mealData)
 
-          $(mealDiv).find('.added-meals').append("<div class='meal week-meal desktop-meal' data="+recipeId+"><a class='desktop-event fc-event-container "+recipeName+"' id='mobile-event' data-event="+response+" data-recipe="+recipeId+" data-image="+recipeName+" data-servings="+recipeServings+" data-recipe-name="+recipeFriendlyName+"><span class='delete-event'></span><span class='servings' id='desktop-week-servings'>"+recipeServings+"s</span><span class='event-title' style='background-color: "+mealColor+"'>"+recipeFriendlyName+"</span></a><div class='change-servings-box hidden'><span class='change-servings-box-close'>close</span><span class='glyphicon glyphicon-minus change-serving' id='minus-serving' aria-hidden='true'></span><span id='num-servings' data="+response+" data-servings="+recipeServings+">"+recipeServings+"</span><span class='glyphicon glyphicon-plus change-serving add' id='add-serving' aria-hidden=true></span></div>") 
+          $(mealDiv).find('.added-meals').append("<div class='meal week-meal desktop-meal "+recipeName+"' data="+recipeId+"><a class='desktop-event fc-event-container "+recipeName+"' id='mobile-event' data-event="+response+" data-recipe="+recipeId+" data-image="+recipeName+" data-servings="+recipeServings+" data-recipe-name="+recipeFriendlyName+"><span class='delete-event'></span><span class='servings' id='desktop-week-servings'>"+recipeServings+"s</span><span class='event-title' style='background-color: "+mealColor+"'>"+recipeFriendlyName+"</span></a><div class='change-servings-box hidden'><span class='change-servings-box-close'>close</span><span class='glyphicon glyphicon-minus change-serving' id='minus-serving' aria-hidden='true'></span><span id='num-servings' data="+response+" data-servings="+recipeServings+">"+recipeServings+"</span><span class='glyphicon glyphicon-plus change-serving add' id='add-serving' aria-hidden=true></span></div>") 
           var addMealBig = $(mealDiv).children('.add-meal-big')
           var addMealSmall = $(mealDiv).children('.add-meal-short')
           var childCount =  $(mealDiv).children('.added-meals').children('.meal').length;
@@ -49,12 +56,30 @@ $('.users.calendar').ready(function() {
           //in the meal types category will be 1
           $(addMealBig).attr("id", "hidden")
           $(addMealSmall).removeAttr("id")
+          if (imageUrl) { //evaling if a recipe was dropped from the recommended view, in which case follow the recipe and take a different method for adding image
+            console.log(true)
+            meals = $(mealDiv).find('.added-meals').children('.'+recipeName)
+            $(meals).find('a').css('background-image', "url("+imageUrl+")"); 
+            followRecipe(recipeId);
+          }
         } 
       });//end ajax call
 
 
     }
-  })
+  });
+
+  function followRecipe(recipeId) {
+    data = {id:recipeId}
+    $.ajax({//ajax call 
+        type:'POST',
+        data: data,
+        url:'/relationships',
+        success:function (response) {
+          console.log("this was succesful")
+        }
+    });//end ajax call
+  }
 
   $(document).on('click', '.delete-event', function() {
     console.log("clicked")

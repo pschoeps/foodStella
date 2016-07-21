@@ -6,7 +6,7 @@
 </div>
 
 <div class= "row">
-  <div class="col-md-12 filter-bar">
+  <div class="col-md-12 filter-bar" data-intro='<%= render 'tutorial/step_two' %>' data-step='2'>
     <%= render(
       partial: 'filter_form',
       locals: {filtering_by: params[:filterrific] }
@@ -16,7 +16,7 @@
 
 <div class="row recipes-page">
 
-  <div id='sidebar-col' class='col-xs-3'>
+  <div id='sidebar-col' class='col-xs-3' data-intro='<%= render 'tutorial/step_three' %>' data-step='3' data-position='top'>
   <%= render(
     partial: 'recipes/sidebar',
     locals: {
@@ -35,7 +35,7 @@
 <div style='display:none' id='refresh-sidebar'>
   <!-- %= link_to 'Refresh recipes', action: :sidebar, remote: true, expanded: [], id: 'doesntmatter' %> -->
 </div>
-  <div class="col-sm-9 sidebar-content" id="recipes-col">
+  <div class="col-sm-9 sidebar-content" id="recipes-col"  data-intro='<%= render 'tutorial/step_one' %>' data-step='1' data-position='top'>
 
     <%= render(
       partial: 'recipes/list',
@@ -47,6 +47,21 @@
 
 
 <script>
+
+if (gon.user_login_count == 1) {
+  $('.recipes.index').ready(function() {
+    var intro = introJs();
+    intro.setOptions({
+      scrollToElement: false
+    });
+    intro.start();
+    $('.footer').css('display', 'none')
+
+    $('.introjs-skipbutton').click(function() {
+      $('.footer').css('display', 'block')
+    })
+  });
+};
 
 
   // copied from ratyrate.js.erb
@@ -111,8 +126,6 @@
   };
 
 
-<<<<<<< HEAD
-=======
   function resetSidebar(){
     console.log('RESET');
     $('#sidebar-col').trigger('detach.ScrollToFixed');
@@ -128,7 +141,6 @@
     // }
   }
 
->>>>>>> 5f41dd2bb6be15f6b3957a117559bd8913c3be63
   function updateMyFoods(new_recipe_id){
     var expandedSections = [];
       $('.selection').each(function(){

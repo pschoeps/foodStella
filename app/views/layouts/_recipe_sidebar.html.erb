@@ -89,8 +89,8 @@
     </div>
 
     <% if @calendar %>
-      <h1 class='recommended-header'>Recommended:</h1>
       <div class="recommended-recipes">
+        <h1 class='recommended-header'>Recommended:</h1>
       </div>
     <% end %>
   </div>
@@ -104,38 +104,58 @@
 $(document).ready(function(){
 
     $('#snacks').click(function() {
-    if ( $('#snacks-selection').css('display') == 'none' )
+    if ( $('#snacks-selection').css('display') == 'none' ) {
       $('#snacks-selection').css('display','block');
-    else
+      $('.recommended-recipes').css('display', 'none');
+    }
+    else {
       $('#snacks-selection').css('display','none');
+      $('.recommended-recipes').css('display', 'block');
+    }
   });
 
   $('#sidedish').click(function() {
-    if ( $('#sidedish-selection').css('display') == 'none' )
+    if ( $('#sidedish-selection').css('display') == 'none' ) {
       $('#sidedish-selection').css('display','block');
-    else
+      $('.recommended-recipes').css('display', 'none');
+    }
+    else {
       $('#sidedish-selection').css('display','none');
+      $('.recommended-recipes').css('display', 'block');
+    }
   });
 
   $('#maindish').click(function() {
-    if ( $('#maindish-selection').css('display') == 'none' )
+    if ( $('#maindish-selection').css('display') == 'none' ) {
       $('#maindish-selection').css('display','block');
-    else
+      $('.recommended-recipes').css('display', 'none');
+    }
+    else {
       $('#maindish-selection').css('display','none');
+      $('.recommended-recipes').css('display', 'block');
+    }
   });
 
   $('#dessert').click(function() {
-    if ( $('#dessert-selection').css('display') == 'none' )
+    if ( $('#dessert-selection').css('display') == 'none' ) {
       $('#dessert-selection').css('display','block');
-    else
+      $('.recommended-recipes').css('display', 'none');
+    }
+    else {
       $('#dessert-selection').css('display','none');
+      $('.recommended-recipes').css('display', 'block');
+    }
   });
 
   $('#drink').click(function() {
-    if ( $('#drink-selection').css('display') == 'none' )
+    if ( $('#drink-selection').css('display') == 'none' ) {
       $('#drink-selection').css('display','block');
-    else
+      $('.recommended-recipes').css('display', 'none');
+    }
+    else {
       $('#drink-selection').css('display','none');
+      $('.recommended-recipes').css('display', 'block')
+    }
   });
 
 

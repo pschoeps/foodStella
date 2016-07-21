@@ -179,7 +179,7 @@ class UsersController < ApplicationController
 	  recommended_recipe_ids = params[:ids]
 	  loader_counter = 0
 	  recommended_recipe_ids.each do |r|
-		response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend_fake")
+		response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend?"+recipe_id+"")
 		puts response.body
 		response = response.body
 		if response
@@ -194,7 +194,7 @@ class UsersController < ApplicationController
             pic = recipe.retrieve_pic
             friendly_name = recipe.get_friendly_name
             truncated_name = truncate(recipe.name, length: 30)
-            ActionCable.server.broadcast 'recommended',
+            ActionCable.server.broadcast "recommended_#{current_user.id}",
               recipe: recipe,
           	  pic: pic,
           	  recipe_class: "#{friendly_name}-#{recipe.id}",
@@ -220,6 +220,7 @@ class UsersController < ApplicationController
 
 	def calendar
 		gon.dayView = false
+		gon.user_id = current_user.id
 		gon.recommended_recipe_ids = @recommended_recipe_ids
 		if params[:zoom_level]
 		  gon.zoomLevel = params[:zoom_level]
@@ -264,6 +265,7 @@ class UsersController < ApplicationController
 	end
 
 	def day_calendar
+		gon.user_id = current_user.id
 		unless mobile_device?
 		  gon.recipes_page = true
 		end

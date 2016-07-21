@@ -81,6 +81,7 @@ class RecipesController < ApplicationController
     @others_photos = @recipe.others_photos
     gon.recipes_page = true
     gon.recipe_id = @recipe.id
+    gon.user_id = current_user.id
   end
 
   def get_recommended_recipes
@@ -106,10 +107,12 @@ class RecipesController < ApplicationController
         truncated_name = truncate(recipe.name, length: 55)
 
         puts "just before action cable"
-        ActionCable.server.broadcast 'recommended',
+       # RecommendedChannel.broadcast_to(
+        ActionCable.server.broadcast "recommended_#{current_user.id}",
           recipe: recipe,
           pic: pic,
           truncated_name: truncated_name
+        #)
       end
 
     end
@@ -163,6 +166,7 @@ class RecipesController < ApplicationController
   end
 
   def index
+    gon.user_login_count = current_user.sign_in_count
     gon.recipes_page = true
     #variables contained in recipes sidebar
     @followed_recipes = current_user.following

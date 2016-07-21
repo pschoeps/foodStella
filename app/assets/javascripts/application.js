@@ -26,8 +26,7 @@
 //= require jqueryTouchPunch
 //= require autocomplete-rails
 //= require rails-jquery-tokeninput
-//= require fullcalendar-local
-//= require scheduler-local
+//= require introjs
 //= require cocoon
 //= require filterrific/filterrific-jquery
 //= require universal

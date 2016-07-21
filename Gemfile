@@ -13,6 +13,9 @@ gem 'pg'
 gem 'redis'
 gem 'puma'
 
+#for first time users
+gem "introjs-rails"
+
 
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '2.5.3'

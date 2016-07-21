@@ -215,6 +215,9 @@ GEM
       rails (>= 3.1.0)
       sass-rails
     inflecto (0.0.2)
+    introjs-rails (1.0.0)
+      sass-rails (>= 3.2)
+      thor (~> 0.14)
     ipaddress (0.8.3)
     jbuilder (1.5.3)
       activesupport (>= 3.0.0)
@@ -378,6 +381,7 @@ DEPENDENCIES
   gon
   httparty
   icheck-rails
+  introjs-rails
   jbuilder (~> 1.2)
   jquery-rails
   jquery-ui-rails

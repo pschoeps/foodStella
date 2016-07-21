@@ -13,6 +13,7 @@
  *= require token-input-facebook
  *= require jquery-ui
  *= require jquery-ui/slider
+ *= require introjs
  */
 
 @import "bootstrap-sprockets";
@@ -21,7 +22,6 @@
 @import "users";
 @import "profiles";
 @import "fullcalendar";
-@import "scheduler";
 @import "recipes";
 @import "calendar";
 @import "feedback";
