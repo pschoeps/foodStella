@@ -179,7 +179,7 @@ class UsersController < ApplicationController
 	  recommended_recipe_ids = params[:ids]
 	  loader_counter = 0
 	  recommended_recipe_ids.each do |r|
-		response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend?"+recipe_id+"")
+		response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend?"+r+"")
 		puts response.body
 		response = response.body
 		if response
