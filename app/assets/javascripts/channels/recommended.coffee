@@ -14,9 +14,10 @@ $('.users.day_calendar, .users.calendar').ready ->
   App.recommendations = App.cable.subscriptions.create { channel: "RecommendedChannel", id: gon.user_id },
     received: (data) ->
       console.log("recieved data")
+      console.log(data)
       recipe = data.recipe
       recommended_recipes_container = $('.sidebar').find('.recommended-recipes')
-      $(recommended_recipes_container).append("<div class='fc-event "+data.recipe_class+"' id='in-list-recommended' data-id="+recipe.id+" data-image-src="+data.pic+" data-servings="+recipe.servings+" data-name="+data.truncated_name+" data="+data.recipe_friendly_name+"><span class='recipe-title'>"+data.truncated_name+"</span><img src='"+data.pic+"' alt='"+recipe.name+"'></div>")
+      $(recommended_recipes_container).append("<div class='fc-event "+data.recipe_class+"' id='in-list-recommended' data-id="+recipe.id+" data-image-src="+data.pic+" data-servings="+recipe.servings+" data-name='"+data.truncated_name_small+"' data="+data.recipe_friendly_name+"><span class='recipe-title'>"+data.truncated_name+"</span><img src='"+data.pic+"' alt='"+recipe.name+"'></div>")
       $('.fc-event').draggable({
                       zIndex: 999,
                       revert: true,      # will cause the event to go back to its
