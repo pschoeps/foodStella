@@ -122,12 +122,13 @@
                 type:'POST',
                 data: {id: recipe_id},
                 url:'/relationships',
-
-                success:function (response) {
-                  console.log('done');
+                beforeSend:function() {
                   $this.addClass("spatula-selected");
                   $this.attr('id', 'unfollow');
                   $this.removeClass("spatula-unselected");
+                },
+                success:function (response) {
+                  console.log('done');
                 }
               });//end ajax call
     });
@@ -140,8 +141,7 @@
                   type:'DELETE',
                   data: {id: recipe_id},
                   url:"/relationships/" + recipe_id,
-              
-                  success:function (response) {
+                  beforeSend:function() {
                     $this.addClass("spatula-unselected");
                     $this.attr('id', 'follow');
                     $this.removeClass("spatula-selected");

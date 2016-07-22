@@ -35,7 +35,7 @@
 <div style='display:none' id='refresh-sidebar'>
   <!-- %= link_to 'Refresh recipes', action: :sidebar, remote: true, expanded: [], id: 'doesntmatter' %> -->
 </div>
-  <div class="col-sm-9 sidebar-content" id="recipes-col"  data-intro='<%= render 'tutorial/step_one' %>' data-step='1' data-position='top'>
+  <div class="col-sm-9 sidebar-content" id="recipes-col" data-intro='<%= render 'tutorial/step_one' %>' data-step='1' data-position='top'>
 
     <%= render(
       partial: 'recipes/list',
@@ -181,7 +181,6 @@
                   type:'POST',
                   data: {id: recipe_id},
                   url:'/relationships',
-
                   success:function (response) {
                     console.log('done');
                   	$this.addClass("spatula-selected");

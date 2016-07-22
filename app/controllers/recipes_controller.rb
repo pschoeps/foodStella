@@ -86,7 +86,7 @@ class RecipesController < ApplicationController
 
   def get_recommended_recipes
     recipe_id = params[:recipe_id]
-    response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend?recipe="+recipe_id+"")
+    response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend_fake?recipe="+recipe_id+"")
     puts response.body, response.code, response.message, response.headers.inspect
     puts "searchy"
     response = response.body
@@ -99,20 +99,17 @@ class RecipesController < ApplicationController
 
     array.each do |response|
       puts response
-      puts "search for response"
-      if Recipe.exists?(id: response)
+      #check if the recipe exists and make sure the response isn't the recipe of the current page
+      if Recipe.exists?(id: response) && response.to_i != recipe_id.to_i
         puts "the recipe exists"
         recipe = Recipe.find(response)
         pic = recipe.retrieve_pic
         truncated_name = truncate(recipe.name, length: 55)
 
-        puts "just before action cable"
-       # RecommendedChannel.broadcast_to(
         ActionCable.server.broadcast "recommended_#{current_user.id}",
           recipe: recipe,
           pic: pic,
           truncated_name: truncated_name
-        #)
       end
 
     end
