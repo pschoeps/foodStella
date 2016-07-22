@@ -7,7 +7,7 @@
     <h2><%= @days_from_week.first.strftime("%B") %></h2>
     <span class="week-subtitle"><%= @week_subtitle %></span>
     <a href="/users/<%= current_user.id %>/calendar" class="next-arrow-link next-week-link" data=<%= params[:week_counter] %>><span class="arrow arrow-right" id="next-week" aria-hidden="true"></span></a>
-    <span class="shopping-cart" aria-hidden="true"></span>
+    <%= link_to "", shopping_list_user_path(current_user, view_type: "week", day: @day), id: "gen-shop-list", class: "shopping-cart" %>
   </div>
 </div>
 

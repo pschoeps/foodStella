@@ -346,6 +346,12 @@ input:-webkit-autofill {
 }
 
 /* shopping list */
+
+#shopping-list-mobile {
+	min-width: 0px;
+	max-width: 100%;
+	float: none;
+}
 .shopping-list {
 	margin: 0;
 	padding: 0;

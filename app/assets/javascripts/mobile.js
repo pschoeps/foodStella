@@ -1,4 +1,4 @@
-$('.users.day_calendar.mobile, .users.calendar.mobile').ready(function() {
+$('.users.day_calendar.mobile, .users.calendar.mobile, .users.shopping_list.mobile').ready(function() {
 
     // exclude from recipes views to avoid conflicts
     if (gon.recipes_page) { 
@@ -6,10 +6,8 @@ $('.users.day_calendar.mobile, .users.calendar.mobile').ready(function() {
       return;
      }
 
-    // not the best way of escaping, so please replace if you know of a more foolproof way
-
-
     calcContainerHeight()
+
 
     //hide color defs
   	$('#hide-chevron').click(function() {
@@ -135,7 +133,22 @@ $('.users.day_calendar.mobile, .users.calendar.mobile').ready(function() {
       $('.day-selector-mobile').css('display', 'none');
     })
 
-    //user clicked the 'add meal' box
+    //user clicked on the spatula just under the nav bar, opening up a dummmy selection of add foods modal
+    console.log("just before")
+    $('.spatula-mobile').click(function() {
+      console.log("spatula clicked")
+      //set date string to empty if they open my foods without a day selected
+      scrollTop = $(document).scrollTop();
+      $(".recipe-selection-mobile").css("top", scrollTop)
+      $(".recipe-selection-mobile").css("display", "block");
+      //remove click events so that a user cannot add a recipe if clicked into from the spatula
+      $('.fc-event').css('pointer-events', 'none');
+
+
+      
+    });
+
+    //user clicked the 'add meal' box, opening up the recipe selection modal
   	$('.add-meal').click(function() { 
   		date = $(this).attr('data');
   		meal = $(this).attr('data-one');
@@ -177,6 +190,7 @@ $('.users.day_calendar.mobile, .users.calendar.mobile').ready(function() {
           selected.remove()
 
       })
+      $('.fc-event').css('pointer-events', 'initial');
   	});
 
     //user clicked x in the event actions modal

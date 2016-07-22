@@ -1,12 +1,12 @@
 <%= render 'layouts/recipe_css_variables' %>
 
-<div class="row shadow-header">
+<div class="row shadow-header"  data-intro='<%= render 'tutorial/step_one' %>' data-step='1' data-position='bottom'>
   <div class="col-md-12 recipe-page-header mobile">
-    <h1>What do you <i>stella</i> today?</h1>
+    <h1>What do you <i>stella</i> today?</h1 >
   </div>
 </div>
 
-<div class="row planner-view-control recipes <%= 'fixed-margin' if @mobile_tab == 'recipes' %>">
+<div class="row planner-view-control recipes <%= 'fixed-margin' if @mobile_tab == 'recipes' %>" data-intro='<%= render 'tutorial/step_three' %>' data-step='3' data-position='top'>
   <div class="col-sm-6 disable-margins disable-padding">
     <%= link_to sidebar_path(:mobile => true) do %>
       <button class="week-view-button"><div class="spatula"></div> My Foods</button>
@@ -19,7 +19,7 @@
   </div>
 </div>
 
-  <div class= "row fixed-filter-bar">
+  <div class= "row fixed-filter-bar"  data-intro='<%= render 'tutorial/step_two' %>' data-step='2'>
     <div class="col-md-12 filter-bar mobile">
       <%= render(
         partial: 'filter_form_mobile',

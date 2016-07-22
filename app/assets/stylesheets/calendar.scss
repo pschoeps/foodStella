@@ -95,6 +95,14 @@ $outer-container: 90%;
     z-index: 40;
 }
 
+.recommended-recipes .fc-event span a {
+    color: white;
+    text-decoration: none;
+    width: 100%;
+    position: relative;
+    left: 5%;
+}
+
 #in-list-recommended {
     height: 10em;
     width: 10em;
@@ -259,6 +267,7 @@ $outer-container: 90%;
 
                     a {
                         color: white;
+                        text-decoration: none;
                     }
                 }
             }
@@ -731,6 +740,7 @@ $outer-container: 90%;
     .spatula-mobile {
         width: 3.5em;
         height: 100%;
+        z-index: 300;
 
         img {
             height: 35px;
@@ -795,10 +805,13 @@ $outer-container: 90%;
 
     h2 {
         position: absolute;
-        width: 100%;
-        height: 2em;
-        top: 25%;
+        width: 10em;
+        height: 100%;
+        top: 0%;
+        padding-top: 15px;
         margin: 0;
+        left: 50%;
+        transform: translateX(-50%);
         color: $green;
         letter-spacing: 3px;
         font-size: 1.75em;
@@ -807,7 +820,7 @@ $outer-container: 90%;
 
     .week-subtitle {
         position: absolute;
-        top: 3.3em;
+        top: 3.6em;
         letter-spacing: .75px;
         width: 100%;
         font-size: .8em;
@@ -1157,6 +1170,7 @@ $outer-container: 90%;
             bottom: 0;
             a {
                 color: white;
+                text-decoration: none;
             }
         }
         button {

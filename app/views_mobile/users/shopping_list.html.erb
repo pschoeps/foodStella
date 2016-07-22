@@ -1,0 +1,55 @@
+<div class="row week-nav">
+  <div class="col-sm-12 disable-margins disable-padding planner-mobile-header">
+    <div class="spatula-mobile"><%= image_tag 'icons/spatula-selected.png' %></div>
+    <h2>Shopping List</h2>
+  </div>
+</div>
+
+<div class="row shopping-list" id="shopping-list-mobile">
+  <div class="col-md-12 shopping-list-container">
+    <div class="list-box">
+        <ol>
+          <% @shopping_items.each do |s| %>
+              <li>
+                <label>
+                   <input type="checkbox" class='icheck-me' data-skin="minimal" data-color="green">
+                    <%= s[0] %> <%= s[1] %> <%= s[2] %>
+                </label>
+              </li>
+          <% end %>
+            <li style="float:none; clear:both;"></li>
+        </ol>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-4 shopping-list-recipes">
+    <div class="shopping-list-header">
+      <h1>Recipes</h1>
+    </div>
+    <div class='list-box'>
+      <ol>
+        <% @planned_recipes.uniq.each do |r| %>
+          <li>
+            <%= '(' + @planned_recipes.count(r).to_s + ')' if @planned_recipes.count(r) > 1 %> <%= link_to r.name, recipe_path(r) %>
+          </li>
+        <% end %>
+      </ol>
+    </div>
+  </div>
+</div>
+
+
+
+<%= render(
+    partial: 'recipe_selection_mobile',
+    locals: {
+      snacks: @snacks,
+      side_dishes: @side_dishes,
+      main_dishes: @main_dishes,
+      desserts: @desserts,
+      drinks: @drinks,
+      expanded: @expanded
+    }
+  ) %>

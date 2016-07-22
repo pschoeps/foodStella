@@ -179,7 +179,7 @@ class UsersController < ApplicationController
 	  recommended_recipe_ids = params[:ids]
 	  loader_counter = 0
 	  recommended_recipe_ids.each do |r|
-		response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend?recipe="+r+"")
+		response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend_fake?recipe="+r+"")
 		puts response.body
 		response = response.body
 		if response
@@ -323,6 +323,10 @@ class UsersController < ApplicationController
     end
 
     def shopping_list
+    	gon.dayView = false
+		gon.user_id = current_user.id
+
+		#@layout = false
 
 		@expanded = ['false','false','false','false','false']
 		if params[:day]

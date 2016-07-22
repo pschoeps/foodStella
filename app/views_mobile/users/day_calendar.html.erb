@@ -6,7 +6,7 @@
     <a href="/users/<%= current_user.id %>/day_calendar" class="prev-arrow-link prev-day-link" data=<%= params[:week_counter] %>><span id="prev-day" class="arrow arrow-left" aria-hidden="true"></span></a>
     <h2><%= @day.strftime("%A") %></h2>
     <a href="/users/<%= current_user.id %>/day_calendar" class="next-arrow-link next-day-link" data=<%= params[:week_counter] %>><span class="arrow arrow-right" id="next-day" aria-hidden="true"></span></a>
-    <span class="shopping-cart" aria-hidden="true"></span>
+    <%= link_to "", shopping_list_user_path(current_user, view_type: "day", day: @day), id: "gen-shop-list", class: "shopping-cart" %>
   </div>
 </div>
 
