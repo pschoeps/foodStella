@@ -86,7 +86,7 @@ class RecipesController < ApplicationController
 
   def get_recommended_recipes
     recipe_id = params[:recipe_id]
-    response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend_fake?recipe="+recipe_id+"")
+    response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend?recipe="+recipe_id+"")
     puts response.body, response.code, response.message, response.headers.inspect
     puts "searchy"
     response = response.body
