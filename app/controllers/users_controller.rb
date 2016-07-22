@@ -179,7 +179,7 @@ class UsersController < ApplicationController
 	  recommended_recipe_ids = params[:ids]
 	  loader_counter = 0
 	  recommended_recipe_ids.each do |r|
-		response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend_fake?recipe="+r+"")
+		response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend?recipe="+r+"")
 		puts response.body
 		response = response.body
 		if response
@@ -187,7 +187,6 @@ class UsersController < ApplicationController
       	  array = YAML::load(response)
     	end
     	array.each do |response|
-    	  puts "array first three"
     	  if Recipe.exists?(id: response.to_i)
             puts "the recipe exists"
             recipe = Recipe.find(response)
