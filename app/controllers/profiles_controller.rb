@@ -119,7 +119,8 @@ class ProfilesController < ApplicationController
 
 		@editable = @myself
 		@friends = @user.friends
-		@others = User.find(:all, :conditions => ["id != ?", current_user.id])
+		# @others = User.find(:all, :conditions => ["id != ?", current_user.id])
+		@others = User.where.not(id: current_user.id)
 		@pending = @myself? @user.pending_friends : []
 		@requests = @myself? @user.requested_friends : []
 
