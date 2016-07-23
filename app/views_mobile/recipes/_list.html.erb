@@ -1,0 +1,76 @@
+<div id="filterrific_results">
+
+    <% if recipes.empty? %>
+      <div class='empty-results'>
+        No recipes match your filters. Try broadening your search.
+      </div>
+    <% end %>
+
+    <ul>
+
+    <% recipes.each do |recipe| %>
+      <li> 
+
+        <div class="box">
+          <%= link_to image_tag(recipe.retrieve_pic), {:action => 'show', :controller => 'recipes', :id => recipe.id} %>
+        </div>
+
+        <div class="details">
+          <h3><%= truncate(recipe.name, length: 30) %></h3>
+          <p><%= truncate(recipe.description, length: 60) %></p>
+          <span class='cook-time'>Cook Time: <p><%= recipe.get_short_time('cook') %></p></span>
+          <span class='prep-time'>Prep Time: <p><%= recipe.get_short_time('prep') %></p></span>
+          <span class="rating">
+            <% if recipe.ratings_count == 1 %>
+              1 Rating: 
+            <% else %>
+              <%= recipe.ratings_count %> Ratings: 
+            <% end %>
+            <%= rating_for recipe, "review", disable_after_rate: false, cancel_hint: 'readonly' %>
+          </span>
+          <div class="recipe-footer">
+            <% if recipe.user_id != 0 %>
+              <p>Recipe By: <%= recipe.get_user(recipe.user_id).retrieve_name('check') %></p>
+              <% else %>
+              <p>Stock</p>
+            <% end %>
+          </div>
+        
+        </div>
+
+          <% unless current_user.owns?(recipe) %>
+            <% if current_user.following?(recipe) %>
+              <div data="<%= recipe.id %>" class="spatula spatula-selected" id="unfollow"></div> 
+            <% else %>
+              <div data="<%= recipe.id %>" class="spatula spatula-unselected" id="follow"></div> 
+            <% end %>
+          <% end %>
+
+
+       </li>
+    <% end %>
+
+
+  </ul>
+
+
+</div>
+
+<div class="clear" style="text-align:center;">
+  <!-- <div class="col-sm-9 sidebar-content" id="show-more"> -->
+    <% unless recipes.total_pages == recipes.current_page %>
+       <%= link_to recipes_next_page_path(page: recipes.next_page, fillterrific: params[:filterrific]), :remote => true, :id => 'show_more_link' do %>
+         Load More
+      <% end %>
+
+       <!-- %= recipes.current_page.to_s + '/' + recipes.total_pages.to_s + ' Next: ' + recipes.next_page.to_s %> -->
+    <% end %>
+  <!-- </div> -->
+  <!-- %= will_paginate recipes %> -->
+</div>
+
+<script>
+$(document).ready(function(){
+  resetStars();
+});
+</script>

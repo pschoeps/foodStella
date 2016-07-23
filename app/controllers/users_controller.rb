@@ -337,7 +337,7 @@ class UsersController < ApplicationController
 		end
 
 		if params[:view_type] == "day"
-		  @events = Event.where(start_at: (@day.strftime + "T00:00:00")..(@day.strftime + "T:2:00:00"))
+		  @events = current_user.events.where(start_at: (@day.strftime + "T00:00:00")..(@day.strftime + "T:2:00:00"))
 		  puts "events count"
 		  puts @events.length
 		  @date_string = @day.strftime("%A")
@@ -346,7 +346,7 @@ class UsersController < ApplicationController
 			@beginning_of_week = @day.at_beginning_of_week.to_datetime
 			@end_of_week = @day.at_end_of_week.to_datetime
 
-		 	@events = Event.where(start_at: (@beginning_of_week)..@end_of_week)
+		 	@events = current_user.events.where(start_at: (@beginning_of_week)..@end_of_week)
 
 			@month = @day.strftime("%B")
 			@week_begin = @day.at_beginning_of_week.strftime("%-d")
