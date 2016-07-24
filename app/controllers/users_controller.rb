@@ -249,11 +249,9 @@ class UsersController < ApplicationController
 		gon.previousWeek = day - 7.days
 
 		@month = day.strftime("%B")
-
-		@planner_begin = day.strftime("%-d")
-		# @planner_end = (d + (@day_counter-1).days).strftime("%-d")
-		@planner_end = (day + (2).days).strftime("%-d")
-		@date_string = @month + " " + @planner_begin + " - " + @planner_end
+		@week_begin = day.at_beginning_of_week.strftime("%-d")
+		@week_end = day.at_end_of_week.strftime("%-d")
+		@date_string = @month + " " + @week_begin + " - " + @week_end
 
 		@today = [DateTime.now.strftime('%A - %B %-d, %Y'), DateTime.now.strftime('%Y-%m-%d')]
 	

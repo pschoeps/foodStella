@@ -64,7 +64,7 @@
 
     <p class="circle-text circle-text-snack"> Snack </p>
 
-    <%= link_to "Generate shopping list", shopping_list_user_path(current_user, view_type: "week"), id: "gen-shop-list" %>
+    <%= link_to "Generate shopping list", shopping_list_user_path(current_user, view_type: "week", day: @days_from_week.first), id: "gen-shop-list" %>
 
   </div>
 </div>
