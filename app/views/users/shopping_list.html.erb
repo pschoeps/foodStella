@@ -57,7 +57,7 @@
         <ol>
           <% @total_recipes.uniq.each do |r| %>
             <li>
-              <%= '(' + @planned_recipes.count(r).to_s + ')' if @planned_recipes.count(r) > 1 %> <%= link_to r.name, recipe_path(r) %>
+              <%= '(' + @total_recipes.count(r).to_s + ')' if @total_recipes.count(r) > 1 %> <%= link_to r.name, recipe_path(r) %>
             </li>
           <% end %>
 
