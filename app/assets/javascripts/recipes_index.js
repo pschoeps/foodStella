@@ -14,3 +14,4 @@ $('.recipes.index').ready(function() {
     });
   };
 });
+

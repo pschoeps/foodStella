@@ -584,8 +584,8 @@ $outer-container: 90%;
             top: 0;
             color: $medium;
             cursor: pointer;
-            height: 26px;
-            width: 26px;
+            height: 29px;
+            width: 29px;
             background-color: rgba(255, 255, 255, .75);
             img {
                 height: 25px;
@@ -667,13 +667,12 @@ $outer-container: 90%;
 
         .delete-event, .change-servings-box-close {
             position: absolute;
-            right: 0;
+            right: 8px;
             top: 0;
             color: $medium;
             cursor: pointer;
-            height: 30px;
-            width: 30px;
-            background-color: rgba(255, 255, 255, .75);
+            height: 29px;
+            width: 29px;
             img {
                 height: 25px;
             }
@@ -684,6 +683,9 @@ $outer-container: 90%;
             background-size: 80% 80%;
             background-position: 4px 3px;
             background-repeat: no-repeat;
+            top: 0;
+            right: 0;
+            background-color: rgba(255, 255, 255, .9);
         }
 
         .change-servings-box {

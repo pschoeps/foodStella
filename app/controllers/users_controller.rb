@@ -179,7 +179,7 @@ class UsersController < ApplicationController
 	  recommended_recipe_ids = params[:ids]
 	  loader_counter = 0
 	  recommended_recipe_ids.each do |r|
-		response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend?recipe="+r+"")
+		response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend_fake?recipe="+r+"")
 		puts response.body
 		response = response.body
 		if response
@@ -356,11 +356,20 @@ class UsersController < ApplicationController
 
 
 		@planned_recipes = []
+		@custom_recipes = []
+		@total_recipes = []
+
 		@events.each do |e|
 			puts "one event"
 		  unless e.recipe_id < 0
 		    recipe = Recipe.find(e.recipe_id)
-		    @planned_recipes << recipe
+		    if e.servings && e.servings.to_i != recipe.servings
+		      @custom_recipes << [recipe, e.servings]
+		      @total_recipes << recipe
+		    else
+		      @planned_recipes << recipe
+		      @total_recipes << recipe
+		    end
 		  end
 		end
 
@@ -380,6 +389,27 @@ class UsersController < ApplicationController
 			  if unique_r
 				unit = q.unit == '' ? '' : 'oz'
 				@shopping_items << [get_fraction(q.ounces, q.unit), get_unit(q.unit, q.amount), i.name, q.ounces, q.unit]
+			  end
+			end
+		  end
+		end
+
+		@custom_recipes.each do |r|
+		  r[0].ingredients.each do |i|
+			i.quantities.where(recipe_id: r[0].id).each do |q|
+			  unique_r = true
+			  @shopping_items.each do |s|
+			    if s[2] == i.name
+				  unique_r = false
+				  s[3] += q.ounces
+				  s[0] = get_fraction(s[3], s[4])
+				end
+			  end
+			  if unique_r
+				unit = q.unit == '' ? '' : 'oz'
+				one_serving = (q.ounces / r[0].servings.to_i)
+				new_serving = (one_serving * r[1].to_i)
+				@shopping_items << [get_fraction(new_serving, q.unit), get_unit(q.unit, q.amount), i.name, q.ounces, q.unit]
 			  end
 			end
 		  end
