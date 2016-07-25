@@ -1,0 +1,10 @@
+[<br>
+<% @ingredients.each do |i| %>
+    {
+					      "id": "<%= i.id %>",
+      				 	"name": <%= i.name %>,
+      					"abbreviated": "<%= i.abbreviated %>",
+      					"category": ""
+    },<br>
+<% end %>
+]

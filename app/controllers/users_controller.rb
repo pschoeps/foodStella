@@ -50,6 +50,11 @@ class UsersController < ApplicationController
    		@users = User.all
   	end
 
+  	def json_list_ing_basic
+    	@layout = false
+    	@ingredients = Ingredient.all 
+    end
+
   	def json_list
   		@layout = false
   		master_array = []
@@ -169,10 +174,6 @@ class UsersController < ApplicationController
 		@recommended_recipe_ids = recommended_recipe_ids
 		puts "search for me"
 		puts @recommended_recipes 
-		@recommended_recipes.each do |r|
-			puts r.name 
-		end
-
 	end
 
 	def load_user_recommended_recipes
@@ -200,11 +201,9 @@ class UsersController < ApplicationController
           	  recipe_class: "#{friendly_name}-#{recipe.id}",
           	  recipe_friendly_name: friendly_name,
           	  truncated_name: "#{truncated_name}",
-          	  truncated_name_small: truncated_name_small,
-          	  pic: pic
+          	  truncated_name_small: truncated_name_small
 
           	loader_counter += 1
-          	puts "loader"
           	puts loader_counter
 
           	if loader_counter == 6
