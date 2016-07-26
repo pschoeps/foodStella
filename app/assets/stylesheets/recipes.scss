@@ -1504,26 +1504,31 @@
 		position: static;
 	}
 	.filter-search {
-		margin: 4em 5px 5px;
+		// margin: 4em 5px 5px;
 		position: absolute;
     	transform: translateY(-50%);
     	z-index: 2;
-	}
-	.filter-search {
-		margin: 10px;
+		margin: 4px;
 		left: 0;
-		padding-bottom: 10px;
-		input, #filter-options {
+		// padding-bottom: 10px;
+		background-color: #ccc;
+		border-radius: 8px;
+		padding: 3px 0 5px;
+		// input, 
+		#filter-options {
 			box-shadow: 0 2px 3px #404040;
+			margin: 0;
 		}
 		input {
 			margin: 0 5px;
 			width: 60%;
 			border-radius: 8px;
 			border: none;
-			background-color: #ccc;
+			// background-color: #ccc;
+			background-color: transparent;
 			height: 30px;
-			text-align: right;
+			// text-align: right;
+			text-align: left;
 			padding: 0 10px;
 		}
 		::-webkit-input-placeholder {color: $dark;}
