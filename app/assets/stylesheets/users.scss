@@ -238,7 +238,7 @@ input:-webkit-autofill {
 
 		.backsplash-col > div > #imgs {
 			position: absolute;
-			top: 50%;
+			top: 30%;
 			left: 50%;
 			-ms-transform: translate(-50%, -50%);
 			-webkit-transform: translate(-50%, -50%);
@@ -246,11 +246,16 @@ input:-webkit-autofill {
 			width: 100%;
 			padding: 50px;
 		}
+
+		.backsplash-col > div > #intro-vid {
+			position: relative;
+			top: 55%;
+		}
 		.backsplash-col #logo {
 			width: 50%;
 			max-width: 400px;
 			min-width: 200px;
-			margin-bottom: 8%;
+			margin-bottom: 3%;
 		}
 		.backsplash-col #banner {
 			width: 100%;
