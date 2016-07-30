@@ -152,6 +152,10 @@
 	padding: 20px;
 	text-align: center;
 }
+#new_user select {
+	color: black !important;
+	option { color: black !important; }
+}
 #new_user input:focus { outline: none; }
 #new_user {
 	::-webkit-input-placeholder { color: white; }
