@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
    include MobileHelper
    include ActionView::Helpers::TextHelper
+   require 'json'
    before_action :check_for_mobile
    before_filter :find_meals_and_events, :only => [:day_calendar, :calendar, :shopping_list]
    before_filter :get_user_recommended_recipes, :only => [:day_calendar, :calendar]
@@ -48,6 +49,17 @@ class UsersController < ApplicationController
 
 	def inbox
    		@users = User.all
+  	end
+
+  	def user_data
+  		@layout = false
+  		require 'json'
+  		@users = User.all
+	
+		
+  	    
+
+  	   
   	end
 
   	def json_list_ing_basic
@@ -105,6 +117,23 @@ class UsersController < ApplicationController
   		end
 
   	end
+
+  	def update_ingredients
+  		require 'json'
+  		new_file = File.open("test_calories.json","r").as_json
+
+		#JSON.parse(new_file).each do |line|
+		#	JSON.parse(line)
+		#	new_line = line.as_json
+		#	puts line.as_json	
+		#	puts new_line["recipe_id"]	
+		#end
+		new_file.each do |line|
+	      line.to_json
+	      puts line
+	      puts eval(line)
+		end
+	end
 
   	def get_meal_type(typ)
     string = case typ 

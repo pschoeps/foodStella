@@ -78,6 +78,7 @@ gem 'momentjs-rails'
 gem 'fullcalendar-rails'
 
 #importing scraped json data
+gem 'execjs', '~> 1.4'
 gem 'json'
 
 group :doc do

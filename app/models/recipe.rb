@@ -79,22 +79,22 @@ class Recipe < ActiveRecord::Base
     # configure number of OR conditions for provision
     # of interpolation arguments. Adjust this if you
     # change the number of OR conditions.
-    num_or_conditions = 3
+    num_or_conditions =  2 # 3
     where(
       terms.map {
         or_clauses = [
           "LOWER(recipes.name) LIKE ?",
           "LOWER(recipes.description) LIKE ?",
-          "LOWER(ingredients.name) LIKE ?"
+          #{}"LOWER(ingredients.name) LIKE ?"
           # "LOWER(user.fir_name) LIKE ?"
         ].join(' OR ')
         "(#{ or_clauses })"
       }.join(' AND '),
       *terms.map { |e| [e] * num_or_conditions }.flatten
-    ).includes(:ingredients)
-    .group('ingredients.id')
+    )
     .group('recipes.id')
-    #.joins(:user)
+    #.includes(:ingredients)
+    #.group('ingredients.id')
   }
 
   scope :sorted_by, lambda { |sort_option|
