@@ -35,19 +35,24 @@
 			  <h1><%= @date_string %></h1>
 			</div>
 
-			<div class="list-box">
-				<ol>
-					<% @shopping_items.each do |s| %>
-			  		  <li>
-			  		  	<label>
-  						     <input type="checkbox" class='icheck-me' data-skin="minimal" data-color="green">
-                    <%= s[0] %> <%= s[1] %> <%= s[2] %>
-			  		  	</label>
-			  		  </li>
-					<% end %>
-            <li style="float:none; clear:both;"></li>
-				</ol>
-			</div>
+        <% @categories.each do |cat| %>
+          <% unless cat[1].length == 0 %>
+            <h2><%= cat[0] %>
+      			<div class="list-box">
+      				<ol>
+      					<% cat[1].each do |s| %>
+      			  		  <li>
+      			  		  	<label>
+        						     <input type="checkbox" class='icheck-me' data-skin="minimal" data-color="green">
+                          <%= s[0] %> <%= s[1] %> <%= s[2] %>
+      			  		  	</label>
+      			  		  </li>
+      					<% end %>
+                  <li style="float:none; clear:both;"></li>
+      				</ol>
+      			</div>
+          <% end %>
+        <% end %>
 		</div>
     <div class="col-sm-4 shopping-list-recipes">
       <div class="shopping-list-header">
@@ -57,7 +62,7 @@
         <ol>
           <% @total_recipes.uniq.each do |r| %>
             <li>
-              <%= '(' + @total_recipes.count(r).to_s + ')' if @total_recipes.count(r) > 1 %> <%= link_to r.name, recipe_path(r) %>
+              <%= '(' + @total_recipes.count(r).to_s + ')' if @total_recipes.count(r) > 1 %> <%= link_to r.name, recipe_path(r) %> (<%= r.get_calories(current_user.id) %> calories)
             </li>
           <% end %>
 

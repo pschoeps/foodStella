@@ -478,6 +478,33 @@ class Recipe < ActiveRecord::Base
     end
   end
 
+  def get_calories(user_id)
+    recipe = Recipe.find(id)
+    user = User.find(user_id)
+    event = user.events.where(:recipe_id => recipe.id).last
+    if event.servings
+      servings = event.servings
+    else
+      servings = recipe.servings
+    end
+
+    ingredients = recipe.ingredients 
+    quantities = Quantity.where(recipe_id: recipe.id)
+
+    total_calories = []
+
+    ingredients.each do |i|
+      calories_per_ounce = i.calories 
+      ounces = i.quantities.last.ounces
+      calories_for_ingredient = (calories_per_ounce * ounces).round
+      total_calories << calories_for_ingredient
+    end
+
+    calories = total_calories.inject(0, :+)
+
+    return calories
+  end
+
   def get_short_time(cookOrPrep)
     if cookOrPrep == 'cook'
       minutes = cook_time.to_i
