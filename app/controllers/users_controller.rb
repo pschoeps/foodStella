@@ -506,14 +506,21 @@ class UsersController < ApplicationController
 				unit = q.unit == '' ? '' : 'oz'
 
 				@categories.each do |cat|
-				  if i.category.chomp == cat[0].chomp
-				    cat[1] << [get_fraction(q.ounces, q.unit), get_unit(q.unit, q.amount), i.name, q.ounces, q.unit]
-				  elsif i.category == nil
-				  	 @categories[0][1] << [get_fraction(new_serving, q.unit), get_unit(q.unit, q.amount), i.name, q.ounces, q.unit]
-				  	 @categories.each do |cat|
-				  	 	cat[1].uniq!
+				  if i.category
+					  if i.category.chomp == cat[0].chomp
+					    cat[1] << [get_fraction(q.ounces, q.unit), get_unit(q.unit, q.amount), i.name, q.ounces, q.unit]
+					  elsif i.category == nil
+					  	 @categories[0][1] << [get_fraction(q.ounces, q.unit), get_unit(q.unit, q.amount), i.name, q.ounces, q.unit]
+					  	 @categories.each do |cat|
+					  	 	cat[1].uniq!
+					     end
+				  	  end
+				   else
+				     @categories[0][1] << [get_fraction(q.ounces, q.unit), get_unit(q.unit, q.amount), i.name, q.ounces, q.unit]
+				  	   @categories.each do |cat|
+				  	     cat[1].uniq!
 				  	 end
-				  end
+				   end
 				end
 			  end
 			end
@@ -538,10 +545,17 @@ class UsersController < ApplicationController
 
 				@categories.each do |cat|
 					puts i.id
-				  if i.category == cat[0]
-				    cat[1] << [get_fraction(new_serving, q.unit), get_unit(q.unit, q.amount), i.name, q.ounces, q.unit]
-				  elsif i.category == nil
-				  	# @categories[0][1] << [get_fraction(new_serving, q.unit), get_unit(q.unit, q.amount), i.name, q.ounces, q.unit]
+				  if i.category
+					  if i.category == cat[0]
+					    cat[1] << [get_fraction(new_serving, q.unit), get_unit(q.unit, q.amount), i.name, q.ounces, q.unit]
+					  elsif i.category == nil
+					  	 @categories[0][1] << [get_fraction(new_serving, q.unit), get_unit(q.unit, q.amount), i.name, q.ounces, q.unit]
+					  	 @categories.each do |cat|
+					  	 	cat[1].uniq!
+					  	 end
+					  end
+				  else
+				  	@categories[0][1] << [get_fraction(new_serving, q.unit), get_unit(q.unit, q.amount), i.name, q.ounces, q.unit]
 				  	 @categories.each do |cat|
 				  	 	cat[1].uniq!
 				  	 end
