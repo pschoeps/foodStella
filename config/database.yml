@@ -20,8 +20,10 @@ development:
   database: foodStella_development
   pool: 5
   # username: salsaia
-  username: pschoeps
-  password:
+  username: alexanderforsyth
+  password: brockmana9
+  # username: pschoeps
+  # password:
 
 
   # Connect on a TCP socket. Omitted by default since the client uses a
@@ -51,13 +53,13 @@ test:
   encoding: unicode
   database: foodStella_test
   pool: 5
-  username: ashlynhu
-  password: password
+  username: alexanderforsyth
+  password: brockmana9
 
 production:
   adapter: postgresql
   encoding: unicode
   database: foodStella_production
   pool: 5
-  username: ashlynhu
-  password: password
+  username: alexanderforsyth
+  password: brockmana9

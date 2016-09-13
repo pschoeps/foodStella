@@ -7,90 +7,174 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>-->
 
+
+
+
 <div class="backsplash-col">
   <div>
     <div id="imgs">
-      <%= image_tag "logo-foodstella.png", id: "logo" %>
+     
       <!-- <br /><br /> -->
 
       <br />
 
+      
+    </div>
+
+    <!-- <div id="intro-vid">
       <%= image_tag "banner-foodstella.png", id: "banner" %>
-    </div>
-
-    <div id="intro-vid">
       <iframe width="80%" height="315" src="//www.youtube.com/embed/s-s2s2bDsZs " frameborder="0" allowfullscreen></iframe>  
+    </div> -->
+  </div>
+</div>
+
+
+
+<div class="homepage">
+    <div class="section title">
+      <div class="mainlogo">
+          
+           <%= image_tag "logo-foodstella.png", id: "logo" %>
+      </div>
     </div>
-  </div>
-</div>
-
-<div class="signin-col">
-
-  <div>
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-      
-
-      <%- flash.each do |name, msg| -%>
-        <%= content_tag :div, msg, :id => "flash_#{name}" if msg.is_a?(String) || :id != "Log in or sign up below to continue!" %>
-      <%- end -%>  
-
-        <br>
-
-      <div class="field">
-        <!-- <%= f.label :email %><br /> -->
-        <%= f.email_field :email, autofocus: false, placeholder: "Email" %>
+    <div class="section tagline">
+         The easiest way to plan your week!
+    </div>
+    <div class="section sign-in">
+      <div class="links">
+        <a href="#getStarted" class="button-link black"> GET STARTED</a>
+        <a href="#getStarted" class="button-link green"> SIGN IN</a>
       </div>
-    
-      <br />
-      
-      <div class="field">
-        <!-- <%= f.label :password %><br /> -->
-        <%= f.password_field :password, autocomplete: "off", placeholder: "Password" %>
+      <div class="info">
+        <span class="explain-text">
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        </span>
+      </div>
+    </div>
+    <div class="section drag-yes-no">
+      <a style="display:none;" name="getStarted"></a>
+      <div class="center-horizontal-children">
+        <h3 style="color:white;"> ANYTHING LOOK GOOD?</h3>
+        <span style="color:orange; font-size:1em;" class="help-text">Try dragging items around.</span>
       </div>
       
-      <!-- <br /> -->
-
-      <% if devise_mapping.rememberable? -%>
-        <div class="field remember">
-          <%= f.check_box :remember_me %>
-          <%= f.label :remember_me %>
+      <div class="rater">
+        <div id="sortable1" class="selector-box connectedSortable no-box"> </div>
+        <div id="sortable2" class="selector-box connectedSortable start-box"">
+          <div style="background: url('assets/food/1.png') no-repeat center center;" class="sortable">
+            <div class="inner" style="">
+              <p class="remove" style="color:red;" onclick="removeFunct(this)"> X </p>
+              <p style="font-size:1.0em;">Add additional info</p>
+            </div>
+          </div>
         </div>
-      <% end -%>
-
-      <div class="field forgot">
-        <%= link_to "Forgot password?", new_password_path(resource_name) %>
+        <div id="sortable3" class="selector-box connectedSortable yes-box"></div>
+           <!-- style="background-color:lightgrey; border:5px dotted green;  background: url('assets/images/like-30.png') no-repeat center center;" -->
+      </div>
+      <div class="info">
+        <p id="curName">Eggs and Bacon</p>
+      </div>
+      <div class="info">
+        <span class="explain-text">
+        <span class="green"><strong> Lorem ipsum dolor sit amet, </strong></span> consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+        </span>
       </div>
 
-      <div class="clear"></div>
+    </div>
+    <div class="section food-names">
 
-      <div class="actions">
-        <%= f.submit "Login" %>
+      <div class="center-horizontal-children">
+        <h3 class="green"> WHAT ARE WE EATING THIS WEEK?</h3>
+        <span style="color:black; font-size:1em;" class="help-text">Try dragging items around.</span>
       </div>
-    <% end %>
 
-    <div class="clear"></div>
-    <br />
-    <br />
-    <p>Don't have an account yet?</p>
-    <br />
-  
-    <%= link_to "CREATE AN ACCOUNT", new_registration_path(resource_name), class: 'btn btn-large' %>
+      
+      <div id="days-items" class="center-horizontal-children" style="margin: 0 auto; padding-top:10vh;">
+         <div id="first_day" class="sortable-day center connectedSortable one" ></div>
+         <div id="second_day" class="sortable-day center connectedSortable two"></div>
+         <div id="third_day" class="sortable-day center connectedSortable three" ></div>
+      </div>
+      <div class="center-horizontal-children">
+          <p onclick="spawnOnto('first_day');" class="addition"> [+] </p>
+          <p onclick="spawnOnto('second_day');" class="addition"> [+] </p>
+          <p onclick="spawnOnto('third_day');" class="addition"> [+] </p>
+      </div>
+      
+    </div>
+    <div class="section shoppinglist">
+      todo....
 
-    <br />
-    <br />
+    </div>
 
-    <div class="or wing"></div><div class="or">or</div><div class="or wing"></div>
-
-    <br />
-    <br />
-
-    <!-- %= link_to "Facebook", user_omniauth_authorize_path(:facebook), style: 'color: blue;' %> -->
-    <!-- %= link_to user_facebook_omniauth_authorize_path(:facebook) do %> -->
-    <%= link_to user_facebook_omniauth_authorize_path do %>
-      <%= image_tag('log_in_with_facebook.png') %>
-      <!-- <div class="fb-login-button" data-max-rows="1" data-size="large" data-show-faces="false" data-auto-logout-link="false"></div> -->
-    <% end %>
-
-     <!-- render "devise/shared/links" %> -->
-  </div>
 </div>
+
+
+<!-- js goes at the bottom of the body for loading speed-->
+  <script type="text/javascript">
+    // scrolling
+    $('a[href^="#"]').on('click',function (e) {
+        e.preventDefault();
+        var target = this.hash;
+        var $target = $(target);
+
+        $('html, body').stop().animate({
+            'scrollTop': $target.offset().top
+        }, 600, 'swing', function () {
+            window.location.hash = target;
+        });
+    });
+
+
+    function removeFunct(item){
+      $(item).parent().parent().remove();
+    }
+    
+    $( function() {
+      $( "#sortable1, #sortable2, #sortable3, .sortable-day").sortable({
+        connectWith: ".connectedSortable"
+      }).disableSelection();
+    } );
+  
+  </script>
+
+  <!-- js for adding and spawning elements -->
+  <script type="text/javascript">
+    function getRandomArbitrary(min, max) {
+      return Math.floor(Math.random() * (max - min) + min) + 1;
+    }
+    function generate(){
+      var children = $('#days-items').find(".connectedSortable");
+      children.find(".sortable").remove();
+      for (var i = 0; i < children.length; i++) {
+        var tableChild = $(children[i]);
+        
+        for (var x = 0; x < 3; x++) {
+          tableChild.prepend(wrapElement().fadeIn(400));
+         }
+      }
+
+    }
+
+    // $(".add").on('click', );
+    function spawnOnto(id_str){
+      spawn($("#"+id_str))
+    }
+    function spawn(element){
+      element.prepend(wrapElement().fadeIn(400));
+    }
+    var wrapElement = function(){
+      var num = getRandomArbitrary(0,5);
+      var imgUrl = "'assets/food/" + num + ".png'";
+      var div = $('<div style="background: url(' + imgUrl + ') no-repeat center center;" class="sortable ui-sortable-handle"></div>');
+        var hidden = $('<div class="inner"></div>');
+          var remove = $('<p class="remove" style="color:red;" onclick="removeFunct(this)"> X </p>');
+          var title = $('<p> Item number ' + num + '</p>');
+          var info = $('<p> Information on item number ' + num + '</p>');
+        hidden.append(remove);
+        hidden.append(title);
+        hidden.append(info);
+      div.append(hidden);
+      return div;
+    }
+
+  </script>
