@@ -1,0 +1,39 @@
+[<br>
+<% @users.each do |user| %>
+  "<%= user.id %>": {<br>
+  "following": {<br>
+  <% user.following.each do |f| %>
+    {
+              "recipe_id": "<%= f.id %>",
+                "user_id": <%= user.id %>,
+                "recipe_name": "<%= f.name %>"
+    },<br>
+    <% end %>
+  }<br>
+
+  "owned": {<br>
+  <% user.recipes.each do |f| %>
+    {
+              "recipe_id": "<%= f.id %>",
+                "user_id": <%= user.id %>,
+                "recipe_name": "<%= f.name %>"
+    },<br>
+    <% end %>
+  }<br>
+
+  "cooked": {<br>
+  <% user.cooked.each do |f| %>
+    {
+              "recipe_id": "<%= f.id %>",
+                "user_id": <%= user.id %>,
+                "recipe_name": "<%= f.name %>"
+    },<br>
+    <% end %>
+  }<br>
+
+
+
+  }<br>
+<% end %>
+
+]

@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
    include MobileHelper
    include ActionView::Helpers::TextHelper
+   require 'json'
    before_action :check_for_mobile
    before_filter :find_meals_and_events, :only => [:day_calendar, :calendar, :shopping_list]
    before_filter :get_user_recommended_recipes, :only => [:day_calendar, :calendar]
@@ -48,6 +49,19 @@ class UsersController < ApplicationController
 
 	def inbox
    		@users = User.all
+  	end
+
+  	def user_data
+  		@layout = false
+  		require 'json'
+  		@users = User.all
+
+
+	
+		
+  	    
+
+  	   
   	end
 
   	def json_list_ing_basic
@@ -105,6 +119,108 @@ class UsersController < ApplicationController
   		end
 
   	end
+
+  	def update_ingredients
+  		require 'json'
+  		new_file = File.open("categorized_ingredients.json", "r")
+  		cal_file = File.open("calories.json", "r")
+
+		#JSON.parse(new_file).each do |line|
+		#	JSON.parse(line)
+		#	new_line = line.as_json
+		#	puts line.as_json	
+		#	puts new_line["recipe_id"]	
+		#end
+		#new_file.to_json
+		new_file.each do |line|
+
+	        pos = line.split[2]
+	        if pos 
+	          new_pos = pos.delete(",").delete('\\"')
+	        end
+	        cat = line.partition('category').last.delete(":").delete("}").delete(',').delete('\\"')
+	        cat[0] = ''
+	        cat = cat.strip!
+
+	        ing_id = new_pos.to_i 
+
+	        if ing_id > 0 && Ingredient.find(ing_id)
+	          ing = Ingredient.find(ing_id)
+	          ing.update_attributes!(category: cat)
+	          ing.save
+	        end
+	    end
+
+	    cal_file.each do |line|
+	      if line.length > 2
+	        recipe_id = line.split[3].delete(",").to_i
+	        recipe_calories = line.partition('calories').last.delete(":").delete("}").delete(',').delete(' ').delete('\\"').to_i
+	        start_string = '\\"'
+	        end_string = "abbreviated"
+	        ing = line.partition('ingredient').last
+	        ing_ing = ing.partition('ingredient').last 
+	        ingy = ing_ing[/#{start_string}(.*?)#{end_string}/m, 1]
+	        ingredientn =  ingy.delete(":").delete("}").delete(',').delete('\\"')
+	        ingredientn[0] = ''
+	        ingredient = ingredientn[0..-2]
+	        puts ingredient
+
+	        if Recipe.find(recipe_id)
+	          recipe_and_ing = true
+	          Recipe.find(recipe_id).ingredients.each do |ing|
+	          	puts ing.name 
+	          	puts ingredient
+	          	puts ing.name.length
+	          	puts ingredient.length
+	          	if ing.name.to_s.squeeze == ingredient.to_s.squeeze
+	              qua = Quantity.find_by_ingredient_id_and_recipe_id(ing.id, recipe_id)
+	              ounces = qua.ounces
+	              puts recipe_calories
+	              puts "recipe_calories"
+	              if recipe_calories != 0 && recipe_calories > 0 && ounces != 0 && ounces > 0
+  	                updated_calories = (recipe_calories/ounces)
+  	              else
+  	              	updated_calories = 0
+  	              end
+  	              #uncomment these to update again
+  	              ing.update_attributes!(calories: updated_calories)
+  	              ing.save
+	            end
+	          	puts "search for a name"
+	          end
+	        end
+
+
+	        puts " "
+	        puts recipe_calories
+	        puts ingredient 
+	        puts recipe_id 
+	        puts recipe_and_ing
+	        puts " "
+
+#	        if recipe_id && Recipe.find(recipe_id)
+#	          rec_rec = Recipe.find(recipe_id)
+#	          ings = rec_rec.ingredients
+#	          if ings.where(:name => ingredient).last
+#	            ing = ings.where(:name => ingredient).last 
+#	            quant = Quantity.find_by_ingredient_id_and_recipe_id(ing.id, rec_rec.id)
+#	            ounces = quant.amount
+#	            updated_calories = (recipe_calories/ounces)
+#	            puts updated_calories
+#	            puts "search for me"
+	            #ng.update_attributes!(calories: updated_calories)
+#	            #ing.save
+#	          end
+#	        end
+	        #recipe = Recipe.find(recipe_id)
+	      end
+	    end
+	    @ingredients = Ingredient.all
+	end
+
+	def string_between_markers marker1, marker2
+      self[/#{Regexp.escape(marker1)}(.*?)#{Regexp.escape(marker2)}/m, 1]
+    end
 
   	def get_meal_type(typ)
     string = case typ 
@@ -371,6 +487,9 @@ class UsersController < ApplicationController
 		end
 
 		@shopping_items = []
+		@categories = get_categories
+		puts @categories
+
 
 		@planned_recipes.each do |r|
 		  r.ingredients.each do |i|
@@ -385,7 +504,24 @@ class UsersController < ApplicationController
 			  end
 			  if unique_r
 				unit = q.unit == '' ? '' : 'oz'
-				@shopping_items << [get_fraction(q.ounces, q.unit), get_unit(q.unit, q.amount), i.name, q.ounces, q.unit]
+
+				@categories.each do |cat|
+				  if i.category
+					  if i.category.chomp == cat[0].chomp
+					    cat[1] << [get_fraction(q.ounces, q.unit), get_unit(q.unit, q.amount), i.name, q.ounces, q.unit]
+					  elsif i.category == nil
+					  	 @categories[0][1] << [get_fraction(q.ounces, q.unit), get_unit(q.unit, q.amount), i.name, q.ounces, q.unit]
+					  	 @categories.each do |cat|
+					  	 	cat[1].uniq!
+					     end
+				  	  end
+				   else
+				     @categories[0][1] << [get_fraction(q.ounces, q.unit), get_unit(q.unit, q.amount), i.name, q.ounces, q.unit]
+				  	   @categories.each do |cat|
+				  	     cat[1].uniq!
+				  	 end
+				   end
+				end
 			  end
 			end
 		  end
@@ -406,7 +542,25 @@ class UsersController < ApplicationController
 				unit = q.unit == '' ? '' : 'oz'
 				one_serving = (q.ounces / r[0].servings.to_i)
 				new_serving = (one_serving * r[1].to_i)
-				@shopping_items << [get_fraction(new_serving, q.unit), get_unit(q.unit, q.amount), i.name, q.ounces, q.unit]
+
+				@categories.each do |cat|
+					puts i.id
+				  if i.category
+					  if i.category == cat[0]
+					    cat[1] << [get_fraction(new_serving, q.unit), get_unit(q.unit, q.amount), i.name, q.ounces, q.unit]
+					  elsif i.category == nil
+					  	 @categories[0][1] << [get_fraction(new_serving, q.unit), get_unit(q.unit, q.amount), i.name, q.ounces, q.unit]
+					  	 @categories.each do |cat|
+					  	 	cat[1].uniq!
+					  	 end
+					  end
+				  else
+				  	@categories[0][1] << [get_fraction(new_serving, q.unit), get_unit(q.unit, q.amount), i.name, q.ounces, q.unit]
+				  	 @categories.each do |cat|
+				  	 	cat[1].uniq!
+				  	 end
+				  end
+				end
 			  end
 			end
 		  end
@@ -480,49 +634,86 @@ class UsersController < ApplicationController
       string
 	end
 
-	def python
-		#require "rubypython"
+	def get_categories	
+
+		array =	[
+			    ["Uncategorized", []],
+				["Baby Care", []],
+				["Bakery Items", []],
+				["Baking Supplies", []],
+				["Basic Cooking Ingredients", []],
+				["Beverages", []],
+				["Canned Foods", []],
+				["Cereals", []],
+				["Condiments and Salad Dressings", []],
+				["Dairy and Egg Products", []],
+				["Dairy, Eggs and Milk", []],
+				["Deli", []],
+				["Ethnic Foods", []],
+				["Fish", []],
+				["Frozen Foods", []],
+				["Herbs and Spices", []],
+				["Meats", []],
+				["Pasta", []],
+				["Produce", []],
+				["Seafood", []],
+				["Soup", []],
+				["Frozen", []],
+				["Boxer Dinners & Sides", []],
+				["Breads", []],
+				["Syrups", []],
+				["Canned Soups", []],
+				["Chocolate", []],
+				["Coffee & Teas", []],
+				["Cooking Oils", []],
+				["Dessert Toppings", []],
+				["Gluten Free", []],
+				["Cheeses", []],
+				["Peanut Butter and Jelly", []],
+				["Salad Dressings", []],
+				["Baking", []],
+				["Beverages", []],
+				["Chocolate & Candy", []],
+				["Condiment", []],
+				["Dessert and Snack", []],
+				["Fruit & Nuts", []],
+				["Grains & Cereals", []],
+				["Jam, Jelly & Spreads", []],
+				["Meat, Seafood and Eggs", []],
+				["Oil and Vinegar", []],
+				["Pasta, Rice and Noodle", []],
+				["Prepared Meals and Canned Food", []],
+				["Regional Food", []],
+				["Salada Dressing, Sauce and Marinade", []],
+				["Salsa & Dip", []],
+				["Spice and Seasoning", []],
+				["Spices and Herbs", []],
+				["Fruits and Fruit Juices", []],
+				["Nut and Seed Products", []],
+				["Lamb Veal and Game Products", []],
+				["Vegetables and Vegetable Products", []],
+				["Soups Sauces and Gravies", []],
+				["Finfish and Shellfish Products", []],
+				["Fats and Oils", []],
+				["Fast Foods", []],
+				["Baked Products", []],
+				["Sweets", []],
+				["Baby Foods", []],
+				["Snacks", []],
+				["Legumes and Legume Products", []],
+				["Beef Products", []],
+				["Poultry Products", []],
+				["Branded Food Products Database", []],
+				["Sausages and Luncheon Meats", []],
+				["American Indian/Alaska Native Foods", []],
+				["Cereal Grains and Pasta", []],
+				["Breakfast Cereals", []],
+				["Restaurant Foods", []],
+				["Pork Products", []]
+			]
 
 
-
-		#RubyPython.start(:python_exe => "python2.6")
-		RubyPython.start(:python_exe => "python2.6")
-
-		  sys = RubyPython.import("sys")
-		  mod = RubyPython.import("initial")
-		  p mod
-		  #sys.path.append("#{Rails.root}/lib")
-		  #p "test"
-		  render :text => mod
-
-		RubyPython.stop # stop the Python interpreter
-
-
-	
-
-  		#@pretty_recipes = @recipes.to_json
-  		#@render = JSON.pretty_generate(@recipes)
-  		#@pretty_json = JSON.pretty_generate(@recipes)
-  		
-
-
-	
-
-=begin
-
-		#result = `python recommender.py params`
-		#puts result
-
-		python_cmd = Escape.shell_command(['python', "../lib/do_work.py"]).to_s
-        system python_cmd
-        render :text => python_cmd
-=end
-
-=begin
-result = `python do_work.py foo bar`
-puts result
-render :text => result
-=end
+		return array
 	end
 end
 

@@ -1,3 +1,10 @@
+New stuff
+change niche:
+
+budget constrain:  cost of recipes and ingredients
+caloric restraint: protein based 
+
+
 //convert ingredients to fractions
 add categories to ingredients
 //add recipes being added for the week to the ingredients
