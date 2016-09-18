@@ -117,7 +117,7 @@ console.log(gon.nextWeek)
 console.log(gon.previousWeek)
 
   $('.next-week-link').click(function(){ 
-      var updated_week = (gon.nextWeek)
+      var  d_week = (gon.nextWeek)
       console.log(updated_week)
       this.href = this.href + '?week=' + (updated_week)
     });
