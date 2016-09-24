@@ -3,6 +3,8 @@ class Recipe < ActiveRecord::Base
   has_many :quantities, dependent: :destroy
   has_many :ingredients, through: :quantities #, dependent: :destroy
 
+  has_many :user_preferences, dependent: :destroy
+
   belongs_to :event
 
   has_many :relationships,        foreign_key: "followed_id",

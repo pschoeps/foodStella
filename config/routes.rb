@@ -3,6 +3,7 @@ FoodStella::Application.routes.draw do
   post '/rate' => 'rater#create', :as => 'rate'
   devise_for :users, controllers: { sessions: "sessions", registrations: "registrations", omniauth_callbacks: "omniauth_callbacks" }
   get "static_pages/home"
+  match "static_pages/temporary_preference" => 'static_pages#temporary_preference', :via => :post
   match 'events/destroy'   => 'events#destroy',    :via => :delete
   match 'events/udpate'   => 'events#update',    :via => :put
   match 'python'          =>'users#python', :via => :get
