@@ -13,31 +13,63 @@ Hey, so this ajax request should work now, send a recipe with the param liked se
 
 -->
   <script>
-//document.addEventListener("turbolinks:load", function() {
-  //$('.sessions.new').ready(function() {  
+document.addEventListener("turbolinks:load", function() {
+  $('.sessions.new').ready(function() {  
+
     console.log("logging")
-    console.log(gon.recipes)
+    // console.log(gon.recipes)
+    console.log(refreshData(10, true))
+    updateMiddle(gon.recipes[0])
+  });
+});
 
 
-  function testAjax() {
-    data = {
-      recipe: 10,
-      liked: true
-    }
+  function refreshData(id, liked) {
+      data = {
+        recipe: id,
+        liked: liked
+      }
 
-    $.ajax({//ajax call 
-          type:'POST',
-          data: data,
-          url:"/static_pages/temporary_preference",
-          beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-          success:function (response) {
-            console.log(response)
-          }
-      }); //end ajax
-  };
-  //});
-//});
+      $.ajax({//ajax call 
+            type:'POST',
+            data: data,
+            url:"/static_pages/temporary_preference",
+            beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+            success:function (response) {
+              console.log(response)
+              return response;
+            }
+        }); //end ajax
+    };
+
+  function updateMiddle(recipe){
+    $("#curName").html(recipe.name);
+
+    var yesNoBox = "<div class='sortable' style='background: url(\"" + recipe.remote_photo_url + "\")no-repeat center center;' recipe-id='" + recipe.id + "'>"
+
+     yesNoBox = yesNoBox + "<div class='inner'>";
+     yesNoBox = yesNoBox +  "<p name='" + recipe.id + "'  class='remove' style='color:red;' onclick='removeFunct(this)''> X </p>";
+     yesNoBox = yesNoBox +  "<p style='font-size:0.4em;'>" + recipe.description + "</p>";
     
+    yesNoBox = yesNoBox 
+        + "</div>"
+     + "</div>";
+
+    $(".start-box").html(yesNoBox);
+  }
+    
+  var gun_count = 0;
+  function removeFunct(item){
+
+    $(item).parent().parent().remove();
+    
+    refreshData($(item).parent().parent().attr("recipe-id"), false);
+    gun_count ++;
+    if (gun_count > 4) {gun_count = 0}
+    updateMiddle(gon.recipes[gun_count]);
+  }
+
+
 </script>
 
 
@@ -53,11 +85,6 @@ Hey, so this ajax request should work now, send a recipe with the param liked se
 
       
     </div>
-
-    <!-- <div id="intro-vid">
-      <%= image_tag "banner-foodstella.png", id: "banner" %>
-      <iframe width="80%" height="315" src="//www.youtube.com/embed/s-s2s2bDsZs " frameborder="0" allowfullscreen></iframe>  
-    </div> -->
   </div>
 </div>
 
@@ -78,6 +105,12 @@ Hey, so this ajax request should work now, send a recipe with the param liked se
         <a href="#getStarted" class="button-link black"> GET STARTED</a>
         <a href="#getStarted" class="button-link green"> SIGN IN</a>
       </div>
+
+      <div class="sign-in-block">
+          
+
+      </div>
+
       <div class="info">
         <span class="explain-text">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
@@ -158,10 +191,6 @@ Hey, so this ajax request should work now, send a recipe with the param liked se
         });
     });
 
-
-    function removeFunct(item){
-      $(item).parent().parent().remove();
-    }
     
     $( function() {
       $( "#sortable1, #sortable2, #sortable3, .sortable-day").sortable({
