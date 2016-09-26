@@ -72,13 +72,28 @@
 		  	margin-left: auto;
 		  	width: 90vw;
 		  	padding-top: 10vh;
+
+		  	.no-box{
+  				border: 1px dotted red;
+  				background-color: rgba(255,0,0,0.1);
+  			}
+
+  			.yes-box{
+  				border: 2px dotted $green;	
+  				background-color: rgba(0,255,0,0.1);
+  			}
+
+  			.start-box{
+  				border: 1px solid white;
+  			}
+
 		  	.selector-box{
 		  		width: 20vw;
 		  		height: 20vw;
 		  		border-radius: 10vw;
-		  		border: 1px solid white;
 		  		padding-top: 0.5vw;
 	  			display: inline-block;
+
 
 				.sortable {
 				  background-color:white;
@@ -91,7 +106,6 @@
 				  display:block;
 				  margin-right: auto;
 				  margin-left: auto;
-
 				  display: block; // align horizontal
 				  margin-right: auto;
 				  margin-left: auto;
@@ -106,19 +120,19 @@
 				    color: rgba(255, 255, 255, 0);
 				    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 				  }
-				  &:hover {
-				    transition: 0.3s;
-				    .inner {
-				      // overflow: hidden;
-				      background-color: white;
-				      transition: 0.3s;
-				      p {
-				        color: rgba(0, 0, 0, 1);
-				        transition: 0.3s;
-				        padding-top: 4%;
-				      }
-				    }
-				  }
+				  // &:hover {
+				  //   transition: 0.3s;
+				  //   .inner {
+				  //     // overflow: hidden;
+				  //     background-color: white;
+				  //     transition: 0.3s;
+				  //     p {
+				  //       color: rgba(0, 0, 0, 1);
+				  //       transition: 0.3s;
+				  //       padding-top: 4%;
+				  //     }
+				  //   }
+				  // }
 				}
 		  	}
 		}

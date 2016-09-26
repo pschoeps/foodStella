@@ -18,9 +18,14 @@ document.addEventListener("turbolinks:load", function() {
 
     console.log("logging")
     // console.log(gon.recipes)
-    console.log(refreshData(10, true))
-    updateMiddle(gon.recipes[0])
+    // console.log(refreshData(10, true));
+    updateMiddle(gon.recipes[0]);
   });
+});
+
+
+$( document ).ready(function() {
+  updateMiddle(gon.recipes[0]);
 });
 
 
@@ -44,6 +49,7 @@ document.addEventListener("turbolinks:load", function() {
 
   function updateMiddle(recipe){
     $("#curName").html(recipe.name);
+    $("#recipe-description").html(recipe.description);
 
     var yesNoBox = "<div class='sortable' style='background: url(\"" + recipe.remote_photo_url + "\")no-repeat center center;' recipe-id='" + recipe.id + "'>"
 
@@ -71,7 +77,6 @@ document.addEventListener("turbolinks:load", function() {
 
 
 </script>
-
 
 <script type="text/javascript">
   function toggle(item){
@@ -113,24 +118,13 @@ document.addEventListener("turbolinks:load", function() {
       
       <div class="rater">
         <div id="sortable1" class="selector-box connectedSortable no-box"> </div>
-        <div id="sortable2" class="selector-box connectedSortable start-box"">
-          <div style="background: url('assets/food/1.png') no-repeat center center;" class="sortable">
-            <div class="inner" style="">
-              <p class="remove" style="color:red;" onclick="removeFunct(this)"> X </p>
-              <p style="font-size:1.0em;">Add additional info</p>
-            </div>
-          </div>
-        </div>
+        <div id="sortable2" class="selector-box connectedSortable start-box""></div>
         <div id="sortable3" class="selector-box connectedSortable yes-box"></div>
            <!-- style="background-color:lightgrey; border:5px dotted green;  background: url('assets/images/like-30.png') no-repeat center center;" -->
       </div>
       <div class="info">
-        <p id="curName">Eggs and Bacon</p>
-      </div>
-      <div class="info">
-        <span class="explain-text">
-        <span class="green"><strong> Lorem ipsum dolor sit amet, </strong></span> consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-        </span>
+        <p id="curName"></p>
+        <span id="recipe-description"></span>
       </div>
 
     </div>
