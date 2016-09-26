@@ -1,0 +1,304 @@
+.homepage{
+// ============== welcome page ==============
+
+	.section {
+	  width: 100%;
+	  min-height: 10vh;
+	  padding-top: 5vh;
+	  padding-bottom: 5vh;
+	  transition: 0.5s;
+	}
+
+	.title{
+		background-color:black; // might want to change to $dark
+		min-height: 40vh;
+		#logo{
+			max-height: 30vh;
+			max-width: 90vw;
+			vertical-align:middle;
+			display: block;
+			margin-right: auto;
+			margin-left: auto;
+		}
+	}
+
+	.tagline{
+		background-color:$green;
+		font-size: 2em;
+		text-align:center;
+		color:white;
+		font-family: 'Great Vibes', 'Cookie', Lucida, Helvetica, sans-serif;
+		padding-top: 2vh;
+		padding-bottom: 2vh;
+	}
+
+	.sign-in{
+		text-align: center !important;
+		height: 70vh;
+		background-color: white;
+		.links{
+			padding-top: 20vh;	
+			display: block;
+			margin-right: auto;
+			margin-left: auto;
+			max-width: 60vw;
+			a {
+				display: inline-block;
+			}
+		}
+		.info{
+			bottom: 0;
+			padding-top: 10vh;
+			padding-bottom: 20vh;
+			max-width: 80vw;
+			display: block;
+			margin-right: auto;
+			margin-left: auto;
+			max-height: 30vh;
+			text-align:center;
+		}
+	}
+
+	.drag-yes-no{
+		background-color: black;
+		min-height: 60vh;
+		padding-top: 20vh;
+		padding-bottom: 20vh;
+
+		.rater{
+			text-align: center;
+			display:block;
+			margin-right: auto;
+		  	margin-left: auto;
+		  	width: 90vw;
+		  	padding-top: 10vh;
+		  	.selector-box{
+		  		width: 20vw;
+		  		height: 20vw;
+		  		border-radius: 10vw;
+		  		border: 1px solid white;
+		  		padding-top: 0.5vw;
+	  			display: inline-block;
+
+				.sortable {
+				  background-color:white;
+				  width: 19vw;
+				  height: 19vw;
+				  border: 1px dotted white;
+				  transition: 0.3s;
+				  border-radius: 9.5vw;
+				  overflow: hidden;
+				  display:block;
+				  margin-right: auto;
+				  margin-left: auto;
+
+				  display: block; // align horizontal
+				  margin-right: auto;
+				  margin-left: auto;
+
+				  .inner {
+				    height: 100%;
+				    background-color: rgba(255, 255, 255, 0);
+				    width: 100%;
+				  }
+				  p {
+				    font-size: 1.2em;
+				    color: rgba(255, 255, 255, 0);
+				    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+				  }
+				  &:hover {
+				    transition: 0.3s;
+				    .inner {
+				      // overflow: hidden;
+				      background-color: white;
+				      transition: 0.3s;
+				      p {
+				        color: rgba(0, 0, 0, 1);
+				        transition: 0.3s;
+				        padding-top: 4%;
+				      }
+				    }
+				  }
+				}
+		  	}
+		}
+		.info{
+			text-align: center;
+			display:block;
+			margin-right: auto;
+		  	margin-left: auto;
+
+			color: grey;
+			width: 50vw;
+			padding-top: 10vh;
+		}
+	}
+
+
+	.food-names{
+
+		background-color: white;
+
+		.sortable-day{
+			display: inline-block;
+			width: 20vw;
+			height: 60vh;
+			overflow: hidden;
+			border:none;
+
+			&.one{
+					background-color:lightgrey;
+			}
+			&.two{
+				background-color:grey;
+			}
+			&.three{
+				background-color:$green;
+			}
+
+			.sortable{
+				width: 20vw;
+				height: 20vh;
+				border: 1px solid black;
+			}
+
+		}
+		.addition{
+	  		width: 20vw;
+	  		display: inline-block;
+			transition: 0.5s;
+			
+	  		&:hover{
+	  			color: orange;
+	  			transition: 0.5s;
+	  		}
+		}
+
+	}
+
+	// ============ text types =============
+	.help-text{
+
+
+	}
+
+	.title-text{
+
+	}
+
+	.explain-text{
+
+
+	}
+
+	.green{
+		color: $green;
+	}
+
+
+	// ============ button types =============
+	.button-link{
+		border-radius: 25px;	
+		display:inline-block;
+		padding-left: 1%;
+		padding-right: 1%;
+		padding-top: 1%;
+		width: 30%;
+		height: 10%;
+		min-width: 100px;
+		min-height: 30px;
+		border: 1px solid white;
+
+		margin-top: 0.2em;
+		margin-bottom: 0.2em;
+		margin-left: 0.2em;
+		margin-right: 0.2em;
+		color: white;
+
+		text-decoration: none !important;
+
+		&.green{
+			background-color: $green;
+			&:hover{
+				color: $green;
+				background-color: white;
+				transition: 0.5s;
+				border: 1px solid $green;
+			}
+		}
+		&.black{
+			background-color: black;
+			&:hover{
+				color: black;
+				background-color: white;
+				transition: 0.5s;
+				border: 1px solid black;
+			}
+		}
+	}
+
+
+
+	// ========== Utility =========
+
+	hr.simple {
+	  border: 0;
+	  height: 1px;
+	  background: #333;
+	  background-image: linear-gradient(to right, #ccc, #333, #ccc);
+	}
+
+	.center-horizontal {
+	  display: block;
+	  margin-right: auto;
+	  margin-left: auto;
+	}
+
+	.center-horizontal-children {
+	  text-align: center;
+	}
+
+	.center-vertical{
+	  position: relative;
+	  top: 50%;
+	  transform: translateY(-50%);
+	}
+
+	// ========== draggable =========
+
+	.sortable-day {
+	  background-color: rgba(255, 255, 255, 0.7);
+	  border: 5px solid green;
+	  overflow: auto;
+	  width: 15vw;
+	  height: 60vh;
+	  text-align: center;
+	  vertical-align: middle;
+	  display: inline-block;
+	  background-repeat: no-repeat;
+	}
+
+	.remove {
+	  color: rgba(255, 0, 0, 1);
+	  font-size: 1em;
+	  float: middle;
+	  display: inline-block;
+	}
+
+	.add {
+	  background-color: lightblue;
+	  color: black;
+	  transition: 0.5s;
+	  width: 100%;
+	  height: 10%;
+	  min-height: 30px;
+	  font-size: 1.5em;
+	  border-radius: 10px;
+	  border: 1px solid grey;
+	  &:hover {
+	    background-color: blue;
+	    color: white;
+	    transition: 0.5s;
+	  }
+	}
+}
