@@ -147,58 +147,57 @@
 
 
 
-#new_user {
-	display: block;
-	padding: 20px;
-	text-align: center;
-}
-#new_user input:focus { outline: none; }
-#new_user {
-	::-webkit-input-placeholder { color: white; }
-	:-moz-placeholder { color: white; }
-	::-moz-placeholder { color: white; }
-	:-ms-input-placeholder { color: white; }
-}
-#new_user input { border-radius: 0; }
-#new_user input[type=email],
-#new_user input[type=password],
-#new_user input[type=text] {
-	background-color: transparent;
-	border: none;
-	text-align: center;
-	border-bottom: solid 1px white;
-	width: 100%;
-}
-#new_user .split { width: 45%; float: right;}
-#new_user .split.first { float: left; }
+// #new_user {
+// 	display: block;
+// 	padding: 20px;
+// 	text-align: center;
+// }
+// #new_user input:focus { }
+// #new_user {
+// 	::-webkit-input-placeholder { color: white; }
+// 	:-moz-placeholder { color: white; }
+// 	::-moz-placeholder { color: white; }
+// 	:-ms-input-placeholder { color: white; }
+// }
+// #new_user input { border-radius: 15px; }
+// #new_user input[type=email],
+// #new_user input[type=password],
+// #new_user input[type=text] {
+// 	background-color: transparent;
+// 	text-align: center;
+// 	border: solid 1px lightgrey;
+// 	width: 100%;
+// }
+// #new_user .split { width: 45%; float: right;}
+// #new_user .split.first { float: left; }
 
 input:-webkit-autofill {
     // -webkit-box-shadow: 0 0 0px 1000px $green inset;
     // color: white;	// doesnt work
 }
 
-#new_user input[type=submit] {
-	border: none;
-	background-color: white;
-	font-weight: bold;
-	color: $green;
-	width: 100px;
-	float: right;
-}
-#new_user input[type=submit].reset_password {
-	width: auto;
-	float: none;
-}
+// #new_user input[type=submit] {
+// 	border: none;
+// 	background-color: white;
+// 	font-weight: bold;
+// 	color: $green;
+// 	width: 100px;
+// 	float: right;
+// }
+// #new_user input[type=submit].reset_password {
+// 	width: auto;
+// 	float: none;
+// }
 
-#new_user input[type=checkbox] {
-	//display: none;
-	// for custom checkbox span
-}
+// #new_user input[type=checkbox] {
+// 	//display: none;
+// 	// for custom checkbox span
+// }
 
 
-// html { height: calc(100% - 0px); }
-// body, body > div { height: 100%; }
-// .full-height { height: 100%; }
+html { height: calc(100% - 0px); }
+body, body > div { height: 100%; }
+.full-height { height: 100%; }
 
 
 .remember, .forgot {
