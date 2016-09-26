@@ -88,27 +88,29 @@ document.addEventListener("turbolinks:load", function() {
   </div>
 </div>
 
+<script type="text/javascript">
+  function toggle(item){
+    $(item).toggle(30);
+  }
 
+</script>
 
 <div class="homepage">
     <div class="section title">
       <div class="mainlogo">
-          
            <%= image_tag "logo-foodstella.png", id: "logo" %>
       </div>
     </div>
     <div class="section tagline">
          The easiest way to plan your week!
     </div>
+        
+    <%= render "login" %>
+
     <div class="section sign-in">
       <div class="links">
         <a href="#getStarted" class="button-link black"> GET STARTED</a>
-        <a href="#getStarted" class="button-link green"> SIGN IN</a>
-      </div>
-
-      <div class="sign-in-block">
-          
-
+        <a href="#getStarted" class="button-link green" onclick="toggle('#sign-in-block')"> SIGN IN</a>
       </div>
 
       <div class="info">
