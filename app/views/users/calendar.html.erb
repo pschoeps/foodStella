@@ -3,10 +3,28 @@
 
 <div class="row">
   <div class="col-md-12 calendar-page-header">
-    <div class="planner-details">
-      <h3><%= @date_string %></h3>
-      <p>Planner</p>
+    
+  <div class="flex-container" style="display: -webkit-flex; display: flex; width: 100%; align-items: center; justify-content: center;">
+      <div class="flex-item" style="flex: 1; float:right; justify-content:right;">
+        <p><%= link_to "< Recipes", shopping_list_user_path(current_user, view_type: "week", class: "next-tile", day: @days_from_week.first), id: "gen-shop-list", style:"font-size: 3em; color:white;" %>
+        </p>
+      </div> 
+      <div class="planner-details" style="flex:1">
+        <h3><%= @date_string %></h3>
+        <p>Planner</p>
+      </div>
+      <div class="flex-item" style="flex: 1; float:right; justify-content:right;">
+        <p><%= link_to "Shopping List >", shopping_list_user_path(current_user, view_type: "week", class: "next-tile", day: @days_from_week.first), id: "gen-shop-list", style:"font-size: 3em; color:white;" %>
+        </p>
+      </div> 
     </div>
+
+    
+    
+    
+    
+    
+    
   </div>
 </div>
 
