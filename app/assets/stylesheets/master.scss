@@ -19,6 +19,22 @@ $red: #EF426F;
 //   padding-bottom: 100px;
 //   margin-bottom: 100px;
 // }
+
+.next-tile{
+  color:$light;
+  font-size:2em;
+  padding-right:2vw;
+  transform: 0.5s;
+  text-decoration:none;
+  & :hover{
+    text-decoration:none;
+    transform: 0.5s;
+    color: $orange;
+  }
+}
+
+
+
 html { background-color: $dark; }
 body {
   background-color: $light;
