@@ -12,74 +12,6 @@
 Hey, so this ajax request should work now, send a recipe with the param liked set to true or false and the backend will return another recipe as well as a token, send the token along with any subsequent requests as the param token (a string).  The code is in the static_pages controller under temporary_preference, and the ajax request below contains the URL (POST request).  You also now have 5 randomly generate recipes available through the variable gon.recipes.  I haven't had a chance to buikd out a feature to shuffle these yet.
 
 -->
-  <script>
-document.addEventListener("turbolinks:load", function() {
-  $('.sessions.new').ready(function() {  
-
-    console.log("logging")
-    // console.log(gon.recipes)
-    // console.log(refreshData(10, true));
-    updateMiddle(gon.recipes[0]);
-  });
-});
-
-
-$( document ).ready(function() {
-  updateMiddle(gon.recipes[0]);
-});
-
-
-  function refreshData(id, liked) {
-      data = {
-        recipe: id,
-        liked: liked
-      }
-
-      $.ajax({//ajax call 
-            type:'POST',
-            data: data,
-            url:"/static_pages/temporary_preference",
-            beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-            success:function (response) {
-              console.log(response)
-              return response;
-            }
-        }); //end ajax
-    };
-
-  function updateMiddle(recipe){
-    $("#curName").html(recipe.name);
-    $("#recipe-description").html(recipe.description);
-
-    var yesNoBox = "<div class='sortable' style='background: url(\"" + recipe.remote_photo_url + "\")no-repeat center center;' recipe-id='" + recipe.id + "'>"
-
-     yesNoBox = yesNoBox + "<div class='inner'>";
-     yesNoBox = yesNoBox +  "<p name='" + recipe.id + "'  class='remove' style='color:red;' onclick='removeFunct(this)''> X </p>";
-     yesNoBox = yesNoBox +  "<p style='font-size:0.4em;'>" + recipe.description + "</p>";
-    
-    yesNoBox = yesNoBox 
-        + "</div>"
-     + "</div>";
-
-    $(".start-box").html(yesNoBox);
-  }
-    
-  var gun_count = 0;
-  function removeFunct(item){
-
-    $(item).parent().parent().remove();
-    
-    refreshData($(item).parent().parent().attr("recipe-id"), false);
-    gun_count ++;
-    if (gun_count > 4) {gun_count = 0}
-    updateMiddle(gon.recipes[gun_count]);
-  }
-  
-  function toggle(item){
-    $(item).toggle(30);
-  }
-
-</script>
 
 <div class="homepage">
     <div class="section title">
@@ -92,49 +24,9 @@ $( document ).ready(function() {
     </div>
         
     <%= render "sign_in_section" %>
-    <div class="section drag-yes-no">
-      <a style="display:none;" name="getStarted"></a>
-      <div class="center-horizontal-children">
-        <h3 style="color:white;"> ANYTHING LOOK GOOD?</h3>
-        <span style="color:orange; font-size:1em;" class="help-text">Try dragging items around.</span>
-      </div>
-      
-      <div class="rater">
-        <div id="sortable1" class="selector-box connectedSortable no-box"> </div>
-        <div id="sortable2" class="selector-box connectedSortable start-box""></div>
-        <div id="sortable3" class="selector-box connectedSortable yes-box"></div>
-           <!-- style="background-color:lightgrey; border:5px dotted green;  background: url('assets/images/like-30.png') no-repeat center center;" -->
-      </div>
-      <div class="info">
-        <p id="curName"></p>
-        <span id="recipe-description"></span>
-      </div>
-
-    </div>
-    <div class="section food-names">
-
-      <div class="center-horizontal-children">
-        <h3 class="green"> WHAT ARE WE EATING THIS WEEK?</h3>
-        <span style="color:black; font-size:1em;" class="help-text">Try dragging items around.</span>
-      </div>
-
-      
-      <div id="days-items" class="center-horizontal-children" style="margin: 0 auto; padding-top:10vh;">
-         <div id="first_day" class="sortable-day center connectedSortable one" ></div>
-         <div id="second_day" class="sortable-day center connectedSortable two"></div>
-         <div id="third_day" class="sortable-day center connectedSortable three" ></div>
-      </div>
-      <div class="center-horizontal-children">
-          <p onclick="spawnOnto('first_day');" class="addition"> [+] </p>
-          <p onclick="spawnOnto('second_day');" class="addition"> [+] </p>
-          <p onclick="spawnOnto('third_day');" class="addition"> [+] </p>
-      </div>
-      
-    </div>
-    <div class="section shoppinglist">
-      todo....
-
-    </div>
+    <%= render "yes_no_section"%>
+    <%= render "next_few_days"%>
+    <%= render "shopping_list"%>
 
 </div>
 
@@ -160,7 +52,23 @@ $( document ).ready(function() {
       $( "#sortable1, #sortable2, #sortable3, .sortable-day").sortable({
         connectWith: ".connectedSortable"
       }).disableSelection();
-    } );
+
+      $( "#sortable1").droppable({
+        hoverClass: "highlight",
+        drop: function( ) {// dropped into dislike
+            // refreshData($(".middle_remove").attr('name'), false)
+            removeFunct(".middle_remove");
+        }
+      });
+
+      $( "#sortable3").droppable({
+        hoverClass: "highlight",
+        drop: function( ) { // dropped into like
+           // refreshData($(".middle_remove").attr('name'), false)
+            removeFunct(".middle_remove");
+        }
+      });
+    });
   
   </script>
 
@@ -204,5 +112,5 @@ $( document ).ready(function() {
       return div;
     }
 
-  </script>
+</script>
 

@@ -1,0 +1,95 @@
+<script>
+document.addEventListener("turbolinks:load", function() {
+  $('.sessions.new').ready(function() {  
+
+    console.log("logging")
+    // console.log(gon.recipes)
+    // console.log(refreshData(10, true));
+    updateMiddle(gon.recipes[0]);
+  });
+});
+
+
+$( document ).ready(function() {
+  updateMiddle(gon.recipes[0]);
+});
+
+
+  function refreshData(id, liked) {
+      console.log("refreshData called");
+
+      data = {
+        recipe: id,
+        liked: liked
+      }
+  
+      var token = $('meta[name="csrf-token"]').attr('content');
+      $.ajax({url:"/static_pages/temporary_preference",
+            type:'POST',
+            beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', token)},
+            data: data.serialize(),
+            success:function (response) {
+              console.log(response)
+              return response;
+            }
+        }); //end ajax
+    };
+
+  function updateMiddle(recipe){
+    $("#curName").html(recipe.name);
+    $("#recipe-description").html(recipe.description);
+
+    var yesNoBox = "<div class='sortable' style='background: url(\"" + recipe.remote_photo_url + "\")no-repeat center center;' recipe-id='" + recipe.id + "'>"
+
+     yesNoBox = yesNoBox + "<div class='inner'>";
+     yesNoBox = yesNoBox +  "<p name='" + recipe.id + "' class='.remove-middle remove' style='color:red;' onclick='removeFunct(this)''> X </p>";
+     yesNoBox = yesNoBox +  "<p style='font-size:0.4em;'>" + recipe.description + "</p>";
+    
+    yesNoBox = yesNoBox 
+        + "</div>"
+     + "</div>";
+
+    $(".start-box").html(yesNoBox);
+  }
+    
+  var gun_count = 0;
+  function removeFunct(item){
+    
+    $(item).parent().parent().remove();
+    
+    //refreshData($(item).parent().parent().attr("recipe-id"), false);
+    gun_count ++;
+    if (gun_count > 4) {gun_count = 0}
+    updateMiddle(gon.recipes[gun_count]);
+  }
+  
+  function toggle(item){
+    $(item).toggle(30);
+  }
+
+  
+
+</script>
+
+
+
+
+<div class="section drag-yes-no">
+      <a style="display:none;" name="getStarted"></a>
+      <div class="center-horizontal-children">
+        <h3 style="color:white;"> ANYTHING LOOK GOOD?</h3>
+        <span style="color:orange; font-size:1em;" class="help-text">Try dragging items around.</span>
+      </div>
+      
+      <div class="rater">
+        <div id="sortable1" class="selector-box connectedSortable no-box"> </div>
+        <div id="sortable2" class="selector-box connectedSortable start-box""></div>
+        <div id="sortable3" class="selector-box connectedSortable yes-box"></div>
+           <!-- style="background-color:lightgrey; border:5px dotted green;  background: url('assets/images/like-30.png') no-repeat center center;" -->
+      </div>
+      <div class="info">
+        <p id="curName"></p>
+        <span id="recipe-description"></span>
+      </div>
+
+    </div>

@@ -77,11 +77,32 @@
 		  	.no-box{
   				border: 1px dotted red;
   				background-color: rgba(255,0,0,0.1);
+  				transition: 0.3s;
+
+  				&:hover {
+  					transition: 0.3s;
+  					background-color: rgba(255,0,0,0.5);
+  				}
+  				&.highlight {
+  					transition: 0.3s;
+  					background-color: rgba(255,0,0,0.5);
+  				}
   			}
 
   			.yes-box{
   				border: 2px dotted $green;	
   				background-color: rgba(0,255,0,0.1);
+  				transition: 0.3s;
+
+  				&:hover {
+  					transition: 0.3s;
+  					background-color: rgba(0,255,0,0.5);
+  				}
+
+  				&.highlight {
+  					transition: 0.3s;
+  					background-color: rgba(0,255,0,0.5);
+  				}
   			}
 
   			.start-box{
