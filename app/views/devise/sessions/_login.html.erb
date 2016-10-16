@@ -19,9 +19,9 @@
             <div class="box">
                <div class="sub-box" style="text-align:right;">
                <% if devise_mapping.rememberable? -%>
-                  <%= f.check_box :remember_me, class: "one-line-field" %>
-                  <%= f.label :remember_me, class: "one-line-field" %>
+                  <span><%= f.check_box :remember_me, style: "display:inline-block;"%> Remember me</span>
                 <% end -%>
+                <br><br>
               </div>
                <div class="sub-box">
                 <%= f.submit "Login", class: "login"%>

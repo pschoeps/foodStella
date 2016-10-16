@@ -4,9 +4,12 @@
 <div class="row">
   <div class="col-md-12 calendar-page-header">
     
-  <div class="flex-container" style="display: -webkit-flex; display: flex; width: 100%; align-items: center; justify-content: center;">
-      <div class="flex-item" style="flex: 1; float:right; justify-content:right;">
-        <p><%= link_to "< Recipes", shopping_list_user_path(current_user, view_type: "week", class: "next-tile", day: @days_from_week.first), id: "gen-shop-list", style:"font-size: 3em; color:white;" %>
+   <div class="flex-container" style="display: -webkit-flex; display: flex; width: 100%; align-items: center; justify-content: center;">
+      <div class="flex-item" style="flex: 1; float:right; justify-content:left;">
+        <p>
+        <p style="text-align: left;">
+        <%= link_to "&#x3008;".html_safe, recipes_path, class: "next-tile", id: "gen-shop-list", style:"font-size: 3em;"%>
+        </p>
         </p>
       </div> 
       <div class="planner-details" style="flex:1">
@@ -14,16 +17,11 @@
         <p>Planner</p>
       </div>
       <div class="flex-item" style="flex: 1; float:right; justify-content:right;">
-        <p><%= link_to "Shopping List >", shopping_list_user_path(current_user, view_type: "week", class: "next-tile", day: @days_from_week.first), id: "gen-shop-list", style:"font-size: 3em; color:white;" %>
+        <p style="text-align: right;">
+        <%= link_to "&#x3009;".html_safe, shopping_list_user_path(current_user, view_type: "week", day: @days_from_week.first), id: "gen-shop-list", style:"font-size: 3em;", class: "next-tile" %>
         </p>
       </div> 
     </div>
-
-    
-    
-    
-    
-    
     
   </div>
 </div>
@@ -81,7 +79,7 @@
 
     <p class="circle-text circle-text-snack"> Snack </p>
 
-    <%= link_to "Generate shopping list", shopping_list_user_path(current_user, view_type: "week", day: @days_from_week.first), id: "gen-shop-list" %>
+    <%= link_to "Generate shopping list &rarr;".html_safe, shopping_list_user_path(current_user, view_type: "week", day: @days_from_week.first), id: "gen-shop-list", style: "color:orange;" %> 
 
 
   </div>

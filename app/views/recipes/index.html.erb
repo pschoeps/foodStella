@@ -1,10 +1,29 @@
 <%= render 'layouts/recipe_css_variables' %>
+
 <div class="row"  data-intro='<%= render 'tutorial/step_four' %>' data-position="bottom-right-aligned" data-step='4'>
-  <div class="col-md-12 recipe-page-header">
-    <h1 style="display:inline-block;">What do you <i>stella</i> today?</h1>
-    <h1 style="display:inline-block; float:right;">
-    <%= link_to ">", calendar_user_path(@current_user), class: "next-tile" %></h1>
-  </div>
+  <div class="col-md-12 calendar-page-header">
+    
+   <div class="flex-container" style="display: -webkit-flex; display: flex; width: 100%; align-items: center; justify-content: center;">
+      <div class="flex-item" style="flex: 1; float:right; justify-content:left;">
+        <p>
+        <p style="text-align: left;">
+        
+        </p>
+        </p>
+      </div> 
+      <div class="planner-details" style="flex:1">
+        
+        <h3>Pick some recipies to get started</h3>
+        <p style="font-size: 2.0em">What do you <i>Stella</i> today?</p>
+        
+      </div>
+      <div class="flex-item" style="flex: 1; float:right; justify-content:right;">
+        <p style="text-align: right; margin: 0;">
+        <%= link_to "&#x3009;".html_safe, calendar_user_path(current_user), style:"font-size: 3em;", class: "next-tile" %>
+        </p>
+      </div> 
+    </div>
+
 </div>
 
 <div class= "row">

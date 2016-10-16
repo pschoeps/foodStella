@@ -1,11 +1,12 @@
 .homepage{
 // ============== welcome page ==============
-
+	background:transparent;
 	.section {
 	  width: 100%;
 	  min-height: 10vh;
-	  padding-top: 5vh;
-	  padding-bottom: 5vh;
+	  background:transparent;
+	  // padding-top: 5vh;
+	  // padding-bottom: 5vh;
 	  transition: 0.5s;
 	}
 
