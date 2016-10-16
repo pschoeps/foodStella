@@ -14,17 +14,31 @@ Hey, so this ajax request should work now, send a recipe with the param liked se
 -->
 
 <div class="homepage">
-    <div class="section title">
+    <div style="background-color: black;">
+    <div class="section title" style="position: relative; z-index: 3; background-color: transparent;"> 
+      <div style="position: absolute; background-repeat:repeat-both; background-image: url('/assets/oct.png'); width: 100%; height: 100%; opacity: 0.1; z-index: -1;"></div>
       <div class="mainlogo">
            <%= image_tag "logo-foodstella.png", id: "logo" %>
       </div>
+
     </div>
+    </div>
+    
+    <%= render "title" %>
     <div class="section tagline">
          The easiest way to plan your week!
     </div>
         
     <%= render "sign_in_section" %>
-    <%= render "yes_no_section"%>
+    <div style="background-color: black;">
+      <div style="position: relative; z-index: 3; background-color: transparent;">
+        <div style="position: absolute; background-repeat:repeat-both; background-image: url('/assets/oct.png'); width: 100%; height: 100%; opacity: 0.1; z-index: -1;">
+        </div>
+        <div>
+          <%= render "yes_no_section"%>
+        </div>
+      </div>
+    </div>
     <%= render "next_few_days"%>
     <%= render "shopping_list"%>
 
@@ -72,45 +86,5 @@ Hey, so this ajax request should work now, send a recipe with the param liked se
   
   </script>
 
-  <!-- js for adding and spawning elements -->
-  <script type="text/javascript">
-    function getRandomArbitrary(min, max) {
-      return Math.floor(Math.random() * (max - min) + min) + 1;
-    }
-    function generate(){
-      var children = $('#days-items').find(".connectedSortable");
-      children.find(".sortable").remove();
-      for (var i = 0; i < children.length; i++) {
-        var tableChild = $(children[i]);
-        
-        for (var x = 0; x < 3; x++) {
-          tableChild.prepend(wrapElement().fadeIn(400));
-         }
-      }
-
-    }
-
-    // $(".add").on('click', );
-    function spawnOnto(id_str){
-      spawn($("#"+id_str))
-    }
-    function spawn(element){
-      element.prepend(wrapElement().fadeIn(400));
-    }
-    var wrapElement = function(){
-      var num = getRandomArbitrary(0,5);
-      var imgUrl = "'assets/food/" + num + ".png'";
-      var div = $('<div style="background: url(' + imgUrl + ') no-repeat center center;" class="sortable ui-sortable-handle"></div>');
-        var hidden = $('<div class="inner"></div>');
-          var remove = $('<p class="remove" style="color:red;" onclick="removeFunct(this)"> X </p>');
-          var title = $('<p> Item number ' + num + '</p>');
-          var info = $('<p> Information on item number ' + num + '</p>');
-        hidden.append(remove);
-        hidden.append(title);
-        hidden.append(info);
-      div.append(hidden);
-      return div;
-    }
-
-</script>
+ 
 

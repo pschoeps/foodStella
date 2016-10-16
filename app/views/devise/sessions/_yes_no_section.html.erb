@@ -59,7 +59,7 @@ $( document ).ready(function() {
     
     //refreshData($(item).parent().parent().attr("recipe-id"), false);
     gun_count ++;
-    if (gun_count > 4) {gun_count = 0}
+    if (gun_count > gon.recipes.length-1) {gun_count = 0}
     updateMiddle(gon.recipes[gun_count]);
   }
   
@@ -74,7 +74,8 @@ $( document ).ready(function() {
 
 
 
-<div class="section drag-yes-no">
+<div class="section drag-yes-no" style="background-color: transparent;">
+
       <a style="display:none;" name="getStarted"></a>
       <div class="center-horizontal-children">
         <h3 style="color:white;"> ANYTHING LOOK GOOD?</h3>

@@ -1,7 +1,7 @@
  <div class="section food-names">
 
-      <div class="center-horizontal-children">
-        <h3 class="green"> WHAT ARE WE EATING THIS WEEK?</h3>
+      <div class="center-horizontal-children" style="padding-top: 2vh;">
+        <h3 class="green" style="margin: 0;"> WHAT ARE WE EATING THIS WEEK?</h3>
         <span style="color:black; font-size:1em;" class="help-text">Try dragging items around.</span>
       </div>
 
@@ -23,3 +23,52 @@
    
   // var imgUrl = "'assets/food/" + num + ".png'";
  </script>
+
+
+  <!-- js for adding and spawning elements -->
+  <script type="text/javascript">
+    function getRandomArbitrary(min, max) {
+      return Math.floor(Math.random() * (max - min) + min) + 1;
+    }
+    function generate(){
+      var children = $('#days-items').find(".connectedSortable");
+      children.find(".sortable").remove();
+      for (var i = 0; i < children.length; i++) {
+        var tableChild = $(children[i]);
+        
+        for (var x = 0; x < 3; x++) {
+          tableChild.prepend(wrapElement().fadeIn(400));
+         }
+      }
+
+    }
+
+    // $(".add").on('click', );
+    
+
+    function spawnOnto(id_str){
+      spawn($("#"+id_str))
+    }
+    function spawn(element){
+      element.prepend(wrapElement().fadeIn(400));
+    }
+    var wrapElement = function(){
+      
+      var num = getRandomArbitrary(0,gon.recipes.length);
+      var recipe = gon.recipes[num];
+
+      var imgUrl = recipe.remote_photo_url;
+      var div = $('<div style="background: url(' + imgUrl + ') no-repeat center center;" class="sortable ui-sortable-handle"></div>');
+        var hidden = $('<div class="inner"></div>');
+          var remove = $('<p class="remove" style="color:red;" onclick="removeFunct(this)"> X </p>');
+          var title = $('<p style="text-shadow: 1px 1px 5px black; color: white;">' + recipe.name + '</p>');
+          var info = $('<p>' + '</p>'); // put info here
+        hidden.append(remove);
+        hidden.append(title);
+        hidden.append(info);
+      div.append(hidden);
+      return div;
+    }
+
+</script>
+
