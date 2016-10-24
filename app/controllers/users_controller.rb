@@ -265,24 +265,25 @@ class UsersController < ApplicationController
 	end
 
 	def get_user_recommended_recipes
+		cap = 376
 		recommended_recipe_ids = []
 		@recommended_recipes = []
 		if @events.length != 0
-		  @events.last(2).each do |event|
+		  @events.where("recipe_id <= ?", cap).last(2).each do |event|
 			recommended_recipe_ids << event.recipe_id
 			@recommended_recipes << Recipe.find(event.recipe_id)
 		  end
 		end
 
 		if @user_recipes.length != 0
-		  @user_recipes.last(3) do |recipe|
+		  @user_recipes.where("id <= ?", cap).last(3) do |recipe|
 		  	recommended_recipe_ids << recipe.id 
 		  	@recommended_recipes << recipe
 		  end
 		end
 
 		if recommended_recipe_ids.length == 0
-			Recipe.last(5).each do |recipe|
+			Recipe.where("id <= ?", cap).last(5).each do |recipe|
 			  recommended_recipe_ids << recipe.id 
 			  @recommended_recipes << recipe
 			end
