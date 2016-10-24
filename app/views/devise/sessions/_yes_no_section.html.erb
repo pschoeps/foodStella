@@ -64,7 +64,7 @@ $( document ).ready(function() {
   }
   
   function toggle(item){
-    $(item).toggle(30);
+    $(item).toggle(500);
   }
 
   
@@ -80,11 +80,12 @@ $( document ).ready(function() {
       <div class="center-horizontal-children">
         <h3 style="color:white;"> ANYTHING LOOK GOOD?</h3>
         <span style="color:orange; font-size:1em;" class="help-text">Try dragging items around.</span>
+        <span>Tell us what you like and don’t like. We will recommend similar recipes and surprise you with creations others, like you, enjoy. Drag recipes left or right to let us know your preferences!</span>
       </div>
       
       <div class="rater">
         <div id="sortable1" class="selector-box connectedSortable no-box"> </div>
-        <div id="sortable2" class="selector-box connectedSortable start-box""></div>
+        <div id="sortable2" class="selector-box connectedSortable start-box" style="border: 1px solid transparent;"></div>
         <div id="sortable3" class="selector-box connectedSortable yes-box"></div>
            <!-- style="background-color:lightgrey; border:5px dotted green;  background: url('assets/images/like-30.png') no-repeat center center;" -->
       </div>
