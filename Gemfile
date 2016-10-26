@@ -27,7 +27,7 @@ gem 'coffee-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
-gem 'rake',                 '11.2.2'
+gem 'rake'
 
 gem 'rails-jquery-autocomplete'
 gem 'rails-jquery-tokeninput'
