@@ -4,14 +4,16 @@ document.addEventListener("turbolinks:load", function() {
 
     console.log("logging")
     // console.log(gon.recipes)
-    // console.log(refreshData(10, true));
+    
     updateMiddle(gon.recipes[0]);
   });
 });
 
 
 $( document ).ready(function() {
+  console.log("logging")
   updateMiddle(gon.recipes[0]);
+  console.log(refreshData(10, true).toString);
 });
 
 
@@ -27,7 +29,7 @@ $( document ).ready(function() {
       $.ajax({url:"/static_pages/temporary_preference",
             type:'POST',
             beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', token)},
-            data: data.serialize(),
+            data: data,
             success:function (response) {
               console.log(response)
               return response;
