@@ -13,15 +13,14 @@ document.addEventListener("turbolinks:load", function() {
 $( document ).ready(function() {
   console.log("logging")
   updateMiddle(gon.recipes[0]);
-  console.log(refreshData(10, true).toString);
+  console.log(refreshData(10, true));
 });
 
 
   function refreshData(id, liked) {
       console.log("refreshData called");
-
       data = {
-        recipe: id,
+        recipe_id: id,
         liked: liked
       }
   
@@ -31,9 +30,16 @@ $( document ).ready(function() {
             beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', token)},
             data: data,
             success:function (response) {
-              console.log(response)
+              console.log("success response: " + response)
               return response;
-            }
+            },
+            failure: function (response) {
+              console.log("Fail response: " + response)
+              return response;
+            },
+            error: function() {
+                  console.log("ajax error")
+              }
         }); //end ajax
     };
 

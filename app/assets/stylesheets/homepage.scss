@@ -348,3 +348,25 @@
 	  }
 	}
 }
+
+.expando{
+	transition: 0.5s;
+	color: darkgrey;
+	&:hover{
+		cursor: pointer;
+		transition: 0.5s;
+		color: orange;
+	}
+}
+
+.shopping-list-container{
+
+	.shopping-item{
+		color: black;
+		margin-top: 1vh;
+		margin-bottom: 2vh;
+		text-align: left;
+		margin-left: 5vw;
+	}	
+
+}

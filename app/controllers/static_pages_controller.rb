@@ -6,6 +6,7 @@ class StaticPagesController < ApplicationController
   end
 
   def temporary_preference
+    token = "";
     if params[:token]
       token = params[:token]
     else
@@ -19,6 +20,7 @@ class StaticPagesController < ApplicationController
     @new_recipe = Recipe.order("RANDOM()").first
     @token = token
     @returned = [@new_recipe, @token]
+    render :json => @returned
   end
 
 
