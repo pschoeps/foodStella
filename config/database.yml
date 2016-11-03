@@ -18,6 +18,7 @@ development:
   adapter: postgresql
   encoding: unicode
   database: foodstella_development
+  # database: foodStella_development
   pool: 5
   # username: salsaia
   username: alexanderforsyth

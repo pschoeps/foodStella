@@ -28,6 +28,7 @@ FoodStella::Application.routes.draw do
       get 'day_calendar'
       get 'load_user_recommended_recipes'
       get 'update_ingredients'
+      get 'shuffle'
     end
 
     collection do 

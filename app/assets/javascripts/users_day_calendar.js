@@ -267,7 +267,7 @@ $('.users.day_calendar').ready(function() {
   
 
 
-  $('.next-day-link').click(function(){ 
+   $('.next-day-link').click(function(){ 
       var updated_day = (gon.nextDay)
       console.log(updated_day)
       this.href = this.href + '?day=' + (updated_day)
@@ -277,6 +277,21 @@ $('.users.day_calendar').ready(function() {
       updated_day = gon.previousDay
       this.href = this.href + '?day=' + (updated_day)
     });
+
+
+    // // Shuffle!
+    // $('.shuffle-button').click(function(){
+    //   shuffle();
+    // });
+
+    // function shuffle() {
+    //   data = {ids: gon.recommended_recipe_ids}
+    //   $.ajax({//ajax call for questions
+    //                 type:'GET',
+    //                 data: data,
+    //                 url: "/users/"+gon.user_id+"/shuffle",
+    //   });//end ajax call
+    // }
  
 
 });

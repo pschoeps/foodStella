@@ -126,4 +126,66 @@ console.log(gon.previousWeek)
     updated_week = gon.previousWeek
     this.href = this.href + '?week=' + (updated_week)
   });
+
+  // Shuffle!
+  $('.shuffle-button').click(function(){
+    $('.shuffle-button .glyphicon-refresh').show();
+    shuffle();
+  });
+
+  function shuffle() {
+    // console.log(gon.shuffle_recommended_recipe_ids);
+    // return;
+    data = {
+      ids: gon.shuffle_recommended_recipe_ids,
+      start_day: gon.start_day,
+      dayView: gon.dayView
+    }
+    console.log(data)
+    $.ajax({//ajax call for questions
+                  type:'GET',
+                  data: data,
+                  url: "/users/"+gon.user_id+"/shuffle",
+                  success:function (response) {
+                    // controller should return full json of new events,
+                    // and then those can be appended here
+                    // the code to create the json has not been written yet
+
+                    // respone.each(function(i, event){
+                    //   // event json will require the following values:
+                    //   event = {
+                    //     recipe_id: 1,
+                    //     recipe_friendly_name: 'name',
+                    //      recipe_truncated_name: truncate(name, length: 18)'
+                    //     meal: 'breakfast',
+                    //      color: '#ffffff'
+                    //     servings: 1,
+                    //   }
+                    
+                      // newEvent =
+                      //   "<div class='meal week-meal desktop-meal' data='" + event.recipe_id + "'>" +
+                      //     "<a class='desktop-event fc-event-container " + event.recipe_friendly_name + "id-" + event.recipe_id + " id='desktop-event' data-event='" + event.id + "' data -recipe='" + event.recipe_id + "' data-recipe-name='' data-image='' data-serving='' style='background-image: url();'>" +
+                      //       "<span class='delete-event'></span>" +
+                      //       "<span class='servings' id='desktop-week-servings'>" + event.servings + "</span>" +
+                      //       "<span class='event-title' style='background-color: " + event.color + "'>" + event.recipe_truncated_name + "</span>" +
+                      //      "</a>" +
+                      //       "<div class='change-servings-box hidden'>" +
+                      //           "<span class='change-servings-box-close'>close</span>" +
+                      //           "<span class='glyphicon glyphicon-minus change-serving' id='minus-serving' aria-hidden='true'></span>" +
+                      //           "<span id ='num-servings' data='" + event.id + "' data-servings='" + event.servings + "'>" + event.servings + "</span>" +
+                      //           "<span class='glyphicon glyphicon-plus add change-serving' id='add-serving' aria-hidden='true'></span>" +
+                      //         "</div>" +
+                      //       "</div>";
+
+                    //   $('.meal-types#' + event.meal + ' added-meals').append(newEvent);
+                    // });
+                    
+                    // until return json is written, just reload page
+                    location.reload();
+
+                    $('.shuffle-button .glyphicon-refresh').hide();
+                  }
+    });//end ajax call
+  }
+
 });

@@ -26,7 +26,6 @@
   </div>
 </div>
 
-
   <div id='sidebar-col' class="col-sm-3">
   <%= render(
     partial: 'layouts/recipe_sidebar',
@@ -53,6 +52,10 @@
     <span class="header">Change all servings</span>
     <span class="glyphicon glyphicon-minus" id="minus-all-servings" aria-hidden="true"></span>
     <span class="glyphicon glyphicon-plus add" id="plus-all-servings" aria-hidden="true"></span>
+  </div>
+  <div class='shuffle-button'>
+    <span class="glyphicon glyphicon-refresh spinning" style='display: none;'></span>
+    <span>Shuffle! <i>(fill open slots with our recommendations)</i></span>
   </div>
   
 </div>
@@ -113,7 +116,7 @@
                 <% recipe = e.get_recipe(e.recipe_id) %>
                 <% servings = e.servings? ? true : false %>
                 <div class="meal week-meal desktop-meal" data ="<%= e.recipe_id %>">
-                  <a class="desktop-event fc-event-container <%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" id="desktop-event" data-event="<%= e.id %>" data-recipe="<%= e.recipe_id %>" data-recipe-name="<%= recipe.name %>" data-image="<%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" data-servings="<%= e.servings || recipe.servings %>">
+                  <a class="desktop-event fc-event-container <%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" id="desktop-event" data-event="<%= e.id %>" data-recipe="<%= e.recipe_id %>" data-recipe-name="<%= recipe.name %>" data-image="<%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" data-servings="<%= e.servings || recipe.servings %>" style="background-image: url('<%= recipe.retrieve_pic %>')">
                     <span class="delete-event"></span>
                     <span class="servings" id="desktop-week-servings"><%= servings ? e.servings : recipe.servings %>s</span>
                     <span class="event-title" style="background-color: <%= m[2] %>"><%= truncate(recipe.name, length: 18) %></span>

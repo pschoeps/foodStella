@@ -394,6 +394,18 @@ $outer-container: 90%;
     }
 }
 
+.calendar-nav .shuffle-button {
+    position: absolute;
+    bottom: .5em;
+    right: 5%;
+    color: $green;
+    font-weight: bolder;
+    cursor: pointer;
+    i {
+        font-weight: lighter;
+    }
+}
+
 // .dragNdrop { animation: highlight_dnd 1s linear 3.5s 2 alternate; }
 @-webkit-keyframes highlight_dnd {
     0% {
