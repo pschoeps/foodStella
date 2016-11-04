@@ -306,8 +306,9 @@ class UsersController < ApplicationController
 		sample_count = 3
 
 		# find 3 recipes of each type to use as the recommender's set
+			# these categories aren't very accurate, a script to guess a meal type would be beneficial
 
-		# breakfast
+		# breakfast = snack, side_dish
 		breakfast_ids = []
 		if @recipes.where("id <= ? AND meal_type IN (?)", cap, ['1','2']).length != 0
 			@recipes.where("id <= ? AND meal_type IN (?)", cap, ['1','2']).order("RANDOM()").last(sample_count).each do |recipe|
@@ -323,7 +324,7 @@ class UsersController < ApplicationController
 		  		@shuffle_recommended_recipes << recipe
 		  	end
 		end
-		# morning snack
+		# morning snack = snack, side_dish
 		morning_snack_ids = []
 		if @recipes.where("id <= ? AND meal_type IN (?)", cap, ['1','2']).length != 0
 			@recipes.where("id <= ? AND meal_type IN (?)", cap, ['1','2']).order("RANDOM()").last(sample_count).each do |recipe|
@@ -339,7 +340,7 @@ class UsersController < ApplicationController
 		  		@shuffle_recommended_recipes << recipe
 		  	end
 		end
-		# lunch
+		# lunch = side_dish, main_dish
 		lunch_ids = []
 		if @recipes.where("id <= ? AND meal_type IN (?)", cap, ['2','3']).length != 0
 			@recipes.where("id <= ? AND meal_type IN (?)", cap, ['2','3']).order("RANDOM()").last(sample_count).each do |recipe|
@@ -355,7 +356,7 @@ class UsersController < ApplicationController
 		  		@shuffle_recommended_recipes << recipe
 		  	end
 		end
-		# afternoon snack
+		# afternoon snack = nsack, side_dish, dessert
 		afternoon_snack_ids = []
 		if @recipes.where("id <= ? AND meal_type IN (?)", cap, ['1','2','4']).length != 0
 			@recipes.where("id <= ? AND meal_type IN (?)", cap, ['1','2','4']).order("RANDOM()").last(sample_count).each do |recipe|
@@ -371,7 +372,7 @@ class UsersController < ApplicationController
 		  		@shuffle_recommended_recipes << recipe
 		  	end
 		end
-		# dinner
+		# dinner = main_dish
 		dinner_ids = []
 		if @recipes.where("id <= ? AND meal_type IN (?)", cap, ['3']).length != 0
 			@recipes.where("id <= ? AND meal_type IN (?)", cap, ['3']).order("RANDOM()").last(sample_count).each do |recipe|
