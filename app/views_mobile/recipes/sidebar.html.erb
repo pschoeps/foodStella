@@ -9,7 +9,11 @@
 <div class="row planner-view-control recipes <%= 'fixed-margin' if @mobile_tab == 'recipes' %>">
   <div class="col-sm-6 disable-margins disable-padding">
     <%= link_to sidebar_path(:mobile => true) do %>
-      <button class="week-view-button" id='selected'><div class="spatula"></div> My Foods</button>
+      <button class="week-view-button" id='selected'>
+      <h2 class="my-foods-text">
+        My F<span class="my-foods-text-oo">oo</span>ds
+      </h2>
+      </button>
     <% end %>
   </div>
   <div class="col-sm-6 disable-margins disable-padding">
