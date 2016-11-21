@@ -129,6 +129,7 @@ console.log(gon.previousWeek)
 
   // Shuffle!
   $('.shuffle-button').click(function(){
+    $(".desktop-calendar-container").css("background-color", "lightgrey");
     $('.shuffle-button .glyphicon-refresh').show();
     shuffle();
   });
