@@ -5,8 +5,12 @@
         <span style="color:black; font-size:1em;" class="help-text">Try dragging items around.</span>
       </div>
 
-      
-      <div id="days-items" class="center-horizontal-children" style="margin: 0 auto; padding-top:10vh;">
+      <div class="center-horizontal-children" style="padding-top:5vh;">
+          <p onclick="spawnOnto('first_day');" class="addition"> Monday </p>
+          <p onclick="spawnOnto('second_day');" class="addition"> Tuesday </p>
+          <p onclick="spawnOnto('third_day');" class="addition"> Wednesday </p>
+      </div>
+      <div id="days-items" class="center-horizontal-children" style="margin: 0 auto;">
          <div id="first_day" class="sortable-day center connectedSortable one" ></div>
          <div id="second_day" class="sortable-day center connectedSortable two"></div>
          <div id="third_day" class="sortable-day center connectedSortable three" ></div>
