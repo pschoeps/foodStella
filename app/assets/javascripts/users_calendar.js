@@ -117,7 +117,7 @@ console.log(gon.nextWeek)
 console.log(gon.previousWeek)
 
   $('.next-week-link').click(function(){ 
-      var  d_week = (gon.nextWeek)
+      var updated_week = (gon.nextWeek)
       console.log(updated_week)
       this.href = this.href + '?week=' + (updated_week)
     });
@@ -126,6 +126,10 @@ console.log(gon.previousWeek)
     updated_week = gon.previousWeek
     this.href = this.href + '?week=' + (updated_week)
   });
+
+  setTimeout(function(){
+    $('.recommended-banner').animate({'opacity': 0}, 1000)
+  }, 5000);
 
   // Shuffle!
   $('.shuffle-button').click(function(){
