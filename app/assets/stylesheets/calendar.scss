@@ -574,6 +574,14 @@ $outer-container: 90%;
 
         }
     }
+    .start_over {
+       color: $brown;
+       position: absolute;
+       top: 0.2em;
+       right: 5%;
+       font-weight: bold;
+       cursor: pointer;
+    }
 }
 
 //begin week view planner desktop
@@ -1174,7 +1182,8 @@ $outer-container: 90%;
             }
 
             .meal:hover, .mobile-event:hover, .desktop-event:hover {
-                .recommended-banner { opacity: .9 !important; }
+                // .recommended-banner { opacity: .9 !important; }
+                .recommended-banner { opacity: 0 !important; }
             }
         }
     }

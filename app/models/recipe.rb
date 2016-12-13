@@ -371,8 +371,8 @@ class Recipe < ActiveRecord::Base
 
   def self.options_for_sorted_by
     [
-      ['Recommended', 'created_at_asc'],
-      ['Trending', 'created_at_desc'],
+      # ['Recommended', 'created_at_asc'],
+      # ['Trending', 'created_at_desc'],
       ['Latest', 'created_at_desc'],
       ['Oldest', 'created_at_asc'],
       # ['Difficulty (hardest first)',       'difficulty_desc'],
@@ -505,6 +505,37 @@ class Recipe < ActiveRecord::Base
     calories = total_calories.inject(0, :+)
 
     return calories
+  end
+
+  def get_calories_string(user_id)
+    recipe = Recipe.find(id)
+    user = User.find(user_id)
+    event = user.events.where(:recipe_id => recipe.id).last
+    if event.servings
+      servings = event.servings
+    else
+      servings = recipe.servings
+    end
+
+    servings_ratio = servings / recipe.servings
+
+    # replacing calories with quantity.ingredient.calories * quantity.ounces - sal
+    total_calories = []
+    quantities = recipe.quantities
+    quantities.each do |q|
+      if q.ingredient.calories 
+        calories_per_ounce = q.ingredient.calories 
+        ounces = q.ounces
+        calories_for_ingredient = (calories_per_ounce * ounces * servings_ratio).round
+        total_calories << calories_for_ingredient
+      end
+    end
+
+    calories = total_calories.inject(0, :+)
+    
+    calories_string = ''
+    calories_string = "(" + calories.to_s + " calories)" if calories > 0
+    return calories_string
   end
 
   def get_short_time(cookOrPrep)
