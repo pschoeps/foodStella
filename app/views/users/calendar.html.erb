@@ -45,7 +45,7 @@
   <a href="/users/<%= current_user.id %>/calendar" class="prev-week-link"><span id="previous-week" data="1"><%= image_tag('left-arrow.png') %> Previous Week</span></a>
   <a href="/users/<%= current_user.id %>/calendar" class="next-week-link"><span id="next-week">Next Week<%= image_tag('right-arrow.png') %></span></a>
   <%= link_to "Week View", calendar_user_path(current_user), id: "selected", class: "week-view btn" %>
-  <%= link_to "Day View", day_calendar_user_path(current_user), class: "day-view btn" %>
+  
 
   
   <div class="change-all-servings-box">
@@ -77,10 +77,8 @@
 
     <p class="circle-text circle-text-dinner"> Dinner </p>
 
-    <div class="circle snack-circle">
-    </div>
-
-    <p class="circle-text circle-text-snack"> Snack </p>
+    <!-- <div class="circle snack-circle"></div>
+    <p class="circle-text circle-text-snack"> Snack </p> -->
 
     <%= link_to "Generate shopping list &rarr;".html_safe, shopping_list_user_path(current_user, view_type: "week", day: @days_from_week.first), id: "gen-shop-list", style: "color:orange;" %> 
 
@@ -92,90 +90,93 @@
 
   <!-- code for colors goes here -->
 
-
   <div class="details-box" style="display:inline-block;">
       <p>*s = servings per recipe</p>
       <p>*x = remove food</p>
       <p>Click on the servings to change</p>
   </div>
-  
+
+    
 </div>
 
-<div class="row desktop-calendar-container weekly-planner" id="offset-margins" data="<%= current_user.id %>">
-  <% @days_from_week.each do |day| %>
-  <div class="one-day col-md-4 col-xs-4 col-sm-4" id="one-day-desktop">
-    <h2 class="one-day-header"><%= day.strftime("%A") %></h2>
+<div class="row desktop-calendar-container weekly-planner" id="offset-margins" data="<%= current_user.id %>" style="min-width: 70%; overflow: auto;">
+  <div style="width: 100%; min-width: 770px;">
+    <% @days_from_week.each do |day| %>
+      <div class="one-day col-md-4 col-xs-4 col-sm-4" id="one-day-desktop" style="padding-left: 0; width: 13%; min-width: 109px">
+        <h2 class="one-day-header"><%= day.strftime("%A") %></h2>
+        <div class="meals" id="<%= day %>">
 
-    <div class="meals" id="<%= day %>">
+            <% @meal_types.each do |m| %>
+              <div class="meal-types" id="<%= m[3] %>">
+                <div class="added-meals">
+                  <% events = @events.where(:start_at => day.strftime + m[1]) %>
+                  <% events.each do |e| %>
+                    <% recipe = e.get_recipe(e.recipe_id) %>
+                    <% servings = e.servings? ? true : false %>
+                    <div class="meal week-meal desktop-meal" data ="<%= e.recipe_id %>">
+                      <a class="desktop-event fc-event-container <%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" id="desktop-event" data-event="<%= e.id %>" data-recipe="<%= e.recipe_id %>" data-recipe-name="<%= recipe.name %>" data-image="<%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" data-servings="<%= e.servings || recipe.servings %>" style="background-image: url('<%= recipe.retrieve_pic %>')">
+                        <span class="delete-event"></span>
+                        <span class="servings" id="desktop-week-servings"><%= servings ? e.servings : recipe.servings %>s</span>
+                        <span class="event-title" style="background-color: <%= m[2] %>"><%= truncate(recipe.name, length: 18) %></span>
+                      </a>
 
-        <% @meal_types.each do |m| %>
-          <div class="meal-types" id="<%= m[3] %>">
-            <div class="added-meals">
-              <% events = @events.where(:start_at => day.strftime + m[1]) %>
-              <% events.each do |e| %>
-                <% recipe = e.get_recipe(e.recipe_id) %>
-                <% servings = e.servings? ? true : false %>
-                <div class="meal week-meal desktop-meal" data ="<%= e.recipe_id %>">
-                  <a class="desktop-event fc-event-container <%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" id="desktop-event" data-event="<%= e.id %>" data-recipe="<%= e.recipe_id %>" data-recipe-name="<%= recipe.name %>" data-image="<%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" data-servings="<%= e.servings || recipe.servings %>" style="background-image: url('<%= recipe.retrieve_pic %>')">
-                    <span class="delete-event"></span>
-                    <span class="servings" id="desktop-week-servings"><%= servings ? e.servings : recipe.servings %>s</span>
-                    <span class="event-title" style="background-color: <%= m[2] %>"><%= truncate(recipe.name, length: 18) %></span>
-                  </a>
-
-                  <div class="change-servings-box hidden">
-                    <span class="change-servings-box-close">close</span>
-                    <span class="glyphicon glyphicon-minus change-serving" id="minus-serving" aria-hidden="true"></span>
-                    <span id ="num-servings" data="<%= e.id %>" data-servings="<%= servings ? e.servings : recipe.servings %>"><%= servings ? e.servings : recipe.servings %></span>
-                    <span class="glyphicon glyphicon-plus add change-serving" id="add-serving" aria-hidden="true"></span>
-                  </div>
+                      <div class="change-servings-box hidden">
+                        <span class="change-servings-box-close">close</span>
+                        <span class="glyphicon glyphicon-minus change-serving" id="minus-serving" aria-hidden="true"></span>
+                        <span id ="num-servings" data="<%= e.id %>" data-servings="<%= servings ? e.servings : recipe.servings %>"><%= servings ? e.servings : recipe.servings %></span>
+                        <span class="glyphicon glyphicon-plus add change-serving" id="add-serving" aria-hidden="true"></span>
+                      </div>
+                    </div>
+                  <% end %>
                 </div>
-              <% end %>
+
+            <!-- div -->
+
+            <% if events.length == 0 %>
+              <div class="meal week-meal add-meal-big <%=day %>-<%= m[3] %>-big">
+                <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
+                  <div class="add-meal-box">
+                    <span class="glyphicon glyphicon-plus" id="hide-chevron" aria-hidden="true"></span>
+                    <h3>Drag <%= m[0] %></h3>
+                  </div>
+                </a>
+              </div>
+
+              <div class="add-meal-short <%=day %>-<%= m[3] %>-small" id="hidden">
+                <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
+                  <div class="add-meal-box">
+                    <h3>Drag <%= m[0] %></h3>
+                  </div>
+                </a>
+              </div>
+            <% else %>
+              <div class="meal week-meal add-meal-big <%=day %>-<%= m[3] %>-big" id="hidden">
+                <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
+                  <div class="add-meal-box">
+                    <span class="glyphicon glyphicon-plus" id="hide-chevron" aria-hidden="true"></span>
+                    <h3>Drag <%= m[0] %></h3>
+                  </div>
+                </a>
+              </div>
+
+              <div class="add-meal-short <%=day %>-<%= m[3] %>-small">
+                <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
+                  <div class="add-meal-box">
+                    <h3>Drag <%= m[0] %></h3>
+                  </div>
+                </a>
+              </div>
+            <% end %>
             </div>
+          <% end %>
 
-        <!-- div -->
-
-        <% if events.length == 0 %>
-          <div class="meal week-meal add-meal-big <%=day %>-<%= m[3] %>-big">
-            <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
-              <div class="add-meal-box">
-                <span class="glyphicon glyphicon-plus" id="hide-chevron" aria-hidden="true"></span>
-                <h3>Drag <%= m[0] %></h3>
-              </div>
-            </a>
-          </div>
-
-          <div class="add-meal-short <%=day %>-<%= m[3] %>-small" id="hidden">
-            <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
-              <div class="add-meal-box">
-                <h3>Drag <%= m[0] %></h3>
-              </div>
-            </a>
-          </div>
-        <% else %>
-          <div class="meal week-meal add-meal-big <%=day %>-<%= m[3] %>-big" id="hidden">
-            <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
-              <div class="add-meal-box">
-                <span class="glyphicon glyphicon-plus" id="hide-chevron" aria-hidden="true"></span>
-                <h3>Drag <%= m[0] %></h3>
-              </div>
-            </a>
-          </div>
-
-          <div class="add-meal-short <%=day %>-<%= m[3] %>-small">
-            <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
-              <div class="add-meal-box">
-                <h3>Drag <%= m[0] %></h3>
-              </div>
-            </a>
-          </div>
-        <% end %>
         </div>
-      <% end %>
-
-    </div>
+      </div>
+    <% end %>
   </div>
-  <% end %>
 </div>
+
+
 
 
 
