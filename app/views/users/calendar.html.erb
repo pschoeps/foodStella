@@ -113,6 +113,9 @@
                       <a class="desktop-event fc-event-container <%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" id="desktop-event" data-event="<%= e.id %>" data-recipe="<%= e.recipe_id %>" data-recipe-name="<%= recipe.name %>" data-image="<%= e.get_recipe(e.recipe_id).get_friendly_name %>id-<%= e.recipe_id %>" data-servings="<%= e.servings || recipe.servings %>" style="background-image: url('<%= recipe.retrieve_pic %>')">
                         <span class="delete-event"></span>
                         <span class="servings" id="desktop-week-servings"><%= servings ? e.servings : recipe.servings %>s</span>
+                        <% if e.in?(@recommended_events) %>
+                          <span class="recommended-banner">Recommended</span> 
+                        <% end %>
                         <span class="event-title" style="background-color: <%= m[2] %>"><%= truncate(recipe.name, length: 18) %></span>
                       </a>
 
