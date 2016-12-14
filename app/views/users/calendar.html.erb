@@ -55,7 +55,7 @@
   </div>
   <div class='shuffle-button'>
     <span class="glyphicon glyphicon-refresh spinning" style='display: none;'></span>
-    <span>Shuffle! <i>(fill open slots with our recommendations)</i></span>
+    <span class='shuffle'>Shuffle! <i>(fill open slots with our recommendations)</i></span>
   </div>
   
 </div>
@@ -81,21 +81,17 @@
     <p class="circle-text circle-text-snack"> Snack </p> -->
 
     <%= link_to "Generate shopping list &rarr;".html_safe, shopping_list_user_path(current_user, view_type: "week", day: @days_from_week.first), id: "gen-shop-list", style: "color:orange;" %> 
-
-
   </div>
 </div>
 
 <div class="col-md-9 desktop-planner-details">
-
-  <!-- code for colors goes here -->
 
   <div class="details-box" style="display:inline-block;">
       <p>*s = servings per recipe</p>
       <p>*x = remove food</p>
       <p>Click on the servings to change</p>
   </div>
-
+  <div class='start_over'>Remove All Recipes</div>
     
 </div>
 
@@ -129,47 +125,41 @@
                     </div>
                   <% end %>
                 </div>
-
-            <!-- div -->
-
-            <% if events.length == 0 %>
-              <div class="meal week-meal add-meal-big <%=day %>-<%= m[3] %>-big">
-                <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
-                  <div class="add-meal-box">
-                    <span class="glyphicon glyphicon-plus" id="hide-chevron" aria-hidden="true"></span>
-                    <h3>Drag <%= m[0] %></h3>
+                <% if events.length == 0 %>
+                  <div class="meal week-meal add-meal-big <%=day %>-<%= m[3] %>-big">
+                    <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
+                      <div class="add-meal-box">
+                        <span class="glyphicon glyphicon-plus" id="hide-chevron" aria-hidden="true"></span>
+                        <h3>Drag <%= m[0] %></h3>
+                      </div>
+                    </a>
                   </div>
-                </a>
-              </div>
-
-              <div class="add-meal-short <%=day %>-<%= m[3] %>-small" id="hidden">
-                <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
-                  <div class="add-meal-box">
-                    <h3>Drag <%= m[0] %></h3>
+                  <div class="add-meal-short <%=day %>-<%= m[3] %>-small" id="hidden">
+                    <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
+                      <div class="add-meal-box">
+                        <h3>Drag <%= m[0] %></h3>
+                      </div>
+                    </a>
                   </div>
-                </a>
-              </div>
-            <% else %>
-              <div class="meal week-meal add-meal-big <%=day %>-<%= m[3] %>-big" id="hidden">
-                <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
-                  <div class="add-meal-box">
-                    <span class="glyphicon glyphicon-plus" id="hide-chevron" aria-hidden="true"></span>
-                    <h3>Drag <%= m[0] %></h3>
+                <% else %>
+                  <div class="meal week-meal add-meal-big <%=day %>-<%= m[3] %>-big" id="hidden">
+                    <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
+                      <div class="add-meal-box">
+                        <span class="glyphicon glyphicon-plus" id="hide-chevron" aria-hidden="true"></span>
+                        <h3>Drag <%= m[0] %></h3>
+                      </div>
+                    </a>
                   </div>
-                </a>
-              </div>
-
-              <div class="add-meal-short <%=day %>-<%= m[3] %>-small">
-                <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
-                  <div class="add-meal-box">
-                    <h3>Drag <%= m[0] %></h3>
+                  <div class="add-meal-short <%=day %>-<%= m[3] %>-small">
+                    <a class="add-meal" data-date="<%= day %>" data-meal-type="<%= m[0] %>" data-day-friendly="<%= day.strftime("%A") %>" data-meal-time="<%= m[1] %>" data-meal-id="<%=m[3] %>" data-meal-color="<%= m[2] %>">
+                      <div class="add-meal-box">
+                        <h3>Drag <%= m[0] %></h3>
+                      </div>
+                    </a>
                   </div>
-                </a>
+                <% end %>
               </div>
             <% end %>
-            </div>
-          <% end %>
-
         </div>
       </div>
     <% end %>

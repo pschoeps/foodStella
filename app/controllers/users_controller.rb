@@ -3,7 +3,7 @@ class UsersController < ApplicationController
    include ActionView::Helpers::TextHelper
    require 'json'
    before_action :check_for_mobile
-   before_filter :find_meals_and_events, :only => [:day_calendar, :calendar, :shopping_list, :shuffle]
+   before_filter :find_meals_and_events, :only => [:day_calendar, :calendar, :shopping_list, :shuffle, :unshuffle, :clear_planner]
    before_filter :get_user_recommended_recipes, :only => [:day_calendar, :calendar]
    before_filter :get_shuffle_recommended_recipes, :only => [:day_calendar, :calendar]
 	respond_to :html, :json
@@ -258,6 +258,15 @@ class UsersController < ApplicationController
 		@recipes = @user_recipes + @followed_recipes
 		@events = current_user.events
 
+		# flag recommended events
+		@recommended_events = []
+		@events.each do |e|
+			r = e.get_recipe(e.recipe_id)
+			unless r.in?(@recipes)
+				@recommended_events << e
+			end
+		end
+
 		@snacks = @user_recipes.where(:meal_type => "1") + @followed_recipes.where(:meal_type => "1")
 		@side_dishes = @user_recipes.where(:meal_type => "2") + @followed_recipes.where(:meal_type => "2")
 		@main_dishes = @user_recipes.where(:meal_type => "3") + @followed_recipes.where(:meal_type => "3")
@@ -296,13 +305,16 @@ class UsersController < ApplicationController
 
 	def get_shuffle_recommended_recipes
 		cap = 376
+		# ^^^^ cap must be increased once breakfasts have been added
 		shuffle_recommended_recipe_ids = []
 		@shuffle_recommended_recipes = []
 
 		@followed_recipes = current_user.following
 		@user_recipes = current_user.recipes
-		# @recipes = @user_recipes + @followed_recipes
-		@recipes = @user_recipes
+		# convert array back into activeRecord relation
+		recipe_array = @user_recipes + @followed_recipes
+		@recipes = Recipe.where(id: recipe_array.map(&:id))
+
 		sample_count = 3
 
 		# find 3 recipes of each type to use as the recommender's set
@@ -326,20 +338,20 @@ class UsersController < ApplicationController
 		end
 		# morning snack = snack, side_dish
 		morning_snack_ids = []
-		if @recipes.where("id <= ? AND meal_type IN (?)", cap, ['1','2']).length != 0
-			@recipes.where("id <= ? AND meal_type IN (?)", cap, ['1','2']).order("RANDOM()").last(sample_count).each do |recipe|
-				morning_snack_ids << recipe.id
-				shuffle_recommended_recipe_ids << recipe.id
-		  		@shuffle_recommended_recipes << recipe
-		  	end
-		end
-		if morning_snack_ids.length < sample_count
-			count = sample_count - morning_snack_ids.length
-			Recipe.where("id <= ? AND meal_type IN (?)", cap, ['1','2']).order("RANDOM()").last(count).each do |recipe|
-				shuffle_recommended_recipe_ids << recipe.id 
-		  		@shuffle_recommended_recipes << recipe
-		  	end
-		end
+		# if @recipes.where("id <= ? AND meal_type IN (?)", cap, ['1','2']).length != 0
+		# 	@recipes.where("id <= ? AND meal_type IN (?)", cap, ['1','2']).order("RANDOM()").last(sample_count).each do |recipe|
+		# 		morning_snack_ids << recipe.id
+		# 		shuffle_recommended_recipe_ids << recipe.id
+		#   		@shuffle_recommended_recipes << recipe
+		#   	end
+		# end
+		# if morning_snack_ids.length < sample_count
+		# 	count = sample_count - morning_snack_ids.length
+		# 	Recipe.where("id <= ? AND meal_type IN (?)", cap, ['1','2']).order("RANDOM()").last(count).each do |recipe|
+		# 		shuffle_recommended_recipe_ids << recipe.id 
+		#   		@shuffle_recommended_recipes << recipe
+		#   	end
+		# end
 		# lunch = side_dish, main_dish
 		lunch_ids = []
 		if @recipes.where("id <= ? AND meal_type IN (?)", cap, ['2','3']).length != 0
@@ -358,20 +370,20 @@ class UsersController < ApplicationController
 		end
 		# afternoon snack = nsack, side_dish, dessert
 		afternoon_snack_ids = []
-		if @recipes.where("id <= ? AND meal_type IN (?)", cap, ['1','2','4']).length != 0
-			@recipes.where("id <= ? AND meal_type IN (?)", cap, ['1','2','4']).order("RANDOM()").last(sample_count).each do |recipe|
-				afternoon_snack_ids << recipe.id
-				shuffle_recommended_recipe_ids << recipe.id 
-		  		@shuffle_recommended_recipes << recipe
-		  	end
-		end
-		if afternoon_snack_ids.length < sample_count
-			count = sample_count - afternoon_snack_ids.length
-			Recipe.where("id <= ? AND meal_type IN (?)", cap, ['1','2','4']).order("RANDOM()").last(count).each do |recipe|
-				shuffle_recommended_recipe_ids << recipe.id 
-		  		@shuffle_recommended_recipes << recipe
-		  	end
-		end
+		# if @recipes.where("id <= ? AND meal_type IN (?)", cap, ['1','2','4']).length != 0
+		# 	@recipes.where("id <= ? AND meal_type IN (?)", cap, ['1','2','4']).order("RANDOM()").last(sample_count).each do |recipe|
+		# 		afternoon_snack_ids << recipe.id
+		# 		shuffle_recommended_recipe_ids << recipe.id 
+		#   		@shuffle_recommended_recipes << recipe
+		#   	end
+		# end
+		# if afternoon_snack_ids.length < sample_count
+		# 	count = sample_count - afternoon_snack_ids.length
+		# 	Recipe.where("id <= ? AND meal_type IN (?)", cap, ['1','2','4']).order("RANDOM()").last(count).each do |recipe|
+		# 		shuffle_recommended_recipe_ids << recipe.id 
+		#   		@shuffle_recommended_recipes << recipe
+		#   	end
+		# end
 		# dinner = main_dish
 		dinner_ids = []
 		if @recipes.where("id <= ? AND meal_type IN (?)", cap, ['3']).length != 0
@@ -452,13 +464,13 @@ class UsersController < ApplicationController
 		if params[:week]
 		  day = params[:week].to_date
 		else
-		  sorted_events = @events.sort_by &:start_at
-		  last_day = sorted_events.last
-		  if last_day
-		    day = Date.parse(last_day.start_at)
-		  else
+		  # sorted_events = @events.sort_by &:start_at
+		  # last_day = sorted_events.last
+		  # if last_day
+		  #   day = Date.parse(last_day.start_at)
+		  # else
 		  	day = Date.today
-		  end
+		  # end
 		end
 
 		gon.nextWeek = day + 7.days 
@@ -683,39 +695,63 @@ class UsersController < ApplicationController
 	  @week_begin = day.at_beginning_of_week.strftime("%-d")
 	  @week_end = day.at_end_of_week.strftime("%-d")
 
-	  @meal_types = [["Breakfast", "T00:00:00", [1,2]], ["Snack", "T00:30:00", [1,2]], ["Lunch", "T01:00:00", [2,3]], ["Snack", "T01:30:00", [1,2,4]], ["Dinner", "T02:00:00", [3]]]
+	  # @meal_types = [["Breakfast", "T00:00:00", [1,2]], ["Snack", "T00:30:00", [1,2]], ["Lunch", "T01:00:00", [2,3]], ["Snack", "T01:30:00", [1,2,4]], ["Dinner", "T02:00:00", [3]]]
+	  # exclude snacks
+	  @meal_types = [["Breakfast", "T00:00:00", [1,2]], ["Lunch", "T01:00:00", [2,3]], ["Dinner", "T02:00:00", [3]]]
 
 	  start_day = params[:dayView] == 'true' ? day : day.at_beginning_of_week
 	  end_day = params[:dayView] == 'true' ? day : day.at_end_of_week
 	  @days_from_week = (start_day..end_day).map{|x| x}
 	  @days_from_week.each do |day|
-	  	@meal_types.each do |m|
-	  		slot_filled = @events.where(:start_at => day.strftime + m[1]).length == 0 ? false : true
-	  		# if no event exists in that time slot, shuffle one in!
+		@meal_types.each do |m|	
+			slot_filled = @events.where(:start_at => day.strftime + m[1]).length == 0 ? false : true
+			# if no event exists in that time slot, shuffle one in!
 			if !slot_filled
-			  recommended_recipe_ids.shuffle.each do |r|
-			  	if !slot_filled
-					response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend?recipe="+r+"")
-					response = response.body
-					if response
-			      	  response.gsub!(/(\,)(\S)/, "\\1 \\2")
-			      	  array = YAML::load(response)
-			    	end
-			    	array.each do |response|
-			    	  if Recipe.exists?(id: response.to_i) && !slot_filled
-			            recipe = Recipe.find(response)
-			            if m[2].include?(recipe.meal_type.to_i)
-			            	@shuffled_events << get_meal_type(recipe.meal_type) + '--for--' + recipe.name
+				# 70% chance of using one of myFoods instead of calling the recommender
+				if rand() < 0.7
+					recommended_recipe_ids.shuffle.each do |r|
+						if !slot_filled
+						  if Recipe.exists?(id: r.to_i) && !slot_filled
+					        recipe = Recipe.find(r)
+					        if m[2].include?(recipe.meal_type.to_i)
+					        	@shuffled_events << get_meal_type(recipe.meal_type) + '--for--' + recipe.name
 
-			            	@event = current_user.events.build(recipe_id: recipe.id, start_at: day.to_s + m[1], recipe_name: recipe.name)
-			            	@event.save
+					        	@event = current_user.events.build(recipe_id: recipe.id, start_at: day.to_s + m[1], recipe_name: recipe.name)
+					        	@event.save
 
-			            	slot_filled = true
-			            end
-			      	  end
+					        	slot_filled = true
+					        end
+					  	  end
+						end
 					end
-				end
-			  end		
+				else
+					recommended_recipe_ids.shuffle.each do |r|
+					  	if !slot_filled
+							response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend?recipe="+r+"")
+							response = response.body
+							if response
+					      	  response.gsub!(/(\,)(\S)/, "\\1 \\2")
+					      	  array = YAML::load(response)
+					    	end
+					    	array.each do |response|
+					    		# this loop is an unnecessary performance hit
+					    		# we should format the recommender call so that we can use whatever it gives us
+					    		# rather than looping through the results to find a recipe of the desired meal_type
+					    	  if Recipe.exists?(id: response.to_i) && !slot_filled
+					            recipe = Recipe.find(response)
+					            if m[2].include?(recipe.meal_type.to_i)
+					            	@shuffled_events << get_meal_type(recipe.meal_type) + '--for--' + recipe.name
+
+					            	@event = current_user.events.build(recipe_id: recipe.id, start_at: day.to_s + m[1], recipe_name: recipe.name)
+					            	@event.save
+
+					            	slot_filled = true
+					            end
+					      	  end
+							end
+						end
+					end
+				end		
 			end
 		end
 	  end
@@ -728,6 +764,68 @@ class UsersController < ApplicationController
 	  respond_to do |format|
 	  	# not formatted for json yet
 	  	format.json { render :json => @shuffled_events } 
+	  end
+    end
+
+    def unshuffle
+   	  recommended_recipe_ids = params[:ids]
+	  loader_counter = 0
+	  @shuffled_events = []
+	  
+	  if params[:start_day]
+	    day = Date.parse(params[:start_day])
+	  else
+	  	day = Date.today
+	  end
+
+	  @month = day.strftime("%B")
+	  @week_begin = day.at_beginning_of_week.strftime("%-d")
+	  @week_end = day.at_end_of_week.strftime("%-d")
+
+	  # @meal_types = [["Breakfast", "T00:00:00", [1,2]], ["Snack", "T00:30:00", [1,2]], ["Lunch", "T01:00:00", [2,3]], ["Snack", "T01:30:00", [1,2,4]], ["Dinner", "T02:00:00", [3]]]
+	  # exclude snacks
+	  @meal_types = [["Breakfast", "T00:00:00", [1,2]], ["Lunch", "T01:00:00", [2,3]], ["Dinner", "T02:00:00", [3]]]
+
+	  start_day = params[:dayView] == 'true' ? day : day.at_beginning_of_week
+	  end_day = params[:dayView] == 'true' ? day : day.at_end_of_week
+	  @days_from_week = (start_day..end_day).map{|x| x}
+	  @days_from_week.each do |day|
+	  	@meal_types.each do |m|	
+			events = @events.where(:start_at => day.strftime + m[1])
+			events.each do |event|
+				if @recommended_events.include?(event)
+					event.destroy
+				end
+			end
+		end
+	  end
+    end
+
+    def clear_planner
+	  if params[:start_day]
+	    day = Date.parse(params[:start_day])
+	  else
+	  	day = Date.today
+	  end
+
+	  @month = day.strftime("%B")
+	  @week_begin = day.at_beginning_of_week.strftime("%-d")
+	  @week_end = day.at_end_of_week.strftime("%-d")
+
+	  # @meal_types = [["Breakfast", "T00:00:00", [1,2]], ["Snack", "T00:30:00", [1,2]], ["Lunch", "T01:00:00", [2,3]], ["Snack", "T01:30:00", [1,2,4]], ["Dinner", "T02:00:00", [3]]]
+	  # exclude snacks
+	  @meal_types = [["Breakfast", "T00:00:00", [1,2]], ["Lunch", "T01:00:00", [2,3]], ["Dinner", "T02:00:00", [3]]]
+
+	  start_day = params[:dayView] == 'true' ? day : day.at_beginning_of_week
+	  end_day = params[:dayView] == 'true' ? day : day.at_end_of_week
+	  @days_from_week = (start_day..end_day).map{|x| x}
+	  @days_from_week.each do |day|
+	  	@meal_types.each do |m|	
+			events = @events.where(:start_at => day.strftime + m[1])
+			events.each do |event|
+				event.destroy
+			end
+		end
 	  end
     end
 

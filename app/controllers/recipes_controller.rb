@@ -97,10 +97,14 @@ class RecipesController < ApplicationController
     puts "search for array"
     puts array
 
+    total_count = 8
+    current_count = 0
+
     array.each do |response|
       puts response
       #check if the recipe exists and make sure the response isn't the recipe of the current page
-      if Recipe.exists?(id: response) && response.to_i != recipe_id.to_i
+      if Recipe.exists?(id: response) && response.to_i != recipe_id.to_i && current_count < total_count
+        current_count+=1
         puts "the recipe exists"
         recipe = Recipe.find(response)
         pic = recipe.retrieve_pic

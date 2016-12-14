@@ -117,7 +117,7 @@ console.log(gon.nextWeek)
 console.log(gon.previousWeek)
 
   $('.next-week-link').click(function(){ 
-      var  d_week = (gon.nextWeek)
+      var updated_week = (gon.nextWeek)
       console.log(updated_week)
       this.href = this.href + '?week=' + (updated_week)
     });
@@ -127,11 +127,21 @@ console.log(gon.previousWeek)
     this.href = this.href + '?week=' + (updated_week)
   });
 
+  setTimeout(function(){
+    // $('.recommended-banner').animate({'opacity': 0}, 1000)
+  }, 5000);
+
   // Shuffle!
-  $('.shuffle-button').click(function(){
+  $('.shuffle-button .shuffle').click(function(){
     $(".desktop-calendar-container").css("background-color", "lightgrey");
     $('.shuffle-button .glyphicon-refresh').show();
     shuffle();
+  });
+
+  $('.start_over').click(function(){
+    $(".desktop-calendar-container").css("background-color", "lightgrey");
+    $('.shuffle-button .glyphicon-refresh').show();
+    clearPlanner();
   });
 
   function shuffle() {
@@ -184,6 +194,45 @@ console.log(gon.previousWeek)
                     // until return json is written, just reload page
                     location.reload();
 
+                    $('.shuffle-button .glyphicon-refresh').hide();
+                  }
+    });//end ajax call
+  }
+
+  function unshuffle() {
+    // console.log(gon.shuffle_recommended_recipe_ids);
+    // return;
+    data = {
+      ids: gon.shuffle_recommended_recipe_ids,
+      start_day: gon.start_day,
+      dayView: gon.dayView
+    }
+    console.log(data)
+    $.ajax({//ajax call for questions
+                  type:'GET',
+                  data: data,
+                  url: "/users/"+gon.user_id+"/unshuffle",
+                  success:function (response) {
+                    location.reload();
+
+                    $('.shuffle-button .glyphicon-refresh').hide();
+                  }
+    });//end ajax call
+  }
+
+  function clearPlanner() {
+    data = {
+      ids: gon.shuffle_recommended_recipe_ids,
+      start_day: gon.start_day,
+      dayView: gon.dayView
+    }
+    $.ajax({//ajax call for questions
+                  type:'GET',
+                  data: data,
+                  url: "/users/"+gon.user_id+"/clear_planner",
+                  success:function (response) {
+                    location.reload();
+                    // $('.desktop-event').remove();
                     $('.shuffle-button .glyphicon-refresh').hide();
                   }
     });//end ajax call

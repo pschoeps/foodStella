@@ -574,6 +574,14 @@ $outer-container: 90%;
 
         }
     }
+    .start_over {
+       color: $brown;
+       position: absolute;
+       top: 0.2em;
+       right: 5%;
+       font-weight: bold;
+       cursor: pointer;
+    }
 }
 
 //begin week view planner desktop
@@ -1101,6 +1109,7 @@ $outer-container: 90%;
                 background-size: cover !important;
                 background-repeat: no-repeat !important;
                 background-position: 0 0 !important;
+                cursor: pointer;
 
                 .servings {
                     position: absolute;
@@ -1123,12 +1132,32 @@ $outer-container: 90%;
                     letter-spacing: .5px;
                     position: absolute;
                     bottom: 0;
+                    left: 0;
                     padding-left: 6px;
                     padding-right: 6px;
                     opacity: .9;
                     text-align: center;
                 }
 
+                .recommended-banner {
+                    width: 100%;
+                    height: 1.5em;
+                    color: white;
+                    font-size: .75em;
+                    letter-spacing: .5px;
+                    position: absolute;
+                    bottom: 1.5em;
+                    left: 0;
+                    padding-left: 6px;
+                    padding-right: 6px;
+                    opacity: .9;
+                    text-align: center;
+                    background-color: $green;
+                    -webkit-transition: opacity 0.3s linear;
+                    -moz-transition: opacity 0.3s linear;
+                    -o-transition: opacity 0.3s linear;
+                    transition: opacity 0.3s linear;
+                }
 
                 .glyphicon {
                         color: $medium;
@@ -1150,6 +1179,11 @@ $outer-container: 90%;
                         color: $medium;
                         bottom: 2.5em;
                 }
+            }
+
+            .meal:hover, .mobile-event:hover, .desktop-event:hover {
+                // .recommended-banner { opacity: .9 !important; }
+                .recommended-banner { opacity: 0 !important; }
             }
         }
     }

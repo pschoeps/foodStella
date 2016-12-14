@@ -17,14 +17,15 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: foodstella_development
-  # database: foodStella_development
   pool: 5
-  # username: salsaia
-  username: alexanderforsyth
-  password: brockmana9
+  database: foodStella_development
+  username: salsaia
+  password:
+  # database: foodstella_development
+  # username: alexanderforsyth
+  # password: brockmana9
   # username: pschoeps
-  # password:
+  
 
 
   # Connect on a TCP socket. Omitted by default since the client uses a
