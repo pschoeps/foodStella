@@ -113,8 +113,16 @@ $('.users.calendar').ready(function() {
       }         
     });//end ajax call
   });
-console.log(gon.nextWeek)
-console.log(gon.previousWeek)
+
+  $(document).on('click', '.event-title', function() {
+    var event = $(this).closest('.desktop-event')
+    var recipeId = parseInt($(event).attr('data-recipe'));
+    console.log(recipeId);
+    document.location.href = "/recipes/"+recipeId;
+  });
+
+  console.log(gon.nextWeek)
+  console.log(gon.previousWeek)
 
   $('.next-week-link').click(function(){ 
       var updated_week = (gon.nextWeek)
