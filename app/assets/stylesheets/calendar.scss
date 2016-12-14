@@ -1109,7 +1109,8 @@ $outer-container: 90%;
                 background-size: cover !important;
                 background-repeat: no-repeat !important;
                 background-position: 0 0 !important;
-                cursor: pointer;
+                // cursor: pointer;
+                cursor: default;
 
                 .servings {
                     position: absolute;
@@ -1137,6 +1138,7 @@ $outer-container: 90%;
                     padding-right: 6px;
                     opacity: .9;
                     text-align: center;
+                    cursor: pointer;
                 }
 
                 .recommended-banner {
