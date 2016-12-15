@@ -172,6 +172,10 @@
 #new_user .split { width: 45%; float: right;}
 #new_user .split.first { float: left; }
 
+#new_user .birthday {
+	color: #819800;
+}
+
 input:-webkit-autofill {
     // -webkit-box-shadow: 0 0 0px 1000px $green inset;
     // color: white;	// doesnt work
