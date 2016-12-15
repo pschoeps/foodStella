@@ -384,7 +384,7 @@ input:-webkit-autofill {
 		position: relative;
 		margin: auto;
 		height: 4em;
-		border-bottom: 2px solid $green;
+		// border-bottom: 2px solid $green;
 
 		h1 {
 			color: $green;
@@ -392,6 +392,7 @@ input:-webkit-autofill {
 			font-size: 1.7em;
 			font-weight: 200;
 			letter-spacing: 2px;
+			text-decoration: underline;
 		}
 	}
 

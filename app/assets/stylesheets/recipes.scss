@@ -1305,6 +1305,7 @@
 .shadow-header {
 	z-index: 2;
 	position: relative;
+	background: $green;
 }
 .shadow-header::after {
 	// content: '';
