@@ -50,7 +50,7 @@ $( document ).ready(function() {
     var yesNoBox = "<div class='sortable' style='background: url(\"" + recipe.remote_photo_url + "\")no-repeat center center;' recipe-id='" + recipe.id + "'>"
 
      yesNoBox = yesNoBox + "<div class='inner'>";
-     yesNoBox = yesNoBox +  "<p name='" + recipe.id + "' class='.remove-middle remove' style='color:red;' onclick='removeFunct(this)''> X </p>";
+     yesNoBox = yesNoBox +  "<p name='" + recipe.id + "style='color:red;' onclick='removeFunct(this)''> X </p>";
      yesNoBox = yesNoBox +  "<p style='font-size:0.4em;'>" + recipe.description + "</p>";
     
     yesNoBox = yesNoBox 
@@ -88,20 +88,25 @@ $( document ).ready(function() {
       <div class="center-horizontal-children" style="">
         <h3 style="color:white;"> ANYTHING LOOK GOOD?</h3>
         <div style="max-width: 500px; text-align: center; margin-right: auto; margin-left: auto;">
-        <span style="color:orange; font-size:1em;" class="help-text">Try dragging items around.</span>
-        <span style="color: grey;">Tell us what you like and don’t like. We will recommend similar recipes and surprise you with creations others, like you, enjoy. Drag recipes left or right to let us know your preferences!</span>
+        <span style="color:orange; font-size:em;" class="help-text">Try dragging items around.</span>
+       <!--  <span style="color: grey;">Tell us what you like and don’t like. We will recommend similar recipes and surprise you with creations others, like you, enjoy. Drag recipes left or right to let us know your preferences!</span> -->
         </div>
       </div>
       
       <div class="rater">
         <div id="sortable1" class="selector-box connectedSortable no-box"> </div>
         <div id="sortable2" class="selector-box connectedSortable start-box" style="border: 1px solid transparent;"></div>
-        <div id="sortable3" class="selector-box connectedSortable yes-box"></div>
+        <div id="sortable3" class="selector-box connectedSortable yes-box"> </div>
+        
+
            <!-- style="background-color:lightgrey; border:5px dotted green;  background: url('assets/images/like-30.png') no-repeat center center;" -->
       </div>
       <div class="info">
         <p id="curName"></p>
-        <span id="recipe-description"></span>
+        <span id="recipe-description">
+        <emp>
+          Our recommendation engine </emp> uses your picks to fine food you might like to try. You can use it easily to fine more recipes, schedule your meals for the next week or even generate a shopping list.
+        </span>
       </div>
 
     </div>

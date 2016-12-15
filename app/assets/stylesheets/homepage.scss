@@ -91,7 +91,7 @@
   			}
 
   			.yes-box{
-  				border: 2px dotted $green;	
+  				border: 1px dotted $green;	
   				background-color: rgba(0,255,0,0.1);
   				transition: 0.3s;
 
@@ -105,6 +105,25 @@
   					background-color: rgba(0,255,0,0.5);
   				}
   			}
+
+
+			.yes-box_stem {
+			    position: absolute;
+			    width:10px;
+			    height:20px;
+			    background-color:red;
+			    left:50px;
+			    top:6px;
+			}
+
+			.yes-box_kick {
+			    position: absolute;
+			    width:10px;
+			    height:20px;
+			    background-color:red;
+			    left:50px;
+			    top:12px;
+			}
 
   			.start-box{
   				border: 1px solid white;
@@ -165,9 +184,14 @@
 			margin-right: auto;
 		  	margin-left: auto;
 
-			color: grey;
+			color: white;
 			width: 50vw;
 			padding-top: 10vh;
+		}
+		.info emp {
+			color: #819800;
+			font-weight: bold;
+
 		}
 	}
 
