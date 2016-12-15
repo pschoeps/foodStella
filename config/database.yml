@@ -18,13 +18,21 @@ development:
   adapter: postgresql
   encoding: unicode
   pool: 5
+  # database: <%= ENV['DB_NAME'] %>
+  # username: <%= ENV['DB_USERNAME'] %>
+  # password: <%= ENV['DB_PASSWAORD'] %>
+  
   database: foodStella_development
   username: salsaia
-  password:
+  password: 
+
   # database: foodstella_development
   # username: alexanderforsyth
   # password: brockmana9
+  
+  # database: foodstella_development
   # username: pschoeps
+  # password: 
   
 
 
