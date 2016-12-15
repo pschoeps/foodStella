@@ -20,9 +20,10 @@ development:
   database: foodstella_development
   # database: foodStella_development
   pool: 5
+  username: haeminpark
   # username: salsaia
-  username: alexanderforsyth
-  password: brockmana9
+  # username: alexanderforsyth
+  # password: brockmana9
   # username: pschoeps
   # password:
 
