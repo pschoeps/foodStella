@@ -19,16 +19,25 @@ development:
   encoding: unicode
   pool: 5
 
+
   username: haeminpark
   # username: salsaia
   # database: foodStella_development
   # username: salsaia
   # password:
     
+
+  # database: <%= ENV['DB_NAME'] %>
+  # username: <%= ENV['DB_USERNAME'] %>
+  # password: <%= ENV['DB_PASSWAORD'] %>
+ 
   # database: foodstella_development
   # username: alexanderforsyth
   # password: brockmana9
+  
+  # database: foodstella_development
   # username: pschoeps
+  # password: 
   
 
 
