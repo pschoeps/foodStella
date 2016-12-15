@@ -308,13 +308,14 @@
 
 
 		// left/right on similar recipes
+		var page_count = 2;
 		$(document).on('click','.next:not(.inactive)',function(){
 			var left_perc = parseInt($('.slider-horizontal')[0].style.left);
 			$('.slider-horizontal').animate({left: (left_perc-100) + '%'},
 				function(){
 					$('.back').removeClass('inactive');
 					var left_perc = parseInt($('.slider-horizontal')[0].style.left);
-					if(left_perc <= -300)
+					if(left_perc <= (page_count-1) * -100)
 						$('.next').addClass('inactive');
 				}
 			);

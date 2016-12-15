@@ -3,7 +3,7 @@ class UsersController < ApplicationController
    include ActionView::Helpers::TextHelper
    require 'json'
    before_action :check_for_mobile
-   before_filter :find_meals_and_events, :only => [:day_calendar, :calendar, :shopping_list, :shuffle]
+   before_filter :find_meals_and_events, :only => [:day_calendar, :calendar, :shopping_list, :shuffle, :unshuffle, :clear_planner]
    before_filter :get_user_recommended_recipes, :only => [:day_calendar, :calendar]
    before_filter :get_shuffle_recommended_recipes, :only => [:day_calendar, :calendar]
 	respond_to :html, :json
@@ -464,13 +464,13 @@ class UsersController < ApplicationController
 		if params[:week]
 		  day = params[:week].to_date
 		else
-		  sorted_events = @events.sort_by &:start_at
-		  last_day = sorted_events.last
-		  if last_day
-		    day = Date.parse(last_day.start_at)
-		  else
+		  # sorted_events = @events.sort_by &:start_at
+		  # last_day = sorted_events.last
+		  # if last_day
+		  #   day = Date.parse(last_day.start_at)
+		  # else
 		  	day = Date.today
-		  end
+		  # end
 		end
 
 		gon.nextWeek = day + 7.days 
@@ -764,6 +764,68 @@ class UsersController < ApplicationController
 	  respond_to do |format|
 	  	# not formatted for json yet
 	  	format.json { render :json => @shuffled_events } 
+	  end
+    end
+
+    def unshuffle
+   	  recommended_recipe_ids = params[:ids]
+	  loader_counter = 0
+	  @shuffled_events = []
+	  
+	  if params[:start_day]
+	    day = Date.parse(params[:start_day])
+	  else
+	  	day = Date.today
+	  end
+
+	  @month = day.strftime("%B")
+	  @week_begin = day.at_beginning_of_week.strftime("%-d")
+	  @week_end = day.at_end_of_week.strftime("%-d")
+
+	  # @meal_types = [["Breakfast", "T00:00:00", [1,2]], ["Snack", "T00:30:00", [1,2]], ["Lunch", "T01:00:00", [2,3]], ["Snack", "T01:30:00", [1,2,4]], ["Dinner", "T02:00:00", [3]]]
+	  # exclude snacks
+	  @meal_types = [["Breakfast", "T00:00:00", [1,2]], ["Lunch", "T01:00:00", [2,3]], ["Dinner", "T02:00:00", [3]]]
+
+	  start_day = params[:dayView] == 'true' ? day : day.at_beginning_of_week
+	  end_day = params[:dayView] == 'true' ? day : day.at_end_of_week
+	  @days_from_week = (start_day..end_day).map{|x| x}
+	  @days_from_week.each do |day|
+	  	@meal_types.each do |m|	
+			events = @events.where(:start_at => day.strftime + m[1])
+			events.each do |event|
+				if @recommended_events.include?(event)
+					event.destroy
+				end
+			end
+		end
+	  end
+    end
+
+    def clear_planner
+	  if params[:start_day]
+	    day = Date.parse(params[:start_day])
+	  else
+	  	day = Date.today
+	  end
+
+	  @month = day.strftime("%B")
+	  @week_begin = day.at_beginning_of_week.strftime("%-d")
+	  @week_end = day.at_end_of_week.strftime("%-d")
+
+	  # @meal_types = [["Breakfast", "T00:00:00", [1,2]], ["Snack", "T00:30:00", [1,2]], ["Lunch", "T01:00:00", [2,3]], ["Snack", "T01:30:00", [1,2,4]], ["Dinner", "T02:00:00", [3]]]
+	  # exclude snacks
+	  @meal_types = [["Breakfast", "T00:00:00", [1,2]], ["Lunch", "T01:00:00", [2,3]], ["Dinner", "T02:00:00", [3]]]
+
+	  start_day = params[:dayView] == 'true' ? day : day.at_beginning_of_week
+	  end_day = params[:dayView] == 'true' ? day : day.at_end_of_week
+	  @days_from_week = (start_day..end_day).map{|x| x}
+	  @days_from_week.each do |day|
+	  	@meal_types.each do |m|	
+			events = @events.where(:start_at => day.strftime + m[1])
+			events.each do |event|
+				event.destroy
+			end
+		end
 	  end
     end
 

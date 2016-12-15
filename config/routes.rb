@@ -29,6 +29,8 @@ FoodStella::Application.routes.draw do
       get 'load_user_recommended_recipes'
       get 'update_ingredients'
       get 'shuffle'
+      get 'unshuffle'
+      get 'clear_planner'
     end
 
     collection do 

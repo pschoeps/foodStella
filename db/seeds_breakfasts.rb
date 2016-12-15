@@ -8,9 +8,10 @@
 
 # json = ActiveSupport::JSON.decode(File.read('db/seeds/countries.json'))
 
+
 # Recipe.destroy_all
 
-# Manually clear all tables related to recipes
+#=========================== Manually clear all tables related to recipes
 sql = "TRUNCATE table average_caches RESTART IDENTITY"
 ActiveRecord::Base.connection.execute(sql)
 sql = "TRUNCATE table commontator_comments RESTART IDENTITY"
@@ -44,9 +45,11 @@ ActiveRecord::Base.connection.execute(sql)
 sql = "TRUNCATE table votes RESTART IDENTITY"
 ActiveRecord::Base.connection.execute(sql)
 
-records = JSON.parse(File.read('app/assets/data/recipes_with_serving_sizes.json'))
+
+records = JSON.parse(File.read('app/assets/data/recipes_with_breakfasts_12_12_16.json'))
 records.each do |record|
 
+  #=========================== meal_type (int)
   appetizers = ['appetizers']
   side_dishes = ['bread','chili','rice','salad','soup','vegetables','casseroles','healthy']
   main_dishes = ['beef','burgers','chicken','fish & seafood','italian','mexican','pasta','pizza','pork','sausage','steak','stew']
@@ -62,12 +65,15 @@ records.each do |record|
     meal_type = 3
   elsif desserts.include? record['meal_type'].downcase
     meal_type = 4
+  elsif drinks.include? record['meal_type'].downcase
+    meal_type = 5
   elsif breakfasts.include? record['meal_type'].downcase
     meal_type = 6
   else
     meal_type = 3
   end
 
+  #=========================== category (string)
   styles = ['burgers','casserole','chili','healthy','italian','mexican','salad','seafood','soup','mediterranean']
   category = ''
   # styles.each_with_index do |s, index|
@@ -79,28 +85,49 @@ records.each do |record|
     category = record['meal_type'].downcase
   end
 
-  if record['servings:'] == ''
+  if !record['servings'] == ''
     servings = 1
   else
-    servings = record['servings:']
+    servings = record['servings']
   end
 
+  #=========================== cook_time and prep_time
   total_mins = 0
   record['total_time'].chomp!
+  # '1 hr 30 mins' format
   if record['total_time'].include? "mins"
     total_mins += record['total_time'][-7,2].to_i
   end
   if record['total_time'].include? "hr"
     total_mins += record['total_time'].gsub(/\s.+/,'').to_i * 60
   end
+  # 'PT1H30M' format
+  if record['total_time'][0..1] == "PT"
+    if record['total_time'].include? "H"
+      total_mins += record['total_time'].split('H')[0].gsub(/[^0-9]/, '').to_i * 60
+      total_mins += record['total_time'].split('H')[1].gsub(/[^0-9]/, '').to_i
+    else
+      total_mins += record['total_time'].gsub(/[^0-9]/, '').to_i
+    end
+  end
 
   prep_mins = 0
   record['prep_time'].chomp!
+  # '1 hr 30 mins' format
   if record['prep_time'].include? "mins"
     prep_mins += record['prep_time'][-7,2].to_i
   end
   if record['prep_time'].include? "hr"
     prep_mins += record['prep_time'].gsub(/\s.+/,'').to_i * 60
+  end
+  # 'PT1H30M' format
+  if record['prep_time'][0..1] == "PT"
+    if record['prep_time'].include? "H"
+      prep_mins += record['prep_time'].split('H')[0].gsub(/[^0-9]/, '').to_i * 60
+      prep_mins += record['prep_time'].split('H')[1].gsub(/[^0-9]/, '').to_i
+    else
+      prep_mins += record['prep_time'].gsub(/[^0-9]/, '').to_i
+    end
   end
 
   if total_mins == 0
@@ -109,6 +136,7 @@ records.each do |record|
     cook_mins = total_mins - prep_mins
   end
 
+  #=========================== estimate difficulty
   difficulty = 1
   if total_mins > 30
     difficulty = 2
@@ -116,6 +144,7 @@ records.each do |record|
     difficulty = 3
   end
 
+  #=========================== create Recipe
   recipe = Recipe.create!({
   	user_id: 0,
   	name: record['recipe_name'],
@@ -130,7 +159,16 @@ records.each do |record|
   })
 
 
-  instructions = record['recipe_instructions'].split(/\d+:\s/)
+  #=========================== create Instructions
+  if record['recipe_instructions'][0..2] == '0: '
+    instructions = record['recipe_instructions'].split(/\d+:\s/)
+  else
+    if record['recipe_instructions'][0..10] == 'Directions '
+      record['recipe_instructions'].slice!(0..10)
+    end
+    intructions = record['recipe_instructions'].split('.').map(&:strip)
+  end
+
   counter = 0
   instructions.each do |i|
     if i != ""
@@ -143,33 +181,45 @@ records.each do |record|
     end
   end
 
-  ingredients = JSON.parse(File.read('app/assets/data/recipe_ingredients_6_7_16.json'))
+  #=========================== create or reference Ingredients
+  ingredients = JSON.parse(File.read('app/assets/data/recipe_with_breakfasts_ingredients.json'))
   ingredients.each do |ingredient|
     if ingredient['recipe_id'] == record['recipe_id']
       new_ingredient = Ingredient.find_or_create_by!(name: ingredient['ingredient'])
       new_ingredient.update_attributes(:abbreviated => ingredient['abbreviated'])
 
-      if ingredient['unit'].downcase.include? "cup"
+      if ingredient['unit'].downcase.include? "cup" || ingredient['quantity'].downcase.include? "cup"
         unit = 1
-      elsif ingredient['unit'].downcase.include? "ounce"
+      elsif ingredient['unit'].downcase.include? "ounce" || ingredient['quantity'].downcase.include? "ounce"
         unit = 2
-      elsif ingredient['unit'].downcase.include? "teaspoon"
+      elsif ingredient['unit'].downcase.include? "ounce" || ingredient['quantity'].downcase.include? "ounce"
         unit = 3
-      elsif ingredient['unit'].downcase.include? "tablespoon"
+      elsif ingredient['unit'].downcase.include? "tablespoon" || ingredient['quantity'].downcase.include? "tablespoon"
         unit = 4
-      elsif ingredient['unit'].downcase.include? "pinch"
+      elsif ingredient['unit'].downcase.include? "pinch" || ingredient['quantity'].downcase.include? "pinch"
         unit = 5
       else
         unit = nil
       end
 
+      if ingredient.has_key?('ounces')
+        ounces = ingredient['ounces'].tr('()', '').map(&:strip)
+      else
+        # where do I get ounces from???????????
+        ounces = 3
+      end
+
+      amount = ingredient['quantity'].tr('()', '').map(&:strip)
+      detail = ingredient['detail'].tr('()', '').map(&:strip)
+
+      #=========================== create Quantities
       Quantity.create!({
         recipe_id: recipe.id,
         ingredient_id: new_ingredient.id,
         unit: unit,
-        amount: ingredient['quantity'],
-        ounces: ingredient['ounces'],
-        detail: ingredient['detail']
+        amount: amount,
+        ounces: ounces,
+        detail: detail
       })
     end
   end

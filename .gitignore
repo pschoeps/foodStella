@@ -17,13 +17,6 @@
 
 # Mailer files
 .env
-<<<<<<< HEAD
-Procfile
-=======
 
 Procfile
 /config/database.yml
-
-
-
->>>>>>> a865c2cb114ae39f37cb73f0b584333a72786229

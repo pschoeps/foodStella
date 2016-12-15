@@ -113,8 +113,16 @@ $('.users.calendar').ready(function() {
       }         
     });//end ajax call
   });
-console.log(gon.nextWeek)
-console.log(gon.previousWeek)
+
+  $(document).on('click', '.event-title', function() {
+    var event = $(this).closest('.desktop-event')
+    var recipeId = parseInt($(event).attr('data-recipe'));
+    console.log(recipeId);
+    document.location.href = "/recipes/"+recipeId;
+  });
+
+  console.log(gon.nextWeek)
+  console.log(gon.previousWeek)
 
   $('.next-week-link').click(function(){ 
       var updated_week = (gon.nextWeek)
@@ -128,14 +136,20 @@ console.log(gon.previousWeek)
   });
 
   setTimeout(function(){
-    $('.recommended-banner').animate({'opacity': 0}, 1000)
+    // $('.recommended-banner').animate({'opacity': 0}, 1000)
   }, 5000);
 
   // Shuffle!
-  $('.shuffle-button').click(function(){
+  $('.shuffle-button .shuffle').click(function(){
     $(".desktop-calendar-container").css("background-color", "lightgrey");
     $('.shuffle-button .glyphicon-refresh').show();
     shuffle();
+  });
+
+  $('.start_over').click(function(){
+    $(".desktop-calendar-container").css("background-color", "lightgrey");
+    $('.shuffle-button .glyphicon-refresh').show();
+    clearPlanner();
   });
 
   function shuffle() {
@@ -188,6 +202,45 @@ console.log(gon.previousWeek)
                     // until return json is written, just reload page
                     location.reload();
 
+                    $('.shuffle-button .glyphicon-refresh').hide();
+                  }
+    });//end ajax call
+  }
+
+  function unshuffle() {
+    // console.log(gon.shuffle_recommended_recipe_ids);
+    // return;
+    data = {
+      ids: gon.shuffle_recommended_recipe_ids,
+      start_day: gon.start_day,
+      dayView: gon.dayView
+    }
+    console.log(data)
+    $.ajax({//ajax call for questions
+                  type:'GET',
+                  data: data,
+                  url: "/users/"+gon.user_id+"/unshuffle",
+                  success:function (response) {
+                    location.reload();
+
+                    $('.shuffle-button .glyphicon-refresh').hide();
+                  }
+    });//end ajax call
+  }
+
+  function clearPlanner() {
+    data = {
+      ids: gon.shuffle_recommended_recipe_ids,
+      start_day: gon.start_day,
+      dayView: gon.dayView
+    }
+    $.ajax({//ajax call for questions
+                  type:'GET',
+                  data: data,
+                  url: "/users/"+gon.user_id+"/clear_planner",
+                  success:function (response) {
+                    location.reload();
+                    // $('.desktop-event').remove();
                     $('.shuffle-button .glyphicon-refresh').hide();
                   }
     });//end ajax call
