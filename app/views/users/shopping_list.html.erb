@@ -7,7 +7,7 @@
    <div class="flex-container" style="display: -webkit-flex; display: flex; width: 100%; align-items: center; justify-content: center;">
       <div class="flex-item" style="flex: 1; float:right; justify-content:left;">
         <p style="text-align: left;">
-        <%= link_to "PLANNER", recipes_path, class: "next-tile", id: "gen-shop-list", style:"font-size: 1em;"%>   <!--CHANGE THIS TO PLANNER PATH -->
+        <%= link_to "PLANNER", calendar_user_path(current_user, week: @day), class: "next-tile", id: "gen-shop-list", style:"font-size: 1em;"%>
       </p>
       </div> 
 
