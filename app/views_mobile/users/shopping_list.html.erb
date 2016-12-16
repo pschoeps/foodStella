@@ -8,6 +8,8 @@
 <div class="row shopping-list" id="shopping-list-mobile">
   <div class="col-md-12 shopping-list-container">
     <div class="list-box">
+        
+        <!-- this was the old formatting, which is now empty -->
         <ol>
           <% @shopping_items.each do |s| %>
               <li>
@@ -19,6 +21,26 @@
           <% end %>
             <li style="float:none; clear:both;"></li>
         </ol>
+        <!-- below is the new formatting -->
+          <% @categories.each do |cat| %>
+            <% unless cat[1].length == 0 %>
+              <h2 class="shopping-item"><%= cat[0] %> <span class="expando">[+]</span>
+              <div class="list-box" style="display: none;">
+                <ol>
+                  <% cat[1].each do |s| %>
+                      <li>
+                        <label>
+                           <input type="checkbox" class='icheck-me' data-skin="minimal" data-color="green">
+                            <%= s[0] %> <%= s[1] %> <%= s[2] %>
+                        </label>
+                      </li>
+                  <% end %>
+                    <li style="float:none; clear:both;"></li>
+                </ol>
+              </div>
+            <% end %>
+          <% end %>
+
     </div>
   </div>
 </div>
