@@ -19,7 +19,7 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% snacks.each do |r| %>
-                <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' data-id="<%= r.id %>" data-servings="<%= r.servings %>" data-name="<%= r.name %>" style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= link_to truncate(r.name, length: 10), recipe_path(r) %></span></div>
+                <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' data-id="<%= r.id %>" data-servings="<%= r.servings %>" data-name="<%= r.name %>" style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= link_to truncate(r.name, length: 100), recipe_path(r) %></span></div>
               <% end %>
             </div>
           </div>
@@ -33,7 +33,7 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% side_dishes.each do |r| %>
-                <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' data-id="<%= r.id %>" data-servings="<%= r.servings %>" data-name="<%= r.name %>" id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= link_to truncate(r.name, length: 10), recipe_path(r) %></span></div>
+                <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' data-id="<%= r.id %>" data-servings="<%= r.servings %>" data-name="<%= r.name %>" id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= link_to truncate(r.name, length: 100), recipe_path(r) %></span></div>
               <% end %>
             </div>
           </div>
@@ -47,7 +47,7 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% main_dishes.each do |r| %>
-                <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data-id="<%= r.id %>" data-servings="<%= r.servings %>" data-name="<%= r.name %>" data="<%= r.get_friendly_name %>id-<%= r.id %>"><span class="recipe-title"><%= truncate(r.name, length: 10) %></span></div>
+                <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data-id="<%= r.id %>" data-servings="<%= r.servings %>" data-name="<%= r.name %>" data="<%= r.get_friendly_name %>id-<%= r.id %>"><span class="recipe-title"><%= link_to truncate(r.name, length: 100), recipe_path(r) %></span></div>
               <% end %>
             </div>
           </div>
@@ -61,7 +61,7 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% desserts.each do |r| %>
-                <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data-id="<%= r.id %>" data-servings="<%= r.servings %>" data-name="<%= r.name %>" data="<%= r.get_friendly_name %>id-<%= r.id %>"><span class="recipe-title"><%= link_to truncate(r.name, length: 10), recipe_path(r) %></span></div>
+                <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data-id="<%= r.id %>" data-servings="<%= r.servings %>" data-name="<%= r.name %>" data="<%= r.get_friendly_name %>id-<%= r.id %>"><span class="recipe-title"><%= link_to truncate(r.name, length: 100), recipe_path(r) %></span></div>
               <% end %>
             </div>
           </div>
@@ -75,7 +75,7 @@
           <div id='external-events'>
             <div id='external-events-listing'>
               <% drinks.each do |r| %>
-                <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data-id="<%= r.id %>" data-servings="<%= r.servings %>" data-name="<%= r.name %>" data="<%= r.get_friendly_name %>id-<%= r.id %>"><span class="recipe-title"><%= link_to truncate(r.name, length: 10), recipe_path(r) %></span></div>
+                <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list" data-id="<%= r.id %>" data-servings="<%= r.servings %>" data-name="<%= r.name %>" data="<%= r.get_friendly_name %>id-<%= r.id %>"><span class="recipe-title"><%= link_to truncate(r.name, length: 100), recipe_path(r) %></span></div>
               <% end %>
             </div>
           </div>
@@ -159,13 +159,42 @@ $(document).ready(function(){
   });
 
 
+  var tryScrollabelSidebarSelections = false;
+
+  if(tryScrollabelSidebarSelections){
+    var selectionOffset = 0;
+    var fromSelection;
+
+    $(document).on('mousedown', '.fc-event', function() {
+      fromSelection = $(this).closest('.selection');
+      selectionOffset = fromSelection.scrollTop();
+      fromSelection.removeClass('scrollable').css({
+        'margin-top': -selectionOffset+'px',
+        '': '',
+        '': ''
+      });
+    });
+
+    $(document).on('mouseup', '.fc-event', function() {
+      if(fromSelection.length){
+        fromSelection.addClass('scrollable').css({
+          'margin-top': 0,
+          '': ''
+        });
+        fromSelection = null;
+      }
+    });
+  }
+
 
   $('button').click(function() {
 
     // make selection scrollable
-    // var matchingSelection = $('#' + $(this).attr('id') + '-selection');
-    // if(matchingSelection.height() > $(window).height()*0.6)
-    //     matchingSelection.addClass('scrollable');
+    if(tryScrollabelSidebarSelections){
+      var matchingSelection = $('#' + $(this).attr('id') + '-selection');
+      if(matchingSelection.height() > $(window).height()*0.6)
+          matchingSelection.addClass('scrollable');
+    }
 
     var contentHeight = $('.meal-selection').outerHeight() + 80;
     var sidebarHeight = $('.sidebar').outerHeight()

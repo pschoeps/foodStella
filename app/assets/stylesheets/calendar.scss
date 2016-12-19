@@ -139,8 +139,10 @@ $outer-container: 90%;
 }
 
 #in-list-recommended {
-    height: 10em;
-    width: 10em;
+    // height: 10em;
+    // width: 10em;
+    height: 82px;
+    width: 82px;
     display: inline-block;
     margin: 5px;
     cursor: pointer;
@@ -298,12 +300,40 @@ $outer-container: 90%;
                     background-color: rgba(176, 176, 176, 0.7);
                     text-align: center;
                     bottom: 0;
-                    font-size: 1.2em;
+                    // font-size: 1.2em;
+                    white-space: nowrap;
+                    margin-left: 0;
+                    overflow: hidden;
 
-                    a {
-                        color: white;
-                        text-decoration: none;
+                    a, span {
+                      color: white;
+                      text-decoration: none;
+
+                      // making sidebar 3x3
+                      float: none;
+                      margin-top: 0em;
+                      text-align: center;
+                      display:inline-block; /* important */
+                      white-space: nowrap;
+                      overflow: hidden;
+                      text-overflow: ellipsis;
+
+                      -webkit-transition: 2s;
+                      -moz-transition: 2s;
+                      transition: 2s;     
+                      
+                      -webkit-transition-timing-function: linear;
+                      -moz-transition-timing-function: linear;
+                      transition-timing-function: linear;
+
+                      margin-left: 0em;
                     }
+
+                    &:hover a,
+                    &:hover span, {
+                      margin-left: -100px;
+                    }
+                    // end 3x3 changes
                 }
             }
 
@@ -319,12 +349,13 @@ $outer-container: 90%;
         	.selection {
         		width: 100%;
         		display: none;
-
-                // max-height: 60vh;
-                // overflow-y: scroll;
         	}
             .selection.scrollable {
+                max-height: 50vh;
                 overflow-y: scroll;
+                .fc-event {
+                    max-width: 45%;
+                }
             }
             .selection.selection-dragging {
                 max-height: 100vh !important;

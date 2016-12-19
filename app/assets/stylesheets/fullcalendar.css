@@ -28,7 +28,8 @@
   margin: auto;
 
   width: 100%;
-  padding: 0 10px;
+  /*padding: 0 10px;*/
+  padding: 0;
   border-top: 1px solid #ccc;
   text-align: left;
 }
@@ -77,8 +78,12 @@ body .fc { /* extra precedence to overcome jqui */
 }
 
 #in-list {
+	/*changing sidebar to 3x3*/
 	height: 82px;
-    width: 82px;
+    /*width: 82px;*/
+    float: left;
+    width: 60px;
+    max-width: 33%;
     display: inline-block;
     margin: 2px;
     cursor: pointer;

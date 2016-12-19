@@ -20,7 +20,7 @@
             <div id='external-events-listing'>
               <% snacks.each do |r| %>
                 <%= link_to recipe_path(r) do %>
-                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
+                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><span><%= truncate(r.name, length: 100) %></span></span>
                     <% unless current_user.owns?(r) %>
                       <span class="glyphicon glyphicon-remove remove" data='<%= r.id %>'></span>
                     <% end %>
@@ -40,7 +40,7 @@
             <div id='external-events-listing'>
               <% side_dishes.each do |r| %>
                 <%= link_to recipe_path(r) do %>
-                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
+                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><span><%= truncate(r.name, length: 100) %></span></span>
                     <% unless current_user.owns?(r) %>
                       <span class="glyphicon glyphicon-remove remove" data='<%= r.id %>'></span>
                     <% end %>
@@ -60,7 +60,7 @@
             <div id='external-events-listing'>
               <% main_dishes.each do |r| %>
                 <%= link_to recipe_path(r) do %>
-                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
+                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><span><%= truncate(r.name, length: 100) %></span></span>
                     <% unless current_user.owns?(r) %>
                       <span class="glyphicon glyphicon-remove remove" data='<%= r.id %>'></span>
                     <% end %>
@@ -80,7 +80,7 @@
             <div id='external-events-listing'>
               <% desserts.each do |r| %>
                 <%= link_to recipe_path(r) do %>
-                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
+                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><span><%= truncate(r.name, length: 100) %></span></span>
                     <% unless current_user.owns?(r) %>
                       <span class="glyphicon glyphicon-remove remove" data='<%= r.id %>'></span>
                     <% end %>
@@ -100,7 +100,7 @@
             <div id='external-events-listing'>
               <% drinks.each do |r| %>
                 <%= link_to recipe_path(r) do %>
-                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
+                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><span><%= truncate(r.name, length: 100) %></span></span>
                     <% unless current_user.owns?(r) %>
                       <span class="glyphicon glyphicon-remove remove" data='<%= r.id %>'></span>
                     <% end %>
