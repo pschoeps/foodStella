@@ -3,10 +3,10 @@
 	background:transparent;
 	.section {
 	  width: 100%;
-	  min-height: 10vh;
+	  min-height: 14vh;
 	  background:transparent;
-	  // padding-top: 5vh;
-	  // padding-bottom: 5vh;
+	  padding-top: 5vh;
+	  padding-bottom: 5vh;
 	  transition: 0.5s;
 	}
 
@@ -14,7 +14,7 @@
 		background-color:black; // might want to change to $dark
 		min-height: 40vh;
 		#logo{
-			max-height: 30vh;
+			max-height: 35vh;
 			max-width: 90vw;
 			vertical-align:middle;
 			display: block;
@@ -25,11 +25,11 @@
 
 	.tagline{
 		background-color:$green;
-		font-size: 2em;
+		font-size: 1.8em;
 		text-align:center;
 		color:white;
 		font-family: 'Great Vibes', 'Cookie', Lucida, Helvetica, sans-serif;
-		padding-top: 2vh;
+		padding-top: 4.5vh;
 		padding-bottom: 2vh;
 	}
 

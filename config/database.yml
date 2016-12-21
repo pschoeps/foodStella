@@ -22,7 +22,7 @@ development:
 
   username: haeminpark
   # username: salsaia
-  # database: foodStella_development
+  database: foodStella_development
   # password:
     
 
