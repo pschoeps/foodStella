@@ -51,16 +51,22 @@
     // $(".add").on('click', );
     
 
-    function spawnOnto(id_str){
-      spawn($("#"+id_str))
+    function spawnOnto(id_str, recipe){
+      spawn($("#"+id_str), recipe)
     }
-    function spawn(element){
-      element.prepend(wrapElement().fadeIn(400));
+    function spawn(element, recipe){
+      element.prepend(wrapElement(recipe).fadeIn(400));
     }
-    var wrapElement = function(){
-      
-      var num = getRandomArbitrary(0,gon.recipes.length);
-      var recipe = gon.recipes[num];
+    var wrapElement = function(targetRecipe){
+
+      var recipe;
+
+      if (targetRecipe)
+        recipe = targetRecipe;
+      else {
+        var num = getRandomArbitrary(0,gon.recipes.length);
+        recipe = gon.recipes[num];
+      }
 
       var imgUrl = recipe.remote_photo_url;
       var div = $('<div style="background: url(' + imgUrl + ') no-repeat center center;" class="sortable ui-sortable-handle"></div>');

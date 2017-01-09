@@ -11,6 +11,9 @@
 
 Hey, so this ajax request should work now, send a recipe with the param liked set to true or false and the backend will return another recipe as well as a token, send the token along with any subsequent requests as the param token (a string).  The code is in the static_pages controller under temporary_preference, and the ajax request below contains the URL (POST request).  You also now have 5 randomly generate recipes available through the variable gon.recipes.  I haven't had a chance to buikd out a feature to shuffle these yet.
 
+FROM SAL - 1/9/17
+removeFunct() has been updated to get 10 new recipes for gon.recipes, one a user reaches the end of the array
+
 -->
 
 <div class="homepage">
@@ -69,16 +72,20 @@ Hey, so this ajax request should work now, send a recipe with the param liked se
       $( "#sortable1").droppable({
         hoverClass: "highlight",
         drop: function( ) {// dropped into dislike
-            // refreshData($(".middle_remove").attr('name'), false)
-            removeFunct(".middle_remove");
+          var recipe_id = $('#swiped-recipe').attr('name');
+            refreshData(recipe_id, false)
+            // removeFunct(".middle_remove");
+            removeFunct("#swiped-recipe");
         }
       });
 
       $( "#sortable3").droppable({
         hoverClass: "highlight",
         drop: function( ) { // dropped into like
-           // refreshData($(".middle_remove").attr('name'), false)
-            removeFunct(".middle_remove");
+          var recipe_id = $('#swiped-recipe').attr('name');
+            refreshData(recipe_id, true)
+            // removeFunct(".middle_remove");
+            removeFunct("#swiped-recipe");
         }
       });
     });

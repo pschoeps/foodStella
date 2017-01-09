@@ -6,21 +6,28 @@ class StaticPagesController < ApplicationController
   end
 
   def temporary_preference
-    token = "";
-    if params[:token]
-      token = params[:token]
+    if params[:reset_gon_recipes]
+      @new_recipes = Recipe.limit(10).order("RANDOM()")
+      @returned = [@new_recipes]
+      render :json => @returned
     else
-      token = SecureRandom.base58(24)
+      token = "";
+      if params[:token]
+        token = params[:token]
+      else
+        token = SecureRandom.base58(24)
+      end
+
+      recipe = Recipe.find(params[:recipe_id])
+      liked = params[:liked]
+      recipe.user_preferences.build(liked: liked, token: token)
+
+      # @new_recipe = Recipe.order("RANDOM()").first
+      @token = token
+      @recipe = recipe
+      @returned = [@recipe, @token]
+      render :json => @returned
     end
-
-    recipe = Recipe.find(params[:recipe_id])
-    liked = params[:liked]
-    recipe.user_preferences.build(liked: liked, token: token)
-
-    @new_recipe = Recipe.order("RANDOM()").first
-    @token = token
-    @returned = [@new_recipe, @token]
-    render :json => @returned
   end
 
 

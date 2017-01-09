@@ -13,9 +13,10 @@ document.addEventListener("turbolinks:load", function() {
 $( document ).ready(function() {
   console.log("logging")
   updateMiddle(gon.recipes[0]);
-  console.log(refreshData(10, true));
+  // console.log(refreshData(10, true));
 });
 
+var spawnToDay = 0;
 
   function refreshData(id, liked) {
       console.log("refreshData called");
@@ -30,15 +31,27 @@ $( document ).ready(function() {
             beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', token)},
             data: data,
             success:function (response) {
-              console.log("success response: " + response)
+              console.log("success response: ", response)
+              // returns random recipe, insert this as next gon.recipes
+              // var next_gun = gun_count > gon.recipes.length-1 ? 0 : gun_count+1;
+              // gon.recipes.splice(next_gun, 0, response[0]);
+              // ^^^ instead of using this method, removeFunct refreshes the entire array once at end
+
+              if(liked){
+                var recipe = response[0];
+                spawnToDay++;
+                if(spawnToDay > 3) spawnToDay = 1;
+                var spawnString = spawnToDay==1 ? 'first_day' : (spawnToDay==2 ? 'second_day' : 'third_day');
+                spawnOnto(spawnString, recipe);
+              }
               return response;
             },
             failure: function (response) {
               console.log("Fail response: " + response)
               return response;
             },
-            error: function() {
-                  console.log("ajax error")
+            error: function(e) {
+                  console.log("ajax error", e)
               }
         }); //end ajax
     };
@@ -50,7 +63,7 @@ $( document ).ready(function() {
     var yesNoBox = "<div class='sortable' style='background: url(\"" + recipe.remote_photo_url + "\")no-repeat center center;' recipe-id='" + recipe.id + "'>"
 
      yesNoBox = yesNoBox + "<div class='inner'>";
-     yesNoBox = yesNoBox +  "<p name='" + recipe.id + "style='color:red;' onclick='removeFunct(this)''> X </p>";
+     yesNoBox = yesNoBox +  "<p id='swiped-recipe' name='" + recipe.id + "' style='color:red;' onclick='removeFunct(this)'> X </p>";
      yesNoBox = yesNoBox +  "<p style='font-size:0.4em;'>" + recipe.description + "</p>";
     
     yesNoBox = yesNoBox 
@@ -62,13 +75,32 @@ $( document ).ready(function() {
     
   var gun_count = 0;
   function removeFunct(item){
+
+    // var recipe_id = $('#swiped-recipe').attr('name');
+    // refreshData(recipe_id, false)
+    // ^^^^^ handled in sortable listener instead
     
     $(item).parent().parent().remove();
-    
-    //refreshData($(item).parent().parent().attr("recipe-id"), false);
+
     gun_count ++;
-    if (gun_count > gon.recipes.length-1) {gun_count = 0}
-    updateMiddle(gon.recipes[gun_count]);
+    if (gun_count > gon.recipes.length-1) {
+      console.log('reached end: get new set of recipes');
+      $.ajax({url:"/static_pages/temporary_preference",
+            type:'POST',
+            data: {reset_gon_recipes: true},
+            success:function (response) {
+              console.log("success response: ", response)
+              gon.recipes = response[0];
+              gun_count = 0;
+              updateMiddle(gon.recipes[gun_count]);
+            },
+            error: function(e) {
+                  console.log("ajax error", e)
+              }
+        }); //end ajax
+    }
+    else
+      updateMiddle(gon.recipes[gun_count]);
   }
   
   function toggle(item){

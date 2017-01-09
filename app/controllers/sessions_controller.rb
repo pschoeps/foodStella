@@ -3,7 +3,7 @@ class SessionsController < Devise::SessionsController
 
   # GET /resource/sign_in
    def new
-      @recipes = Recipe.limit(5).order("RANDOM()")
+      @recipes = Recipe.limit(10).order("RANDOM()")
       gon.recipes = @recipes
      super
    end
