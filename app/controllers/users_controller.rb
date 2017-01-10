@@ -812,9 +812,9 @@ class UsersController < ApplicationController
 	  @week_begin = day.at_beginning_of_week.strftime("%-d")
 	  @week_end = day.at_end_of_week.strftime("%-d")
 
-	  # @meal_types = [["Breakfast", "T00:00:00", [1,2]], ["Snack", "T00:30:00", [1,2]], ["Lunch", "T01:00:00", [2,3]], ["Snack", "T01:30:00", [1,2,4]], ["Dinner", "T02:00:00", [3]]]
+	  @meal_types = [["Breakfast", "T00:00:00", [1,2]], ["Snack", "T00:30:00", [1,2]], ["Lunch", "T01:00:00", [2,3]], ["Snack", "T01:30:00", [1,2,4]], ["Dinner", "T02:00:00", [3]]]
 	  # exclude snacks
-	  @meal_types = [["Breakfast", "T00:00:00", [1,2]], ["Lunch", "T01:00:00", [2,3]], ["Dinner", "T02:00:00", [3]]]
+	  # @meal_types = [["Breakfast", "T00:00:00", [1,2]], ["Lunch", "T01:00:00", [2,3]], ["Dinner", "T02:00:00", [3]]]
 
 	  start_day = params[:dayView] == 'true' ? day : day.at_beginning_of_week
 	  end_day = params[:dayView] == 'true' ? day : day.at_end_of_week
