@@ -7,7 +7,12 @@
    <div class="flex-container" style="display: -webkit-flex; display: flex; width: 100%; align-items: center; justify-content: center;">
       <div class="flex-item" style="flex: 1; float:right; justify-content:left;">
         <p style="text-align: left;">
+        <!--
         <%= link_to "PLANNER", calendar_user_path(current_user, week: @day), class: "next-tile", id: "gen-shop-list", style:"font-size: 1em;"%>
+        -->
+
+        <%= link_to image_tag("planner-left.png", onmouseover: "this.src='#{asset_path('planner-hover-left.png')}'", onmouseout: "this.src='#{asset_path('planner-left.png')}'"), calendar_user_path(current_user, week: @day), id: "gen-shop-list", style:"font-size: 1em;"%>
+
       </p>
       </div> 
 
