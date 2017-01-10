@@ -52,6 +52,7 @@
     
 
     function spawnOnto(id_str, recipe){
+      if(!recipe) return;
       spawn($("#"+id_str), recipe)
     }
     function spawn(element, recipe){
