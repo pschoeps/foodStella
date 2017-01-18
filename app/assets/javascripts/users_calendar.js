@@ -156,7 +156,9 @@ $('.users.calendar').ready(function() {
     // console.log(gon.shuffle_recommended_recipe_ids);
     // return;
     data = {
-      ids: gon.shuffle_recommended_recipe_ids,
+      breakfast_ids: gon.shufflable_breakfast_ids,
+      lunch_ids: gon.shufflable_lunch_ids,
+      dinner_ids: gon.shufflable_dinner_ids,
       start_day: gon.start_day,
       dayView: gon.dayView
     }

@@ -353,7 +353,8 @@ class Recipe < ActiveRecord::Base
       ['Side Dish', 2],
       ['Main Dish', 3],
       ['Dessert', 4],
-      ['Drink', 5]
+      ['Drink', 5],
+      ['Breakfast', 6]
     ]
   end
 
@@ -628,8 +629,8 @@ class Recipe < ActiveRecord::Base
                   "Dessert"
                 when "5"
                   "Drink"
-                # when "6"
-                   # "Appetizer"
+                when "6"
+                   "Breakfast"
                 end
     string
   end
