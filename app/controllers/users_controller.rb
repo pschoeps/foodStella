@@ -226,8 +226,8 @@ class UsersController < ApplicationController
                   "Dessert"
                 when "5"
                   "Drink"
-                # when "6"
-                   # "Appetizer"
+                when "6"
+                   "Breakfast"
                 end
     	string
   	end
@@ -296,6 +296,7 @@ class UsersController < ApplicationController
 	end
 
 	def get_shufflable_recipes
+		# this is not being used, get_shuffle_recommended_recipes is instead
 		# cap = 2281
 		cap = 376
 		@followed_recipes = current_user.following
@@ -326,7 +327,8 @@ class UsersController < ApplicationController
 	def get_shuffle_recommended_recipes
 		# cap = 2281
 		cap = 376
-		# ^^^^ cap must be increased once breakfasts have been added
+		bf_cap = 2281
+
 		shuffle_recommended_recipe_ids = []
 		@shuffle_recommended_recipes = []
 
@@ -341,8 +343,8 @@ class UsersController < ApplicationController
 		# breakfast = breakfast
 		@shufflable_breakfast_ids = []
 		# @shufflable_breakfasts = []
-		if @recipes.where("id <= ? AND meal_type IN (?)", cap, ['6']).length != 0
-			@recipes.where("id <= ? AND meal_type IN (?)", cap, ['6']).order("RANDOM()").last(sample_count).each do |recipe|
+		if @recipes.where("id <= ? AND meal_type IN (?)", bf_cap, ['6']).length != 0
+			@recipes.where("id <= ? AND meal_type IN (?)", bf_cap, ['6']).order("RANDOM()").last(sample_count).each do |recipe|
 				@shufflable_breakfast_ids << recipe.id
 				shuffle_recommended_recipe_ids << recipe.id 
 		  		@shuffle_recommended_recipes << recipe
@@ -351,7 +353,7 @@ class UsersController < ApplicationController
 		if @shufflable_breakfast_ids.length < sample_count
 			count = sample_count - @shufflable_breakfast_ids.length
 			# Recipe.where("id <= ? AND meal_type IN (?)", cap, ['6']).order("RANDOM()").last(count).each do |recipe|
-			Recipe.where("id <= ? AND meal_type IN (?)", cap, ['6']).order("RANDOM()").last(count).each do |recipe|
+			Recipe.where("id <= ? AND meal_type IN (?)", bf_cap, ['6']).order("RANDOM()").last(count).each do |recipe|
 				@shufflable_breakfast_ids << recipe.id
 				shuffle_recommended_recipe_ids << recipe.id 
 		  		@shuffle_recommended_recipes << recipe
@@ -682,18 +684,28 @@ class UsersController < ApplicationController
     	dinner_ids = params[:dinner_ids]
 
     	# Make recommended array from random recipe of each array
-    	response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend?recipe="+breakfast_ids.shuffle.first+"")
-		response = response.body
-		if response
-			response.gsub!(/(\,)(\S)/, "\\1 \\2")
-			shuffled_breakfasts = YAML::load(response)
+  		# response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend?recipe="+breakfast_ids.shuffle.first+"")
+		# response = response.body
+		# if response
+		# 	response.gsub!(/(\,)(\S)/, "\\1 \\2")
+		# 	shuffled_breakfasts = YAML::load(response)
+		# end
+
+		# hotfix, bc recommender does not have breakfasts
+		bf_cap = 2281
+		count = 5
+		shuffled_breakfasts = []
+		Recipe.where("id <= ? AND meal_type IN (?)", bf_cap, ['6']).order("RANDOM()").last(count).each do |recipe|
+		  	shuffled_breakfasts << recipe.id
 		end
+
 		response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend?recipe="+lunch_ids.shuffle.first+"")
 		response = response.body
 		if response
 			response.gsub!(/(\,)(\S)/, "\\1 \\2")
 			shuffled_lunches = YAML::load(response)
 		end
+
 		response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend?recipe="+dinner_ids.shuffle.first+"")
 		response = response.body
 		if response
