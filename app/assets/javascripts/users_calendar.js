@@ -163,6 +163,7 @@ $('.users.calendar').ready(function() {
       dayView: gon.dayView
     }
     console.log(data)
+    
     $.ajax({//ajax call for questions
                   type:'GET',
                   data: data,

@@ -266,6 +266,7 @@ class UsersController < ApplicationController
 	end
 
 	def get_user_recommended_recipes
+		# cap = 2281
 		cap = 376
 		recommended_recipe_ids = []
 		@recommended_recipes = []
@@ -295,6 +296,7 @@ class UsersController < ApplicationController
 	end
 
 	def get_shufflable_recipes
+		# cap = 2281
 		cap = 376
 		@followed_recipes = current_user.following
 		@user_recipes = current_user.recipes
@@ -322,6 +324,7 @@ class UsersController < ApplicationController
 	end
 
 	def get_shuffle_recommended_recipes
+		# cap = 2281
 		cap = 376
 		# ^^^^ cap must be increased once breakfasts have been added
 		shuffle_recommended_recipe_ids = []
@@ -333,7 +336,7 @@ class UsersController < ApplicationController
 		recipe_array = @user_recipes + @followed_recipes
 		@recipes = Recipe.where(id: recipe_array.map(&:id))
 
-		sample_count = 3
+		sample_count = 5
 
 		# breakfast = breakfast
 		@shufflable_breakfast_ids = []
@@ -348,7 +351,7 @@ class UsersController < ApplicationController
 		if @shufflable_breakfast_ids.length < sample_count
 			count = sample_count - @shufflable_breakfast_ids.length
 			# Recipe.where("id <= ? AND meal_type IN (?)", cap, ['6']).order("RANDOM()").last(count).each do |recipe|
-			Recipe.where("id <= ? AND meal_type IN (?)", cap, ['4']).order("RANDOM()").last(count).each do |recipe|
+			Recipe.where("id <= ? AND meal_type IN (?)", cap, ['6']).order("RANDOM()").last(count).each do |recipe|
 				@shufflable_breakfast_ids << recipe.id
 				shuffle_recommended_recipe_ids << recipe.id 
 		  		@shuffle_recommended_recipes << recipe
