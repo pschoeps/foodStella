@@ -11,6 +11,26 @@
     </div>
 
     <div class="meal-selection">
+      <button type="button" id="breakfasts">
+          Breakfasts
+          <span class="badge"><%= breakfasts.count %></span>
+       </button>
+      <div class="selection" id="breakfasts-selection">
+          <div id='external-events'>
+            <div id='external-events-listing'>
+              <% breakfasts.each do |r| %>
+                <%= link_to recipe_path(r) do %>
+                  <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><span><%= truncate(r.name, length: 100) %></span></span>
+                    <% unless current_user.owns?(r) %>
+                      <span class="glyphicon glyphicon-remove remove" data='<%= r.id %>'></span>
+                    <% end %>
+                    </div>
+                <% end %>
+              <% end %>
+            </div>
+          </div>
+      </div>
+
        <button type="button" id="snacks">
           Snacks
           <span class="badge"><%= snacks.count %></span>
@@ -202,6 +222,13 @@ $(document).ready(function(){
       $('#drink-selection').css('display','none');
   });
 
+  $('#breakfasts').click(function() {
+    if ( $('#breakfasts-selection').css('display') == 'none' )
+      $('#breakfasts-selection').css('display','block');
+    else
+      $('#breakfasts-selection').css('display','none');
+  });
+
 
 
   $('button').click(function() {
@@ -256,8 +283,9 @@ $(document).ready(function(){
       });
 
       var newIndex = parseInt('<%= new_category %>');
-      newIndex -= 1;
-      if(newIndex){
+      newIndex = newIndex == 6 ? 0 : newIndex;
+      // newIndex -= 1;
+      if(newIndex || newIndex === 0){
         // $('.badge').eq(newIndex).animate({
         //   color: "#819800"
         // }, 600, function(){

@@ -11,6 +11,20 @@
     </div>
 
     <div class="meal-selection">
+      <button type="button" id="breakfasts">
+          Breakfasts
+          <span class="badge"><%= breakfasts.count %></span>
+       </button>
+      <div class="selection" id="breakfasts-selection" style="display: <%= 'block' if expanded[0] == 'true' %>">
+          <div id='external-events'>
+            <div id='external-events-listing'>
+              <% breakfasts.each do |r| %>
+                <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %> draggable' id="in-list" data="<%= r.get_friendly_name %>id-<%= r.id %>" data-event='1' data-id="<%= r.id %>" data-servings="<%= r.servings %>" data-name="<%= r.name %>" style='background-image: url("<%= r.retrieve_pic %>")'><span class="recipe-title"><%= link_to truncate(r.name, length: 100), recipe_path(r) %></span></div>
+              <% end %>
+            </div>
+          </div>
+      </div>
+
        <button type="button" id="snacks">
           Snacks
           <span class="badge"><%= snacks.count %></span>
@@ -154,6 +168,17 @@ $(document).ready(function(){
     }
     else {
       $('#drink-selection').css('display','none');
+      $('.recommended-recipes').css('display', 'block')
+    }
+  });
+
+  $('#breakfasts').click(function() {
+    if ( $('#breakfasts-selection').css('display') == 'none' ) {
+      $('#breakfasts-selection').css('display','block');
+      $('.recommended-recipes').css('display', 'none');
+    }
+    else {
+      $('#breakfasts-selection').css('display','none');
       $('.recommended-recipes').css('display', 'block')
     }
   });

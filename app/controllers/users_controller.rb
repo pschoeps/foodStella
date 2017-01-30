@@ -263,11 +263,11 @@ class UsersController < ApplicationController
 		@main_dishes = @user_recipes.where(:meal_type => "3") + @followed_recipes.where(:meal_type => "3")
 		@desserts = @user_recipes.where(:meal_type => "4") + @followed_recipes.where(:meal_type => "4")
 		@drinks = @user_recipes.where(:meal_type => "5") + @followed_recipes.where(:meal_type => "5")
+		@breakfasts = @user_recipes.where(:meal_type => "6") + @followed_recipes.where(:meal_type => "6")
 	end
 
 	def get_user_recommended_recipes
-		# cap = 2281
-		cap = 376
+		cap = 600
 		recommended_recipe_ids = []
 		@recommended_recipes = []
 		if @events.length != 0
@@ -297,8 +297,7 @@ class UsersController < ApplicationController
 
 	def get_shufflable_recipes
 		# this is not being used, get_shuffle_recommended_recipes is instead
-		# cap = 2281
-		cap = 376
+		cap = 600
 		@followed_recipes = current_user.following
 		@user_recipes = current_user.recipes
 		# convert array back into activeRecord relation
@@ -325,9 +324,7 @@ class UsersController < ApplicationController
 	end
 
 	def get_shuffle_recommended_recipes
-		# cap = 2281
-		cap = 376
-		bf_cap = 2281
+		cap = 600
 
 		shuffle_recommended_recipe_ids = []
 		@shuffle_recommended_recipes = []
@@ -342,9 +339,8 @@ class UsersController < ApplicationController
 
 		# breakfast = breakfast
 		@shufflable_breakfast_ids = []
-		# @shufflable_breakfasts = []
-		if @recipes.where("id <= ? AND meal_type IN (?)", bf_cap, ['6']).length != 0
-			@recipes.where("id <= ? AND meal_type IN (?)", bf_cap, ['6']).order("RANDOM()").last(sample_count).each do |recipe|
+		if @recipes.where("id <= ? AND meal_type IN (?)", cap, ['6']).length != 0
+			@recipes.where("id <= ? AND meal_type IN (?)", cap, ['6']).order("RANDOM()").last(sample_count).each do |recipe|
 				@shufflable_breakfast_ids << recipe.id
 				shuffle_recommended_recipe_ids << recipe.id 
 		  		@shuffle_recommended_recipes << recipe
@@ -352,8 +348,7 @@ class UsersController < ApplicationController
 		end
 		if @shufflable_breakfast_ids.length < sample_count
 			count = sample_count - @shufflable_breakfast_ids.length
-			# Recipe.where("id <= ? AND meal_type IN (?)", cap, ['6']).order("RANDOM()").last(count).each do |recipe|
-			Recipe.where("id <= ? AND meal_type IN (?)", bf_cap, ['6']).order("RANDOM()").last(count).each do |recipe|
+			Recipe.where("id <= ? AND meal_type IN (?)", cap, ['6']).order("RANDOM()").last(count).each do |recipe|
 				@shufflable_breakfast_ids << recipe.id
 				shuffle_recommended_recipe_ids << recipe.id 
 		  		@shuffle_recommended_recipes << recipe
@@ -361,7 +356,6 @@ class UsersController < ApplicationController
 		end
 		# lunch = side_dish, main_dish
 		@shufflable_lunch_ids = []
-		# @shufflable_lunches = []
 		if @recipes.where("id <= ? AND meal_type IN (?)", cap, ['2','3']).length != 0
 			@recipes.where("id <= ? AND meal_type IN (?)", cap, ['2','3']).order("RANDOM()").last(sample_count).each do |recipe|
 				@shufflable_lunch_ids << recipe.id
@@ -379,7 +373,6 @@ class UsersController < ApplicationController
 		end
 		# dinner = main_dish
 		@shufflable_dinner_ids = []
-		# @shufflable_dinners = []
 		if @recipes.where("id <= ? AND meal_type IN (?)", cap, ['3']).length != 0
 			@recipes.where("id <= ? AND meal_type IN (?)", cap, ['3']).order("RANDOM()").last(sample_count).each do |recipe|
 				@shufflable_dinner_ids << recipe.id
@@ -410,32 +403,62 @@ class UsersController < ApplicationController
       	  response.gsub!(/(\,)(\S)/, "\\1 \\2")
       	  array = YAML::load(response)
     	end
+    	selected_recipe_ids = []
     	array.each do |response|
     	  if Recipe.exists?(id: response.to_i)
             puts "the recipe exists"
             recipe = Recipe.find(response)
-            pic = recipe.retrieve_pic
-            friendly_name = recipe.get_friendly_name
-            truncated_name = truncate(recipe.name, length: 30)
-            truncated_name_small = truncate(recipe.name, length: 15)
-            ActionCable.server.broadcast "recommended_#{current_user.id}",
-              recipe: recipe,
-          	  pic: pic,
-          	  recipe_class: "#{friendly_name}-#{recipe.id}",
-          	  recipe_friendly_name: friendly_name,
-          	  truncated_name: "#{truncated_name}",
-          	  truncated_name_small: truncated_name_small
+            if !selected_recipe_ids.include? recipe.id
+	            selected_recipe_ids << recipe.id
+	            pic = recipe.retrieve_pic
+	            friendly_name = recipe.get_friendly_name
+	            truncated_name = truncate(recipe.name, length: 30)
+	            truncated_name_small = truncate(recipe.name, length: 15)
+	            ActionCable.server.broadcast "recommended_#{current_user.id}",
+	              recipe: recipe,
+	          	  pic: pic,
+	          	  recipe_class: "#{friendly_name}-#{recipe.id}",
+	          	  recipe_friendly_name: friendly_name,
+	          	  truncated_name: "#{truncated_name}",
+	          	  truncated_name_small: truncated_name_small
 
-          	loader_counter += 1
-          	puts loader_counter
+	          	loader_counter += 1
+	          	puts loader_counter
 
-          	if loader_counter == 6
-          	  return
-          	end
+	          	if loader_counter == 6
+	          	  return
+	          	end
+	          end
       	  end
-
 		end
+
+		# while
+		# if load_counter < 6
+		# 	recipe = Recipe.where('id NOT IN (?)', selected_recipe_ids).order('RANDOM()')
+  #           if !selected_recipe_ids.include? recipe.id
+	 #            selected_recipe_ids << recipe.id
+	 #            pic = recipe.retrieve_pic
+	 #            friendly_name = recipe.get_friendly_name
+	 #            truncated_name = truncate(recipe.name, length: 30)
+	 #            truncated_name_small = truncate(recipe.name, length: 15)
+	 #            ActionCable.server.broadcast "recommended_#{current_user.id}",
+	 #              recipe: recipe,
+	 #          	  pic: pic,
+	 #          	  recipe_class: "#{friendly_name}-#{recipe.id}",
+	 #          	  recipe_friendly_name: friendly_name,
+	 #          	  truncated_name: "#{truncated_name}",
+	 #          	  truncated_name_small: truncated_name_small
+
+	 #          	loader_counter += 1
+	 #          	puts loader_counter
+
+	 #          	if loader_counter == 6
+	 #          	  return
+	 #          	end
+		# 	end
+  #     	end
 	  end
+
 	  respond_to do |format|
 	  	format.js 
 	  end
@@ -456,7 +479,7 @@ class UsersController < ApplicationController
 		end
 		@calendar = true
 
-		@expanded = ['none', 'none', 'none', 'none', 'none']
+		@expanded = ['none', 'none', 'none', 'none', 'none', 'none']
 
 		gon.week
 		if params[:week]
@@ -500,7 +523,7 @@ class UsersController < ApplicationController
 		gon.dayView = true
 		@calendar = true
 
-		@expanded = ['none', 'none', 'none', 'none', 'none']
+		@expanded = ['none', 'none', 'none', 'none', 'none', 'none']
 
 		day_counter = params[:day_counter]
 		day = params[:day]
@@ -551,7 +574,7 @@ class UsersController < ApplicationController
 
 		#@layout = false
 
-		@expanded = ['false','false','false','false','false']
+		@expanded = ['false','false','false','false','false','false']
 		if params[:day]
 		  	@day = params[:day].to_date
 		  	puts "day here"
@@ -684,19 +707,11 @@ class UsersController < ApplicationController
     	dinner_ids = params[:dinner_ids]
 
     	# Make recommended array from random recipe of each array
-  		# response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend?recipe="+breakfast_ids.shuffle.first+"")
-		# response = response.body
-		# if response
-		# 	response.gsub!(/(\,)(\S)/, "\\1 \\2")
-		# 	shuffled_breakfasts = YAML::load(response)
-		# end
-
-		# hotfix, bc recommender does not have breakfasts
-		bf_cap = 2281
-		count = 5
-		shuffled_breakfasts = []
-		Recipe.where("id <= ? AND meal_type IN (?)", bf_cap, ['6']).order("RANDOM()").last(count).each do |recipe|
-		  	shuffled_breakfasts << recipe.id
+  		response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend?recipe="+breakfast_ids.shuffle.first+"")
+		response = response.body
+		if response
+			response.gsub!(/(\,)(\S)/, "\\1 \\2")
+			shuffled_breakfasts = YAML::load(response)
 		end
 
 		response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend?recipe="+lunch_ids.shuffle.first+"")

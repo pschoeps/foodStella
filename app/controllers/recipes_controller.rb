@@ -183,11 +183,12 @@ class RecipesController < ApplicationController
     @main_dishes = @user_recipes.where(:meal_type => "3") + @followed_recipes.where(:meal_type => "3")
     @desserts = @user_recipes.where(:meal_type => "4") + @followed_recipes.where(:meal_type => "4")
     @drinks = @user_recipes.where(:meal_type => "5") + @followed_recipes.where(:meal_type => "5")
+    @breakfasts = @user_recipes.where(:meal_type => "6") + @followed_recipes.where(:meal_type => "6")
 
     if params[:expanded]
       @expanded = params[:expanded]
     else
-      @expanded = ['false','false','false','false','false']
+      @expanded = ['false','false','false','false','false','false']
     end
 
     # if params[:mobile_tab]
@@ -281,8 +282,9 @@ class RecipesController < ApplicationController
     @main_dishes = @user_recipes.where(:meal_type => "3") + @followed_recipes.where(:meal_type => "3")
     @desserts = @user_recipes.where(:meal_type => "4") + @followed_recipes.where(:meal_type => "4")
     @drinks = @user_recipes.where(:meal_type => "5") + @followed_recipes.where(:meal_type => "5")
+    @breakfasts = @user_recipes.where(:meal_type => "6") + @followed_recipes.where(:meal_type => "6")
 
-    @expanded = ['false','false','false','false','false']
+    @expanded = ['false','false','false','false','false','false']
 
     @filterrific_my_foods = initialize_filterrific(
       Recipe,
@@ -298,6 +300,7 @@ class RecipesController < ApplicationController
     @main_dishes = @main_dishes & @filtered_my_foods
     @desserts = @desserts & @filtered_my_foods
     @drinks = @drinks & @filtered_my_foods
+    @breakfasts = @breakfasts & @filtered_my_foods
 
     if params[:new_recipe_id]
       @newRecipe = Recipe.where(:id => params[:new_recipe_id]).first
@@ -353,8 +356,8 @@ class RecipesController < ApplicationController
                   "Dessert"
                 when "5"
                   "Drink"
-                # when "6"
-                   # "Appetizer"
+                when "6"
+                   "Breakfast"
                 end
     string
   end

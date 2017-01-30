@@ -1,6 +1,24 @@
 <%= render 'event_actions_mobile' %>
 
   	<div class="meal-selection recipes">
+        <button type="button" id="breakfasts">
+           Breakfasts
+           <span class="badge"><%= breakfasts.count %></span>
+        </button>
+       <div class="selection" id="breakfasts-selection">
+           <div id='external-events'>
+             <div id='external-events-listing'>
+               <% breakfasts.each do |r| %>
+                 <div class='fc-event <%= r.get_friendly_name %>id-<%= r.id %>' id="in-list"
+                 data-image-url="<%= r.retrieve_pic %>" data-recipe-id="<%= r.id %>" data-name="<%= r.name %>"
+                 style='background-image: url("<%= r.retrieve_pic %>")'>
+                   <span class="recipe-title"><%= truncate(r.name, length: 10) %></span>
+                 </div>
+               <% end %>
+             </div>
+           </div>
+       </div>
+
        <button type="button" id="snacks">
           Snacks
           <span class="badge"><%= snacks.count %></span>
@@ -143,6 +161,13 @@ $(document).ready(function(){
       $('#drink-selection').css('display','block');
     else
       $('#drink-selection').css('display','none');
+  });
+
+  $('#breakfasts').click(function() {
+    if ( $('#breakfasts-selection').css('display') == 'none' )
+      $('#breakfasts-selection').css('display','block');
+    else
+      $('#breakfasts-selection').css('display','none');
   });
 
 
