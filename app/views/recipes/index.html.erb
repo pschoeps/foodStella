@@ -18,10 +18,10 @@
       </div>
       <div class="flex-item" style="flex: 1; float:right; justify-content:right;">
         <p style="text-align: right; margin: 0;">
-        <!--
-        <%= link_to "PLANNER", calendar_user_path(current_user), style:"font-size: 1em;", class: "next-tile" %>
-        -->
-        <%= link_to image_tag("planner-right.png",  onmouseover: "this.src='#{asset_path('planner-hover-right.png')}'", onmouseout: "this.src='#{asset_path('planner-right.png')}'"), calendar_user_path(current_user), id: "gen-shop-list", style:"font-size: 1em;"%>
+        
+        <!-- %= link_to "PLANNER", calendar_user_path(current_user), style:"font-size: 1em;", class: "next-tile" %> -->
+
+        <%= link_to image_tag("planner-right.png",  onmouseover: "this.src='#{asset_path('planner-hover-right.png')}'", onmouseout: "this.src='#{asset_path('planner-right.png')}'"), calendar_user_path(current_user), id: "gen-shop-list", class: 'img-btn', style:"font-size: 1em;"%>
         </p>
       </div> 
     </div>

@@ -9,11 +9,9 @@
 
         <p style="text-align: left;">
 
-       <!-- \
-       <%= link_to "RECIPES", recipes_path, class: "next-tile", id: "gen-shop-list", style:"font-size: 1em;"%> 
-       -->
+       <!-- %= link_to "RECIPES", recipes_path, class: "next-tile img-btn", id: "gen-shop-list", style:"font-size: 1em;"%>  -->
 
-        <%= link_to image_tag("recipes-left.png", onmouseover: "this.src='#{asset_path('recipe-hover-left.png')}'", onmouseout: "this.src='#{asset_path('recipes-left.png')}'"), recipes_path, id: "gen-shop-list", style:"font-size: 1em;"%>
+        <%= link_to image_tag("recipes-left.png", onmouseover: "this.src='#{asset_path('recipe-hover-left.png')}'", onmouseout: "this.src='#{asset_path('recipes-left.png')}'"), recipes_path, id: "gen-shop-list", class: 'img-btn', style:"font-size: 1em;"%>
 
        
         </p>
@@ -24,10 +22,10 @@
       </div>
       <div class="flex-item" style="flex: 1; float:right; justify-content:right;">
         <p style="text-align: right;">
-        <!--
-        <%= link_to "SHOPPING LIST", shopping_list_user_path(current_user, view_type: "week", day: @days_from_week.first), id: "gen-shop-list", style:"font-size: 1em;", class: "next-tile" %>
-        -->
-        <%= link_to image_tag("shopping-list-right.png", onmouseover: "this.src='#{asset_path('shopping-list-hover-right.png')}'", onmouseout: "this.src='#{asset_path('shopping-list-right.png')}'"), shopping_list_user_path(current_user, view_type: "week", day: @days_from_week.first), id: "gen-shop-list", style:"font-size: 1em;" %>
+        
+        <!-- %= link_to "SHOPPING LIST", shopping_list_user_path(current_user, view_type: "week", day: @days_from_week.first), id: "gen-shop-list", style:"font-size: 1em;", class: "next-tile" %> -->
+
+        <%= link_to image_tag("shopping-list-right.png", onmouseover: "this.src='#{asset_path('shopping-list-hover-right.png')}'", onmouseout: "this.src='#{asset_path('shopping-list-right.png')}'"), shopping_list_user_path(current_user, view_type: "week", day: @days_from_week.first), id: "gen-shop-list", class: 'img-btn', style:"font-size: 1em;" %>
 
         </p>
 
