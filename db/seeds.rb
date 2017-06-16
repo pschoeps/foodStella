@@ -46,7 +46,7 @@ sql = "TRUNCATE table votes RESTART IDENTITY"
 ActiveRecord::Base.connection.execute(sql)
 
 
-records = JSON.parse(File.read('app/assets/data/all_recipes.json'))
+records = JSON.parse(File.read('app/assets/data/recipes_400.json'))
 records.each do |record|
 
   #=========================== meal_type (int)
@@ -186,7 +186,7 @@ records.each do |record|
   end
 
   #=========================== create or reference Ingredients
-  ingredients = JSON.parse(File.read('app/assets/data/all_ingredients.json'))
+  ingredients = JSON.parse(File.read('app/assets/data/ingredients_400.json'))
   ingredients.each do |ingredient|
     if ingredient['recipe_id'] == record['recipe_id']
       new_ingredient = Ingredient.find_or_create_by!(name: ingredient['ingredient'])
