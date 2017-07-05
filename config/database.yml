@@ -77,3 +77,4 @@ production:
   pool: 5
   username: salsaia
   # password: 
+  host: /tmp
