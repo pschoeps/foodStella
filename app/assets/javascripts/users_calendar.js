@@ -13,7 +13,7 @@ $('.users.calendar').ready(function() {
       mealColor = $(meal).attr('data-meal-color')
       recipeFriendlyName = $(meal).attr('data-day-friendly')
 
-      startAt = date + time 
+      startAt = date + time
 
       recipe = $(ui.draggable)
 
@@ -36,16 +36,16 @@ $('.users.calendar').ready(function() {
                     }
                   };
 
-      $.ajax({//ajax call 
+      $.ajax({//ajax call
         type:'POST',
         data: data,
         url:'/events',
-              
+
         success:function (response) {
           dateDiv = '#' + date
           mealDiv = $(dateDiv).find('#' + mealData)
 
-          $(mealDiv).find('.added-meals').append("<div class='meal week-meal desktop-meal "+recipeName+"' data="+recipeId+"><a class='desktop-event fc-event-container "+recipeName+"' id='mobile-event' data-event="+response+" data-recipe="+recipeId+" data-image="+recipeName+" data-servings="+recipeServings+" data-recipe-name="+recipeFriendlyName+"><span class='delete-event'></span><span class='servings' id='desktop-week-servings'>"+recipeServings+"s</span><span class='event-title' style='background-color: "+mealColor+"'>"+recipeFriendlyName+"</span></a><div class='change-servings-box hidden'><span class='change-servings-box-close'>close</span><span class='glyphicon glyphicon-minus change-serving' id='minus-serving' aria-hidden='true'></span><span id='num-servings' data="+response+" data-servings="+recipeServings+">"+recipeServings+"</span><span class='glyphicon glyphicon-plus change-serving add' id='add-serving' aria-hidden=true></span></div>") 
+          $(mealDiv).find('.added-meals').append("<div class='meal week-meal desktop-meal "+recipeName+"' data="+recipeId+"><a class='desktop-event fc-event-container "+recipeName+"' id='mobile-event' data-event="+response+" data-recipe="+recipeId+" data-image="+recipeName+" data-servings="+recipeServings+" data-recipe-name="+recipeFriendlyName+"><span class='delete-event'></span><span class='servings' id='desktop-week-servings'>"+recipeServings+"s</span><span class='event-title' style='background-color: "+mealColor+"'>"+recipeFriendlyName+"</span></a><div class='change-servings-box hidden'><span class='change-servings-box-close'>close</span><span class='glyphicon glyphicon-minus change-serving' id='minus-serving' aria-hidden='true'></span><span id='num-servings' data="+response+" data-servings="+recipeServings+">"+recipeServings+"</span><span class='glyphicon glyphicon-plus change-serving add' id='add-serving' aria-hidden=true></span></div>")
           var addMealBig = $(mealDiv).children('.add-meal-big')
           var addMealSmall = $(mealDiv).children('.add-meal-short')
           var childCount =  $(mealDiv).children('.added-meals').children('.meal').length;
@@ -59,10 +59,10 @@ $('.users.calendar').ready(function() {
           if (imageUrl) { //evaling if a recipe was dropped from the recommended view, in which case follow the recipe and take a different method for adding image
             console.log(true)
             meals = $(mealDiv).find('.added-meals').children('.'+recipeName)
-            $(meals).find('a').css('background-image', "url("+imageUrl+")"); 
+            $(meals).find('a').css('background-image', "url("+imageUrl+")");
             followRecipe(recipeId);
           }
-        } 
+        }
       });//end ajax call
 
 
@@ -71,7 +71,7 @@ $('.users.calendar').ready(function() {
 
   function followRecipe(recipeId) {
     data = {id:recipeId}
-    $.ajax({//ajax call 
+    $.ajax({//ajax call
         type:'POST',
         data: data,
         url:'/relationships',
@@ -92,7 +92,7 @@ $('.users.calendar').ready(function() {
                   }
                 };
 
-    $.ajax({//ajax call 
+    $.ajax({//ajax call
       type:'DELETE',
       data: data,
       url:'/events/destroy',
@@ -110,7 +110,7 @@ $('.users.calendar').ready(function() {
             $(addMealBig).removeAttr("id")
             console.log("this is evaling true")
           }
-      }         
+      }
     });//end ajax call
   });
 
@@ -124,13 +124,13 @@ $('.users.calendar').ready(function() {
   console.log(gon.nextWeek)
   console.log(gon.previousWeek)
 
-  $('.next-week-link').click(function(){ 
+  $('.next-week-link').click(function(){
       var updated_week = (gon.nextWeek)
       console.log(updated_week)
       this.href = this.href + '?week=' + (updated_week)
     });
 
-  $('.prev-week-link').click(function(){ 
+  $('.prev-week-link').click(function(){
     updated_week = gon.previousWeek
     this.href = this.href + '?week=' + (updated_week)
   });
@@ -140,7 +140,9 @@ $('.users.calendar').ready(function() {
   }, 5000);
 
   // Shuffle!
-  $('.shuffle-button .shuffle').click(function(){
+  $('.shuffle-button .shuffle, .shuffle-tag').click(function(){
+		alert('shuffle');
+		return;
     $(".desktop-calendar-container").css("background-color", "lightgrey");
     $('.shuffle-button .glyphicon-refresh').show();
     shuffle();
@@ -163,7 +165,7 @@ $('.users.calendar').ready(function() {
       dayView: gon.dayView
     }
     console.log(data)
-    
+
     $.ajax({//ajax call for questions
                   type:'GET',
                   data: data,
@@ -183,7 +185,7 @@ $('.users.calendar').ready(function() {
                     //      color: '#ffffff'
                     //     servings: 1,
                     //   }
-                    
+
                       // newEvent =
                       //   "<div class='meal week-meal desktop-meal' data='" + event.recipe_id + "'>" +
                       //     "<a class='desktop-event fc-event-container " + event.recipe_friendly_name + "id-" + event.recipe_id + " id='desktop-event' data-event='" + event.id + "' data -recipe='" + event.recipe_id + "' data-recipe-name='' data-image='' data-serving='' style='background-image: url();'>" +
@@ -201,7 +203,7 @@ $('.users.calendar').ready(function() {
 
                     //   $('.meal-types#' + event.meal + ' added-meals').append(newEvent);
                     // });
-                    
+
                     // until return json is written, just reload page
                     location.reload();
 

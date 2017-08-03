@@ -69,7 +69,7 @@ $outer-container: 90%;
       ar {
 
         color: #819800;
-            padding-top: 20vh;  
+            padding-top: 20vh;
             display: block;
             margin-right: auto;
             margin-left: auto;
@@ -80,7 +80,7 @@ $outer-container: 90%;
 
 }
 }
-} 
+}
 
 #sidebar-skinny {
     width: 20%;
@@ -216,7 +216,7 @@ $outer-container: 90%;
         max-height: 100vh;
         // overflow: hidden;
         // width: 20%;
-        
+
         // min-width: 280px;
 
         .fc-event .remove {
@@ -226,23 +226,27 @@ $outer-container: 90%;
             cursor: pointer;
         }
         .fc-event:hover .remove { display: block; }
-     
 
-        .dragNdrop {
-            // color: $medium;
+				.shuffle-tag {
             color: $green;
-            text-align: center;
-            padding-top:10px;
-            margin-top:10px;
-            border-top: solid 1px lightgrey;
-            // font-weight: 100;
-            div {
-                font-size: 1.1em;
-                float:right;
-                padding: 2px 0 0 2px;
-            }
-            white-space: nowrap;
+						text-align: center;
+						margin-top: 15px;
+						cursor: pointer;
         }
+
+				.dragNdrop {
+					color: $orange;
+					text-align: center;
+					margin-top: 25px;
+					padding-top: 5px;
+					border-top: solid 1px lightgrey;
+					white-space: nowrap;
+					div {
+							font-size: 1.1em;
+							float:right;
+							padding: 2px 0 0 2px;
+					}
+				}
 
         .header {
         	height: 5em;
@@ -320,8 +324,8 @@ $outer-container: 90%;
 
                       -webkit-transition: 2s;
                       -moz-transition: 2s;
-                      transition: 2s;     
-                      
+                      transition: 2s;
+
                       -webkit-transition-timing-function: linear;
                       -moz-transition-timing-function: linear;
                       transition-timing-function: linear;
@@ -552,7 +556,7 @@ $outer-container: 90%;
     top: 50%;
     transform: translateY(-50%);
 }
- 
+
  .week-view-header .breakfast-circle{
     background-color: #819801;
 }
@@ -598,7 +602,7 @@ $outer-container: 90%;
     margin: 0;
     background-color: white;
 
-    
+
     .details-box {
         position: relative;
         left: 5em;
@@ -854,7 +858,7 @@ $outer-container: 90%;
         width: 2em;
         height: 2em;
         z-index: 20;
-    
+
         .arrow-left {
             height: 100%;
             width: 100%;
@@ -1070,8 +1074,8 @@ $outer-container: 90%;
             margin:auto;
 
             .ui-slider-range { background: $green;}
-            .ui-slider-handle { 
-                    border-color: $green; 
+            .ui-slider-handle {
+                    border-color: $green;
                     border-radius: 100%;
                     top: -.5em;
                     }
@@ -1139,7 +1143,7 @@ $outer-container: 90%;
             }
 
             #mobile-event, #desktop-event {
-                height: 100%;   
+                height: 100%;
                 /* only used when as a fallback if a user has unfollowed a recipe but an event for that recipe still remains */
                 background-image: asset-url("background-picture-foodstella.jpg");
 
@@ -1430,7 +1434,7 @@ $outer-container: 90%;
                 letter-spacing: 1px;
                 font-weight: 100;
             }
-            
+
         }
 
 
@@ -1625,11 +1629,3 @@ $outer-container: 90%;
         }
     }
 }
-
-
-
-
-
-
-
-
