@@ -3,7 +3,7 @@ class SessionsController < Devise::SessionsController
 
   # GET /resource/sign_in
    def new
-      @recipes = Recipe.limit(10).order("RANDOM()")
+      @recipes = Recipe.limit(10).order("RANDOM()").where.not(remote_photo_url:"http://images.meredith.com/content/dam/bhg/Images/assets/BHGrecipe_no_image.jpg")
       gon.recipes = @recipes
      super
    end

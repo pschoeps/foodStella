@@ -7,7 +7,7 @@ class StaticPagesController < ApplicationController
 
   def temporary_preference
     if params[:reset_gon_recipes]
-      @new_recipes = Recipe.limit(10).order("RANDOM()")
+      @new_recipes = Recipe.limit(10).order("RANDOM()").where.not(remote_photo_url:"http://images.meredith.com/content/dam/bhg/Images/assets/BHGrecipe_no_image.jpg")
       @returned = [@new_recipes]
       render :json => @returned
     else
