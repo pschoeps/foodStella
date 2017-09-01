@@ -82,11 +82,13 @@
 
   				&:hover {
   					transition: 0.3s;
-  					background-color: rgba(255,0,0,0.5);
+            color: rgba(255,0,0,1.5);
+  					background-color: rgba(255,0,0,0.4);
   				}
   				&.highlight {
   					transition: 0.3s;
-  					background-color: rgba(255,0,0,0.5);
+            color: rgba(255,0,0,1.5);
+  					background-color: rgba(255,0,0,0.4);
   				}
   			}
 
@@ -97,12 +99,14 @@
 
   				&:hover {
   					transition: 0.3s;
-  					background-color: rgba(0,255,0,0.5);
+            color: rgba(0,255,0,1.5);
+  					background-color: rgba(0,255,0,0.4);
   				}
 
   				&.highlight {
   					transition: 0.3s;
-  					background-color: rgba(0,255,0,0.5);
+            color: rgba(0,255,0,1.5);
+  					background-color: rgba(0,255,0,0.4);
   				}
   			}
 
@@ -129,13 +133,33 @@
   				border: 1px solid white;
   			}
 
+        .start-box p#swiped-recipe {
+          display: none;
+          // hide the red X that all recipes have
+        }
+
 		  	.selector-box{
 		  		width: 20vw;
 		  		height: 20vw;
 		  		border-radius: 10vw;
 		  		padding-top: 0.5vw;
 	  			display: inline-block;
+          position: relative;
+          color: #ccc;
 
+          h1 {
+            line-height: 20vw;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            margin: 0;
+            font-size: 4em;
+          }
+
+        .sortable.ui-sortable-placeholder {
+          display: none;
+        }
 
 				.sortable {
 				  background-color:white;
@@ -145,7 +169,6 @@
 				  transition: 0.3s;
 				  border-radius: 9.5vw;
 				  overflow: hidden;
-				  display:block;
 				  margin-right: auto;
 				  margin-left: auto;
 				  display: block; // align horizontal
