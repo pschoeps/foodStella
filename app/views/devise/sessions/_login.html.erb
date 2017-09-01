@@ -1,4 +1,4 @@
-<div id="sign-in-block" style="display:none;">
+<div id="sign-in-block" style="display: <%= flash.first ? (flash.first[1].include?('continue!') ? 'none' : 'block') : 'none' %> ;">
   <div class="boxes"> 
     <div class="box">
       <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>  
