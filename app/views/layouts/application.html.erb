@@ -28,10 +28,12 @@
 
       $(".expando").click(function(){
           if ($(this).next("div").is(":visible")) {
-            $(this).text("[+]");
+            // $(this).text("v");
+            $(this).removeClass('open');
           }
           else{
-            $(this).text("[-]");
+            $(this).text("");
+            $(this).addClass('open');
           }
           $(this).next("div").toggle(100);
           

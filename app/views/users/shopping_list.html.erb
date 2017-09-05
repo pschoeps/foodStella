@@ -53,7 +53,7 @@
 
         <% @categories.each do |cat| %>
           <% unless cat[1].length == 0 %>
-            <h2 class="shopping-item"><%= cat[0] %> <span class="expando">[+]</span>
+            <h2 class="shopping-item"><%= cat[0] %> <span class="expando"></span>
       			<div class="list-box" style="display: none;">
       				<ol>
       					<% cat[1].each do |s| %>

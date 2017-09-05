@@ -1,24 +1,22 @@
-<div class="section shoppinglist" style="min-height: 50vh; padding-top: 1vh;">
+<div class="section shoppinglist" style="min-height: 50vh;">
 	
 	<div style="display: block; text-align: center;">
-		<h1 style="color:lightgrey; font-size: 24px; margin-bottom: 12px">Finish planning your week!</h1>
-		<h3 style="color:grey; font-size: 14px; margin-top: 1px;"> Generate your weekly shopping list.</h3>
+		
+    <h3 class="green">WHAT'S IN MY SHOPPING LIST?</h3>
 
-		<%= link_to "Get Started &rarr;".html_safe, new_user_registration_path, class:"button-link green" %>	
+    <span style="color:black; font-size:1em;" class="help-text">Keep track of what ingredients you need.</span>
+		
+    <!-- %= link_to "Get Started &rarr;".html_safe, new_user_registration_path, class:"button-link green" %>	 -->
 
-
-		<div style="background-color: white; opacity: 0.8; width: 700px; min-height: 40px; max-width: 95vw; margin-right: auto; margin-left: auto;">
-			
+		<div style="background-color: white; opacity: 0.8; width: 700px; min-height: 40px; max-width: 95vw; margin-right: auto; margin-left: auto;">			
 			<!-- <img src="/sample_shopping.png" style="width: 100%;" /> -->
 			<%= render 'static_shopping_list' %>
-
 		</div>
 
 	</div>
 	 
-	
 
-
-	<%= render "about_seo" %>
 
 </div>
+
+<%= render "about_seo" %>
