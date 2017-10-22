@@ -396,7 +396,7 @@ class UsersController < ApplicationController
 	  recommended_recipe_ids = params[:ids]
 	  loader_counter = 0
 	  recommended_recipe_ids.each do |r|
-		response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend?recipe="+r+"")
+		response = HTTParty.get("https://foodstella-python-api.herokuapp.com/recommend?recipe="+r+"")
 		puts response.body
 		response = response.body
 		if response
@@ -707,21 +707,21 @@ class UsersController < ApplicationController
     	dinner_ids = params[:dinner_ids]
 
     	# Make recommended array from random recipe of each array
-  		response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend?recipe="+breakfast_ids.shuffle.first+"")
+  		response = HTTParty.get("https://foodstella-python-api.herokuapp.com/recommend?recipe="+breakfast_ids.shuffle.first+"")
 		response = response.body
 		if response
 			response.gsub!(/(\,)(\S)/, "\\1 \\2")
 			shuffled_breakfasts = YAML::load(response)
 		end
 
-		response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend?recipe="+lunch_ids.shuffle.first+"")
+		response = HTTParty.get("https://foodstella-python-api.herokuapp.com/recommend?recipe="+lunch_ids.shuffle.first+"")
 		response = response.body
 		if response
 			response.gsub!(/(\,)(\S)/, "\\1 \\2")
 			shuffled_lunches = YAML::load(response)
 		end
 
-		response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend?recipe="+dinner_ids.shuffle.first+"")
+		response = HTTParty.get("https://foodstella-python-api.herokuapp.com/recommend?recipe="+dinner_ids.shuffle.first+"")
 		response = response.body
 		if response
 			response.gsub!(/(\,)(\S)/, "\\1 \\2")

@@ -86,7 +86,7 @@ class RecipesController < ApplicationController
 
   def get_recommended_recipes
     recipe_id = params[:recipe_id]
-    response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/recommend?recipe="+recipe_id+"")
+    response = HTTParty.get("https://foodstella-python-api.herokuapp.com/recommend?recipe="+recipe_id+"")
     puts response.body, response.code, response.message, response.headers.inspect
     puts "searchy"
     response = response.body
@@ -121,7 +121,7 @@ class RecipesController < ApplicationController
 
   def broadcast
     # Use the class methods to get down to business quickly
-    response = HTTParty.get("https://sleepy-escarpment-10890.herokuapp.com/search")
+    response = HTTParty.get("https://foodstella-python-api.herokuapp.com/search")
     puts response.body, response.code, response.message, response.headers.inspect
     puts "searchy"
     response = response.body
