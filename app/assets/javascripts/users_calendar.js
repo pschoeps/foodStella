@@ -141,8 +141,8 @@ $('.users.calendar').ready(function() {
 
   // Shuffle!
   $('.shuffle-button .shuffle, .shuffle-tag').click(function(){
-		alert('shuffle');
-		return;
+		// alert('shuffle');
+		// return;
     $(".desktop-calendar-container").css("background-color", "lightgrey");
     $('.shuffle-button .glyphicon-refresh').show();
     shuffle();
