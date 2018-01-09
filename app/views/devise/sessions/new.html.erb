@@ -71,7 +71,7 @@ removeFunct() has been updated to get 10 new recipes for gon.recipes, once a use
 
       $( "#sortable1").droppable({
         hoverClass: "highlight",
-        drop: function( ) {// dropped into dislike
+        drop: function(ev,ui) {// dropped into dislike
           var recipe_id = $('#swiped-recipe').attr('name');
             refreshData(recipe_id, false)
             // removeFunct(".middle_remove");
@@ -81,7 +81,7 @@ removeFunct() has been updated to get 10 new recipes for gon.recipes, once a use
 
       $( "#sortable3").droppable({
         hoverClass: "highlight",
-        drop: function( ) { // dropped into like
+        drop: function(ev,ui) { // dropped into like
           var recipe_id = $('#swiped-recipe').attr('name');
             refreshData(recipe_id, true)
             // removeFunct(".middle_remove");
