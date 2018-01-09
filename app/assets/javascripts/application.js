@@ -18,11 +18,9 @@
 //= require jquery-ui
 //= require jquery-ui/core
 //= require jquery-ui/widget
-//= require jquery-ui/mouse
+
 //= require jquery-ui/position
-//= require jquery-ui/draggable
-//= require jquery-ui/autocomplete
-//= require jquery-ui/slider
+
 //= require jqueryTouchPunch
 //= require autocomplete-rails
 //= require rails-jquery-tokeninput

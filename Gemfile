@@ -42,8 +42,8 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 #bootrap and sass front end frameworks
-gem 'bootstrap-sass',       '3.2.0.0'
-gem 'sass-rails'
+gem 'bootstrap-sass', '~>3.3.7'
+gem 'sass-rails', '>=3.2'
 
 #for checkboxes
 gem 'icheck-rails'

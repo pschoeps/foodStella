@@ -21,7 +21,7 @@ development:
 
 
   # username: haeminpark
-  username: salsaia
+  username: dovstokar
   database: foodStella_development
   # password:
     
@@ -67,7 +67,7 @@ test:
   encoding: unicode
   database: foodStella_test
   pool: 5
-  username: salsaia
+  username: dovstokar
   # password: 
 
 production:
@@ -75,5 +75,5 @@ production:
   encoding: unicode
   database: foodStella_production
   pool: 5
-  username: salsaia
+  username: dovstokar
   # password: 

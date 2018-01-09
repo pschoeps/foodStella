@@ -16,35 +16,55 @@ removeFunct() has been updated to get 10 new recipes for gon.recipes, once a use
 
 -->
 
-<div class="homepage">
-    <div style="background-color: black;">
-      <div class="section title" style="position: relative; z-index: 3; background-color: transparent;"> 
-        <div style="position: absolute; top: -1px; background-repeat:repeat-both; /*background-image: url('/assets/oct.png');*/ width: 100%; height: 100%; opacity: 0.1; z-index: -1;"></div>
-        <div class="mainlogo">
-             <%= image_tag "logo-foodstella-light.png", id: "logo", :align=> "middle" %>
-        </div>
+<body data-spy="scroll" data-target="#myScrollspy" data-offset="20">
+  <div class="container">
+    <div class="row">
+      <nav class="col-md-3" id="myScrollspy">
+        <ul class="nav nav-pills nav-stacked">
+          <li class="active"><a href="#homepage"></a></li>
+          <li><a href="#yesOrNo"></a></li>
+          <li><a href="#nextFewDays"></a></li>
+          <li><a href="#shoppingList"></a></li>
+          <li><a href="#aboutSeo"></a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</body>
+  <div class="homepage" id="homepage">
+      <div style="background-color: black;">
+        <div class="section title" style="position: relative; z-index: 3; background-color: transparent;"> 
+          <div style="position: absolute; top: -1px; background-repeat:repeat-both; /*background-image: url('/assets/oct.png');*/ width: 100%; height: 100%; opacity: 0.1; z-index: -1;"></div>
+          <div class="mainlogo">
+              <%= image_tag "logo-foodstella-light.png", id: "logo", :align=> "middle" %>
+          </div>
 
-      </div>
-    </div>
-    
-    <div class="section tagline">
-         The easiest way to plan your cooking and shopping for the week!
-    </div>
-        
-    <%= render "sign_in_section" %>
-    <div style="background-color: black;">
-      <div style="position: relative; z-index: 3; background-color: transparent;">
-        <div style="position: absolute; background-repeat:repeat-both; /*background-image: url('/assets/oct.png');*/ width: 100%; height: 100%; opacity: 0.1; z-index: -1;">
-        </div>
-        <div>
-          <%= render "yes_no_section"%>
         </div>
       </div>
-    </div>
-    <%= render "next_few_days"%>
-    <%= render "shopping_list"%>
-
-</div>
+      
+      <div class="section tagline">
+          The easiest way to plan your cooking and shopping for the week!
+      </div>
+          
+      <%= render "sign_in_section" %>
+      <div style="background-color: black;">
+        <div style="position: relative; z-index: 3; background-color: transparent;">
+          <div style="position: absolute; background-repeat:repeat-both; /*background-image: url('/assets/oct.png');*/ width: 100%; height: 100%; opacity: 0.1; z-index: -1;">
+          </div>
+          <div id="yesOrNo">
+            <%= render "yes_no_section"%>
+          </div>
+        </div>
+      </div>
+      <div id="nextFewDays">
+        <%= render "next_few_days"%>
+      </div>
+      <div id="shoppingList">
+        <%= render "shopping_list"%>
+      </div>
+      <div id="aboutSeo">
+        <%= render "about_seo" %>
+      </div>
 
 
 
@@ -88,6 +108,23 @@ removeFunct() has been updated to get 10 new recipes for gon.recipes, once a use
             removeFunct("#swiped-recipe");
         }
       });
+    });
+
+
+
+    $( "#droppable" ).droppable({
+      tolerance: "touch",
+      over: function(ev, ui) {
+        ui.draggable.context.style.border = '5px solid red';
+        $(ui.draggable.context).animate({height: '10vh', width: '10vw', fontSize: '.6em'});
+      },
+      out: function(ev, ui) {
+        ui.draggable.context.style.border = '1px solid black';
+        $(ui.draggable.context).animate({height: '20vh', width: '20vw', fontSize: '1.1em'});
+      },
+      drop: function(ev, ui) {
+        ui.draggable.remove();
+      }
     });
   
   </script>
