@@ -1,3 +1,27 @@
+//========= bootstrap scrollspy on landing page ==============
+
+body {
+	position: relative;
+}
+ul.nav-pills {
+	top: 40%;
+	left: 95%;
+	position: fixed;
+	z-index: 10;
+}
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+	background-color: #404040;
+}
+.nav-pills > li > a {
+	border-radius: 50%;
+	height: 29px;
+	margin-top: 8px;
+}
+a {
+	background-color: rgba(255,255,255,0.5);
+	border: 1px solid black;
+}
+
 .homepage{
 // ============== welcome page ==============
 	background:transparent;
@@ -256,7 +280,7 @@
 			border:none;
 
 			&.one{
-					background-color:lightgrey;
+					background-color:black;
 			}
 			&.two{
 				background-color:grey;
@@ -408,6 +432,17 @@
     cursor: pointer;
 	}
 
+	// ========= bootstrap glyphicon trash can ==================
+	
+	.glyphicon {
+		margin-left: 5%;
+		font-size: 30px;
+		z-index: 10;
+	}
+
+
+	// ==========================================================
+
 	.add {
 	  background-color: lightblue;
 	  color: black;
@@ -528,4 +563,17 @@
 	.my-foods-text-oo{
 		color: $green;
 	}
+}
+
+
+// ============ Delete border when hovering over trash can =====================
+
+.onDropZone {
+	width: 10vw;
+	height: 10vh;
+}
+
+.notOnDropZone {
+	width: 20vw;
+	height: 20vh;
 }
