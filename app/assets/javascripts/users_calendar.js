@@ -17,6 +17,7 @@ $('.users.calendar').ready(function() {
 
       recipe = $(ui.draggable)
 
+      imageUrl = null;
       if ($(recipe).attr('id') == "in-list-recommended") {
         console.log("from recommended")
         imageUrl = recipe.attr('data-image-src')
