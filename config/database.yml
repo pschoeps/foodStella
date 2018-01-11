@@ -21,8 +21,8 @@ development:
 
 
   # username: haeminpark
-  username: dovstokar
-  # username: slvtrs
+  # username: dovstokar
+  username: slvtrs
   database: foodStella_development
   # password:
     

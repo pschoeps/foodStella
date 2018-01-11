@@ -1,25 +1,24 @@
 //========= bootstrap scrollspy on landing page ==============
-
-body {
+body.sessions.new {
 	position: relative;
-}
-ul.nav-pills {
-	top: 40%;
-	left: 95%;
-	position: fixed;
-	z-index: 10;
-}
-.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
-	background-color: #404040;
-}
-.nav-pills > li > a {
-	border-radius: 50%;
-	height: 29px;
-	margin-top: 8px;
-}
-a {
-	background-color: rgba(255,255,255,0.5);
-	border: 1px solid black;
+  ul.nav-pills {
+  	top: 40%;
+  	left: 95%;
+  	position: fixed;
+  	z-index: 10;
+  }
+  .nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+  	background-color: #404040;
+  }
+  .nav-pills > li > a {
+  	border-radius: 50%;
+  	height: 29px;
+  	margin-top: 8px;
+  }
+  a {
+  	background-color: rgba(255,255,255,0.5);
+    border: 1px solid black;
+  }
 }
 
 .homepage{
@@ -292,7 +291,15 @@ a {
 			.sortable{
 				width: 20vw;
 				height: 20vh;
-				border: 1px solid black;
+        
+        border: 1px solid black;        
+        transform: scale(1);
+        transition: transform 400ms;
+
+        &.shrink {
+          transform: scale(0.5);
+          border: 5px solid red;
+        }
 			}
 
 		}
@@ -555,6 +562,7 @@ a {
 
 .navbar-default{
 	background-color: black;
+  border-radius: 0;
 }
 
 .my-foods-text{
