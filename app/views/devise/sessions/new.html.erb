@@ -115,12 +115,14 @@ removeFunct() has been updated to get 10 new recipes for gon.recipes, once a use
     $( "#droppable" ).droppable({
       tolerance: "touch",
       over: function(ev, ui) {
-        ui.draggable.context.style.border = '5px solid red';
-        $(ui.draggable.context).animate({height: '10vh', width: '10vw', fontSize: '.6em'});
+        // ui.draggable.context.style.border = '5px solid red';
+        // $(ui.draggable.context).animate({height: '10vh', width: '10vw', fontSize: '.6em'});
+        $(ui.draggable.context).addClass('shrink');
       },
       out: function(ev, ui) {
-        ui.draggable.context.style.border = '1px solid black';
-        $(ui.draggable.context).animate({height: '20vh', width: '20vw', fontSize: '1.1em'});
+        // ui.draggable.context.style.border = '1px solid black';
+        // $(ui.draggable.context).animate({height: '20vh', width: '20vw', fontSize: '1.1em'});
+        $(ui.draggable.context).removeClass('shrink');
       },
       drop: function(ev, ui) {
         ui.draggable.remove();
